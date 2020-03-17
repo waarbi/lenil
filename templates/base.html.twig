@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="fr" class="ui-toolkit">
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Lenyl | Plateforme des freelancers africains!{% endblock %}</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <meta name="author" content="">
+        <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,300,100" rel="stylesheet">
+        <link href="{{ asset('build/css/bootstrap_css.css') }}" rel="stylesheet">
+        <link href="{{ asset('build/css/custom_css.css') }}" rel="stylesheet"> <!-- Custom css code from modified in admin panel --->
+        <link href="{{ asset('build/css/styles.css') }}" rel="stylesheet">
+        <link href="{{ asset('build/css/categories_nav_styles.css') }}" rel="stylesheet">
+        <link href="{{ asset('build/css/font_awesome.css') }}" rel="stylesheet">
+        <link href="{{ asset('build/css/owl_carousel_css.css') }}" rel="stylesheet">
+        <link href="{{ asset('build/css/owl_theme_default_css.css') }}" rel="stylesheet">
+        <link href="{{ asset('build/css/sweat_alert_css.css') }}" rel="stylesheet">
+        <link href="{{ asset('build/css/animate_css.css') }}" rel="stylesheet">
+        <link href="{{ asset('build/css/knowledge_bank_css.css') }}" rel="stylesheet">
+        <link rel="shortcut icon" href="{{ asset('build/images/gigtodoFav.ico') }}" type="image/x-icon" />
+        <link href="{{ asset('build/css/scoped_responsive_and_nav.css') }}" rel="stylesheet">
+        <link href="{{ asset('build/css/vesta_homepage_css.css') }}" rel="stylesheet">
+        <link rel="stylesheet" href="{{ asset('build/css/msdropdown_css.css') }}"/>
+        <!-- Optional: include a polyfill for ES6 Promises for IE11 and Android browser -->
+        <script type="text/javascript" src="{{ asset('build/js/sweat_alert.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('build/js/jquery.js') }}"></script>
+
+        <style>.swal2-popup .swal2-styled.swal2-confirm {background-color: #3578e5;}</style>
+        {% block stylesheets %}
+
+        {% endblock %}
+    </head>
+    <body class="is-responsive">
+
+    {{ include('partials/header.html.twig') }}
+
+        {% block body %}{% endblock %}
+
+
+
+
+
+    {{ include('partials/footer.html.twig') }}
+
+    <script type="text/javascript" src="{{ asset('build/js/msdropdown.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('build/js/sticky.js') }}"></script>
+    <script type="text/javascript" id="custom-js" src="{{ asset('build/js/customjs.js') }}" data-logged-id="" data-base-url="/" data-enable-sound=""></script>
+    <script type="text/javascript" src="{{ asset('build/js/categoriesProposal.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('build/js/popper.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('build/js/carousel.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('build/js/bootstrap_js.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('build/js/summernote.js') }}"></script>
+
+
+    {% block javascripts %}
+    {% endblock %}
+
+
+    </body>
+</html>
