@@ -24,25 +24,6 @@ Encore
      * Each entry will result in one JavaScript file (e.g. app.js)
      * and one CSS file (e.g. app.css) if your JavaScript imports CSS.
      */
-    .addEntry('js/bootstrap_js', './assets/js/bootstrap.js')
-    .addEntry('js/categoriesProposal', './assets/js/categoriesProposal.js')
-    .addEntry('js/croppie_js', './assets/js/croppie.js')
-    .addEntry('js/customjs', './assets/js/customjs.js')
-    .addEntry('js/emoji', './assets/js/emoji.js')
-    .addEntry('js/ie', './assets/js/ie.js')
-    .addEntry('js/barrating', './assets/js/jquery.barrating.min.js')
-    .addEntry('js/autocomplete', './assets/js/jquery.easy-autocomplete.min.js')
-    .addEntry('js/jquery', './assets/js/jquery.min.js')
-    .addEntry('js/sticky', './assets/js/jquery.sticky.js')
-    .addEntry('js/ui', './assets/js/jquery-ui.js')
-    .addEntry('js/knowledge', './assets/js/knowledge-bank.js')
-    .addEntry('js/msdropdown', './assets/js/msdropdown.js')
-    .addEntry('js/carousel', './assets/js/owl.carousel.js')
-    .addEntry('js/popper', './assets/js/popper.min.js')
-    .addEntry('js/slidesbg', './assets/js/slidesbg.js')
-    .addEntry('js/summernote', './assets/js/summernote.js')
-    .addEntry('js/sweat_alert', './assets/js/sweat_alert.js')
-    .addEntry('js/tagsinput', './assets/js/tagsinput.js')
 
     //.addEntry('page1', './assets/js/page1.js')
     //.addEntry('page2', './assets/js/page2.js')
@@ -80,7 +61,8 @@ Encore
     .addPlugin(new CopyWebpackPlugin([
         // copies to {output}/static
         { from: './assets/images', to: 'images' },
-        { from: './assets/fonts', to: 'fonts' }
+        { from: './assets/fonts', to: 'fonts' },
+        { from: './assets/js', to: 'js' }
     ]))
     // will require an extra script tag for runtime.js
     // but, you probably want this, unless you're building a single-page app

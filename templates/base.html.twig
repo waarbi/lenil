@@ -1,64 +1,142 @@
 <!DOCTYPE html>
 <html lang="fr" class="ui-toolkit">
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Lenyl | Plateforme des freelancers africains!{% endblock %}</title>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <meta name="description" content="">
-        <meta name="keywords" content="">
-        <meta name="author" content="">
-        <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,300,100" rel="stylesheet">
-        <link href="{{ asset('build/css/bootstrap_css.css') }}" rel="stylesheet">
-        <link href="{{ asset('build/css/custom_css.css') }}" rel="stylesheet"> <!-- Custom css code from modified in admin panel --->
-        <link href="{{ asset('build/css/styles.css') }}" rel="stylesheet">
-        <link href="{{ asset('build/css/categories_nav_styles.css') }}" rel="stylesheet">
-        <link href="{{ asset('build/css/font_awesome.css') }}" rel="stylesheet">
-        <link href="{{ asset('build/css/owl_carousel_css.css') }}" rel="stylesheet">
-        <link href="{{ asset('build/css/owl_theme_default_css.css') }}" rel="stylesheet">
-        <link href="{{ asset('build/css/sweat_alert_css.css') }}" rel="stylesheet">
-        <link href="{{ asset('build/css/animate_css.css') }}" rel="stylesheet">
-        <link href="{{ asset('build/css/knowledge_bank_css.css') }}" rel="stylesheet">
-        <link rel="shortcut icon" href="{{ asset('build/images/gigtodoFav.ico') }}" type="image/x-icon" />
-        <link href="{{ asset('build/css/scoped_responsive_and_nav.css') }}" rel="stylesheet">
-        <link href="{{ asset('build/css/vesta_homepage_css.css') }}" rel="stylesheet">
-        <link rel="stylesheet" href="{{ asset('build/css/msdropdown_css.css') }}"/>
-        <!-- Optional: include a polyfill for ES6 Promises for IE11 and Android browser -->
-{#         <script type="text/javascript" src="{{ asset('build/js/sweat_alert.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('build/js/jquery.js') }}"></script> #}
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Lenyl | Plateforme des freelancers africains!{% endblock %}</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,300,100" rel="stylesheet">
+    <link href="{{ asset('build/css/bootstrap_css.css') }}" rel="stylesheet">
+    <link href="{{ asset('build/css/custom_css.css') }}" rel="stylesheet">
+    <!-- Custom css code from modified in admin panel --->
+    <link href="{{ asset('build/css/styles.css') }}" rel="stylesheet">
+    <link href="{{ asset('build/css/categories_nav_styles.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="{{ asset('build/css/owl_carousel_css.css') }}" rel="stylesheet">
+    <link href="{{ asset('build/css/owl_theme_default_css.css') }}" rel="stylesheet">
+    <link href="{{ asset('build/css/sweat_alert_css.css') }}" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css" rel="stylesheet">
+    <link href="{{ asset('build/css/knowledge_bank_css.css') }}" rel="stylesheet">
+    <link rel="shortcut icon" href="{{ asset('build/images/gigtodoFav.ico') }}" type="image/x-icon"/>
+    <link href="{{ asset('build/css/scoped_responsive_and_nav.css') }}" rel="stylesheet">
+    <link href="{{ asset('build/css/vesta_homepage_css.css') }}" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/promise-polyfill@8/dist/polyfill.min.js"></script>
+    <!-- Optional: include a polyfill for ES6 Promises for IE11 and Android browser -->
+    {#         <script type="text/javascript" src="{{ asset('build/js/sweat_alert.js') }}"></script>
+            <script type="text/javascript" src="{{ asset('build/js/jquery.js') }}"></script> #}
 
-        <style>.swal2-popup .swal2-styled.swal2-confirm {background-color: #3578e5;}</style>
-        {% block stylesheets %}
+    <style>.swal2-popup .swal2-styled.swal2-confirm {
+            background-color: #3578e5;
+        }</style>
+    {% block stylesheets %}
 
-        {% endblock %}
-    </head>
-    <body class="is-responsive">
+    {% endblock %}
+</head>
+<body class="is-responsive">
 
-    {{ include('partials/header.html.twig') }}
+{{ include('partials/header.html.twig') }}
 
-        {% block body %}{% endblock %}
-
-
+{% block body %}{% endblock %}
 
 
 
-    {{ include('partials/footer.html.twig') }}
+
+
+{{ include('partials/footer.html.twig') }}
 
 {#     <script type="text/javascript" src="{{ asset('build/js/msdropdown.js') }}"></script>
     <script type="text/javascript" src="{{ asset('build/js/sticky.js') }}"></script>
     <script type="text/javascript" id="custom-js" src="{{ asset('build/js/customjs.js') }}" data-logged-id="" data-base-url="/" data-enable-sound=""></script>
-    <script type="text/javascript" src="{{ asset('build/js/categoriesProposal.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('build/js/popper.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('build/js/carousel.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('build/js/bootstrap_js.js') }}"></script>
     <script type="text/javascript" src="{{ asset('build/js/summernote.js') }}"></script> #}
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
 
-    {% block javascripts %}
-    {% endblock %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.sticky/1.0.4/jquery.sticky.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-dropdown/2.0.3/jquery.dropdown.min.js"></script>
+<script src="{{ asset('build/js/ui.js') }}"></script>
+<script type="application/javascript">
+    $(document).ready(function(){
+        $(function(){
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+        $(function(){
+            $('[data-toggle="popover"]').popover();
+        });
+
+        //// Categories Dropdown Code
+        $(".top-nav-item").mouseover(function(){
+            $(".body-sub-width").addClass("display-none");
+            $(".top-nav-item").removeClass("active");
+            var node_id = $(this).data('node-id');
+            $(this).addClass("active");
+            $(".body-sub-width[data-node-id="+node_id+"]").removeClass("display-none");
+        });
+
+        $(".ui-toolkit .cat-nav").mouseleave(function(){
+            $(".top-nav-item").removeClass("active");
+            $(".body-sub-width").addClass("display-none");
+        });
+
+        $('#mobilemenu').click(function(){
+            $('html body').css('overflow','hidden');
+            $('.cat-mobile').show();
+            $('.mobile-subnav').addClass("display-none");
+            $(".mobile-catnav-back-btn").addClass("display-none");
+            $("#mobile-sub-catnav-header-title").text("");
+            $("#mobile-catnav-header-title").removeClass("display-none");
+            $(".mobile-cat-nav").addClass("slideInUp slower");
+            $(".mobile-topnav").removeClass("display-none").addClass("slideInUp slower");
+            if($(window).width() <= 421){
+                $(".mobile-catnav-wrapper").css({"top" : "44px"});
+            }else if($(window).width() <= 639){
+                $(".mobile-catnav-wrapper").css({"top" : "60px"});
+            }
+        });
+
+        $(".cat-mobile .mobile-topnav ul li").click(function(){
+            $(".top-nav-item").removeClass("active");
+            var u_id = $(this).data('uid');
+            var name = $(this).data('name');
+            $("#mobile-sub-catnav-header-title").text(name);
+            $("#mobile-catnav-header-title").addClass("display-none");
+            $(".mobile-catnav-back-btn").removeClass("display-none");
+            $(".mobile-topnav").addClass("display-none");
+            $("#mobile-sub-catnav-content-"+u_id).removeClass("display-none").addClass("slideInRight slower");
+            $("#mobile-sub-catnav-content-"+u_id+" ul").removeClass("display-none");
+        });
+
+        $(".cat-mobile .mobile-catnav-back-btn").click(function(){
+            $('.mobile-subnav').addClass("display-none");
+            $(".mobile-catnav-back-btn").addClass("display-none");
+            $("#mobile-sub-catnav-header-title").text("");
+            $("#mobile-catnav-header-title").removeClass("display-none");
+            $(".mobile-topnav").removeClass("slideInUp display-none").addClass("slideInLeft slower");
+        });
+
+        $('.cat-mobile .overlay-close').click(function(){
+            $('.cat-mobile').hide();
+            $('html body').removeAttr('style');
+        });
 
 
-    </body>
+
+    });
+</script>
+{% block javascripts %}
+{% endblock %}
+
+
+</body>
 </html>

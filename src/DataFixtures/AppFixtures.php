@@ -94,7 +94,7 @@ Caricatures de dessins animés')->setDescription('It is a long established fact 
 
         $cat2 = new Category();
         $cat2->setTitle('Marketing Digital')->setDescription('It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.')
-            ->setFeatured(true)->setImage('2.jpg')->setSlug('digital-marketing')->setInCard(true);
+            ->setFeatured(true)->setImage('p2.jpg')->setSlug('digital-marketing')->setInCard(true);
         $manager->persist($cat2);
         $manager->flush();
 
@@ -164,12 +164,12 @@ Caricatures de dessins animés')->setDescription('It is a long established fact 
 
         $cat3 = new Category();
         $cat3->setTitle('Rédaction & traduction')->setDescription('It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.')
-            ->setFeatured(true)->setImage('4.jpg')->setSlug('writing-translation')->setInCard(true);
+            ->setFeatured(true)->setImage('p4.png')->setSlug('writing-translation')->setInCard(true);
         $manager->persist($cat3);
 
         $cat4 = new Category();
         $cat4->setTitle('Video & Animation')->setDescription('It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.')
-            ->setFeatured(true)->setImage('7.jpg')->setSlug('video-animation')->setInCard(true);
+            ->setFeatured(true)->setImage('p3.png')->setSlug('video-animation')->setInCard(true);
         $manager->persist($cat4);
 
         $cat5 = new Category();
