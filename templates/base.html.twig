@@ -11,6 +11,7 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,300,100" rel="stylesheet">
     <link href="{{ asset('build/css/bootstrap_css.css') }}" rel="stylesheet">
     <link href="{{ asset('build/css/custom_css.css') }}" rel="stylesheet">
+    <link href="{{ asset('build/css/animate_css.css') }}" rel="stylesheet">
     <!-- Custom css code from modified in admin panel --->
     <link href="{{ asset('build/css/styles.css') }}" rel="stylesheet">
     <link href="{{ asset('build/css/categories_nav_styles.css') }}" rel="stylesheet">
@@ -23,7 +24,7 @@
     <link rel="shortcut icon" href="{{ asset('build/images/gigtodoFav.ico') }}" type="image/x-icon"/>
     <link href="{{ asset('build/css/scoped_responsive_and_nav.css') }}" rel="stylesheet">
     <link href="{{ asset('build/css/vesta_homepage_css.css') }}" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/promise-polyfill@8/dist/polyfill.min.js"></script>
+    <link href="{{ asset('build/css/desktop_proposals.css') }}" rel="stylesheet">
     <!-- Optional: include a polyfill for ES6 Promises for IE11 and Android browser -->
     {#         <script type="text/javascript" src="{{ asset('build/js/sweat_alert.js') }}"></script>
             <script type="text/javascript" src="{{ asset('build/js/jquery.js') }}"></script> #}
@@ -64,10 +65,17 @@
         crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.sticky/1.0.4/jquery.sticky.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-dropdown/2.0.3/jquery.dropdown.min.js"></script>
-<script src="{{ asset('build/js/ui.js') }}"></script>
+<link rel="stylesheet" href="http://www.marghoobsuleman.com/mywork/jcomponents/image-dropdown/samples/css/msdropdown/dd.css">
+<script src="http://www.marghoobsuleman.com/mywork/jcomponents/image-dropdown/samples/js/msdropdown/jquery.dd.min.js"></script>
 <script type="application/javascript">
     $(document).ready(function(){
+        $(document).on('click','.dropdown-menu',function(event){
+            event.stopPropagation();
+        });
+
+        $(".dropdown-menu .dropdown-item.dropdown-toggle").click(function(){
+            $('.collapse.dropdown-submenu').collapse('hide');
+        });
         $(function(){
             $('[data-toggle="tooltip"]').tooltip();
         });

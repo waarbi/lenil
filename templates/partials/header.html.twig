@@ -36,22 +36,26 @@
                 </div>
             </div>
             <ul class="account-nav apply-nav-height">
-                <li class="register-link">
-                    <a href="https://www.gigtodo.com/freelancers.php">Freelancers</a>
-                </li>
-                <li class="sell-on-gigtodo-link d-none d-lg-block">
-                    <a href="#" data-toggle="modal" data-target="#register-modal">
-          <span class="sell-copy">
-          Devenir vendeur          </span>
-                    </a>
-                </li>
-                <li class="register-link">
-                    <a href="#" data-toggle="modal" data-target="#login-modal">Se connecter</a>
-                </li>
-                <li class="sign-in-link mr-lg-0 mr-3">
-                    <a href="#" class="btn btn_join" style="color: white;" data-toggle="modal" data-target="#register-modal">
-                        S'inscrire          </a>
-                </li>
+                {% if 1!= 1 %}
+                    <li class="register-link">
+                        <a href="{{ path('index_freelancers') }}">Freelancers</a>
+                    </li>
+                    <li class="sell-on-gigtodo-link d-none d-lg-block">
+                        <a href="#" data-toggle="modal" data-target="#register-modal">
+              <span class="sell-copy">
+              Devenir vendeur          </span>
+                        </a>
+                    </li>
+                    <li class="register-link">
+                        <a href="#" data-toggle="modal" data-target="#login-modal">Se connecter</a>
+                    </li>
+                    <li class="sign-in-link mr-lg-0 mr-3">
+                        <a href="#" class="btn btn_join" style="color: white;" data-toggle="modal" data-target="#register-modal">
+                            S'inscrire          </a>
+                    </li>
+                {% else %}
+                    {{ include('seller/seller_nav.html.twig') }}
+                {% endif %}
             </ul>
         </div>
     </header>
