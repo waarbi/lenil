@@ -17,3 +17,8 @@ NB: If changes don't apply, try adding "!important" For example:
     background-color: #0069d9;
     border-color: #0062cc;
 }
+#logo-nil{
+    max-width: 75px;
+    margin-top: 3px;
+    margin-left: 70px;
+}
