@@ -34,6 +34,10 @@ html {
 	width: 100%;
 }
 
+h1, h2, h3 {
+	color: #3578e5 ;
+}
+
 .modal-backdrop.show:first-child{
 	display: none !important;
 	opacity: 0 !important;
@@ -188,7 +192,9 @@ color: #afb8bc;
 .red-color{
 	color: red !important;
 }
-
+.lenil-color{
+	color: #3578e5 !important;
+}
 .gnav-header .notifications-dropdown {
 margin-left: -145px;
 width:385px !important;
@@ -2271,7 +2277,9 @@ background-color: #00a64b !important;
 	left: 5px !important;
 }
 
-
+.user-header{
+	background: url("../images/user-background.jpg");
+}
 
 /** Login **/
 
@@ -2285,6 +2293,17 @@ border-radius:5px;
 box-shadow:0px 0px 8px rgba(0,0,0,0.4);
 
 }
+.box-inscription {
+
+	background:#fff;
+	border: solid 1px #e6e6e6;
+	padding:8px 20px 20px 20px;
+	margin-bottom:40px;
+	border-radius:5px;
+	box-shadow:0px 0px 8px rgba(0,0,0,0.4);
+
+}
+
 
 .box-login .logo {
 

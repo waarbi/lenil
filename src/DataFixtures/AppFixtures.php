@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\Category;
+use App\Entity\Pays;
 use App\Entity\SousCategory;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -191,6 +192,19 @@ Caricatures de dessins animés')->setDescription('It is a long established fact 
         $cat8->setTitle('Music & Audio')->setDescription('It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.')
             ->setFeatured(true)->setImage('p8.png')->setSlug('music-audio')->setParentId(null);
         $manager->persist($cat8);
+
+        //country
+        //pays
+        $paysName = ['SENEGAL', 'MALI', 'COTE D\'IVOIRE','MAURITANIE', 'CAMEROUN', 'GAMBIE'];
+        $pays = [];
+        foreach ($paysName as $name){
+            $lepays = new Pays();
+            $lepays->setName($name);
+            $manager->persist($lepays);
+            $pays [] = $lepays;
+        }
+
+
 
         $manager->flush();
 

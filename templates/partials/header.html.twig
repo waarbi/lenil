@@ -28,7 +28,7 @@
                             </div>
                             <div class="search-button-wrapper hide">
                                 <button class="btn btn-primary" name="search" type="submit" value="Search">
-                                    Search                </button>
+                                    Rechercher                </button>
                             </div>
                         </div>
                         <ul class="search-bar-panel d-none"></ul>
@@ -36,21 +36,21 @@
                 </div>
             </div>
             <ul class="account-nav apply-nav-height">
-                {% if 1!= 1 %}
+                {% if app.user is null %}
                     <li class="register-link">
                         <a href="{{ path('index_freelancers') }}">Freelancers</a>
                     </li>
                     <li class="sell-on-gigtodo-link d-none d-lg-block">
-                        <a href="#" data-toggle="modal" data-target="#register-modal">
+                        <a href="{{ path('account_register') }}">
               <span class="sell-copy">
               Devenir vendeur          </span>
                         </a>
                     </li>
                     <li class="register-link">
-                        <a href="#" data-toggle="modal" data-target="#login-modal">Se connecter</a>
+                        <a href="{{ path('account_login') }}">Se connecter</a>
                     </li>
                     <li class="sign-in-link mr-lg-0 mr-3">
-                        <a href="#" class="btn btn_join" style="color: white;" data-toggle="modal" data-target="#register-modal">
+                        <a href="{{ path('account_register') }}" class="btn btn_join" style="color: white;" >
                             S'inscrire          </a>
                     </li>
                 {% else %}
@@ -60,3 +60,13 @@
         </div>
     </header>
 </div>
+{{ include('partials/categories_nav_test.html.twig') }}
+
+{% for label, messages in app.flashes %}
+    <div class="alert alert-{{ label }} clearfix activate-email-class mb-0">
+        {% for message in messages %}
+            <p>{{ message | raw }}</p>
+        {% endfor %}
+    </div>
+
+{% endfor %}

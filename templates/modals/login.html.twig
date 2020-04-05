@@ -4,42 +4,30 @@
             <div class="modal-header">
                 <!-- Modal header start -->
                 <i class="fa fa-sign-in fa-log"></i>
-                <h5 class="modal-title">Login To Your Account</h5>
+                <h5 class="modal-title">Se connecter à votre compte</h5>
                 <button class="close" type="button" data-dismiss="modal"><span>×</span></button>
             </div>
             <!-- Modal header end -->
             <div class="modal-body">
                 <!-- Modal body start -->
-                <form action="" method="post">
+                <form action="{{ path('account_login') }}" method="post">
                     <div class="form-group">
-                        <label class="form-group-label"> Username:</label>
-                        <input type="text" class="form-control" name="seller_user_name" placeholder="Enter Username" value="" required="">
+                        <label class="form-group-label"> Email:</label>
+                        <input type="email" class="form-control" name="username_parameter" placeholder="Entrer votre email" value="" required="">
                     </div>
                     <div class="form-group">
-                        <label class="form-group-label"> Password:</label>
-                        <input type="password" class="form-control" name="seller_pass" placeholder="Enter Password" required="">
+                        <label class="form-group-label"> Mot de pass:</label>
+                        <input type="password" class="form-control" name="seller_pass" placeholder="Entrer votre mot de pass" required="">
                     </div>
-                    <input type="submit" name="login" class="btn btn-success btn-block" value="Login Now">
+                    <input type="submit" name="login" class="btn btn-success btn-block" value="Connexion">
                 </form>
-                <div class="clearfix"></div>
-                <div class="text-center pt-4 pb-2">OR</div>
-                <hr class="">
-                <div class="line mt-3"><span></span></div>
-                <div class="text-center">
-                    <a href="#" onclick="window.location = 'https://www.facebook.com/v2.10/dialog/oauth?client_id=2104842466470242&amp;state=655a3a318fb011031af87b8cd0ab52c3&amp;response_type=code&amp;sdk=php-sdk-5.7.0&amp;redirect_uri=https%3A%2F%2Fwww.gigtodo.com%2Ffb-callback&amp;scope=email';" class="btn btn-primary btn-fb-connect">
-                        <i class="fa fa-facebook"></i> FACEBOOK
-                    </a>
-                    <a href="#" onclick="window.location = 'https://accounts.google.com/o/oauth2/auth?response_type=code&amp;access_type=online&amp;client_id=926378892464-07r4u47v8dh6i26kajn9rkkjs0hk5na2.apps.googleusercontent.com&amp;redirect_uri=https%3A%2F%2Fwww.gigtodo.com%2Fg-callback&amp;state&amp;scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fplus.login%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email&amp;approval_prompt=auto';" class="btn btn-danger btn-gplus-connect ">
-                        <i class="fa fa-google-plus"></i> GOOGLE
-                    </a>
-                </div>
                 <div class="clearfix"></div>
                 <div class="text-center mt-3">
                     <a href="#" class="text-success" data-toggle="modal" data-target="#register-modal" data-dismiss="modal">
-                        Not Registered?          </a>
+                        S'inscrire ?          </a>
                     &nbsp; &nbsp; | &nbsp; &nbsp;
                     <a href="#" class="text-success" data-toggle="modal" data-target="#forgot-modal" data-dismiss="modal">
-                        Forgot Password?          </a>
+                        Mot de pass oublié ?          </a>
                 </div>
             </div>
             <!-- Modal body ends -->
