@@ -100,8 +100,8 @@
     <li class="logged-in-link">
         <div class="dropdown user-menu">
             <a href="#" id="usermenu" class="user dropdown-toggle menuItem" style="margin-top: 17px;" data-toggle="dropdown" aria-expanded="false">
-                <img src="https://www.gigtodo.com/user_images/empty-image.png" width="27" height="27" class="rounded-circle">
-                <span class="name">mdiop</span>
+                <img src="{{ asset('/uploads/images/'~app.user.picture) }}" height="27" width="27" class="rounded-circle" alt="Avatar de  {{ app.user.fullName }}"/>
+                <span class="name">{{ app.user.fullName }}</span>
             </a>
             <div class="dropdown-menu" style="min-width: 200px; z-index: 2000; width: auto !important; position: absolute; transform: translate3d(0px, 62px, 0px); top: 0px; left: 0px; will-change: transform;" x-placement="bottom-start">
                 <a class="dropdown-item" href="https://www.gigtodo.com/dashboard">
@@ -148,8 +148,8 @@
                 </div>
                 <a class="dropdown-item" href="https://www.gigtodo.com/conversations/inbox">
                     Inbox Messages   </a>
-                <a class="dropdown-item" href="https://www.gigtodo.com/mdiop">
-                    My Profile   </a>
+                <a class="dropdown-item" href="{{ path('account_index') }}">
+                    Mon Profil   </a>
                 <a class="dropdown-item dropdown-toggle" href="#" data-toggle="collapse" data-target="#settings">
                     Settings   </a>
                 <div id="settings" class="dropdown-submenu collapse">
@@ -159,8 +159,8 @@
                         Account Settings      </a>
                 </div>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="https://www.gigtodo.com/logout">
-                    Logout   </a>
+                <a class="dropdown-item" href="{{ path('account_logout') }}">
+                    Déconnexion   </a>
             </div>
         </div></li>
     <li class="logged-in-link mr-lg-0 mr-2">

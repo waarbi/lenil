@@ -4,6 +4,7 @@
 namespace App\Controller;
 
 
+use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,10 +20,24 @@ class FreelancerController extends AbstractController
     public function index(EntityManagerInterface $manager)
     {
         $categories_yes = $manager->getRepository('App\Entity\Category')->findBy(array('featured' => true));
-      //recuperation des freelancers
+        //recuperation des freelancers
         return $this->render('freelancer/index.html.twig',
             array(
                 'categories_yes' => $categories_yes,
             ));
+    }
+
+    /**
+     * @Route("/freelance/details/{id}", name="show_freelancer")
+     * @param User $user
+     * @return Response
+     */
+    public function show(User $user)
+    {
+        return $this->render('freelancer/show.html.twig',
+            array(
+                'freelancer' => $user
+            )
+        );
     }
 }

@@ -1,13 +1,12 @@
 {% block stylesheets %}
-
+    {% block title %}Lenyl | Plateforme des freelancers africains!{% endblock %}
 {% endblock %}
 
 {% extends "base.html.twig" %}
 
 {% block body %}
     <!-- start main -->
-    {{ include('partials/categories_nav_test.html.twig') }}
-
+    {% if app.user is null %}
     <div id="demo1" class="main carousel slide" data-ride="carousel">
         <ul class="carousel-indicators">
             <li data-target="#demo1" data-slide-to="0" class="active"></li>
@@ -291,6 +290,9 @@
             </div>
         </div>
     </section>
+    {% else %}
+        {{ include('seller/seller_home.html.twig') }}
+    {% endif %}
 {% endblock %}
 {% block javascripts %}
 
