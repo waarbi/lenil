@@ -1,20 +1,18 @@
-{% block stylesheets %}
-
-{% endblock %}
-
+{% block stylesheets %}{% endblock %}
+{% block title %}Lenil |Devenez vendeur sur notre plateforme {% endblock %}
 {% extends "base.html.twig" %}
 
 {% block body %}
-    {{ include('partials/categories_nav_test.html.twig') }}
     <header id="start_selling">
 
-        <h2 class="text-center text-white">Become A Seller On Our Platform</h2>
+        <h2 class="text-center text-white">Devenez vendeur sur notre plateforme</h2>
 
-        <h3 class="text-center text-white">You bring the skill. We'll make earnings as easy as 1,2,3</h3>
+        Vous apportez la compétence. Nous rendrons les gains aussi simples que 1,2,3
+        <h3 class="text-center text-white">Vous apportez la compétence. Nous rendrons les gains aussi simples que 1,2,3</h3>
         <div class="text-center btn_start_selling">
 
             <a href="proposals/create_proposal" class="btn btn-success btn-lg btn_start_selling"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                Create A Proposal</a>
+                Vendez un service</a>
         </div>
     </header>
         <br>
@@ -23,17 +21,17 @@
 
             <div class="container">
 
-                <h2 class="text-center pb-5 pt-5">How Does This Work?</h2>
+                <h2 class="text-center pb-5 pt-5">Comment ça marche ?</h2>
 
                 <div class="row">
                     <div class="col-md-4">
                         <!--<i class="fa fa-address-card-o pb-4" style="color:#3498db;" aria-hidden="true"></i>-->
 
-                        <img style="position: relative; left: 50px; padding: 15px;" src="images/comp/create-icon.png">
+                        <img style="position: relative; left: 50px; padding: 15px;" src="{{ asset('uploads/images/comp/create-icon.png') }}">
 
-                        <h3 class="pb-4" style="position: relative; left: 40px;">Create a Proposal</h3>
+                        <h3 class="pb-4" style="position: relative; left: 40px;">Créer un service</h3>
 
-                        <p>Once you create an account, all you have to do to become a seller is to create a proposal/service. Make sure you proposal is as captivating as possible. Potential customers actually read through your content.</p>
+                        <p>Une fois que vous avez créé un compte, tout ce que vous avez à faire pour devenir vendeur est de créer une proposition / un service. Assurez-vous que votre proposition est aussi captivante que possible. Les clients potentiels lisent réellement votre contenu.</p>
 
 
                     </div>
@@ -41,22 +39,22 @@
                     <div class="col-md-4">
                         <!--<i class="fa fa-archive pb-4" style="color:#e67e22;" aria-hidden="true"></i>-->
 
-                        <img style="position: relative; left: 50px; padding: 15px;" src="images/comp/approve-icon.png">
+                        <img style="position: relative; left: 50px; padding: 15px;" src="{{ asset('uploads/images/comp/approve-icon.png') }}">
 
-                        <h3 class="pb-4" style="position: relative; left: 50px;">Submit Proposal</h3>
+                        <h3 class="pb-4" style="position: relative; left: 50px;">Soumettre votre service pour validation</h3>
 
-                        <p>After you've created your amazing proposal/service, submit it so the admin can make sure everything looks good. Admins rarely decline proposals, however, make sure everything looks good before submitting.</p>
+                        <p>Après avoir créé votre proposition / service incroyable, soumettez-le afin que l'administrateur puisse s'assurer que tout a l'air bien. Les administrateurs refusent rarement les propositions, cependant, assurez-vous que tout semble bien avant de soumettre.</p>
 
 
                     </div>
 
                     <div class="col-md-4">
 
-                        <img style="position: relative; left: 50px; padding: 15px;" src="images/comp/receive-icon.png">
+                        <img style="position: relative; left: 50px; padding: 15px;" src="{{ asset('uploads/images/comp/receive-icon.png') }}">
 
-                        <h3 class="pb-4" style="position: relative; left: 50px;">Get Orders. Worldwide.</h3>
+                        <h3 class="pb-4" style="position: relative; left: 50px;">Obtenez les commandes. À l'échelle mondiale.</h3>
 
-                        <p>Yay! so your proposal/service was approved by the admin. Now's the good part, start receiving a ton of orders from customer from all over the world. Just perform your very best on every single order.</p>
+                        <p>Votre proposition / service a donc été approuvé par l'administrateur. Maintenant, c'est la bonne partie, commencez à recevoir une tonne de commandes de clients du monde entier. Faites de votre mieux pour chaque commande.</p>
 
                     </div>
 
@@ -72,11 +70,11 @@
                     <div class="col-md-4">
                         <!--<i class="fa fa-address-card-o pb-4" style="color:#3498db;" aria-hidden="true"></i>-->
 
-                        <img style="position: relative; left: 67px; padding: 15px;" src="images/comp/delivered-icon.png">
+                        <img style="position: relative; left: 67px; padding: 15px;" src="{{ asset('uploads/images/comp/delivered-icon.png') }}">
 
-                        <h3 class="pb-4" style="position: relative; left: 40px;">Deliver Masterpieces</h3>
+                        <h3 class="pb-4" style="position: relative; left: 40px;">Livrer des projets</h3>
 
-                        <p>Once you've received orders, try your very best to satisfy your customers. This is very important for return customers and amazing reviews. Communication is key, make sure you are in touch with your customer.</p>
+                        <p>Une fois que vous avez reçu des commandes, faites de votre mieux pour satisfaire vos clients. Ceci est très important pour les clients de retour et les commentaires incroyables. La communication est la clé, assurez-vous d'être en contact avec votre client.</p>
 
 
                     </div>
@@ -84,11 +82,11 @@
                     <div class="col-md-4">
                         <!--<i class="fa fa-archive pb-4" style="color:#e67e22;" aria-hidden="true"></i>-->
 
-                        <img style="position: relative; left: 67px; padding: 15px;" src="images/comp/rate-icon.png">
+                        <img style="position: relative; left: 67px; padding: 15px;" src="{{ asset('uploads/images/comp/rate-icon.png') }}">
 
-                        <h3 class="pb-4" style="position: relative; left: 50px;">Rate Your Customers</h3>
+                        <h3 class="pb-4" style="position: relative; left: 50px;">Évaluez vos clients</h3>
 
-                        <p>A lot of customers do check their own ratings. It is important to rate customers based on their behaviour during the order process. This is important for other sellers, and for the admins. Most sellers give 5 stars.</p>
+                        <p>De nombreux clients vérifient leurs propres notes. Il est important d'évaluer les clients en fonction de leur comportement au cours du processus de commande. Ceci est important pour les autres vendeurs et pour les administrateurs. La plupart des vendeurs donnent 5 étoiles.</p>
 
 
                     </div>
@@ -96,11 +94,11 @@
                     <div class="col-md-4">
                         <!--<i class="fa fa-check-square-o pb-4" aria-hidden="true"></i>-->
 
-                        <img style="position: relative; left: 67px; padding: 15px;" src="images/comp/earn-icon.png">
+                        <img style="position: relative; left: 67px; padding: 15px;" src="{{ asset('uploads/images/comp/earn-icon.png') }}">
 
-                        <h3 class="pb-4" style="position: relative; left: 50px;">Get Paid. On Time.</h3>
+                        <h3 class="pb-4" style="position: relative; left: 50px;">Soyez payé. À temps.</h3>
 
-                        <p>Get paid on time, every time. After the clearnace period, payment is transferred to you. Our system lets you transfer funds from our system to your PayPal, Mobile Money, Payoneer or Crypto account.</p>
+                        <p>Soyez payé à temps, à chaque fois. Après la période de validation, le paiement vous est transféré. Notre système vous permet de transférer des fonds de notre système vers votre compte PayPal, Mobile Money.</p>
 
 
                     </div>
@@ -112,7 +110,7 @@
         <div class="text-center btn_start_selling">
 
             <a href="proposals/create_proposal" class="btn btn-success btn-lg btn_start_selling"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                Create A Proposal</a>
+                Vendez un service</a>
 
         </div>
         <div class="pb-5"></div>
