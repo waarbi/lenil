@@ -3,7 +3,10 @@
 namespace App\DataFixtures;
 
 use App\Entity\Category;
+use App\Entity\LanguageName;
+use App\Entity\Level;
 use App\Entity\Pays;
+use App\Entity\SkillsName;
 use App\Entity\SousCategory;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -196,16 +199,33 @@ Caricatures de dessins animés')->setDescription('It is a long established fact 
         //country
         //pays
         $paysName = ['SENEGAL', 'MALI', 'COTE D\'IVOIRE','MAURITANIE', 'CAMEROUN', 'GAMBIE'];
-        $pays = [];
         foreach ($paysName as $name){
             $lepays = new Pays();
             $lepays->setName($name);
             $manager->persist($lepays);
             $pays [] = $lepays;
         }
-
-
-
+        //SkillsName
+        $skills = ['HTML, CSS3, BOOTSRAP','Javascript, Ajax, JQuery','PHP','PhotoShop','Laravel','Marketing digital'];
+        foreach ($skills as $name){
+            $skillName = new SkillsName();
+            $skillName->setName($name);
+            $manager->persist($skillName);
+        }
+        //LanguageNames
+        $laguageNames = ['Français', 'Anglais','Espagnol','Arabe'];
+        foreach ($laguageNames as $name){
+            $langName = new LanguageName();
+            $langName->setName($name);
+            $manager->persist($langName);
+        }
+        //LanguageNames
+        $levels = ['Débutant', 'Intermédiaire','Expert'];
+        foreach ($levels as $name){
+            $oneLevel = new Level();
+            $oneLevel->setName($name);
+            $manager->persist($oneLevel);
+        }
         $manager->flush();
 
     }

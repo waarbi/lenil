@@ -4,17 +4,11 @@
 
 {% block body %}
     <div class="container mt-5">
-
         <div class="row justify-content-center">
-
             <div class="col-lg-5 col-md-7">
-
                 <h2 class="text-center">Inscription</h2>
-
                 <div class="box-inscription mt-4">
-
                     <h2 class="text-center mb-3 mt-3"><i class="fa fa-user-plus"></i></h2>
-
                     {{ form_start(registrationForm) }}
                     <div class="form-group">
                         {{ form_label(registrationForm.firstName, null, {'label_attr': {'class': 'form-control-label font-weight-bold'}}) }}
@@ -74,19 +68,13 @@
                     <input type="hidden" class="form-control" name="referral" value="">
                     <input type="submit" name="register" class="btn btn-success btn-block" value="S'inscrire">
                     {{ form_end(registrationForm) }}
-
                     <div class="clearfix"></div>
                     <div class="text-center mt-3 text-muted">
                         Vous avez déjà un compte cliquez ? <a href="{{ path('account_login') }}" class="text-success">ICI.</a>
                     </div>
-
                 </div>
-
-
             </div>
-
         </div>
-
     </div>
 
 {% endblock %}

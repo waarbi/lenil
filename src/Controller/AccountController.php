@@ -2,11 +2,15 @@
 
 namespace App\Controller;
 
+use App\Entity\Language;
+use App\Entity\Skill;
 use App\Entity\User;
 use App\Form\AccountType;
 use App\Entity\PasswordUpdate;
+use App\Form\LangueType;
 use App\Form\RegistrationType;
 use App\Form\PasswordUpdateType;
+use App\Form\SkillsType;
 use App\Services\FileUploader;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\FormError;
@@ -186,21 +190,75 @@ class AccountController extends AbstractController
 
     /**
      * Permet d'afficher le profil de l'utilisateur concerné
-     * 
+     *
      * @Route("/account",name="account_index")
      * @IsGranted("ROLE_USER")
-     * 
+     *
+     * @param EntityManagerInterface $manager
+     * @param Request $request
      * @return Response
      */
-    public function myAccount(EntityManagerInterface $manager){
+    public function myAccount(EntityManagerInterface $manager, Request $request){
         $categories_yes = $manager->getRepository('App\Entity\Category')->findBy(array('featured' => true));
+        $skill = new Skill();
+        $formSkill = $this->createForm(SkillsType::class, $skill);
+        $formSkill->handleRequest($request);
+
+
+        if($formSkill->isSubmitted() && $formSkill->isValid()){
+            $skill->addUser($this->getUser());
+            $this->getUser()->addSkill($skill);
+            $manager->persist($skill);
+            $manager->flush();
+        }
+
+        $langue = new Language();
+        $formLanguage = $this->createForm(LangueType::class, $langue);
+        $formLanguage->handleRequest($request);
+
+        if($formLanguage->isSubmitted() && $formLanguage->isValid()){
+            $langue->addUser($this->getUser());
+            $this->getUser()->addLanguage($langue);
+            $manager->persist($langue);
+            $manager->flush();
+        }
+
 
         return $this->render('seller/index.html.twig', [
              'user' => $this->getUser(),
-            'categories_yes' => $categories_yes,
+             'categories_yes' => $categories_yes,
+             'formSkill' => $formSkill->createView(),
+             'formLanguage' => $formLanguage->createView()
 
         ]);
     }
 
+    /**
+     * @Route("/delete/skill/{id}",name="delete_skill")
+     * @IsGranted("ROLE_USER")
+     * @param Skill $skill
+     * @param EntityManagerInterface $manager
+     * @return Response
+     */
+    public function deleteUserSkill(Skill $skill,EntityManagerInterface $manager){
 
+        $manager->remove($skill);
+        $manager->flush();
+        return $this->redirectToRoute('account_index');
+    }
+
+    /**
+     *
+     * @Route("/delete/langue/{id}",name="delete_langue")
+     * @IsGranted("ROLE_USER")
+     * @param Language $language
+     * @param EntityManagerInterface $manager
+     * @return Response
+     */
+    public function deleteUserLanguage(Language $language,EntityManagerInterface $manager){
+
+        $manager->remove($language);
+        $manager->flush();
+        return $this->redirectToRoute('account_index');
+    }
 }
