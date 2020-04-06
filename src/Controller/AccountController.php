@@ -83,7 +83,6 @@ class AccountController extends AbstractController
     {
         $user = new User();
         $registrationForm = $this->createForm(RegistrationType::class, $user);
-        $categories_yes = $manager->getRepository('App\Entity\Category')->findBy(array('featured' => true));
 
         $registrationForm->handleRequest($request);
 
@@ -112,60 +111,11 @@ class AccountController extends AbstractController
 
         return $this->render('account/registration.html.twig', [
             'registrationForm' => $registrationForm->createView(),
-            'categories_yes' => $categories_yes,
+            'categories_yes' => $this->categories_yes,
 
         ]);
     }
 
-    /**
-     * Permet de modifier un mot de passe
-     *
-     * @Route("/account/password-update", name="account_password")
-     * @IsGranted("ROLE_USER")
-     *
-     * @param Request $request
-     * @param UserPasswordEncoderInterface $encoder
-     * @param ObjectManager $manager
-     * @return Response
-     */
-    public function updatePassword(Request $request, UserPasswordEncoderInterface $encoder, ObjectManager $manager)
-    {
-        $passwordUpdate = new PasswordUpdate();
-
-        $user = $this->getUser();
-
-        $form = $this->createForm(PasswordUpdateType::class, $passwordUpdate);
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            //1. Vérifier que le oldPassword du formulaire soit le meme que le password de l'utilisateur
-            if (!password_verify($passwordUpdate->getOldPassword(), $user->getHash())) {
-                //Gérer l'erreur
-                $form->get('oldPassword')->addError(new FormError("Le mot de passe que vous avez tapé n'est pas votre mot de passe actuel !"));
-            } else {
-                $newPassword = $passwordUpdate->getNewPassword();
-                $hash = $encoder->encodePassword($user, $newPassword);
-
-                $user->setHash($hash);
-
-                $manager->persist($user);
-                $manager->flush();
-
-                $this->addFlash(
-                    'success',
-                    "Votre mot de passe a bien été modifié !"
-                );
-                return $this->redirectToRoute('homepage');
-            }
-
-        }
-
-
-        return $this->render('account/password.html.twig', [
-            'form' => $form->createView()
-        ]);
-    }
 
     /**
      * Permet d'afficher le profil de l'utilisateur concerné
