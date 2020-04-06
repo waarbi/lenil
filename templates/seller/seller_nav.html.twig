@@ -1,7 +1,7 @@
     <li class="logged-in-link">
-        <a class="menuItem" href="https://www.gigtodo.com/freelancers">
+        <a class="menuItem" href="#freelancers">
     <span class="gigtodo-icon nav-icon gigtodo-icon-relative">
-      <img width="135" src="https://www.gigtodo.com/images/big-users.png" style="width: 35px;height: 35px;top: -10px;">
+      <img width="135" src="{{ asset('/uploads/images/big-users.png') }}" style="width: 35px;height: 35px;top: -10px;">
     </span>
         </a>
     </li>
@@ -21,7 +21,7 @@
 </span>
             <span class="total-user-count count c-notifications-header"></span>
         </a>
-        <div class="dropdown-menu notifications-dropdown"><h3 class="dropdown-header"> Notifications (0) <a class="float-right make-black" href="https://www.gigtodo.com/notifications" style="color:black;">View Notifications</a></h3><h6 class="text-center mt-3">No Notifications Are Available</h6></div>
+        <div class="dropdown-menu notifications-dropdown"><h3 class="dropdown-header"> Notifications (0) <a class="float-right make-black" href="#notifications" style="color:black;">View Notifications</a></h3><h6 class="text-center mt-3">No Notifications Are Available</h6></div>
     </li>
     <li class="logged-in-link">
         <a class="message menuItem" data-toggle="dropdown" title="Inbox">
@@ -40,10 +40,10 @@
 </span>
             <span class="total-user-count count c-messages-header"></span>
         </a>
-        <div class="dropdown-menu messages-dropdown"><h3 class="dropdown-header"> Inbox (0) <a class="float-right make-black" href="https://www.gigtodo.com/conversations/inbox" style="color:black;">View Inbox</a></h3><h6 class="text-center mt-3"> No Messages Are Available </h6></div>
+        <div class="dropdown-menu messages-dropdown"><h3 class="dropdown-header"> Inbox (0) <a class="float-right make-black" href="#conversations/inbox" style="color:black;">View Inbox</a></h3><h6 class="text-center mt-3"> No Messages Are Available </h6></div>
     </li>
     <li class="logged-in-link">
-        <a href="https://www.gigtodo.com/favorites" class="heart menuItem">
+        <a href="#favorites" class="heart menuItem">
   <span class="gigtodo-icon nav-icon gigtodo-icon-relative">
 <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
 <g>
@@ -70,7 +70,7 @@
         </a>
     </li>
     <li class="logged-in-link">
-        <a class="menuItem" href="https://www.gigtodo.com/cart">
+        <a class="menuItem" href="#cart">
   <span class="gigtodo-icon nav-icon gigtodo-icon-relative">
 <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 33 33" style="enable-background:new 0 0 33 33;" xml:space="preserve">
 <g xmlns="http://www.w3.org/2000/svg">
@@ -104,65 +104,60 @@
                 <span class="name">{{ app.user.fullName }}</span>
             </a>
             <div class="dropdown-menu" style="min-width: 200px; z-index: 2000; width: auto !important; position: absolute; transform: translate3d(0px, 62px, 0px); top: 0px; left: 0px; will-change: transform;" x-placement="bottom-start">
-                <a class="dropdown-item" href="https://www.gigtodo.com/dashboard">
+                <a class="dropdown-item" href="#dashboard">
                     Dashboard   </a>
                 <a class="dropdown-item dropdown-toggle" href="#" data-toggle="collapse" data-target="#selling">
                     Selling   </a>
                 <div id="selling" class="dropdown-submenu collapse">
-                    <a class="dropdown-item" href="https://www.gigtodo.com/proposals/view_proposals">
+                    <a class="dropdown-item" href="#proposals/view_proposals">
                         My Proposals      </a>
                 </div>
                 <a class="dropdown-item dropdown-toggle" href="#" data-toggle="collapse" data-target="#buying">
                     Buying   </a>
                 <div id="buying" class="dropdown-submenu collapse">
-                    <a class="dropdown-item" href="https://www.gigtodo.com/buying_orders">
+                    <a class="dropdown-item" href="#buying_orders">
                         Orders      </a>
-                    <a class="dropdown-item" href="https://www.gigtodo.com/purchases">
+                    <a class="dropdown-item" href="#purchases">
                         Purchases      </a>
-                    <a class="dropdown-item" href="https://www.gigtodo.com/favorites">
+                    <a class="dropdown-item" href="#favorites">
                         Favorites      </a>
                 </div>
                 <a class="dropdown-item dropdown-toggle" href="#" data-toggle="collapse" data-target="#requests">
                     Requests   </a>
                 <div id="requests" class="dropdown-submenu collapse">
-                    <a class="dropdown-item" href="https://www.gigtodo.com/requests/post_request">
+                    <a class="dropdown-item" href="#requests/post_request">
                         Post A Request      </a>
-                    <a class="dropdown-item" href="https://www.gigtodo.com/requests/manage_requests">
+                    <a class="dropdown-item" href="#requests/manage_requests">
                         Manage Requests      </a>
                 </div>
                 <a class="dropdown-item dropdown-toggle" href="#" data-toggle="collapse" data-target="#contacts">
                     Contacts   </a>
                 <div id="contacts" class="dropdown-submenu collapse">
-                    <a class="dropdown-item" href="https://www.gigtodo.com/manage_contacts?my_buyers">
+                    <a class="dropdown-item" href="#manage_contacts?my_buyers">
                         My Buyers      </a>
-                    <a class="dropdown-item" href="https://www.gigtodo.com/manage_contacts?my_sellers">
+                    <a class="dropdown-item" href="#manage_contacts?my_sellers">
                         My Sellers      </a>
                 </div>
                 <a class="dropdown-item dropdown-toggle" href="#" data-toggle="collapse" data-target="#referrals">
                     My Referrals   </a>
                 <div id="referrals" class="dropdown-submenu collapse">
-                    <a class="dropdown-item" href="https://www.gigtodo.com/my_referrals" data-target="#referrals">
+                    <a class="dropdown-item" href="#my_referrals" data-target="#referrals">
                         User Referrals      </a>
-                    <a class="dropdown-item" href="https://www.gigtodo.com/proposal_referrals" data-target="#referrals">
+                    <a class="dropdown-item" href="#proposal_referrals" data-target="#referrals">
                         Proposal Referrals      </a>
                 </div>
-                <a class="dropdown-item" href="https://www.gigtodo.com/conversations/inbox">
+                <a class="dropdown-item" href="#conversations/inbox">
                     Inbox Messages   </a>
                 <a class="dropdown-item" href="{{ path('account_index') }}">
                     Mon Profil   </a>
-                <a class="dropdown-item dropdown-toggle" href="#" data-toggle="collapse" data-target="#settings">
-                    Settings   </a>
-                <div id="settings" class="dropdown-submenu collapse">
-                    <a class="dropdown-item" href="https://www.gigtodo.com/settings?profile_settings">
-                        Profile Settings      </a>
-                    <a class="dropdown-item" href="https://www.gigtodo.com/settings?account_settings">
-                        Account Settings      </a>
-                </div>
+                <a class="dropdown-item" href="{{ path('account_profile') }}">
+                    Mes Paramètres   </a>
+
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="{{ path('account_logout') }}">
                     Déconnexion   </a>
             </div>
         </div></li>
     <li class="logged-in-link mr-lg-0 mr-2">
-        <a class="menuItem btn btn-success text-white">$0</a>
+        <a class="menuItem btn btn-success text-white">0€</a>
     </li>

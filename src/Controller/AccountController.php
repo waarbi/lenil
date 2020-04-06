@@ -22,9 +22,18 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class AccountController extends AbstractController
 {
+    private $categories_yes;
+
+    public function __construct(EntityManagerInterface $manager)
+    {
+        $this->categories_yes = $manager->getRepository('App\Entity\Category')->findBy(array('featured' => true));
+
+    }
+
     /**
      * Permet d'afficher et de gérer le formulaire de connexion
      *
@@ -34,30 +43,29 @@ class AccountController extends AbstractController
      */
     public function login(AuthenticationUtils $utils, EntityManagerInterface $manager)
     {
-        $error =  $utils->getLastAuthenticationError();
-        $username =$utils->getLastUsername();
-        $categories_yes = $manager->getRepository('App\Entity\Category')->findBy(array('featured' => true));
+        $error = $utils->getLastAuthenticationError();
+        $username = $utils->getLastUsername();
 
 
         return $this->render('account/login.html.twig', [
             'hasError' => $error != null,
             'username' => $username,
-            'categories_yes' => $categories_yes,
+            'categories_yes' => $this->categories_yes,
 
 
         ]);
     }
-    
+
     /**
      * Permet de se déconnecter
      *
      * @Route("/logout", name="account_logout")
-     * 
+     *
      * @return void
      */
     public function logout()
     {
-        
+
     }
 
     /**
@@ -71,7 +79,7 @@ class AccountController extends AbstractController
      * @param UserPasswordEncoderInterface $encoder
      * @return Response
      */
-    public function register(Request $request, FileUploader $fileUploader  ,EntityManagerInterface $manager, UserPasswordEncoderInterface $encoder)
+    public function register(Request $request, FileUploader $fileUploader, EntityManagerInterface $manager, UserPasswordEncoderInterface $encoder)
     {
         $user = new User();
         $registrationForm = $this->createForm(RegistrationType::class, $user);
@@ -79,17 +87,17 @@ class AccountController extends AbstractController
 
         $registrationForm->handleRequest($request);
 
-        if ($registrationForm->isSubmitted()&& $registrationForm->isValid()){
+        if ($registrationForm->isSubmitted() && $registrationForm->isValid()) {
             $image = $registrationForm['picture']->getData();
-            if(is_null($image)){
+            if (is_null($image)) {
                 $user->setPicture('default-user.png');
-            }else{
+            } else {
                 if ($image) {
                     $adFileName = $fileUploader->upload($image);
                     $user->setPicture($adFileName);
                 }
             }
-            $hash = $encoder->encodePassword($user,$user->getHash());
+            $hash = $encoder->encodePassword($user, $user->getHash());
             $user->setHash($hash);
 
             $manager->persist($user);
@@ -103,40 +111,10 @@ class AccountController extends AbstractController
         }
 
         return $this->render('account/registration.html.twig', [
-            'registrationForm'=> $registrationForm->createView(),
+            'registrationForm' => $registrationForm->createView(),
             'categories_yes' => $categories_yes,
 
         ]);
-    }
-
-    /**
-     * Permet d'afficher et de traiter le formulaire de modification de profil
-     *
-     * @Route("/account/profile", name="account_profile")
-     * @IsGranted("ROLE_USER")
-     *
-     * @return Response
-     */
-    public function profile(Request $request, EntityManagerInterface $manager) {
-        $user = $this->getUser();
-        $form = $this->createForm(AccountType::class, $user);
-
-        $form->handleRequest($request);
-
-        if($form->isSubmitted() && $form->isValid()){
-
-          $manager->persist($user);
-          $manager->flush();
-
-          $this->addFlash(
-            'success',
-            "Les données du profils ont été enregistrées avec succés !"
-        );
-        }
-
-       return $this->render('account/profile.html.twig', [
-             'form'=> $form->createView()
-       ]);
     }
 
     /**
@@ -150,42 +128,43 @@ class AccountController extends AbstractController
      * @param ObjectManager $manager
      * @return Response
      */
-    public function updatePassword(Request $request, UserPasswordEncoderInterface $encoder, ObjectManager $manager) {
+    public function updatePassword(Request $request, UserPasswordEncoderInterface $encoder, ObjectManager $manager)
+    {
         $passwordUpdate = new PasswordUpdate();
 
         $user = $this->getUser();
 
         $form = $this->createForm(PasswordUpdateType::class, $passwordUpdate);
-        
+
         $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid()){
-          //1. Vérifier que le oldPassword du formulaire soit le meme que le password de l'utilisateur
-          if(!password_verify($passwordUpdate->getOldPassword(), $user->getHash())){
-           //Gérer l'erreur
-           $form->get('oldPassword')->addError(new FormError("Le mot de passe que vous avez tapé n'est pas votre mot de passe actuel !"));
-          } else {
-              $newPassword = $passwordUpdate->getNewPassword();
-              $hash = $encoder->encodePassword($user, $newPassword);
+        if ($form->isSubmitted() && $form->isValid()) {
+            //1. Vérifier que le oldPassword du formulaire soit le meme que le password de l'utilisateur
+            if (!password_verify($passwordUpdate->getOldPassword(), $user->getHash())) {
+                //Gérer l'erreur
+                $form->get('oldPassword')->addError(new FormError("Le mot de passe que vous avez tapé n'est pas votre mot de passe actuel !"));
+            } else {
+                $newPassword = $passwordUpdate->getNewPassword();
+                $hash = $encoder->encodePassword($user, $newPassword);
 
-              $user->setHash($hash);
+                $user->setHash($hash);
 
-              $manager->persist($user);
-              $manager->flush();
+                $manager->persist($user);
+                $manager->flush();
 
-              $this->addFlash(
-                'success',
-                "Votre mot de passe a bien été modifié !"
-              );
-              return $this->redirectToRoute('homepage');
-          }
-          
+                $this->addFlash(
+                    'success',
+                    "Votre mot de passe a bien été modifié !"
+                );
+                return $this->redirectToRoute('homepage');
+            }
+
         }
-       
 
-       return $this->render('account/password.html.twig',[
-           'form' => $form->createView()
-       ]);
+
+        return $this->render('account/password.html.twig', [
+            'form' => $form->createView()
+        ]);
     }
 
     /**
@@ -198,14 +177,15 @@ class AccountController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    public function myAccount(EntityManagerInterface $manager, Request $request){
+    public function myAccount(EntityManagerInterface $manager, Request $request)
+    {
         $categories_yes = $manager->getRepository('App\Entity\Category')->findBy(array('featured' => true));
         $skill = new Skill();
         $formSkill = $this->createForm(SkillsType::class, $skill);
         $formSkill->handleRequest($request);
 
 
-        if($formSkill->isSubmitted() && $formSkill->isValid()){
+        if ($formSkill->isSubmitted() && $formSkill->isValid()) {
             $skill->addUser($this->getUser());
             $this->getUser()->addSkill($skill);
             $manager->persist($skill);
@@ -216,7 +196,7 @@ class AccountController extends AbstractController
         $formLanguage = $this->createForm(LangueType::class, $langue);
         $formLanguage->handleRequest($request);
 
-        if($formLanguage->isSubmitted() && $formLanguage->isValid()){
+        if ($formLanguage->isSubmitted() && $formLanguage->isValid()) {
             $langue->addUser($this->getUser());
             $this->getUser()->addLanguage($langue);
             $manager->persist($langue);
@@ -225,10 +205,11 @@ class AccountController extends AbstractController
 
 
         return $this->render('seller/index.html.twig', [
-             'user' => $this->getUser(),
-             'categories_yes' => $categories_yes,
-             'formSkill' => $formSkill->createView(),
-             'formLanguage' => $formLanguage->createView()
+            'user' => $this->getUser(),
+            'categories_yes' => $categories_yes,
+            'formSkill' => $formSkill->createView(),
+            'formLanguage' => $formLanguage->createView()
+
 
         ]);
     }
@@ -240,7 +221,8 @@ class AccountController extends AbstractController
      * @param EntityManagerInterface $manager
      * @return Response
      */
-    public function deleteUserSkill(Skill $skill,EntityManagerInterface $manager){
+    public function deleteUserSkill(Skill $skill, EntityManagerInterface $manager)
+    {
 
         $manager->remove($skill);
         $manager->flush();
@@ -255,10 +237,83 @@ class AccountController extends AbstractController
      * @param EntityManagerInterface $manager
      * @return Response
      */
-    public function deleteUserLanguage(Language $language,EntityManagerInterface $manager){
+    public function deleteUserLanguage(Language $language, EntityManagerInterface $manager)
+    {
 
         $manager->remove($language);
         $manager->flush();
         return $this->redirectToRoute('account_index');
+    }
+
+    /**
+     * Permet d'afficher et de traiter le formulaire de modification de profil
+     *
+     * @Route("/account/profile", name="account_profile")
+     * @IsGranted("ROLE_USER")
+     *
+     * @param Request $request
+     * @param UserPasswordEncoderInterface $encoder
+     * @param FileUploader $fileUploader
+     * @param EntityManagerInterface $manager
+     * @return Response
+     */
+    public function profile(Request $request, UserPasswordEncoderInterface $encoder, FileUploader $fileUploader, EntityManagerInterface $manager)
+    {
+        $user = $this->getUser();
+        $formProfil = $this->createForm(AccountType::class, $user);
+
+        $formProfil->handleRequest($request);
+
+        if ($formProfil->isSubmitted() && $formProfil->isValid()) {
+
+            $image = $formProfil['picture']->getData();
+            if (is_null($image) && is_null($user->getPicture())) {
+                $user->setPicture('default-user.png');
+            } else {
+                if ($image) {
+                    $adFileName = $fileUploader->upload($image);
+                    $user->setPicture($adFileName);
+                }
+            }
+            $manager->persist($user);
+            $manager->flush();
+            $this->addFlash(
+                'success',
+                'Votre modification a bien été prise en compte.'
+            );
+        }
+
+        $passwordUpdate = new PasswordUpdate();
+        $formPassword = $this->createForm(PasswordUpdateType::class, $passwordUpdate);
+
+        $formPassword->handleRequest($request);
+
+        if ($formPassword->isSubmitted() && $formPassword->isValid()) {
+            //1. Vérifier que le oldPassword du formulaire soit le meme que le password de l'utilisateur
+            if (!password_verify($passwordUpdate->getOldPassword(), $user->getHash())) {
+                //Gérer l'erreur
+                $formPassword->get('oldPassword')->addError(new FormError("Le mot de passe que vous avez tapé n'est pas votre mot de passe actuel !"));
+            } else {
+                $newPassword = $passwordUpdate->getNewPassword();
+                $hash = $encoder->encodePassword($user, $newPassword);
+
+                $user->setHash($hash);
+
+                $manager->persist($user);
+                $manager->flush();
+
+                $this->addFlash(
+                    'success',
+                    "Votre mot de passe a bien été modifié !"
+                );
+                return $this->redirectToRoute('account_profile');
+            }
+        }
+        return $this->render('account/profile.html.twig', [
+            'formProfil' => $formProfil->createView(),
+            'formPassword' => $formPassword->createView(),
+            'categories_yes' => $this->categories_yes,
+
+        ]);
     }
 }

@@ -9,8 +9,8 @@
 
                 <div class="bg-white display-flex-md show-md pt-md-3 pl-md-2 pb-md-3">
                     <div class="flex-md-5 pl-md-0">
-                        <a role="button" href="https://www.gigtodo.com">
-                            <img src="https://www.gigtodo.com/images/sample.png" width="158">
+                        <a role="button" href="#">
+                            <img src="#images/sample.png" width="158">
                         </a>
                     </div>
                     <div class="flex-md-1 pr-md-2">
@@ -39,7 +39,7 @@
                     </button>
                     <div class="flex-xs-4 width-full pt-md-4 pb-md-4 pl-xs-2">
                         <h6 id="mobile-catnav-header-title" class="text-left position-absolute vertical-center">
-                            <!--  <a href="https://www.gigtodo.com"><img src="images/gigtodoFav.ico" class="rounded" title='Home' alt='Home'/></a> -->
+                            <!--  <a href="#"><img src="images/gigtodoFav.ico" class="rounded" title='Home' alt='Home'/></a> -->
                             Parcourir les catégories</h6>
                         <h6 id="mobile-sub-catnav-header-title"
                             class="text-center position-absolute position-left position-right vertical-center pl-md-8 pr-md-8"></h6>
@@ -88,11 +88,11 @@
                                  id="mobile-sub-catnav-content-{{ category.id }}">
                                 <ul class="mobile-sub-catnav-container list-unstyled mobile-catnav-margin display-none">
                                     {% for sousCategory in category.getSousCategories %}
-                                    <li class="p-xs-1 bb-xs-1 text-body-larger subnav-item a11y-focus-only">
-                                        <a class="p-xs-1 text-gray display-inline-block width-full text-underline"
-                                           href="{{ path('category_services',{slug: sousCategory.slug}) }}">
-                                            {{ sousCategory.title }} </a>
-                                    </li>
+                                        <li class="p-xs-1 bb-xs-1 text-body-larger subnav-item a11y-focus-only">
+                                            <a class="p-xs-1 text-gray display-inline-block width-full text-underline"
+                                               href="{{ path('category_services',{slug: sousCategory.slug}) }}">
+                                                {{ sousCategory.title }} </a>
+                                        </li>
                                     {% endfor %}
                                 </ul>
                             </div>
@@ -103,3 +103,4 @@
         </div>
     </div>
 </div>
+{{ include('partials/nav_user.html.twig') }}

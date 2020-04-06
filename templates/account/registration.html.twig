@@ -63,7 +63,8 @@
                         {{ form_label(registrationForm.description, null, {'label_attr': {'class': 'form-control-label font-weight-bold'}}) }}
                         <div class="red-color">
                             {{ form_errors(registrationForm.description,{ 'attr': {'class': 'red-color'} }) }}
-                        </div> {{ form_widget(registrationForm.description, { 'attr': {'class': 'form-control'} }) }}
+                        </div>
+                        {{ form_widget(registrationForm.description, { 'attr': {'class': 'form-control'} }) }}
                     </div>
                     <input type="hidden" class="form-control" name="referral" value="">
                     <input type="submit" name="register" class="btn btn-success btn-block" value="S'inscrire">
