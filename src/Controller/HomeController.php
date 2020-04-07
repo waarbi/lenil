@@ -23,11 +23,19 @@ class HomeController extends AbstractController
         $categories_cards = $manager->getRepository('App\Entity\Category')->findBy(array('in_card' => true));
 
         $categories_card = array_merge($sous_categories_card,$categories_cards);
+        if (is_null($this->getUser())){
+            return $this->render('home_anonym.html.twig',
+                array(
+                    'categories_yes' => $categories_yes,
+                    'categories_card' => $categories_card,
+                ));
+        }else{
+            return $this->render('home_seller.html.twig',
+                array(
+                    'categories_yes' => $categories_yes,
+                    'categories_card' => $categories_card,
+                ));
+        }
 
-        return $this->render('home.html.twig',
-            array(
-                'categories_yes' => $categories_yes,
-                'categories_card' => $categories_card,
-            ));
     }
 }
