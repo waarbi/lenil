@@ -1,0 +1,39 @@
+{% block stylesheets %}
+{% endblock %}
+    {% block title %}Lenyl | Plateforme des freelancers africains!{% endblock %}
+
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+        {{ include('seller/seller_home.html.twig') }}
+
+{% endblock %}
+{% block javascripts %}
+
+    {{ parent() }}
+
+    <script type="application/javascript">
+        var userfullname = {{ app.user.fullName|json_encode|raw }};
+        if (sessionStorage.getItem('connected') !== "ok") {
+            swal({
+                title: "Bienvenue, " + userfullname,
+                icon: "success",
+                timer: 3000,
+            }).then(
+                sessionStorage.setItem('connected', 'ok')
+            );
+
+        }
+        $("#logout-link").click(function () {
+            swal({
+                title: "Au Revoir !",
+                icon: "success",
+                timer: 3000,
+            }).then(
+                sessionStorage.setItem("connected", "ko")
+            );
+        });
+    </script>
+
+{% endblock %}
