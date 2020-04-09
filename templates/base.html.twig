@@ -5,9 +5,7 @@
     <title>{% block title %}{% endblock %}</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="keywords" content="">
-    <meta name="author" content="">
+    {% block meta %}{% endblock %}
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,300,100" rel="stylesheet">
     <link href="{{ asset('build/css/bootstrap_css.css') }}" rel="stylesheet">
     <link href="{{ asset('build/css/custom_css.css') }}" rel="stylesheet">
@@ -26,6 +24,7 @@
     <link href="{{ asset('build/css/scoped_responsive_and_nav.css') }}" rel="stylesheet">
     <link href="{{ asset('build/css/vesta_homepage_css.css') }}" rel="stylesheet">
     <link href="{{ asset('build/css/desktop_proposals.css') }}" rel="stylesheet">
+
     <!-- Optional: include a polyfill for ES6 Promises for IE11 and Android browser -->
     {#         <script type="text/javascript" src="{{ asset('build/js/sweat_alert.js') }}"></script>
             <script type="text/javascript" src="{{ asset('build/js/jquery.js') }}"></script> #}
@@ -53,9 +52,7 @@
     <script type="text/javascript" src="{{ asset('build/js/sticky.js') }}"></script>
     <script type="text/javascript" id="custom-js" src="{{ asset('build/js/customjs.js') }}" data-logged-id="" data-base-url="/" data-enable-sound=""></script>
     <script type="text/javascript" src="{{ asset('build/js/summernote.js') }}"></script> #}
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
         integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
@@ -201,8 +198,6 @@
             $('.cat-mobile').hide();
             $('html body').removeAttr('style');
         });
-
-
         /// Mobile Category Menu Code Enye ////
 
         /// Mobile User Menu Code Starts ////

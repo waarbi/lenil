@@ -4,13 +4,27 @@
 namespace App\Controller;
 
 
+use App\Entity\Contact;
+use App\Form\ContactType;
+use App\Services\ContactNotification;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class HomeController extends AbstractController
 {
+
+    private $categories_yes;
+
+
+    public function __construct(EntityManagerInterface $manage)
+    {
+        $this->categories_yes = $manage->getRepository('App\Entity\Category')->findBy(array('featured' => true));
+
+    }
+
     /**
      * @Route("/", name="homepage")
      * @param EntityManagerInterface $manager
@@ -37,5 +51,33 @@ class HomeController extends AbstractController
                 ));
         }
 
+    }
+
+    /**
+     * @Route("/contact", name="contact_support")
+     * @param Request $request
+     * @param $contactNotification
+     * @return Response
+     */
+    public function contact(Request $request, ContactNotification $contactNotification)
+    {
+        $contact = new Contact();
+        $form = $this->createForm(ContactType::class, $contact);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isSubmitted()){
+            $contactNotification->notify($contact);
+            $this->addFlash(
+                'success',
+               'Votre email a été bien envoyé'
+            );
+            return $this->redirectToRoute('contact_support');
+        }
+        return $this->render('static/contact.html.twig',
+            [
+                'form' => $form->createView(),
+                 'categories_yes' => $this->categories_yes,
+
+            ]
+        );
     }
 }

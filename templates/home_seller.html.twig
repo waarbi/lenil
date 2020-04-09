@@ -1,39 +1,69 @@
 {% block stylesheets %}
 {% endblock %}
     {% block title %}Lenyl | Plateforme des freelancers africains!{% endblock %}
-
+{% block meta %}
+    <meta name="description" content="Plateforme des freelancers africains"/>
+    <meta name="keywords" content="it senegal,developpeur, web, informatique, freelance afrique, projet diaspora"/>
+{% endblock %}
 {% extends "base.html.twig" %}
 
 {% block body %}
 
-        {{ include('seller/seller_home.html.twig') }}
+    {{ include('seller/seller_home.html.twig') }}
 
 {% endblock %}
 {% block javascripts %}
-
-    {{ parent() }}
-
     <script type="application/javascript">
-        var userfullname = {{ app.user.fullName|json_encode|raw }};
-        if (sessionStorage.getItem('connected') !== "ok") {
-            swal({
-                title: "Bienvenue, " + userfullname,
-                icon: "success",
-                timer: 3000,
-            }).then(
-                sessionStorage.setItem('connected', 'ok')
-            );
+        $(document).ready(function () {
+            var userfullname = {{ app.user.fullName|json_encode|raw }};
+            if (sessionStorage.getItem('connected') !== "ok") {
+                swal({
+                    text: "Bienvenue, " + userfullname,
+                    icon: "success",
+                    timer: 3000,
+                }).then(
+                    sessionStorage.setItem('connected', 'ok')
+                );
 
-        }
-        $("#logout-link").click(function () {
-            swal({
-                title: "Au Revoir !",
-                icon: "success",
-                timer: 3000,
-            }).then(
-                sessionStorage.setItem("connected", "ko")
-            );
-        });
+            }
+            $("#logout-link").click(function () {
+                swal({
+                    text: "Au Revoir !",
+                    icon: "success",
+                    timer: 3000,
+                }).then(
+                    sessionStorage.setItem("connected", "ko")
+                );
+            });
+
+            $("#send-email").click(function () {
+                $.ajax({
+                    method: "GET",
+                    url: "{{ path('send_mail_for_activate_account',{username: app.user.email }) }}",
+                    success: function (response) {
+                        if (response){
+                            swal({
+                                text: "Mail de confirmation envoyé. Merci de consulter vos emails.",
+                                icon: "success",
+                                timer: 3000,
+                            })
+                        }
+                    }
+                });
+            });
+            // Sticky Code start //
+            if ($(window).width() < 767) {
+            } else {
+                $(".sticky-start").sticky({
+                    topSpacing: 20,
+                    zIndex: 500,
+                    bottomSpacing: 400,
+                });
+            }
+
+// Sticky code ends //
+
+            });
     </script>
 
 {% endblock %}
