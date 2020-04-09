@@ -6,42 +6,42 @@
                                 <div class="card rounded-0 mb-3 welcome-box"><!-- card rounded-0 mb-3 welcome-box Starts -->
                                         <div class="card-body pb-2"><!-- card-body Starts -->
                                                 <center>
-                                                        <img src="#user_images/empty-image.png" class="img-fluid rounded-circle mb-3">
+                                                        <img src="{{ asset('/uploads/images/'~app.user.picture) }}" class="img-fluid rounded-circle mb-3">
                                                 </center>
-                                                <h5>Welcome, <span class="text-success">Mdiop</span> </h5>
+                                                <h5>Bienvenue, <span class="text-success">{{ app.user.fullName }}</span> </h5>
                                                 <hr>
                                                 <div class="row m-0"><!--- row Starts --->
                                                         <div class="col-lg-6 m-0 p-0 pr-2 pb-lg-0 pr-lg-2 pb-md-2 pr-sm-2"><!--- col-md-6 Starts --->
-                                                                <h5><a href="#dashboard">Dashboard</a></h5>
-                                                                <h5><a href="#proposals/create_proposal">Add A Proposal</a></h5>
-                                                                <h5 class="mb-0"><a href="#requests/post_request">Post A Request</a></h5>
+                                                                <h5><a href="{{ path('dashboard_seller') }}">Dashboard</a></h5>
+                                                                <h5><a href="#proposals/create_proposal">Ajouter un service</a></h5>
+                                                                <h5 class="mb-0"><a href="#requests/post_request">Poster une demande</a></h5>
                                                         </div><!--- col-md-6 Ends --->
                                                         <div class="col-lg-6 m-0 p-0 pl-2 pt-lg-0 pl-lg-2 pl-md-0 pt-md-2 pl-sm-2"><!--- col-md-6 Starts --->
-                                                                <h5><a href="#buying_orders">View Purchases</a></h5>
-                                                                <h5><a href="#settings?profile_settings">Edit Profile</a></h5>
-                                                                <h5 class="mb-0"><a href="#settings">Settings</a></h5>
+                                                                <h5><a href="#buying_orders">Mes achats</a></h5>
+                                                                <h5><a href="{{ path('account_index') }}">Editer mon profil</a></h5>
+                                                                <h5 class="mb-0"><a href="{{ path('account_profile') }}">Paramétrer mon compte</a></h5>
                                                         </div><!--- col-md-6 Ends --->
                                                 </div><!--- row Ends --->
                                                 <hr>
-                                                <h5><a href="#customer_support">Contact <i class="fa fa-life-ring" aria-hidden="true"></i> Lenil</a></h5>
+                                                <h5><a href="{{ path('contact_support') }}">Contact <i class="fa fa-life-ring" aria-hidden="true"></i> Lenil</a></h5>
                                         </div><!-- card-body Ends -->
                                 </div><!-- card rounded-0 mb-3 welcome-box Ends -->
                                 <div class="rounded-0 carosel_sec">
-                                        <h3 class="buy_head ">Buy It Again</h3>
-                                        <p class="text-muted"><i class="fa fa-frown-o"></i> Nothing purchased yet. </p></div>
+                                        <h3 class="buy_head ">Achèter les de nouveau</h3>
+                                        <p class="text-muted"><i class="fa fa-frown-o"></i> Pas encore d'achat. </p></div>
                                 <div class="rounded-0 mb-3 carosel_sec mt-3">
-                                        <h3 class="buy_head ">Recently Viewed</h3>
+                                        <h3 class="buy_head ">Vue récemment</h3>
                                         <div id="demo2" class="carousel slide" data-ride="carousel"><!-- The slideshow -->
                                                 <div class="carousel-inner " role="listbox">
                                                         <div class="carousel-item active"><!--- carousel-item Starts --->
                                                                 <div class="proposal-card-base mp-proposal-card"><!--- proposal-card-base mp-proposal-card Starts --->
                                                                         <a href="proposals/ashleytharma1/i-will-design-a-logo-and-brand-for-you">
-                                                                                <img src="#proposals/proposal_files/logo-1.jpg" class="img-fluid">
+                                                                                <img src="https://www.gigtodo.com/proposals/proposal_files/logo-1.jpg" class="img-fluid">
                                                                         </a>
                                                                         <div class="proposal-card-caption"><!--- proposal-card-caption Starts --->
                                                                                 <div class="proposal-seller-info"><!--- gig-seller-info Starts --->
                                                                                         <span class="fit-avatar s24">
-    <img src="user_images/amir-khan.jpg" class="rounded-circle" width="32" height="32">
+    <img src="https://www.gigtodo.com/user_images/amir-khan.jpg" class="rounded-circle" width="32" height="32">
     </span>
                                                                                         <div class="seller-info-wrapper">
                                                                                                 <a href="#ashleytharma1" class="seller-name">ashleytharma1</a>
@@ -79,12 +79,12 @@
                                                         <div class="carousel-item"><!--- carousel-item Starts --->
                                                                 <div class="proposal-card-base mp-proposal-card"><!--- proposal-card-base mp-proposal-card Starts --->
                                                                         <a href="proposals/mir_digimarket/i-will-create-a-professional-custom-explainer-video">
-                                                                                <img src="proposals/proposal_files/videosales-1.png" class="img-fluid">
+                                                                                <img src="https://www.gigtodo.com/proposals/proposal_files/videosales-1.png" class="img-fluid">
                                                                         </a>
                                                                         <div class="proposal-card-caption"><!--- proposal-card-caption Starts --->
                                                                                 <div class="proposal-seller-info"><!--- gig-seller-info Starts --->
                                                                                         <span class="fit-avatar s24">
-    <img src="user_images/salman.jpg" class="rounded-circle" width="32" height="32">
+    <img src="https://www.gigtodo.com/user_images/salman.jpg" class="rounded-circle" width="32" height="32">
     </span>
                                                                                         <div class="seller-info-wrapper">
                                                                                                 <a href="#mir_digimarket" class="seller-name">mir_digimarket</a>
@@ -129,27 +129,13 @@
                                 </div>
                                 <div id="sticky-wrapper" class="sticky-wrapper" style="height: 275px;"><div class="card rounded-0 sticky-start mb-3 card_user">
                                                 <div class="card-body">
-                                                        <img src="images/sales.png" class="img-fluid center-block" alt="none">
-                                                        <h4>Start Selling</h4>
-                                                        <p>Sell your services to millions of people all over the world.</p>
-                                                        <button onclick="location.href='start_selling'" class="btn get_btn">GET STARTED</button>
+                                                        <img src="{{ asset('/uploads/images/sales.png')}}" class="img-fluid center-block" alt="none">
+                                                        <h4>Commençer à vendre</h4>
+                                                        <p>Vendez vos services à des millions de personnes partout dans le monde.</p>
+                                                        <button onclick="location.href='/start_selling'" class="btn get_btn">Vendre un service</button>
                                                 </div>
                                         </div></div>
-                                <br>
-                                <script>
-                                        $(document).ready(function(){
-// Sticky Code start //
-                                                if($(window).width() < 767){
-                                                }else{
-                                                        $(".sticky-start").sticky({
-                                                                topSpacing:20,
-                                                                zIndex:500,
-                                                                bottomSpacing:400,
-                                                        });
-                                                }
-// Sticky code ends //
-                                        });
-                                </script>    </div>
+                                <br></div>
                         <div class="col-md-9 ">
                                 <div id="demo3" class="carousel slide" data-ride="carousel">
                                         <ul class="carousel-indicators">
@@ -161,7 +147,7 @@
                                         <div class="carousel-inner">
                                                 <div class="carousel-item active">
                                                         <a href="https://www.pixinal.com/case_study/gigtodo-script/">
-                                                                <img src="#slides_images/art-artist-canvas-374054.jpg" alt="Los Angeles" class="img-fluid">
+                                                                <img src="https://www.gigtodo.com/slides_images/art-artist-canvas-374054.jpg" alt="Los Angeles" class="img-fluid">
                                                                 <div class="carousel-caption d-lg-block d-md-block d-none ">
                                                                         <h3></h3>
                                                                         <p></p>
@@ -170,7 +156,7 @@
                                                 </div>
                                                 <div class="carousel-item">
                                                         <a href="#">
-                                                                <img src="#slides_images/art-artist-canvas-374054.jpg" class="img-fluid">
+                                                                <img src="https://www.gigtodo.com/slides_images/art-artist-canvas-374054.jpg" class="img-fluid">
                                                                 <div class="carousel-caption d-lg-block d-md-block d-none ">
                                                                         <h3></h3>
                                                                         <p></p>
@@ -183,19 +169,19 @@
                                 <div class="row mt-4 mb-3">
                                         <div class="col-md-12">
                                                 <h2 class="float-left">Featured Proposals/Services</h2>
-                                                <button onclick="location.href='featured_proposals'" class="float-right btn btn-success">VIEW ALL</button>
+                                                <button onclick="location.href='featured_proposals'" class="float-right btn btn-success">VOIR TOUT</button>
                                         </div>
                                 </div>
                                 <div class="row">
                                         <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 mb-3 pr-lg-1">
                                                 <div class="proposal-card-base mp-proposal-card"><!--- proposal-card-base mp-proposal-card Starts --->
                                                         <a href="#proposals/ashleytharma1/i-will-design-a-logo-and-brand-for-you">
-                                                                <img src="#proposals/proposal_files/logo-1.jpg" class="img-fluid">
+                                                                <img src="https://www.gigtodo.com/proposals/proposal_files/logo-1.jpg" class="img-fluid">
                                                         </a>
                                                         <div class="proposal-card-caption"><!--- proposal-card-caption Starts --->
                                                                 <div class="proposal-seller-info"><!--- gig-seller-info Starts --->
                                                                         <span class="fit-avatar s24">
-			<img src="#user_images/amir-khan.jpg" class="rounded-circle" width="32" height="32">
+			<img src="https://www.gigtodo.com/user_images/amir-khan.jpg" class="rounded-circle" width="32" height="32">
 		</span>
                                                                         <div class="seller-info-wrapper">
                                                                                 <a href="#ashleytharma1" class="seller-name">ashleytharma1</a>
@@ -242,36 +228,7 @@
                                                                                                 <path style="fill:#FFEEBD;" d="M259.24,327.22c-4-1.6-8-3.2-10.4-4v27.2c8,4,12.8,8,12.8,13.6c0,6.4-4.8,9.6-12.8,11.2v41.6h8
 		v-20.8c24-4,32.8-17.6,32.8-34.4C289.64,344.82,280.84,335.22,259.24,327.22z"></path>
                                                                                         </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
+
                                                                                 </svg>
                                                                         </a>
 
@@ -283,416 +240,25 @@
                                                                 </div>
                                                         </footer><!--- proposal-card-footer Ends --->
                                                 </div><!--- proposal-card-base mp-proposal-card Ends --->        </div>
-                                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 mb-3 pr-lg-1">
-                                                <div class="proposal-card-base mp-proposal-card"><!--- proposal-card-base mp-proposal-card Starts --->
-                                                        <a href="#proposals/mir_digimarket/i-will-create-a-professional-custom-explainer-video">
-                                                                <img src="#proposals/proposal_files/videosales-1.png" class="img-fluid">
-                                                        </a>
-                                                        <div class="proposal-card-caption"><!--- proposal-card-caption Starts --->
-                                                                <div class="proposal-seller-info"><!--- gig-seller-info Starts --->
-                                                                        <span class="fit-avatar s24">
-			<img src="#user_images/salman.jpg" class="rounded-circle" width="32" height="32">
-		</span>
-                                                                        <div class="seller-info-wrapper">
-                                                                                <a href="#mir_digimarket" class="seller-name">mir_digimarket</a>
-                                                                                <div class="gig-seller-tooltip">
-                                                                                        Level Two	    </div>
-                                                                        </div>
-                                                                </div><!--- gig-seller-info Ends --->
-                                                                <a href="#proposals/mir_digimarket/i-will-create-a-professional-custom-explainer-video" class="proposal-link-main js-proposal-card-imp-data">
-                                                                        <h3>I Will Create A Professional Custom Explainer Video</h3>
-                                                                </a>
-                                                                <div class="rating-badges-container">
-		<span class="proposal-rating">
-		<svg class="fit-svg-icon full_star" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg" width="15" height="15"><path d="M1728 647q0 22-26 48l-363 354 86 500q1 7 1 20 0 21-10.5 35.5t-30.5 14.5q-19 0-40-12l-449-236-449 236q-22 12-40 12-21 0-31.5-14.5t-10.5-35.5q0-6 2-20l86-500-364-354q-25-27-25-48 0-37 56-46l502-73 225-455q19-41 49-41t49 41l225 455 502 73q56 9 56 46z"></path></svg>
-		<span>
-		<strong>4.7</strong>
-		(15)
-		</span>
-		</span>
-                                                                </div>
-                                                        </div><!--- proposal-card-caption Ends --->
-                                                        <footer class="proposal-card-footer"><!--- proposal-card-footer Starts --->
-                                                                <div class="proposal-fav">
 
-
-                                                                        <i data-id="4" href="#" class="fa fa-heart proposal-favorite dil1" data-toggle="tooltip" data-placement="top" title="" data-original-title="Favorite"></i>
-                                                                </div>
-                                                                <div class="proposal-price">
-                                                                        <a><small>STARTING AT</small>$10</a>
-                                                                </div>
-                                                        </footer><!--- proposal-card-footer Ends --->
-                                                </div><!--- proposal-card-base mp-proposal-card Ends --->        </div>
-                                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 mb-3 pr-lg-1">
-                                                <div class="proposal-card-base mp-proposal-card"><!--- proposal-card-base mp-proposal-card Starts --->
-                                                        <a href="#proposals/shoail/i-will-record-your-brazilian-portuguese-voice-over">
-                                                                <img src="#proposals/proposal_files/voice-over-1.jpg" class="img-fluid">
-                                                        </a>
-                                                        <div class="proposal-card-caption"><!--- proposal-card-caption Starts --->
-                                                                <div class="proposal-seller-info"><!--- gig-seller-info Starts --->
-                                                                        <span class="fit-avatar s24">
-			<img src="#user_images/shoail.jpg" class="rounded-circle" width="32" height="32">
-		</span>
-                                                                        <div class="seller-info-wrapper">
-                                                                                <a href="#shoail" class="seller-name">shoail</a>
-                                                                                <div class="gig-seller-tooltip">
-                                                                                        New Seller	    </div>
-                                                                        </div>
-                                                                </div><!--- gig-seller-info Ends --->
-                                                                <a href="#proposals/shoail/i-will-record-your-brazilian-portuguese-voice-over" class="proposal-link-main js-proposal-card-imp-data">
-                                                                        <h3>I Will Record Your Brazilian Portuguese Voice Over</h3>
-                                                                </a>
-                                                                <div class="rating-badges-container">
-		<span class="proposal-rating">
-		<svg class="fit-svg-icon full_star" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg" width="15" height="15"><path d="M1728 647q0 22-26 48l-363 354 86 500q1 7 1 20 0 21-10.5 35.5t-30.5 14.5q-19 0-40-12l-449-236-449 236q-22 12-40 12-21 0-31.5-14.5t-10.5-35.5q0-6 2-20l86-500-364-354q-25-27-25-48 0-37 56-46l502-73 225-455q19-41 49-41t49 41l225 455 502 73q56 9 56 46z"></path></svg>
-		<span>
-		<strong>4.2</strong>
-		(5)
-		</span>
-		</span>
-                                                                </div>
-                                                        </div><!--- proposal-card-caption Ends --->
-                                                        <footer class="proposal-card-footer"><!--- proposal-card-footer Starts --->
-                                                                <div class="proposal-fav">
-
-
-                                                                        <i data-id="5" href="#" class="fa fa-heart proposal-favorite dil1" data-toggle="tooltip" data-placement="top" title="" data-original-title="Favorite"></i>
-                                                                </div>
-                                                                <div class="proposal-price">
-                                                                        <a><small>STARTING AT</small>$10</a>
-                                                                </div>
-                                                        </footer><!--- proposal-card-footer Ends --->
-                                                </div><!--- proposal-card-base mp-proposal-card Ends --->        </div>
-                                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 mb-3 pr-lg-1">
-                                                <div class="proposal-card-base mp-proposal-card"><!--- proposal-card-base mp-proposal-card Starts --->
-                                                        <a href="#proposals/volarex/i-will-design-and-code-android-apps">
-                                                                <img src="#proposals/proposal_files/andorid-1_1571118714.png" class="img-fluid">
-                                                        </a>
-                                                        <div class="proposal-card-caption"><!--- proposal-card-caption Starts --->
-                                                                <div class="proposal-seller-info"><!--- gig-seller-info Starts --->
-                                                                        <span class="fit-avatar s24">
-			<img src="#user_images/adult-beautiful-blur-2590575_1565298919_1566178756_1570042898.png" class="rounded-circle" width="32" height="32">
-		</span>
-                                                                        <div class="seller-info-wrapper">
-                                                                                <a href="#volarex" class="seller-name">volarex</a>
-                                                                                <div class="gig-seller-tooltip">
-                                                                                        New Seller	    </div>
-                                                                        </div>
-                                                                </div><!--- gig-seller-info Ends --->
-                                                                <a href="#proposals/volarex/i-will-design-and-code-android-apps" class="proposal-link-main js-proposal-card-imp-data">
-                                                                        <h3>I Will Design And Code Android Apps</h3>
-                                                                </a>
-                                                                <div class="rating-badges-container">
-		<span class="proposal-rating">
-		<svg class="fit-svg-icon full_star" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg" width="15" height="15"><path d="M1728 647q0 22-26 48l-363 354 86 500q1 7 1 20 0 21-10.5 35.5t-30.5 14.5q-19 0-40-12l-449-236-449 236q-22 12-40 12-21 0-31.5-14.5t-10.5-35.5q0-6 2-20l86-500-364-354q-25-27-25-48 0-37 56-46l502-73 225-455q19-41 49-41t49 41l225 455 502 73q56 9 56 46z"></path></svg>
-		<span>
-		<strong>4.5</strong>
-		(2)
-		</span>
-		</span>
-                                                                </div>
-                                                        </div><!--- proposal-card-caption Ends --->
-                                                        <footer class="proposal-card-footer"><!--- proposal-card-footer Starts --->
-                                                                <div class="proposal-fav">
-                                                                        <a class="icn-list proposal-offer" data-id="6">
-                                                                                <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 497.68 497.68" style="enable-background:new 0 0 497.68 497.68;" data-toggle="tooltip" data-placement="top" title="" data-original-title="Affiliate Link">
-
-                                                                                        <path style="fill:#F2B233;" d="M464.04,404.82c0,97.6-96,92-215.2,92s-215.2,4.8-215.2-92c0-97.6,96-260,215.2-260
-	C368.04,145.62,464.04,308.02,464.04,404.82z"></path>
-                                                                                        <path style="fill:#DD981D;" d="M248.84,145.62c119.2,0,215.2,162.4,215.2,260s-96,92-215.2,92"></path>
-                                                                                        <path style="fill:#F2B233;" d="M144.04,44.82c0-47.2,47.2-44.8,104.8-44.8s104.8-2.4,104.8,44.8s-47.2,126.4-104.8,126.4
-	S144.04,92.02,144.04,44.82z"></path>
-                                                                                        <path style="fill:#DD981D;" d="M248.84,0.02c57.6,0,104.8-2.4,104.8,44.8s-47.2,126.4-104.8,126.4"></path>
-                                                                                        <path style="fill:#04AF76;" d="M340.84,154.42c0,8-6.4,14.4-14.4,14.4h-155.2c-8,0-14.4-6.4-14.4-14.4v-4c0-8,6.4-14.4,14.4-14.4
-	h156c8,0,14.4,6.4,14.4,14.4v4H340.84z"></path>
-                                                                                        <path style="fill:#008C61;" d="M168.84,136.82h158.4c8,0,14.4,6.4,14.4,14.4v4c0,8-8,14.4-16,14.4"></path>
-                                                                                        <circle style="fill:#04AF76;" cx="248.84" cy="339.22" r="96"></circle>
-                                                                                        <path style="fill:#008C61;" d="M180.84,271.22c37.6-37.6,98.4-37.6,136,0s37.6,98.4,0,136"></path>
-                                                                                        <path style="fill:#FFF6E1;" d="M240.84,416.82v-20c-16-0.8-24.8-4-32-8l4.8-21.6c8,4,18.4,8,30.4,8c10.4,0,17.6-4,17.6-11.2
-	s-5.6-11.2-20-16c-20-6.4-32.8-16-32.8-33.6c0-16,7.2-28.8,31.2-32.8v-16.8h16v16c16,0.8,21.6,3.2,27.2,6.4l-4.8,20.8
-	c-4.8-2.4-12.8-6.4-26.4-6.4c-12,0-16,4.8-16,10.4c0,6.4,6.4,9.6,22.4,16c21.6,8,30.4,17.6,30.4,34.4s-8.8,30.4-32.8,34.4v20H240.84
-	z"></path>
-                                                                                        <g>
-                                                                                                <path style="fill:#FFEEBD;" d="M248.84,264.82v36.8c0,0,2.4,0,4,0c13.6,0,21.6,4,26.4,6.4l4.8-20.8c-6.4-3.2-11.2-6.4-27.2-6.4v-16
-		H248.84z"></path>
-                                                                                                <path style="fill:#FFEEBD;" d="M259.24,327.22c-4-1.6-8-3.2-10.4-4v27.2c8,4,12.8,8,12.8,13.6c0,6.4-4.8,9.6-12.8,11.2v41.6h8
-		v-20.8c24-4,32.8-17.6,32.8-34.4C289.64,344.82,280.84,335.22,259.24,327.22z"></path>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                </svg>
-                                                                        </a>
-
-
-                                                                        <i data-id="6" href="#" class="fa fa-heart proposal-favorite dil1" data-toggle="tooltip" data-placement="top" title="" data-original-title="Favorite"></i>
-                                                                </div>
-                                                                <div class="proposal-price">
-                                                                        <a><small>STARTING AT</small>$20</a>
-                                                                </div>
-                                                        </footer><!--- proposal-card-footer Ends --->
-                                                </div><!--- proposal-card-base mp-proposal-card Ends --->        </div>
-                                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 mb-3 pr-lg-1">
-                                                <div class="proposal-card-base mp-proposal-card"><!--- proposal-card-base mp-proposal-card Starts --->
-                                                        <a href="#proposals/thili00traffi/i-will-develop-and-reskin-3d-and-2d-games-in-unit">
-                                                                <img src="#proposals/proposal_files/game-1.jpg" class="img-fluid">
-                                                        </a>
-                                                        <div class="proposal-card-caption"><!--- proposal-card-caption Starts --->
-                                                                <div class="proposal-seller-info"><!--- gig-seller-info Starts --->
-                                                                        <span class="fit-avatar s24">
-			<img src="#user_images/afro-hair-blur-depth-of-field-2535859_1568161906.png" class="rounded-circle" width="32" height="32">
-		</span>
-                                                                        <div class="seller-info-wrapper">
-                                                                                <a href="#thili00traffi" class="seller-name">thili00traffi</a>
-                                                                                <div class="gig-seller-tooltip">
-                                                                                        New Seller	    </div>
-                                                                        </div>
-                                                                </div><!--- gig-seller-info Ends --->
-                                                                <a href="#proposals/thili00traffi/i-will-develop-and-reskin-3d-and-2d-games-in-unit" class="proposal-link-main js-proposal-card-imp-data">
-                                                                        <h3>I Will Develop And Reskin 3d And 2d Games In Unity</h3>
-                                                                </a>
-                                                                <div class="rating-badges-container">
-		<span class="proposal-rating">
-		<svg class="fit-svg-icon full_star" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg" width="15" height="15"><path d="M1728 647q0 22-26 48l-363 354 86 500q1 7 1 20 0 21-10.5 35.5t-30.5 14.5q-19 0-40-12l-449-236-449 236q-22 12-40 12-21 0-31.5-14.5t-10.5-35.5q0-6 2-20l86-500-364-354q-25-27-25-48 0-37 56-46l502-73 225-455q19-41 49-41t49 41l225 455 502 73q56 9 56 46z"></path></svg>
-		<span>
-		<strong>4.0</strong>
-		(4)
-		</span>
-		</span>
-                                                                </div>
-                                                        </div><!--- proposal-card-caption Ends --->
-                                                        <footer class="proposal-card-footer"><!--- proposal-card-footer Starts --->
-                                                                <div class="proposal-fav">
-
-
-                                                                        <i data-id="7" href="#" class="fa fa-heart proposal-favorite dil1" data-toggle="tooltip" data-placement="top" title="" data-original-title="Favorite"></i>
-                                                                </div>
-                                                                <div class="proposal-price">
-                                                                        <a><small>STARTING AT</small>$20</a>
-                                                                </div>
-                                                        </footer><!--- proposal-card-footer Ends --->
-                                                </div><!--- proposal-card-base mp-proposal-card Ends --->        </div>
-                                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 mb-3 pr-lg-1">
-                                                <div class="proposal-card-base mp-proposal-card"><!--- proposal-card-base mp-proposal-card Starts --->
-                                                        <a href="#proposals/morgankhalil/modeling-couch">
-                                                                <img src="#proposals/proposal_files/art-attractive-beautiful-beauty-458381_1576255659.png" class="img-fluid">
-                                                        </a>
-                                                        <div class="proposal-card-caption"><!--- proposal-card-caption Starts --->
-                                                                <div class="proposal-seller-info"><!--- gig-seller-info Starts --->
-                                                                        <span class="fit-avatar s24">
-			<img src="#user_images/woman-with-orange-petaled-flower-on-her-lips-1937394_1575273165.png" class="rounded-circle" width="32" height="32">
-		</span>
-                                                                        <div class="seller-info-wrapper">
-                                                                                <a href="#morgankhalil" class="seller-name">morgankhalil</a>
-                                                                                <div class="gig-seller-tooltip">
-                                                                                        New Seller	    </div>
-                                                                        </div>
-                                                                </div><!--- gig-seller-info Ends --->
-                                                                <a href="#proposals/morgankhalil/modeling-couch" class="proposal-link-main js-proposal-card-imp-data">
-                                                                        <h3>Modeling Couch</h3>
-                                                                </a>
-                                                                <div class="rating-badges-container">
-		<span class="proposal-rating">
-		<svg class="fit-svg-icon full_star" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg" width="15" height="15"><path d="M1728 647q0 22-26 48l-363 354 86 500q1 7 1 20 0 21-10.5 35.5t-30.5 14.5q-19 0-40-12l-449-236-449 236q-22 12-40 12-21 0-31.5-14.5t-10.5-35.5q0-6 2-20l86-500-364-354q-25-27-25-48 0-37 56-46l502-73 225-455q19-41 49-41t49 41l225 455 502 73q56 9 56 46z"></path></svg>
-		<span>
-		<strong>0.0</strong>
-		(0)
-		</span>
-		</span>
-                                                                </div>
-                                                        </div><!--- proposal-card-caption Ends --->
-                                                        <footer class="proposal-card-footer"><!--- proposal-card-footer Starts --->
-                                                                <div class="proposal-fav">
-
-
-                                                                        <i data-id="481" href="#" class="fa fa-heart proposal-favorite dil1" data-toggle="tooltip" data-placement="top" title="" data-original-title="Favorite"></i>
-                                                                </div>
-                                                                <div class="proposal-price">
-                                                                        <a><small>STARTING AT</small>$10</a>
-                                                                </div>
-                                                        </footer><!--- proposal-card-footer Ends --->
-                                                </div><!--- proposal-card-base mp-proposal-card Ends --->        </div>
-                                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 mb-3 pr-lg-1">
-                                                <div class="proposal-card-base mp-proposal-card"><!--- proposal-card-base mp-proposal-card Starts --->
-                                                        <a href="#proposals/morgankhalil/love-couch">
-                                                                <img src="#proposals/proposal_files/silhouette-photography-of-man-and-woman-1759823_1576257266.png" class="img-fluid">
-                                                        </a>
-                                                        <div class="proposal-card-caption"><!--- proposal-card-caption Starts --->
-                                                                <div class="proposal-seller-info"><!--- gig-seller-info Starts --->
-                                                                        <span class="fit-avatar s24">
-			<img src="#user_images/woman-with-orange-petaled-flower-on-her-lips-1937394_1575273165.png" class="rounded-circle" width="32" height="32">
-		</span>
-                                                                        <div class="seller-info-wrapper">
-                                                                                <a href="#morgankhalil" class="seller-name">morgankhalil</a>
-                                                                                <div class="gig-seller-tooltip">
-                                                                                        New Seller	    </div>
-                                                                        </div>
-                                                                </div><!--- gig-seller-info Ends --->
-                                                                <a href="#proposals/morgankhalil/love-couch" class="proposal-link-main js-proposal-card-imp-data">
-                                                                        <h3>Love Couch</h3>
-                                                                </a>
-                                                                <div class="rating-badges-container">
-		<span class="proposal-rating">
-		<svg class="fit-svg-icon full_star" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg" width="15" height="15"><path d="M1728 647q0 22-26 48l-363 354 86 500q1 7 1 20 0 21-10.5 35.5t-30.5 14.5q-19 0-40-12l-449-236-449 236q-22 12-40 12-21 0-31.5-14.5t-10.5-35.5q0-6 2-20l86-500-364-354q-25-27-25-48 0-37 56-46l502-73 225-455q19-41 49-41t49 41l225 455 502 73q56 9 56 46z"></path></svg>
-		<span>
-		<strong>5.0</strong>
-		(1)
-		</span>
-		</span>
-                                                                </div>
-                                                        </div><!--- proposal-card-caption Ends --->
-                                                        <footer class="proposal-card-footer"><!--- proposal-card-footer Starts --->
-                                                                <div class="proposal-fav">
-                                                                        <a class="icn-list proposal-offer" data-id="482">
-                                                                                <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 497.68 497.68" style="enable-background:new 0 0 497.68 497.68;" data-toggle="tooltip" data-placement="top" title="" data-original-title="Affiliate Link">
-
-                                                                                        <path style="fill:#F2B233;" d="M464.04,404.82c0,97.6-96,92-215.2,92s-215.2,4.8-215.2-92c0-97.6,96-260,215.2-260
-	C368.04,145.62,464.04,308.02,464.04,404.82z"></path>
-                                                                                        <path style="fill:#DD981D;" d="M248.84,145.62c119.2,0,215.2,162.4,215.2,260s-96,92-215.2,92"></path>
-                                                                                        <path style="fill:#F2B233;" d="M144.04,44.82c0-47.2,47.2-44.8,104.8-44.8s104.8-2.4,104.8,44.8s-47.2,126.4-104.8,126.4
-	S144.04,92.02,144.04,44.82z"></path>
-                                                                                        <path style="fill:#DD981D;" d="M248.84,0.02c57.6,0,104.8-2.4,104.8,44.8s-47.2,126.4-104.8,126.4"></path>
-                                                                                        <path style="fill:#04AF76;" d="M340.84,154.42c0,8-6.4,14.4-14.4,14.4h-155.2c-8,0-14.4-6.4-14.4-14.4v-4c0-8,6.4-14.4,14.4-14.4
-	h156c8,0,14.4,6.4,14.4,14.4v4H340.84z"></path>
-                                                                                        <path style="fill:#008C61;" d="M168.84,136.82h158.4c8,0,14.4,6.4,14.4,14.4v4c0,8-8,14.4-16,14.4"></path>
-                                                                                        <circle style="fill:#04AF76;" cx="248.84" cy="339.22" r="96"></circle>
-                                                                                        <path style="fill:#008C61;" d="M180.84,271.22c37.6-37.6,98.4-37.6,136,0s37.6,98.4,0,136"></path>
-                                                                                        <path style="fill:#FFF6E1;" d="M240.84,416.82v-20c-16-0.8-24.8-4-32-8l4.8-21.6c8,4,18.4,8,30.4,8c10.4,0,17.6-4,17.6-11.2
-	s-5.6-11.2-20-16c-20-6.4-32.8-16-32.8-33.6c0-16,7.2-28.8,31.2-32.8v-16.8h16v16c16,0.8,21.6,3.2,27.2,6.4l-4.8,20.8
-	c-4.8-2.4-12.8-6.4-26.4-6.4c-12,0-16,4.8-16,10.4c0,6.4,6.4,9.6,22.4,16c21.6,8,30.4,17.6,30.4,34.4s-8.8,30.4-32.8,34.4v20H240.84
-	z"></path>
-                                                                                        <g>
-                                                                                                <path style="fill:#FFEEBD;" d="M248.84,264.82v36.8c0,0,2.4,0,4,0c13.6,0,21.6,4,26.4,6.4l4.8-20.8c-6.4-3.2-11.2-6.4-27.2-6.4v-16
-		H248.84z"></path>
-                                                                                                <path style="fill:#FFEEBD;" d="M259.24,327.22c-4-1.6-8-3.2-10.4-4v27.2c8,4,12.8,8,12.8,13.6c0,6.4-4.8,9.6-12.8,11.2v41.6h8
-		v-20.8c24-4,32.8-17.6,32.8-34.4C289.64,344.82,280.84,335.22,259.24,327.22z"></path>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                </svg>
-                                                                        </a>
-
-
-                                                                        <i data-id="482" href="#" class="fa fa-heart proposal-favorite dil1" data-toggle="tooltip" data-placement="top" title="" data-original-title="Favorite"></i>
-                                                                </div>
-                                                                <div class="proposal-price">
-                                                                        <a><small>STARTING AT</small>$20</a>
-                                                                </div>
-                                                        </footer><!--- proposal-card-footer Ends --->
-                                                </div><!--- proposal-card-base mp-proposal-card Ends --->        </div>
-                                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 mb-3 pr-lg-1">
-                                                <div class="proposal-card-base mp-proposal-card"><!--- proposal-card-base mp-proposal-card Starts --->
-                                                        <a href="#proposals/ramis8/34-34">
-                                                                <img src="#proposals/proposal_files/Javascript-1_1579673180.png" class="img-fluid">
-                                                        </a>
-                                                        <div class="proposal-card-caption"><!--- proposal-card-caption Starts --->
-                                                                <div class="proposal-seller-info"><!--- gig-seller-info Starts --->
-                                                                        <span class="fit-avatar s24">
-			<img src="#user_images/6_1579151243.png" class="rounded-circle" width="32" height="32">
-		</span>
-                                                                        <div class="seller-info-wrapper">
-                                                                                <a href="#ramis8" class="seller-name">ramis8</a>
-                                                                                <div class="gig-seller-tooltip">
-                                                                                        New Seller	    </div>
-                                                                        </div>
-                                                                </div><!--- gig-seller-info Ends --->
-                                                                <a href="#proposals/ramis8/34-34" class="proposal-link-main js-proposal-card-imp-data">
-                                                                        <h3>I will do your PHP work</h3>
-                                                                </a>
-                                                                <div class="rating-badges-container">
-		<span class="proposal-rating">
-		<svg class="fit-svg-icon full_star" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg" width="15" height="15"><path d="M1728 647q0 22-26 48l-363 354 86 500q1 7 1 20 0 21-10.5 35.5t-30.5 14.5q-19 0-40-12l-449-236-449 236q-22 12-40 12-21 0-31.5-14.5t-10.5-35.5q0-6 2-20l86-500-364-354q-25-27-25-48 0-37 56-46l502-73 225-455q19-41 49-41t49 41l225 455 502 73q56 9 56 46z"></path></svg>
-		<span>
-		<strong>5.0</strong>
-		(1)
-		</span>
-		</span>
-                                                                </div>
-                                                        </div><!--- proposal-card-caption Ends --->
-                                                        <footer class="proposal-card-footer"><!--- proposal-card-footer Starts --->
-                                                                <div class="proposal-fav">
-
-
-                                                                        <i data-id="535" href="#" class="fa fa-heart proposal-favorite dil1" data-toggle="tooltip" data-placement="top" title="" data-original-title="Favorite"></i>
-                                                                </div>
-                                                                <div class="proposal-price">
-                                                                        <a><small>STARTING AT</small>$5</a>
-                                                                </div>
-                                                        </footer><!--- proposal-card-footer Ends --->
-                                                </div><!--- proposal-card-base mp-proposal-card Ends --->        </div>
                                 </div>
                                 <!-- If You have no gigs, show random gigs on homepage -->
                                 <div class="row mb-3">
                                         <div class="col-md-12">
                                                 <h2 class="float-left">Top Proposals/Services</h2>
-                                                <button onclick="location.href='top_proposals'" class="float-right btn btn-success">VIEW ALL</button>
+                                                <button onclick="location.href='top_proposals'" class="float-right btn btn-success">VOIR TOUT</button>
                                         </div>
                                 </div>
                                 <div class="row">
                                         <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 mb-3 pr-lg-1">
                                                 <div class="proposal-card-base mp-proposal-card"><!--- proposal-card-base mp-proposal-card Starts --->
                                                         <a href="#proposals/ashleytharma1/i-will-design-a-logo-and-brand-for-you">
-                                                                <img src="#proposals/proposal_files/logo-1.jpg" class="img-fluid">
+                                                                <img src="https://www.gigtodo.com/proposals/proposal_files/logo-1.jpg" class="img-fluid">
                                                         </a>
                                                         <div class="proposal-card-caption"><!--- proposal-card-caption Starts --->
                                                                 <div class="proposal-seller-info"><!--- gig-seller-info Starts --->
                                                                         <span class="fit-avatar s24">
-			<img src="#user_images/amir-khan.jpg" class="rounded-circle" width="32" height="32">
+			<img src="https://www.gigtodo.com/user_images/amir-khan.jpg" class="rounded-circle" width="32" height="32">
 		</span>
                                                                         <div class="seller-info-wrapper">
                                                                                 <a href="#ashleytharma1" class="seller-name">ashleytharma1</a>
@@ -780,416 +346,25 @@
                                                                 </div>
                                                         </footer><!--- proposal-card-footer Ends --->
                                                 </div><!--- proposal-card-base mp-proposal-card Ends --->        </div>
-                                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 mb-3 pr-lg-1">
-                                                <div class="proposal-card-base mp-proposal-card"><!--- proposal-card-base mp-proposal-card Starts --->
-                                                        <a href="#proposals/volarex/i-will-design-and-code-android-apps">
-                                                                <img src="#proposals/proposal_files/andorid-1_1571118714.png" class="img-fluid">
-                                                        </a>
-                                                        <div class="proposal-card-caption"><!--- proposal-card-caption Starts --->
-                                                                <div class="proposal-seller-info"><!--- gig-seller-info Starts --->
-                                                                        <span class="fit-avatar s24">
-			<img src="#user_images/adult-beautiful-blur-2590575_1565298919_1566178756_1570042898.png" class="rounded-circle" width="32" height="32">
-		</span>
-                                                                        <div class="seller-info-wrapper">
-                                                                                <a href="#volarex" class="seller-name">volarex</a>
-                                                                                <div class="gig-seller-tooltip">
-                                                                                        New Seller	    </div>
-                                                                        </div>
-                                                                </div><!--- gig-seller-info Ends --->
-                                                                <a href="#proposals/volarex/i-will-design-and-code-android-apps" class="proposal-link-main js-proposal-card-imp-data">
-                                                                        <h3>I Will Design And Code Android Apps</h3>
-                                                                </a>
-                                                                <div class="rating-badges-container">
-		<span class="proposal-rating">
-		<svg class="fit-svg-icon full_star" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg" width="15" height="15"><path d="M1728 647q0 22-26 48l-363 354 86 500q1 7 1 20 0 21-10.5 35.5t-30.5 14.5q-19 0-40-12l-449-236-449 236q-22 12-40 12-21 0-31.5-14.5t-10.5-35.5q0-6 2-20l86-500-364-354q-25-27-25-48 0-37 56-46l502-73 225-455q19-41 49-41t49 41l225 455 502 73q56 9 56 46z"></path></svg>
-		<span>
-		<strong>4.5</strong>
-		(2)
-		</span>
-		</span>
-                                                                </div>
-                                                        </div><!--- proposal-card-caption Ends --->
-                                                        <footer class="proposal-card-footer"><!--- proposal-card-footer Starts --->
-                                                                <div class="proposal-fav">
-                                                                        <a class="icn-list proposal-offer" data-id="6">
-                                                                                <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 497.68 497.68" style="enable-background:new 0 0 497.68 497.68;" data-toggle="tooltip" data-placement="top" title="" data-original-title="Affiliate Link">
 
-                                                                                        <path style="fill:#F2B233;" d="M464.04,404.82c0,97.6-96,92-215.2,92s-215.2,4.8-215.2-92c0-97.6,96-260,215.2-260
-	C368.04,145.62,464.04,308.02,464.04,404.82z"></path>
-                                                                                        <path style="fill:#DD981D;" d="M248.84,145.62c119.2,0,215.2,162.4,215.2,260s-96,92-215.2,92"></path>
-                                                                                        <path style="fill:#F2B233;" d="M144.04,44.82c0-47.2,47.2-44.8,104.8-44.8s104.8-2.4,104.8,44.8s-47.2,126.4-104.8,126.4
-	S144.04,92.02,144.04,44.82z"></path>
-                                                                                        <path style="fill:#DD981D;" d="M248.84,0.02c57.6,0,104.8-2.4,104.8,44.8s-47.2,126.4-104.8,126.4"></path>
-                                                                                        <path style="fill:#04AF76;" d="M340.84,154.42c0,8-6.4,14.4-14.4,14.4h-155.2c-8,0-14.4-6.4-14.4-14.4v-4c0-8,6.4-14.4,14.4-14.4
-	h156c8,0,14.4,6.4,14.4,14.4v4H340.84z"></path>
-                                                                                        <path style="fill:#008C61;" d="M168.84,136.82h158.4c8,0,14.4,6.4,14.4,14.4v4c0,8-8,14.4-16,14.4"></path>
-                                                                                        <circle style="fill:#04AF76;" cx="248.84" cy="339.22" r="96"></circle>
-                                                                                        <path style="fill:#008C61;" d="M180.84,271.22c37.6-37.6,98.4-37.6,136,0s37.6,98.4,0,136"></path>
-                                                                                        <path style="fill:#FFF6E1;" d="M240.84,416.82v-20c-16-0.8-24.8-4-32-8l4.8-21.6c8,4,18.4,8,30.4,8c10.4,0,17.6-4,17.6-11.2
-	s-5.6-11.2-20-16c-20-6.4-32.8-16-32.8-33.6c0-16,7.2-28.8,31.2-32.8v-16.8h16v16c16,0.8,21.6,3.2,27.2,6.4l-4.8,20.8
-	c-4.8-2.4-12.8-6.4-26.4-6.4c-12,0-16,4.8-16,10.4c0,6.4,6.4,9.6,22.4,16c21.6,8,30.4,17.6,30.4,34.4s-8.8,30.4-32.8,34.4v20H240.84
-	z"></path>
-                                                                                        <g>
-                                                                                                <path style="fill:#FFEEBD;" d="M248.84,264.82v36.8c0,0,2.4,0,4,0c13.6,0,21.6,4,26.4,6.4l4.8-20.8c-6.4-3.2-11.2-6.4-27.2-6.4v-16
-		H248.84z"></path>
-                                                                                                <path style="fill:#FFEEBD;" d="M259.24,327.22c-4-1.6-8-3.2-10.4-4v27.2c8,4,12.8,8,12.8,13.6c0,6.4-4.8,9.6-12.8,11.2v41.6h8
-		v-20.8c24-4,32.8-17.6,32.8-34.4C289.64,344.82,280.84,335.22,259.24,327.22z"></path>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                </svg>
-                                                                        </a>
-
-
-                                                                        <i data-id="6" href="#" class="fa fa-heart proposal-favorite dil1" data-toggle="tooltip" data-placement="top" title="" data-original-title="Favorite"></i>
-                                                                </div>
-                                                                <div class="proposal-price">
-                                                                        <a><small>STARTING AT</small>$20</a>
-                                                                </div>
-                                                        </footer><!--- proposal-card-footer Ends --->
-                                                </div><!--- proposal-card-base mp-proposal-card Ends --->        </div>
-                                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 mb-3 pr-lg-1">
-                                                <div class="proposal-card-base mp-proposal-card"><!--- proposal-card-base mp-proposal-card Starts --->
-                                                        <a href="#proposals/pat/personal-trainer">
-                                                                <img src="#proposals/proposal_files/pexels-photo-1229356_1568877863.png" class="img-fluid">
-                                                        </a>
-                                                        <div class="proposal-card-caption"><!--- proposal-card-caption Starts --->
-                                                                <div class="proposal-seller-info"><!--- gig-seller-info Starts --->
-                                                                        <span class="fit-avatar s24">
-			<img src="#user_images/adult-beautiful-blur-2590575_1565298919_1566178756_1576352028.png" class="rounded-circle" width="32" height="32">
-		</span>
-                                                                        <div class="seller-info-wrapper">
-                                                                                <a href="#pat" class="seller-name">pat</a>
-                                                                                <div class="gig-seller-tooltip">
-                                                                                        Level One	    </div>
-                                                                        </div>
-                                                                </div><!--- gig-seller-info Ends --->
-                                                                <a href="#proposals/pat/personal-trainer" class="proposal-link-main js-proposal-card-imp-data">
-                                                                        <h3>Personal Trainer</h3>
-                                                                </a>
-                                                                <div class="rating-badges-container">
-		<span class="proposal-rating">
-		<svg class="fit-svg-icon full_star" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg" width="15" height="15"><path d="M1728 647q0 22-26 48l-363 354 86 500q1 7 1 20 0 21-10.5 35.5t-30.5 14.5q-19 0-40-12l-449-236-449 236q-22 12-40 12-21 0-31.5-14.5t-10.5-35.5q0-6 2-20l86-500-364-354q-25-27-25-48 0-37 56-46l502-73 225-455q19-41 49-41t49 41l225 455 502 73q56 9 56 46z"></path></svg>
-		<span>
-		<strong>4.0</strong>
-		(2)
-		</span>
-		</span>
-                                                                </div>
-                                                        </div><!--- proposal-card-caption Ends --->
-                                                        <footer class="proposal-card-footer"><!--- proposal-card-footer Starts --->
-                                                                <div class="proposal-fav">
-
-
-                                                                        <i data-id="166" href="#" class="fa fa-heart proposal-favorite dil1" data-toggle="tooltip" data-placement="top" title="" data-original-title="Favorite"></i>
-                                                                </div>
-                                                                <div class="proposal-price">
-                                                                        <a><small>STARTING AT</small>$10</a>
-                                                                </div>
-                                                        </footer><!--- proposal-card-footer Ends --->
-                                                </div><!--- proposal-card-base mp-proposal-card Ends --->        </div>
-                                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 mb-3 pr-lg-1">
-                                                <div class="proposal-card-base mp-proposal-card"><!--- proposal-card-base mp-proposal-card Starts --->
-                                                        <a href="#proposals/Crazypants/i-will-give-you-creative-bear-tech-search-engine-scraper-and-email-extractor">
-                                                                <img src="#proposals/proposal_files/523617EC-C753-48D0-B87A-AA9470A0F111_1569425840.png" class="img-fluid">
-                                                        </a>
-                                                        <div class="proposal-card-caption"><!--- proposal-card-caption Starts --->
-                                                                <div class="proposal-seller-info"><!--- gig-seller-info Starts --->
-                                                                        <span class="fit-avatar s24">
-			<img src="#user_images/114565362612489012539.jpg" class="rounded-circle" width="32" height="32">
-		</span>
-                                                                        <div class="seller-info-wrapper">
-                                                                                <a href="#Crazypants" class="seller-name">Crazypants</a>
-                                                                                <div class="gig-seller-tooltip">
-                                                                                        New Seller	    </div>
-                                                                        </div>
-                                                                </div><!--- gig-seller-info Ends --->
-                                                                <a href="#proposals/Crazypants/i-will-give-you-creative-bear-tech-search-engine-scraper-and-email-extractor" class="proposal-link-main js-proposal-card-imp-data">
-                                                                        <h3>I will give you Creative Bear Tech Search Engine Scraper and Email Extractor</h3>
-                                                                </a>
-                                                                <div class="rating-badges-container">
-		<span class="proposal-rating">
-		<svg class="fit-svg-icon full_star" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg" width="15" height="15"><path d="M1728 647q0 22-26 48l-363 354 86 500q1 7 1 20 0 21-10.5 35.5t-30.5 14.5q-19 0-40-12l-449-236-449 236q-22 12-40 12-21 0-31.5-14.5t-10.5-35.5q0-6 2-20l86-500-364-354q-25-27-25-48 0-37 56-46l502-73 225-455q19-41 49-41t49 41l225 455 502 73q56 9 56 46z"></path></svg>
-		<span>
-		<strong>5.0</strong>
-		(1)
-		</span>
-		</span>
-                                                                </div>
-                                                        </div><!--- proposal-card-caption Ends --->
-                                                        <footer class="proposal-card-footer"><!--- proposal-card-footer Starts --->
-                                                                <div class="proposal-fav">
-
-
-                                                                        <i data-id="186" href="#" class="fa fa-heart proposal-favorite dil1" data-toggle="tooltip" data-placement="top" title="" data-original-title="Favorite"></i>
-                                                                </div>
-                                                                <div class="proposal-price">
-                                                                        <a><small>STARTING AT</small>$500</a>
-                                                                </div>
-                                                        </footer><!--- proposal-card-footer Ends --->
-                                                </div><!--- proposal-card-base mp-proposal-card Ends --->        </div>
-                                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 mb-3 pr-lg-1">
-                                                <div class="proposal-card-base mp-proposal-card"><!--- proposal-card-base mp-proposal-card Starts --->
-                                                        <a href="#proposals/pat/%D8%AF%D9%88%D8%B1%D8%A7%D8%AA+%D8%B4%D8%A7%D9%85%D9%84%D8%A9+%D8%AA%D8%B9%D8%AA%D9%85%D8%AF+%D8%B9%D9%84%D9%89+%D8%A7%D9%84%D8%AA%D8%B7%D8%A8%D9%8A%D9%82+%D8%A7%D9%84%D8%B9%D9%85%D9%84%D9%8A">
-                                                                <img src="#proposals/proposal_files/yoast-seo_1571289927.png" class="img-fluid">
-                                                        </a>
-                                                        <div class="proposal-card-caption"><!--- proposal-card-caption Starts --->
-                                                                <div class="proposal-seller-info"><!--- gig-seller-info Starts --->
-                                                                        <span class="fit-avatar s24">
-			<img src="#user_images/adult-beautiful-blur-2590575_1565298919_1566178756_1576352028.png" class="rounded-circle" width="32" height="32">
-		</span>
-                                                                        <div class="seller-info-wrapper">
-                                                                                <a href="#pat" class="seller-name">pat</a>
-                                                                                <div class="gig-seller-tooltip">
-                                                                                        Level One	    </div>
-                                                                        </div>
-                                                                </div><!--- gig-seller-info Ends --->
-                                                                <a href="#proposals/pat/%D8%AF%D9%88%D8%B1%D8%A7%D8%AA+%D8%B4%D8%A7%D9%85%D9%84%D8%A9+%D8%AA%D8%B9%D8%AA%D9%85%D8%AF+%D8%B9%D9%84%D9%89+%D8%A7%D9%84%D8%AA%D8%B7%D8%A8%D9%8A%D9%82+%D8%A7%D9%84%D8%B9%D9%85%D9%84%D9%8A" class="proposal-link-main js-proposal-card-imp-data">
-                                                                        <h3>دورات شاملة تعتمد على التطبيق العملي</h3>
-                                                                </a>
-                                                                <div class="rating-badges-container">
-		<span class="proposal-rating">
-		<svg class="fit-svg-icon full_star" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg" width="15" height="15"><path d="M1728 647q0 22-26 48l-363 354 86 500q1 7 1 20 0 21-10.5 35.5t-30.5 14.5q-19 0-40-12l-449-236-449 236q-22 12-40 12-21 0-31.5-14.5t-10.5-35.5q0-6 2-20l86-500-364-354q-25-27-25-48 0-37 56-46l502-73 225-455q19-41 49-41t49 41l225 455 502 73q56 9 56 46z"></path></svg>
-		<span>
-		<strong>0.0</strong>
-		(0)
-		</span>
-		</span>
-                                                                </div>
-                                                        </div><!--- proposal-card-caption Ends --->
-                                                        <footer class="proposal-card-footer"><!--- proposal-card-footer Starts --->
-                                                                <div class="proposal-fav">
-
-
-                                                                        <i data-id="260" href="#" class="fa fa-heart proposal-favorite dil1" data-toggle="tooltip" data-placement="top" title="" data-original-title="Favorite"></i>
-                                                                </div>
-                                                                <div class="proposal-price">
-                                                                        <a><small>STARTING AT</small>$5</a>
-                                                                </div>
-                                                        </footer><!--- proposal-card-footer Ends --->
-                                                </div><!--- proposal-card-base mp-proposal-card Ends --->        </div>
-                                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 mb-3 pr-lg-1">
-                                                <div class="proposal-card-base mp-proposal-card"><!--- proposal-card-base mp-proposal-card Starts --->
-                                                        <a href="#proposals/pat/%D9%87%D8%B0%D8%A7+%D9%87%D9%88+%D8%A3%D9%81%D8%B6%D9%84+%D9%85%D9%83%D8%A7%D9%86+">
-                                                                <img src="#proposals/proposal_files/bright-colorful-colourful-268941_1566178772_1571296763.png" class="img-fluid">
-                                                        </a>
-                                                        <div class="proposal-card-caption"><!--- proposal-card-caption Starts --->
-                                                                <div class="proposal-seller-info"><!--- gig-seller-info Starts --->
-                                                                        <span class="fit-avatar s24">
-			<img src="#user_images/adult-beautiful-blur-2590575_1565298919_1566178756_1576352028.png" class="rounded-circle" width="32" height="32">
-		</span>
-                                                                        <div class="seller-info-wrapper">
-                                                                                <a href="#pat" class="seller-name">pat</a>
-                                                                                <div class="gig-seller-tooltip">
-                                                                                        Level One	    </div>
-                                                                        </div>
-                                                                </div><!--- gig-seller-info Ends --->
-                                                                <a href="#proposals/pat/%D9%87%D8%B0%D8%A7+%D9%87%D9%88+%D8%A3%D9%81%D8%B6%D9%84+%D9%85%D9%83%D8%A7%D9%86+" class="proposal-link-main js-proposal-card-imp-data">
-                                                                        <h3>هذا هو أفضل مكان </h3>
-                                                                </a>
-                                                                <div class="rating-badges-container">
-		<span class="proposal-rating">
-		<svg class="fit-svg-icon full_star" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg" width="15" height="15"><path d="M1728 647q0 22-26 48l-363 354 86 500q1 7 1 20 0 21-10.5 35.5t-30.5 14.5q-19 0-40-12l-449-236-449 236q-22 12-40 12-21 0-31.5-14.5t-10.5-35.5q0-6 2-20l86-500-364-354q-25-27-25-48 0-37 56-46l502-73 225-455q19-41 49-41t49 41l225 455 502 73q56 9 56 46z"></path></svg>
-		<span>
-		<strong>0.0</strong>
-		(0)
-		</span>
-		</span>
-                                                                </div>
-                                                        </div><!--- proposal-card-caption Ends --->
-                                                        <footer class="proposal-card-footer"><!--- proposal-card-footer Starts --->
-                                                                <div class="proposal-fav">
-
-
-                                                                        <i data-id="263" href="#" class="fa fa-heart proposal-favorite dil1" data-toggle="tooltip" data-placement="top" title="" data-original-title="Favorite"></i>
-                                                                </div>
-                                                                <div class="proposal-price">
-                                                                        <a><small>STARTING AT</small>$10</a>
-                                                                </div>
-                                                        </footer><!--- proposal-card-footer Ends --->
-                                                </div><!--- proposal-card-base mp-proposal-card Ends --->        </div>
-                                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 mb-3 pr-lg-1">
-                                                <div class="proposal-card-base mp-proposal-card"><!--- proposal-card-base mp-proposal-card Starts --->
-                                                        <a href="#proposals/hakan/deneme-bir-grafik-tasaerm">
-                                                                <img src="#proposals/proposal_files/box-1-c_1572691097.png" class="img-fluid">
-                                                        </a>
-                                                        <div class="proposal-card-caption"><!--- proposal-card-caption Starts --->
-                                                                <div class="proposal-seller-info"><!--- gig-seller-info Starts --->
-                                                                        <span class="fit-avatar s24">
-			<img src="#user_images/empty-image.png" class="rounded-circle" width="32" height="32">
-		</span>
-                                                                        <div class="seller-info-wrapper">
-                                                                                <a href="#hakan" class="seller-name">hakan</a>
-                                                                                <div class="gig-seller-tooltip">
-                                                                                        New Seller	    </div>
-                                                                        </div>
-                                                                </div><!--- gig-seller-info Ends --->
-                                                                <a href="#proposals/hakan/deneme-bir-grafik-tasaerm" class="proposal-link-main js-proposal-card-imp-data">
-                                                                        <h3>Deneme bir grafik tasaerım</h3>
-                                                                </a>
-                                                                <div class="rating-badges-container">
-		<span class="proposal-rating">
-		<svg class="fit-svg-icon full_star" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg" width="15" height="15"><path d="M1728 647q0 22-26 48l-363 354 86 500q1 7 1 20 0 21-10.5 35.5t-30.5 14.5q-19 0-40-12l-449-236-449 236q-22 12-40 12-21 0-31.5-14.5t-10.5-35.5q0-6 2-20l86-500-364-354q-25-27-25-48 0-37 56-46l502-73 225-455q19-41 49-41t49 41l225 455 502 73q56 9 56 46z"></path></svg>
-		<span>
-		<strong>0.0</strong>
-		(0)
-		</span>
-		</span>
-                                                                </div>
-                                                        </div><!--- proposal-card-caption Ends --->
-                                                        <footer class="proposal-card-footer"><!--- proposal-card-footer Starts --->
-                                                                <div class="proposal-fav">
-                                                                        <a class="icn-list proposal-offer" data-id="306">
-                                                                                <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 497.68 497.68" style="enable-background:new 0 0 497.68 497.68;" data-toggle="tooltip" data-placement="top" title="" data-original-title="Affiliate Link">
-
-                                                                                        <path style="fill:#F2B233;" d="M464.04,404.82c0,97.6-96,92-215.2,92s-215.2,4.8-215.2-92c0-97.6,96-260,215.2-260
-	C368.04,145.62,464.04,308.02,464.04,404.82z"></path>
-                                                                                        <path style="fill:#DD981D;" d="M248.84,145.62c119.2,0,215.2,162.4,215.2,260s-96,92-215.2,92"></path>
-                                                                                        <path style="fill:#F2B233;" d="M144.04,44.82c0-47.2,47.2-44.8,104.8-44.8s104.8-2.4,104.8,44.8s-47.2,126.4-104.8,126.4
-	S144.04,92.02,144.04,44.82z"></path>
-                                                                                        <path style="fill:#DD981D;" d="M248.84,0.02c57.6,0,104.8-2.4,104.8,44.8s-47.2,126.4-104.8,126.4"></path>
-                                                                                        <path style="fill:#04AF76;" d="M340.84,154.42c0,8-6.4,14.4-14.4,14.4h-155.2c-8,0-14.4-6.4-14.4-14.4v-4c0-8,6.4-14.4,14.4-14.4
-	h156c8,0,14.4,6.4,14.4,14.4v4H340.84z"></path>
-                                                                                        <path style="fill:#008C61;" d="M168.84,136.82h158.4c8,0,14.4,6.4,14.4,14.4v4c0,8-8,14.4-16,14.4"></path>
-                                                                                        <circle style="fill:#04AF76;" cx="248.84" cy="339.22" r="96"></circle>
-                                                                                        <path style="fill:#008C61;" d="M180.84,271.22c37.6-37.6,98.4-37.6,136,0s37.6,98.4,0,136"></path>
-                                                                                        <path style="fill:#FFF6E1;" d="M240.84,416.82v-20c-16-0.8-24.8-4-32-8l4.8-21.6c8,4,18.4,8,30.4,8c10.4,0,17.6-4,17.6-11.2
-	s-5.6-11.2-20-16c-20-6.4-32.8-16-32.8-33.6c0-16,7.2-28.8,31.2-32.8v-16.8h16v16c16,0.8,21.6,3.2,27.2,6.4l-4.8,20.8
-	c-4.8-2.4-12.8-6.4-26.4-6.4c-12,0-16,4.8-16,10.4c0,6.4,6.4,9.6,22.4,16c21.6,8,30.4,17.6,30.4,34.4s-8.8,30.4-32.8,34.4v20H240.84
-	z"></path>
-                                                                                        <g>
-                                                                                                <path style="fill:#FFEEBD;" d="M248.84,264.82v36.8c0,0,2.4,0,4,0c13.6,0,21.6,4,26.4,6.4l4.8-20.8c-6.4-3.2-11.2-6.4-27.2-6.4v-16
-		H248.84z"></path>
-                                                                                                <path style="fill:#FFEEBD;" d="M259.24,327.22c-4-1.6-8-3.2-10.4-4v27.2c8,4,12.8,8,12.8,13.6c0,6.4-4.8,9.6-12.8,11.2v41.6h8
-		v-20.8c24-4,32.8-17.6,32.8-34.4C289.64,344.82,280.84,335.22,259.24,327.22z"></path>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                </svg>
-                                                                        </a>
-
-
-                                                                        <i data-id="306" href="#" class="fa fa-heart proposal-favorite dil1" data-toggle="tooltip" data-placement="top" title="" data-original-title="Favorite"></i>
-                                                                </div>
-                                                                <div class="proposal-price">
-                                                                        <a><small>STARTING AT</small>$300</a>
-                                                                </div>
-                                                        </footer><!--- proposal-card-footer Ends --->
-                                                </div><!--- proposal-card-base mp-proposal-card Ends --->        </div>
-                                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 mb-3 pr-lg-1">
-                                                <div class="proposal-card-base mp-proposal-card"><!--- proposal-card-base mp-proposal-card Starts --->
-                                                        <a href="#proposals/asadiqbal/full-website-creation-in-codeigniter-and-core-php">
-                                                                <img src="#proposals/proposal_files/269638_08f4_3_1573203607.png" class="img-fluid">
-                                                        </a>
-                                                        <div class="proposal-card-caption"><!--- proposal-card-caption Starts --->
-                                                                <div class="proposal-seller-info"><!--- gig-seller-info Starts --->
-                                                                        <span class="fit-avatar s24">
-			<img src="#user_images/1641980482624579.jpg" class="rounded-circle" width="32" height="32">
-		</span>
-                                                                        <div class="seller-info-wrapper">
-                                                                                <a href="#asadiqbal" class="seller-name">asadiqbal</a>
-                                                                                <div class="gig-seller-tooltip">
-                                                                                        New Seller	    </div>
-                                                                        </div>
-                                                                </div><!--- gig-seller-info Ends --->
-                                                                <a href="#proposals/asadiqbal/full-website-creation-in-codeigniter-and-core-php" class="proposal-link-main js-proposal-card-imp-data">
-                                                                        <h3>full website creation in CODEIGNITER and core PHP</h3>
-                                                                </a>
-                                                                <div class="rating-badges-container">
-		<span class="proposal-rating">
-		<svg class="fit-svg-icon full_star" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg" width="15" height="15"><path d="M1728 647q0 22-26 48l-363 354 86 500q1 7 1 20 0 21-10.5 35.5t-30.5 14.5q-19 0-40-12l-449-236-449 236q-22 12-40 12-21 0-31.5-14.5t-10.5-35.5q0-6 2-20l86-500-364-354q-25-27-25-48 0-37 56-46l502-73 225-455q19-41 49-41t49 41l225 455 502 73q56 9 56 46z"></path></svg>
-		<span>
-		<strong>0.0</strong>
-		(0)
-		</span>
-		</span>
-                                                                </div>
-                                                        </div><!--- proposal-card-caption Ends --->
-                                                        <footer class="proposal-card-footer"><!--- proposal-card-footer Starts --->
-                                                                <div class="proposal-fav">
-
-
-                                                                        <i data-id="340" href="#" class="fa fa-heart proposal-favorite dil1" data-toggle="tooltip" data-placement="top" title="" data-original-title="Favorite"></i>
-                                                                </div>
-                                                                <div class="proposal-price">
-                                                                        <a><small>STARTING AT</small>$5</a>
-                                                                </div>
-                                                        </footer><!--- proposal-card-footer Ends --->
-                                                </div><!--- proposal-card-base mp-proposal-card Ends --->        </div>
                                 </div>
                                 <!-- If You have no gigs, show random gigs on homepage -->
                                 <div class="row mb-3">
                                         <div class="col-md-12">
                                                 <h2 class="pl-0 pr-0 ml-0 mr-0 float-left">Random Proposals/Services</h2>
-                                                <button onclick="location.href='random_proposals'" class="float-right btn btn-success">VIEW ALL</button>
+                                                <button onclick="location.href='random_proposals'" class="float-right btn btn-success">VOIR TOUT</button>
                                         </div>
                                 </div>
                                 <div class="row">
                                         <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 mb-3 pr-lg-1">
                                                 <div class="proposal-card-base mp-proposal-card"><!--- proposal-card-base mp-proposal-card Starts --->
                                                         <a href="#proposals/hakan/deneme-bir-grafik-tasaerm">
-                                                                <img src="#proposals/proposal_files/box-1-c_1572691097.png" class="img-fluid">
+                                                                <img src="https://www.gigtodo.com/proposals/proposal_files/box-1-c_1572691097.png" class="img-fluid">
                                                         </a>
                                                         <div class="proposal-card-caption"><!--- proposal-card-caption Starts --->
                                                                 <div class="proposal-seller-info"><!--- gig-seller-info Starts --->
                                                                         <span class="fit-avatar s24">
-			<img src="#user_images/empty-image.png" class="rounded-circle" width="32" height="32">
+			<img src="https://www.gigtodo.com/user_images/empty-image.png" class="rounded-circle" width="32" height="32">
 		</span>
                                                                         <div class="seller-info-wrapper">
                                                                                 <a href="#hakan" class="seller-name">hakan</a>
@@ -1274,510 +449,6 @@
                                                                 </div>
                                                                 <div class="proposal-price">
                                                                         <a><small>STARTING AT</small>$300</a>
-                                                                </div>
-                                                        </footer><!--- proposal-card-footer Ends --->
-                                                </div><!--- proposal-card-base mp-proposal-card Ends --->        </div>
-                                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 mb-3 pr-lg-1">
-                                                <div class="proposal-card-base mp-proposal-card"><!--- proposal-card-base mp-proposal-card Starts --->
-                                                        <a href="#proposals/MR_PMV/do-top-functioning-taxi-booking-app-like-uber-ride-ola-lyft">
-                                                                <img src="#proposals/proposal_files/pmvni_1575007047.png" class="img-fluid">
-                                                        </a>
-                                                        <div class="proposal-card-caption"><!--- proposal-card-caption Starts --->
-                                                                <div class="proposal-seller-info"><!--- gig-seller-info Starts --->
-                                                                        <span class="fit-avatar s24">
-			<img src="#user_images/IMG_20190421_174938_1_1574748255.png" class="rounded-circle" width="32" height="32">
-		</span>
-                                                                        <div class="seller-info-wrapper">
-                                                                                <a href="#MR_PMV" class="seller-name">MR_PMV</a>
-                                                                                <div class="gig-seller-tooltip">
-                                                                                        New Seller	    </div>
-                                                                        </div>
-                                                                </div><!--- gig-seller-info Ends --->
-                                                                <a href="#proposals/MR_PMV/do-top-functioning-taxi-booking-app-like-uber-ride-ola-lyft" class="proposal-link-main js-proposal-card-imp-data">
-                                                                        <h3>do top functioning taxi booking app like uber ride,ola,lyft</h3>
-                                                                </a>
-                                                                <div class="rating-badges-container">
-		<span class="proposal-rating">
-		<svg class="fit-svg-icon full_star" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg" width="15" height="15"><path d="M1728 647q0 22-26 48l-363 354 86 500q1 7 1 20 0 21-10.5 35.5t-30.5 14.5q-19 0-40-12l-449-236-449 236q-22 12-40 12-21 0-31.5-14.5t-10.5-35.5q0-6 2-20l86-500-364-354q-25-27-25-48 0-37 56-46l502-73 225-455q19-41 49-41t49 41l225 455 502 73q56 9 56 46z"></path></svg>
-		<span>
-		<strong>0.0</strong>
-		(0)
-		</span>
-		</span>
-                                                                </div>
-                                                        </div><!--- proposal-card-caption Ends --->
-                                                        <footer class="proposal-card-footer"><!--- proposal-card-footer Starts --->
-                                                                <div class="proposal-fav">
-                                                                        <a class="icn-list proposal-offer" data-id="420">
-                                                                                <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 497.68 497.68" style="enable-background:new 0 0 497.68 497.68;" data-toggle="tooltip" data-placement="top" title="" data-original-title="Affiliate Link">
-
-                                                                                        <path style="fill:#F2B233;" d="M464.04,404.82c0,97.6-96,92-215.2,92s-215.2,4.8-215.2-92c0-97.6,96-260,215.2-260
-	C368.04,145.62,464.04,308.02,464.04,404.82z"></path>
-                                                                                        <path style="fill:#DD981D;" d="M248.84,145.62c119.2,0,215.2,162.4,215.2,260s-96,92-215.2,92"></path>
-                                                                                        <path style="fill:#F2B233;" d="M144.04,44.82c0-47.2,47.2-44.8,104.8-44.8s104.8-2.4,104.8,44.8s-47.2,126.4-104.8,126.4
-	S144.04,92.02,144.04,44.82z"></path>
-                                                                                        <path style="fill:#DD981D;" d="M248.84,0.02c57.6,0,104.8-2.4,104.8,44.8s-47.2,126.4-104.8,126.4"></path>
-                                                                                        <path style="fill:#04AF76;" d="M340.84,154.42c0,8-6.4,14.4-14.4,14.4h-155.2c-8,0-14.4-6.4-14.4-14.4v-4c0-8,6.4-14.4,14.4-14.4
-	h156c8,0,14.4,6.4,14.4,14.4v4H340.84z"></path>
-                                                                                        <path style="fill:#008C61;" d="M168.84,136.82h158.4c8,0,14.4,6.4,14.4,14.4v4c0,8-8,14.4-16,14.4"></path>
-                                                                                        <circle style="fill:#04AF76;" cx="248.84" cy="339.22" r="96"></circle>
-                                                                                        <path style="fill:#008C61;" d="M180.84,271.22c37.6-37.6,98.4-37.6,136,0s37.6,98.4,0,136"></path>
-                                                                                        <path style="fill:#FFF6E1;" d="M240.84,416.82v-20c-16-0.8-24.8-4-32-8l4.8-21.6c8,4,18.4,8,30.4,8c10.4,0,17.6-4,17.6-11.2
-	s-5.6-11.2-20-16c-20-6.4-32.8-16-32.8-33.6c0-16,7.2-28.8,31.2-32.8v-16.8h16v16c16,0.8,21.6,3.2,27.2,6.4l-4.8,20.8
-	c-4.8-2.4-12.8-6.4-26.4-6.4c-12,0-16,4.8-16,10.4c0,6.4,6.4,9.6,22.4,16c21.6,8,30.4,17.6,30.4,34.4s-8.8,30.4-32.8,34.4v20H240.84
-	z"></path>
-                                                                                        <g>
-                                                                                                <path style="fill:#FFEEBD;" d="M248.84,264.82v36.8c0,0,2.4,0,4,0c13.6,0,21.6,4,26.4,6.4l4.8-20.8c-6.4-3.2-11.2-6.4-27.2-6.4v-16
-		H248.84z"></path>
-                                                                                                <path style="fill:#FFEEBD;" d="M259.24,327.22c-4-1.6-8-3.2-10.4-4v27.2c8,4,12.8,8,12.8,13.6c0,6.4-4.8,9.6-12.8,11.2v41.6h8
-		v-20.8c24-4,32.8-17.6,32.8-34.4C289.64,344.82,280.84,335.22,259.24,327.22z"></path>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                </svg>
-                                                                        </a>
-
-
-                                                                        <i data-id="420" href="#" class="fa fa-heart proposal-favorite dil1" data-toggle="tooltip" data-placement="top" title="" data-original-title="Favorite"></i>
-                                                                </div>
-                                                                <div class="proposal-price">
-                                                                        <a><small>STARTING AT</small>$1000</a>
-                                                                </div>
-                                                        </footer><!--- proposal-card-footer Ends --->
-                                                </div><!--- proposal-card-base mp-proposal-card Ends --->        </div>
-                                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 mb-3 pr-lg-1">
-                                                <div class="proposal-card-base mp-proposal-card"><!--- proposal-card-base mp-proposal-card Starts --->
-                                                        <a href="#proposals/tyrone/efefwef">
-                                                                <img src="#proposals/proposal_files/Screenshot 2019-09-19 at 13.56.32_1568910410.png" class="img-fluid">
-                                                        </a>
-                                                        <div class="proposal-card-caption"><!--- proposal-card-caption Starts --->
-                                                                <div class="proposal-seller-info"><!--- gig-seller-info Starts --->
-                                                                        <span class="fit-avatar s24">
-			<img src="#user_images/ty_1574032240.png" class="rounded-circle" width="32" height="32">
-		</span>
-                                                                        <div class="seller-info-wrapper">
-                                                                                <a href="#tyrone" class="seller-name">tyrone</a>
-                                                                                <div class="gig-seller-tooltip">
-                                                                                        New Seller	    </div>
-                                                                        </div>
-                                                                </div><!--- gig-seller-info Ends --->
-                                                                <a href="#proposals/tyrone/efefwef" class="proposal-link-main js-proposal-card-imp-data">
-                                                                        <h3>efefwef</h3>
-                                                                </a>
-                                                                <div class="rating-badges-container">
-		<span class="proposal-rating">
-		<svg class="fit-svg-icon full_star" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg" width="15" height="15"><path d="M1728 647q0 22-26 48l-363 354 86 500q1 7 1 20 0 21-10.5 35.5t-30.5 14.5q-19 0-40-12l-449-236-449 236q-22 12-40 12-21 0-31.5-14.5t-10.5-35.5q0-6 2-20l86-500-364-354q-25-27-25-48 0-37 56-46l502-73 225-455q19-41 49-41t49 41l225 455 502 73q56 9 56 46z"></path></svg>
-		<span>
-		<strong>0.0</strong>
-		(0)
-		</span>
-		</span>
-                                                                </div>
-                                                        </div><!--- proposal-card-caption Ends --->
-                                                        <footer class="proposal-card-footer"><!--- proposal-card-footer Starts --->
-                                                                <div class="proposal-fav">
-
-
-                                                                        <i data-id="172" href="#" class="fa fa-heart proposal-favorite dil1" data-toggle="tooltip" data-placement="top" title="" data-original-title="Favorite"></i>
-                                                                </div>
-                                                                <div class="proposal-price">
-                                                                        <a><small>STARTING AT</small>$5</a>
-                                                                </div>
-                                                        </footer><!--- proposal-card-footer Ends --->
-                                                </div><!--- proposal-card-base mp-proposal-card Ends --->        </div>
-                                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 mb-3 pr-lg-1">
-                                                <div class="proposal-card-base mp-proposal-card"><!--- proposal-card-base mp-proposal-card Starts --->
-                                                        <a href="#proposals/david0119/create-a-new-tecnology">
-                                                                <img src="#proposals/proposal_files/450_1000_1577475283.png" class="img-fluid">
-                                                        </a>
-                                                        <div class="proposal-card-caption"><!--- proposal-card-caption Starts --->
-                                                                <div class="proposal-seller-info"><!--- gig-seller-info Starts --->
-                                                                        <span class="fit-avatar s24">
-			<img src="#user_images/B4EE3558-4937-48B9-B885-0840AC0AA7BF_1565365551.png" class="rounded-circle" width="32" height="32">
-		</span>
-                                                                        <div class="seller-info-wrapper">
-                                                                                <a href="#david0119" class="seller-name">david0119</a>
-                                                                                <div class="gig-seller-tooltip">
-                                                                                        New Seller	    </div>
-                                                                        </div>
-                                                                </div><!--- gig-seller-info Ends --->
-                                                                <a href="#proposals/david0119/create-a-new-tecnology" class="proposal-link-main js-proposal-card-imp-data">
-                                                                        <h3>create a new tecnology</h3>
-                                                                </a>
-                                                                <div class="rating-badges-container">
-		<span class="proposal-rating">
-		<svg class="fit-svg-icon full_star" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg" width="15" height="15"><path d="M1728 647q0 22-26 48l-363 354 86 500q1 7 1 20 0 21-10.5 35.5t-30.5 14.5q-19 0-40-12l-449-236-449 236q-22 12-40 12-21 0-31.5-14.5t-10.5-35.5q0-6 2-20l86-500-364-354q-25-27-25-48 0-37 56-46l502-73 225-455q19-41 49-41t49 41l225 455 502 73q56 9 56 46z"></path></svg>
-		<span>
-		<strong>0.0</strong>
-		(0)
-		</span>
-		</span>
-                                                                </div>
-                                                        </div><!--- proposal-card-caption Ends --->
-                                                        <footer class="proposal-card-footer"><!--- proposal-card-footer Starts --->
-                                                                <div class="proposal-fav">
-                                                                        <a class="icn-list proposal-offer" data-id="506">
-                                                                                <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 497.68 497.68" style="enable-background:new 0 0 497.68 497.68;" data-toggle="tooltip" data-placement="top" title="" data-original-title="Affiliate Link">
-
-                                                                                        <path style="fill:#F2B233;" d="M464.04,404.82c0,97.6-96,92-215.2,92s-215.2,4.8-215.2-92c0-97.6,96-260,215.2-260
-	C368.04,145.62,464.04,308.02,464.04,404.82z"></path>
-                                                                                        <path style="fill:#DD981D;" d="M248.84,145.62c119.2,0,215.2,162.4,215.2,260s-96,92-215.2,92"></path>
-                                                                                        <path style="fill:#F2B233;" d="M144.04,44.82c0-47.2,47.2-44.8,104.8-44.8s104.8-2.4,104.8,44.8s-47.2,126.4-104.8,126.4
-	S144.04,92.02,144.04,44.82z"></path>
-                                                                                        <path style="fill:#DD981D;" d="M248.84,0.02c57.6,0,104.8-2.4,104.8,44.8s-47.2,126.4-104.8,126.4"></path>
-                                                                                        <path style="fill:#04AF76;" d="M340.84,154.42c0,8-6.4,14.4-14.4,14.4h-155.2c-8,0-14.4-6.4-14.4-14.4v-4c0-8,6.4-14.4,14.4-14.4
-	h156c8,0,14.4,6.4,14.4,14.4v4H340.84z"></path>
-                                                                                        <path style="fill:#008C61;" d="M168.84,136.82h158.4c8,0,14.4,6.4,14.4,14.4v4c0,8-8,14.4-16,14.4"></path>
-                                                                                        <circle style="fill:#04AF76;" cx="248.84" cy="339.22" r="96"></circle>
-                                                                                        <path style="fill:#008C61;" d="M180.84,271.22c37.6-37.6,98.4-37.6,136,0s37.6,98.4,0,136"></path>
-                                                                                        <path style="fill:#FFF6E1;" d="M240.84,416.82v-20c-16-0.8-24.8-4-32-8l4.8-21.6c8,4,18.4,8,30.4,8c10.4,0,17.6-4,17.6-11.2
-	s-5.6-11.2-20-16c-20-6.4-32.8-16-32.8-33.6c0-16,7.2-28.8,31.2-32.8v-16.8h16v16c16,0.8,21.6,3.2,27.2,6.4l-4.8,20.8
-	c-4.8-2.4-12.8-6.4-26.4-6.4c-12,0-16,4.8-16,10.4c0,6.4,6.4,9.6,22.4,16c21.6,8,30.4,17.6,30.4,34.4s-8.8,30.4-32.8,34.4v20H240.84
-	z"></path>
-                                                                                        <g>
-                                                                                                <path style="fill:#FFEEBD;" d="M248.84,264.82v36.8c0,0,2.4,0,4,0c13.6,0,21.6,4,26.4,6.4l4.8-20.8c-6.4-3.2-11.2-6.4-27.2-6.4v-16
-		H248.84z"></path>
-                                                                                                <path style="fill:#FFEEBD;" d="M259.24,327.22c-4-1.6-8-3.2-10.4-4v27.2c8,4,12.8,8,12.8,13.6c0,6.4-4.8,9.6-12.8,11.2v41.6h8
-		v-20.8c24-4,32.8-17.6,32.8-34.4C289.64,344.82,280.84,335.22,259.24,327.22z"></path>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                </svg>
-                                                                        </a>
-
-
-                                                                        <i data-id="506" href="#" class="fa fa-heart proposal-favorite dil1" data-toggle="tooltip" data-placement="top" title="" data-original-title="Favorite"></i>
-                                                                </div>
-                                                                <div class="proposal-price">
-                                                                        <a><small>STARTING AT</small>$5</a>
-                                                                </div>
-                                                        </footer><!--- proposal-card-footer Ends --->
-                                                </div><!--- proposal-card-base mp-proposal-card Ends --->        </div>
-                                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 mb-3 pr-lg-1">
-                                                <div class="proposal-card-base mp-proposal-card"><!--- proposal-card-base mp-proposal-card Starts --->
-                                                        <a href="#proposals/kingsg/i-will-develop-a-website">
-                                                                <img src="#proposals/proposal_files/mobile-message-logo_1574990510.png" class="img-fluid">
-                                                        </a>
-                                                        <div class="proposal-card-caption"><!--- proposal-card-caption Starts --->
-                                                                <div class="proposal-seller-info"><!--- gig-seller-info Starts --->
-                                                                        <span class="fit-avatar s24">
-			<img src="#user_images/man-wearing-green-camouflage-crew-neck-t-shirt-698547_1575486706.png" class="rounded-circle" width="32" height="32">
-		</span>
-                                                                        <div class="seller-info-wrapper">
-                                                                                <a href="#kingsg" class="seller-name">kingsg</a>
-                                                                                <div class="gig-seller-tooltip">
-                                                                                        New Seller	    </div>
-                                                                        </div>
-                                                                </div><!--- gig-seller-info Ends --->
-                                                                <a href="#proposals/kingsg/i-will-develop-a-website" class="proposal-link-main js-proposal-card-imp-data">
-                                                                        <h3>I will develop a website</h3>
-                                                                </a>
-                                                                <div class="rating-badges-container">
-		<span class="proposal-rating">
-		<svg class="fit-svg-icon full_star" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg" width="15" height="15"><path d="M1728 647q0 22-26 48l-363 354 86 500q1 7 1 20 0 21-10.5 35.5t-30.5 14.5q-19 0-40-12l-449-236-449 236q-22 12-40 12-21 0-31.5-14.5t-10.5-35.5q0-6 2-20l86-500-364-354q-25-27-25-48 0-37 56-46l502-73 225-455q19-41 49-41t49 41l225 455 502 73q56 9 56 46z"></path></svg>
-		<span>
-		<strong>0.0</strong>
-		(0)
-		</span>
-		</span>
-                                                                </div>
-                                                        </div><!--- proposal-card-caption Ends --->
-                                                        <footer class="proposal-card-footer"><!--- proposal-card-footer Starts --->
-                                                                <div class="proposal-fav">
-
-
-                                                                        <i data-id="419" href="#" class="fa fa-heart proposal-favorite dil1" data-toggle="tooltip" data-placement="top" title="" data-original-title="Favorite"></i>
-                                                                </div>
-                                                                <div class="proposal-price">
-                                                                        <a><small>STARTING AT</small>$50</a>
-                                                                </div>
-                                                        </footer><!--- proposal-card-footer Ends --->
-                                                </div><!--- proposal-card-base mp-proposal-card Ends --->        </div>
-                                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 mb-3 pr-lg-1">
-                                                <div class="proposal-card-base mp-proposal-card"><!--- proposal-card-base mp-proposal-card Starts --->
-                                                        <a href="#proposals/Karthikdv/i-will-create-logo-designs">
-                                                                <img src="#proposals/proposal_files/Screenshot_2019-08-26-22-53-43-83_1570818802.png" class="img-fluid">
-                                                        </a>
-                                                        <div class="proposal-card-caption"><!--- proposal-card-caption Starts --->
-                                                                <div class="proposal-seller-info"><!--- gig-seller-info Starts --->
-                                                                        <span class="fit-avatar s24">
-			<img src="#user_images/118129000935047725032.jpg" class="rounded-circle" width="32" height="32">
-		</span>
-                                                                        <div class="seller-info-wrapper">
-                                                                                <a href="#Karthikdv" class="seller-name">Karthikdv</a>
-                                                                                <div class="gig-seller-tooltip">
-                                                                                        New Seller	    </div>
-                                                                        </div>
-                                                                </div><!--- gig-seller-info Ends --->
-                                                                <a href="#proposals/Karthikdv/i-will-create-logo-designs" class="proposal-link-main js-proposal-card-imp-data">
-                                                                        <h3>I will create logo designs</h3>
-                                                                </a>
-                                                                <div class="rating-badges-container">
-		<span class="proposal-rating">
-		<svg class="fit-svg-icon full_star" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg" width="15" height="15"><path d="M1728 647q0 22-26 48l-363 354 86 500q1 7 1 20 0 21-10.5 35.5t-30.5 14.5q-19 0-40-12l-449-236-449 236q-22 12-40 12-21 0-31.5-14.5t-10.5-35.5q0-6 2-20l86-500-364-354q-25-27-25-48 0-37 56-46l502-73 225-455q19-41 49-41t49 41l225 455 502 73q56 9 56 46z"></path></svg>
-		<span>
-		<strong>0.0</strong>
-		(0)
-		</span>
-		</span>
-                                                                </div>
-                                                        </div><!--- proposal-card-caption Ends --->
-                                                        <footer class="proposal-card-footer"><!--- proposal-card-footer Starts --->
-                                                                <div class="proposal-fav">
-                                                                        <a class="icn-list proposal-offer" data-id="241">
-                                                                                <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 497.68 497.68" style="enable-background:new 0 0 497.68 497.68;" data-toggle="tooltip" data-placement="top" title="" data-original-title="Affiliate Link">
-
-                                                                                        <path style="fill:#F2B233;" d="M464.04,404.82c0,97.6-96,92-215.2,92s-215.2,4.8-215.2-92c0-97.6,96-260,215.2-260
-	C368.04,145.62,464.04,308.02,464.04,404.82z"></path>
-                                                                                        <path style="fill:#DD981D;" d="M248.84,145.62c119.2,0,215.2,162.4,215.2,260s-96,92-215.2,92"></path>
-                                                                                        <path style="fill:#F2B233;" d="M144.04,44.82c0-47.2,47.2-44.8,104.8-44.8s104.8-2.4,104.8,44.8s-47.2,126.4-104.8,126.4
-	S144.04,92.02,144.04,44.82z"></path>
-                                                                                        <path style="fill:#DD981D;" d="M248.84,0.02c57.6,0,104.8-2.4,104.8,44.8s-47.2,126.4-104.8,126.4"></path>
-                                                                                        <path style="fill:#04AF76;" d="M340.84,154.42c0,8-6.4,14.4-14.4,14.4h-155.2c-8,0-14.4-6.4-14.4-14.4v-4c0-8,6.4-14.4,14.4-14.4
-	h156c8,0,14.4,6.4,14.4,14.4v4H340.84z"></path>
-                                                                                        <path style="fill:#008C61;" d="M168.84,136.82h158.4c8,0,14.4,6.4,14.4,14.4v4c0,8-8,14.4-16,14.4"></path>
-                                                                                        <circle style="fill:#04AF76;" cx="248.84" cy="339.22" r="96"></circle>
-                                                                                        <path style="fill:#008C61;" d="M180.84,271.22c37.6-37.6,98.4-37.6,136,0s37.6,98.4,0,136"></path>
-                                                                                        <path style="fill:#FFF6E1;" d="M240.84,416.82v-20c-16-0.8-24.8-4-32-8l4.8-21.6c8,4,18.4,8,30.4,8c10.4,0,17.6-4,17.6-11.2
-	s-5.6-11.2-20-16c-20-6.4-32.8-16-32.8-33.6c0-16,7.2-28.8,31.2-32.8v-16.8h16v16c16,0.8,21.6,3.2,27.2,6.4l-4.8,20.8
-	c-4.8-2.4-12.8-6.4-26.4-6.4c-12,0-16,4.8-16,10.4c0,6.4,6.4,9.6,22.4,16c21.6,8,30.4,17.6,30.4,34.4s-8.8,30.4-32.8,34.4v20H240.84
-	z"></path>
-                                                                                        <g>
-                                                                                                <path style="fill:#FFEEBD;" d="M248.84,264.82v36.8c0,0,2.4,0,4,0c13.6,0,21.6,4,26.4,6.4l4.8-20.8c-6.4-3.2-11.2-6.4-27.2-6.4v-16
-		H248.84z"></path>
-                                                                                                <path style="fill:#FFEEBD;" d="M259.24,327.22c-4-1.6-8-3.2-10.4-4v27.2c8,4,12.8,8,12.8,13.6c0,6.4-4.8,9.6-12.8,11.2v41.6h8
-		v-20.8c24-4,32.8-17.6,32.8-34.4C289.64,344.82,280.84,335.22,259.24,327.22z"></path>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                </svg>
-                                                                        </a>
-
-
-                                                                        <i data-id="241" href="#" class="fa fa-heart proposal-favorite dil1" data-toggle="tooltip" data-placement="top" title="" data-original-title="Favorite"></i>
-                                                                </div>
-                                                                <div class="proposal-price">
-                                                                        <a><small>STARTING AT</small>$30</a>
-                                                                </div>
-                                                        </footer><!--- proposal-card-footer Ends --->
-                                                </div><!--- proposal-card-base mp-proposal-card Ends --->        </div>
-                                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 mb-3 pr-lg-1">
-                                                <div class="proposal-card-base mp-proposal-card"><!--- proposal-card-base mp-proposal-card Starts --->
-                                                        <a href="#proposals/jMusArchProd/get-full-hq-jmusarchproductions-electricacoustic-professional-drums">
-                                                                <img src="#proposals/proposal_files/New Project_1563085545.png" class="img-fluid">
-                                                        </a>
-                                                        <div class="proposal-card-caption"><!--- proposal-card-caption Starts --->
-                                                                <div class="proposal-seller-info"><!--- gig-seller-info Starts --->
-                                                                        <span class="fit-avatar s24">
-			<img src="#user_images/jmusarch logo hashtag 2018_1562782150.png" class="rounded-circle" width="32" height="32">
-		</span>
-                                                                        <div class="seller-info-wrapper">
-                                                                                <a href="#jMusArchProd" class="seller-name">jMusArchProd</a>
-                                                                                <div class="gig-seller-tooltip">
-                                                                                        New Seller	    </div>
-                                                                        </div>
-                                                                </div><!--- gig-seller-info Ends --->
-                                                                <a href="#proposals/jMusArchProd/get-full-hq-jmusarchproductions-electricacoustic-professional-drums" class="proposal-link-main js-proposal-card-imp-data">
-                                                                        <h3>GET FULL HQ ELECTRIC/ACOUSTIC PRO DRUMS #jMusArch.Prod MusicianDrummer</h3>
-                                                                </a>
-                                                                <div class="rating-badges-container">
-		<span class="proposal-rating">
-		<svg class="fit-svg-icon full_star" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg" width="15" height="15"><path d="M1728 647q0 22-26 48l-363 354 86 500q1 7 1 20 0 21-10.5 35.5t-30.5 14.5q-19 0-40-12l-449-236-449 236q-22 12-40 12-21 0-31.5-14.5t-10.5-35.5q0-6 2-20l86-500-364-354q-25-27-25-48 0-37 56-46l502-73 225-455q19-41 49-41t49 41l225 455 502 73q56 9 56 46z"></path></svg>
-		<span>
-		<strong>0.0</strong>
-		(0)
-		</span>
-		</span>
-                                                                </div>
-                                                        </div><!--- proposal-card-caption Ends --->
-                                                        <footer class="proposal-card-footer"><!--- proposal-card-footer Starts --->
-                                                                <div class="proposal-fav">
-                                                                        <a class="icn-list proposal-offer" data-id="46">
-                                                                                <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 497.68 497.68" style="enable-background:new 0 0 497.68 497.68;" data-toggle="tooltip" data-placement="top" title="" data-original-title="Affiliate Link">
-
-                                                                                        <path style="fill:#F2B233;" d="M464.04,404.82c0,97.6-96,92-215.2,92s-215.2,4.8-215.2-92c0-97.6,96-260,215.2-260
-	C368.04,145.62,464.04,308.02,464.04,404.82z"></path>
-                                                                                        <path style="fill:#DD981D;" d="M248.84,145.62c119.2,0,215.2,162.4,215.2,260s-96,92-215.2,92"></path>
-                                                                                        <path style="fill:#F2B233;" d="M144.04,44.82c0-47.2,47.2-44.8,104.8-44.8s104.8-2.4,104.8,44.8s-47.2,126.4-104.8,126.4
-	S144.04,92.02,144.04,44.82z"></path>
-                                                                                        <path style="fill:#DD981D;" d="M248.84,0.02c57.6,0,104.8-2.4,104.8,44.8s-47.2,126.4-104.8,126.4"></path>
-                                                                                        <path style="fill:#04AF76;" d="M340.84,154.42c0,8-6.4,14.4-14.4,14.4h-155.2c-8,0-14.4-6.4-14.4-14.4v-4c0-8,6.4-14.4,14.4-14.4
-	h156c8,0,14.4,6.4,14.4,14.4v4H340.84z"></path>
-                                                                                        <path style="fill:#008C61;" d="M168.84,136.82h158.4c8,0,14.4,6.4,14.4,14.4v4c0,8-8,14.4-16,14.4"></path>
-                                                                                        <circle style="fill:#04AF76;" cx="248.84" cy="339.22" r="96"></circle>
-                                                                                        <path style="fill:#008C61;" d="M180.84,271.22c37.6-37.6,98.4-37.6,136,0s37.6,98.4,0,136"></path>
-                                                                                        <path style="fill:#FFF6E1;" d="M240.84,416.82v-20c-16-0.8-24.8-4-32-8l4.8-21.6c8,4,18.4,8,30.4,8c10.4,0,17.6-4,17.6-11.2
-	s-5.6-11.2-20-16c-20-6.4-32.8-16-32.8-33.6c0-16,7.2-28.8,31.2-32.8v-16.8h16v16c16,0.8,21.6,3.2,27.2,6.4l-4.8,20.8
-	c-4.8-2.4-12.8-6.4-26.4-6.4c-12,0-16,4.8-16,10.4c0,6.4,6.4,9.6,22.4,16c21.6,8,30.4,17.6,30.4,34.4s-8.8,30.4-32.8,34.4v20H240.84
-	z"></path>
-                                                                                        <g>
-                                                                                                <path style="fill:#FFEEBD;" d="M248.84,264.82v36.8c0,0,2.4,0,4,0c13.6,0,21.6,4,26.4,6.4l4.8-20.8c-6.4-3.2-11.2-6.4-27.2-6.4v-16
-		H248.84z"></path>
-                                                                                                <path style="fill:#FFEEBD;" d="M259.24,327.22c-4-1.6-8-3.2-10.4-4v27.2c8,4,12.8,8,12.8,13.6c0,6.4-4.8,9.6-12.8,11.2v41.6h8
-		v-20.8c24-4,32.8-17.6,32.8-34.4C289.64,344.82,280.84,335.22,259.24,327.22z"></path>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                        <g>
-                                                                                        </g>
-                                                                                </svg>
-                                                                        </a>
-
-
-                                                                        <i data-id="46" href="#" class="fa fa-heart proposal-favorite dil1" data-toggle="tooltip" data-placement="top" title="" data-original-title="Favorite"></i>
-                                                                </div>
-                                                                <div class="proposal-price">
-                                                                        <a><small>STARTING AT</small>$70</a>
-                                                                </div>
-                                                        </footer><!--- proposal-card-footer Ends --->
-                                                </div><!--- proposal-card-base mp-proposal-card Ends --->        </div>
-                                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 mb-3 pr-lg-1">
-                                                <div class="proposal-card-base mp-proposal-card"><!--- proposal-card-base mp-proposal-card Starts --->
-                                                        <a href="#proposals/rewedfv/fghjkl">
-                                                                <img src="#proposals/proposal_files/convert_1574807701.png" class="img-fluid">
-                                                        </a>
-                                                        <div class="proposal-card-caption"><!--- proposal-card-caption Starts --->
-                                                                <div class="proposal-seller-info"><!--- gig-seller-info Starts --->
-                                                                        <span class="fit-avatar s24">
-			<img src="#user_images/empty-image.png" class="rounded-circle" width="32" height="32">
-		</span>
-                                                                        <div class="seller-info-wrapper">
-                                                                                <a href="#rewedfv" class="seller-name">rewedfv</a>
-                                                                                <div class="gig-seller-tooltip">
-                                                                                        New Seller	    </div>
-                                                                        </div>
-                                                                </div><!--- gig-seller-info Ends --->
-                                                                <a href="#proposals/rewedfv/fghjkl" class="proposal-link-main js-proposal-card-imp-data">
-                                                                        <h3>fghjkl</h3>
-                                                                </a>
-                                                                <div class="rating-badges-container">
-		<span class="proposal-rating">
-		<svg class="fit-svg-icon full_star" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg" width="15" height="15"><path d="M1728 647q0 22-26 48l-363 354 86 500q1 7 1 20 0 21-10.5 35.5t-30.5 14.5q-19 0-40-12l-449-236-449 236q-22 12-40 12-21 0-31.5-14.5t-10.5-35.5q0-6 2-20l86-500-364-354q-25-27-25-48 0-37 56-46l502-73 225-455q19-41 49-41t49 41l225 455 502 73q56 9 56 46z"></path></svg>
-		<span>
-		<strong>0.0</strong>
-		(0)
-		</span>
-		</span>
-                                                                </div>
-                                                        </div><!--- proposal-card-caption Ends --->
-                                                        <footer class="proposal-card-footer"><!--- proposal-card-footer Starts --->
-                                                                <div class="proposal-fav">
-
-
-                                                                        <i data-id="404" href="#" class="fa fa-heart proposal-favorite dil1" data-toggle="tooltip" data-placement="top" title="" data-original-title="Favorite"></i>
-                                                                </div>
-                                                                <div class="proposal-price">
-                                                                        <a><small>STARTING AT</small>$5</a>
                                                                 </div>
                                                         </footer><!--- proposal-card-footer Ends --->
                                                 </div><!--- proposal-card-base mp-proposal-card Ends --->        </div>

@@ -59,7 +59,14 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=255)
      */
     private $hash;
-
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $confirmationToken;
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $enabled = false;
     /**
      *@Assert\EqualTo(propertyPath="hash", message="Vous n'avez pas correctement confirmé votre mot de passe !")
      *
@@ -274,6 +281,38 @@ class User implements UserInterface
     public function getUserRoles(): Collection
     {
         return $this->userRoles;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getConfirmationToken()
+    {
+        return $this->confirmationToken;
+    }
+
+    /**
+     * @param mixed $confirmationToken
+     */
+    public function setConfirmationToken($confirmationToken): void
+    {
+        $this->confirmationToken = $confirmationToken;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEnabled()
+    {
+        return $this->enabled;
+    }
+
+    /**
+     * @param mixed $enabled
+     */
+    public function setEnabled($enabled): void
+    {
+        $this->enabled = $enabled;
     }
 
     public function addUserRole(Role $userRole): self
