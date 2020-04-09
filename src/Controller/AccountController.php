@@ -2,11 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\ForgotPassword;
 use App\Entity\Language;
 use App\Entity\Skill;
 use App\Entity\User;
 use App\Form\AccountType;
 use App\Entity\PasswordUpdate;
+use App\Form\ForgotPasswordType;
 use App\Form\LangueType;
 use App\Form\RegistrationType;
 use App\Form\PasswordUpdateType;
@@ -24,10 +26,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\Encoder\XmlEncoder;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
-use Symfony\Component\Serializer\Serializer;
 
 class AccountController extends AbstractController
 {
@@ -205,8 +203,77 @@ class AccountController extends AbstractController
 
         ]);
     }
+    /**
+     * @Route("/mot-de-passe-oublier", name="forgotten_password")
+     * @param Request $request
+     * @param MailerService $mailerService
+     * @return Response
+     * @throws Exception
+     */
+    public function forgottenPassword(Request $request, MailerService $mailerService): Response
+    {
+        if($request->isMethod('POST')) {
+            $email = $request->get('forgot_email');
+            $user = $this->getDoctrine()->getRepository(User::class)->findOneBy(['email' => $email]);
+            if($user === null) {
+                $this->addFlash('warning', 'utilisateur non trouvé');
+                return $this->redirectToRoute('account_register');
+            }
+            /**
+             * @var $user User
+             */
+            $user->setTokenPassword($this->generateToken());
+            $user->setCreatedTokenPasswordAt(new \DateTime());
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
+            $token = $user->getTokenPassword();
+            $email = $user->getEmail();
+            $urlConfirm = $request->headers->get('host');
+            $mailerService->sendForgotPassword($urlConfirm,$token, $email, 'forgotten_password.html.twig');
+            $this->addFlash('success', 'Un mail vous a été envoyé pour réinitialiser votre mot de pass');
+
+            return $this->redirectToRoute("account_login");
+        }
+        return $this->render('account/login.html.twig');
+    }
 
     /**
+     * @Route("/account/resetpasswword/{token}/{username}", name="reset_password")
+     * @param Request $request
+     * @param $token
+     * @param UserPasswordEncoderInterface $encoder
+     * @return Response
+     */
+    public function resetPassword(Request $request, $token, UserPasswordEncoderInterface $encoder): Response
+    {
+        $em = $this->getDoctrine()->getManager();
+        $forgotPassword = new ForgotPassword();
+        $form = $this->createForm(ForgotPasswordType::class, $forgotPassword);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $user = $em->getRepository(User::class)->findOneBy(['tokenPassword' => $token]);
+            if ($user === null) {
+                $this->addFlash('not-user-exist', 'utilisateur non trouvé');
+                return $this->redirectToRoute('account_register');
+            }
+            $user->setTokenPassword(null);
+            $user->setCreatedTokenPasswordAt(null);
+            $newPassword = $forgotPassword->getNewPassword();
+            $hash = $encoder->encodePassword($user, $newPassword);
+
+            $user->setHash($hash);
+            $em->flush();
+            return $this->redirectToRoute('account_login');
+        }
+        return $this->render('account/reset-password.html.twig', [
+            'form' => $form->createView(),
+            'categories_yes' => $this->categories_yes,
+
+        ]);
+    }
+
+        /**
      * @Route("/delete/skill/{id}",name="delete_skill")
      * @IsGranted("ROLE_USER")
      * @param Skill $skill

@@ -48,4 +48,25 @@ class MailerService
         return $code;
     }
 
+    public function sendForgotPassword($baseUrl,$token, $to, $template){
+
+        $url = 'http://'.$baseUrl.'/account/resetpasswword/'.$token.'/'.$to ;
+        $message = (new \Swift_Message('Réinitialisation de mot de pass'))
+            ->setFrom('inscription@lenil.com')
+            ->setTo($to)
+            ->setBody(
+                $this->environment->render(
+                    'emails/'.$template,
+                    [
+                        'username' => $to,
+                        'urlConfirm' => $url
+                    ]
+                ),
+                'text/html'
+            );
+
+        $code = $this->mailer->send($message);
+        return $code;
+    }
+
 }
