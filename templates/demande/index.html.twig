@@ -1,0 +1,416 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des demandes{% endblock %}
+
+{% block body %}
+    <div class="container-fluid mt-5">
+
+        <div class="row">
+
+            <div class="col-md-12 mb-4">
+
+                <h1 class="pull-left"> Gestion de mes demandes </h1>
+
+                <a href="{{ path('demande_new') }}" class="btn btn-success pull-right">
+                    <i class="fa fa-plus-circle"></i> Poster une nouvelle demande
+                </a>
+
+            </div>
+
+            <div class="col-md-12">
+
+                <ul class="nav nav-tabs flex-column flex-sm-row  mt-4">
+
+
+                    <li class="nav-item">
+
+                        <a href="#active" data-toggle="tab" class="nav-link make-black active">
+
+                            Demande active <span class="badge badge-success">{% if demandesActives is not empty %}{{ demandesActives | length }} {% else %} 0 {% endif %}</span>
+
+                        </a>
+
+                    </li>
+
+
+                    <li class="nav-item">
+
+                        <a href="#pause" data-toggle="tab" class="nav-link make-black">
+
+                            Demandes suspendues <span class="badge badge-success">{% if demandesSuspendues is not empty %}{{ demandesSuspendues | length }} {% else %} 0 {% endif %}</span>
+
+                        </a>
+
+                    </li>
+
+
+
+                    <li class="nav-item">
+
+                        <a href="#pending" data-toggle="tab" class="nav-link make-black">
+
+                            En attente de validation <span class="badge badge-success">{% if demandesEncours is not empty %}{{ demandesEncours | length }} {% else %} 0 {% endif %}</span>
+
+                        </a>
+
+                    </li>
+
+
+                    <li class="nav-item">
+
+                        <a href="#unapproved" data-toggle="tab" class="nav-link make-black">
+
+                            Désapprouvé <span class="badge badge-success">{% if demandesAnnulees is not empty %}{{ demandesAnnulees |length}} {% else %} 0 {% endif %}</span>
+
+                        </a>
+
+                    </li>
+
+                </ul>
+
+                <div class="tab-content mt-4">
+
+                    <div id="active" class="tab-pane fade active show">
+
+                        <div class="table-responsive box-table">
+
+                            <table class="table table-bordered">
+
+                                <thead>
+
+                                <tr>
+
+                                    <th>Title</th>
+
+                                    <th>Description</th>
+
+                                    <th>Date</th>
+
+                                    <th>Offres</th>
+
+                                    <th>Budget</th>
+
+                                    <th>Actions</th>
+
+                                </tr>
+
+                                </thead>
+
+                                <tbody>
+                                {% for demande in demandesActives %}
+                                    <tr>
+                                        <td> {{ demande.title }} </td>
+
+                                        <td>{{ demande.description }}</td>
+
+                                        <td>{{ demande.createdAt | date('m/d/Y') }}</td>
+
+                                        <td>{% if demande.offers is not empty %}{{ demande.offers |length}} {% else %} 0 {% endif %}</td>
+                                        <td class="text-success">{{ demande.budget }} €</td>
+                                        <td class="text-center">
+
+                                            <div class="dropdown">
+
+                                                <button class="btn btn-success dropdown-toggle" data-toggle="dropdown"></button>
+
+                                                <div class="dropdown-menu">
+
+                                                    <a href="view_offers?request_id=235" target="blank" class="dropdown-item">
+                                                        Voires les offres
+                                                    </a>
+
+                                                    <a href="pause_request?request_id=235" class="dropdown-item">
+                                                        Suspendre
+                                                    </a>
+
+                                                    <a href="{{ path('demande_delete', {id: demande.id}) }}" class="dropdown-item">
+                                                        Supprimer
+                                                    </a>
+
+                                                </div>
+
+                                            </div>
+
+                                        </td>
+
+                                    </tr>
+                                {% else %}
+                                    <tr>
+                                        <td colspan="7">no records found</td>
+                                    </tr>
+                                {% endfor %}
+
+                                </tbody>
+
+
+                            </table>
+
+
+
+                        </div>
+
+
+                    </div>
+
+
+                    <div id="pause" class="tab-pane fade">
+
+                        <div class="table-responsive box-table">
+
+                            <table class="table table-bordered">
+
+                                <thead>
+
+                                <tr>
+
+                                    <th>Title</th>
+
+                                    <th>Description</th>
+
+                                    <th>Date</th>
+
+                                    <th>Offres</th>
+
+                                    <th>Budget</th>
+
+                                    <th>Actions</th>
+
+                                </tr>
+
+                                </thead>
+
+                                <tbody>
+                                {% for demande in demandesSuspendues %}
+                                    <tr>
+                                        <td> {{ demande.title }} </td>
+
+                                        <td>{{ demande.description }}</td>
+
+                                        <td>{{ demande.createdAt | date('m/d/Y') }}</td>
+
+                                        <td>{% if demande.offers is not empty %}{{ demande.offers |length}} {% else %} 0 {% endif %}</td>
+                                        <td class="text-success">{{ demande.budget }} €</td>
+                                        <td class="text-center">
+
+                                            <div class="dropdown">
+
+                                                <button class="btn btn-success dropdown-toggle" data-toggle="dropdown"></button>
+
+                                                <div class="dropdown-menu">
+
+                                                    <a href="view_offers?request_id=235" target="blank" class="dropdown-item">
+                                                        Voires les offres
+                                                    </a>
+
+                                                    <a href="pause_request?request_id=235" class="dropdown-item">
+                                                        Suspendre
+                                                    </a>
+
+                                                    <a href="{{ path('demande_delete', {id: demande.id}) }}" class="dropdown-item">
+                                                        Supprimer
+                                                    </a>
+
+                                                </div>
+
+                                            </div>
+
+                                        </td>
+
+                                    </tr>
+                                {% else %}
+                                    <tr>
+                                        <td colspan="7">no records found</td>
+                                    </tr>
+                                {% endfor %}
+
+                                </tbody>
+
+                            </table>
+
+                            <center><h3 class="pt-4 pb-4"><i class="fa fa-smile-o"></i> You currently have no requests paused.</h3></center>
+                        </div>
+
+                    </div>
+
+
+
+                    <div id="pending" class="tab-pane fade">
+
+                        <div class="table-responsive box-table">
+
+                            <table class="table table-bordered">
+
+                                <thead>
+
+                                <tr>
+
+                                    <th>Title</th>
+
+                                    <th>Description</th>
+
+                                    <th>Date</th>
+
+                                    <th>Offers</th>
+
+                                    <th>Budget</th>
+
+                                    <th>Actions</th>
+
+                                </tr>
+
+                                </thead>
+
+                                <tbody>
+
+                                {% for demande in demandesEncours %}
+                                    <tr>
+                                        <td> {{ demande.title }} </td>
+
+                                        <td>{{ demande.description }}</td>
+
+                                        <td>{{ demande.createdAt | date('m/d/Y') }}</td>
+
+                                        <td>{% if demande.offers is not empty %}{{ demande.offers |length}} {% else %} 0 {% endif %}</td>
+                                        <td class="text-success">{{ demande.budget }} €</td>
+                                        <td class="text-center">
+
+                                            <div class="dropdown">
+
+                                                <button class="btn btn-success dropdown-toggle" data-toggle="dropdown"></button>
+
+                                                <div class="dropdown-menu">
+
+                                                    <a href="view_offers?request_id=235" target="blank" class="dropdown-item">
+                                                        Voires les offres
+                                                    </a>
+
+                                                    <a href="pause_request?request_id=235" class="dropdown-item">
+                                                        Suspendre
+                                                    </a>
+
+                                                    <a href="{{ path('demande_delete', {id: demande.id}) }}" class="dropdown-item">
+                                                        Supprimer
+                                                    </a>
+
+                                                </div>
+
+                                            </div>
+
+                                        </td>
+
+                                    </tr>
+                                {% else %}
+                                    <tr>
+                                        <td colspan="7">no records found</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+
+                            </table>
+
+                            <center><h3 class="pt-4 pb-4"><i class="fa fa-smile-o"></i> You currently have no requests pending.</h3></center>
+                        </div>
+
+                    </div>
+
+
+
+                    <div id="unapproved" class="tab-pane fade">
+
+                        <div class="table-responsive box-table">
+
+                            <table class="table table-bordered">
+
+                                <thead>
+
+                                <tr>
+
+                                    <th>Title</th>
+
+                                    <th>Description</th>
+
+                                    <th>Date</th>
+
+                                    <th>Offers</th>
+
+                                    <th>Budget</th>
+
+                                    <th>Actions</th>
+
+                                </tr>
+
+                                </thead>
+
+                                <tbody>
+                                {% for demande in demandesAnnulees %}
+                                    <tr>
+                                        <td> {{ demande.title }} </td>
+
+                                        <td>{{ demande.description }}</td>
+
+                                        <td>   <td>{{ demande.createdAt | date('m/d/Y') }}</td>
+
+
+                                        <td>{% if demande.offers is not empty %}{{ demande.offers |length}} {% else %} 0 {% endif %}</td>
+                                        <td class="text-success">{{ demande.budget }} €</td>
+                                        <td class="text-center">
+
+                                            <div class="dropdown">
+
+                                                <button class="btn btn-success dropdown-toggle" data-toggle="dropdown"></button>
+
+                                                <div class="dropdown-menu">
+
+                                                    <a href="view_offers?request_id=235" target="blank" class="dropdown-item">
+                                                        Voires les offres
+                                                    </a>
+
+                                                    <a href="pause_request?request_id=235" class="dropdown-item">
+                                                        Suspendre
+                                                    </a>
+
+                                                    <a href="{{ path('demande_delete', {id: demande.id}) }}" class="dropdown-item">
+                                                        Supprimer
+                                                    </a>
+
+                                                </div>
+
+                                            </div>
+
+                                        </td>
+
+                                    </tr>
+                                {% else %}
+                                    <tr>
+                                        <td colspan="7">no records found</td>
+                                    </tr>
+                                {% endfor %}
+
+                                </tbody>
+
+                            </table>
+
+                            <center><h3 class="pt-4 pb-4"><i class="fa fa-smile-o"></i> You currently have no unapproved requests.</h3></center>
+                        </div>
+
+                    </div>
+
+
+
+
+
+
+                </div>
+
+
+
+
+            </div>
+
+
+        </div>
+
+
+
+
+    </div>{% endblock %}
