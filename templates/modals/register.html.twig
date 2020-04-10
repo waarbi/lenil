@@ -1,0 +1,59 @@
+<div class="modal fade" id="register-modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <!-- modal-header Starts -->
+                <i class="fa fa-user-plus"></i>
+                <h5 class="modal-title"> Register Account </h5>
+                <button class="close" data-dismiss="modal"><span>×</span></button>
+            </div>
+            <!-- modal-header Ends -->
+            <div class="modal-body">
+                <!-- modal-body Starts -->
+                <form action="" method="post" class="pb-3">
+                    <div class="form-group">
+                        <label class="form-control-label font-weight-bold"> Full Name: </label>
+                        <input type="text" class="form-control" name="name" placeholder="Enter Your Full Name" value="" required="">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label font-weight-bold"> Username: </label>
+                        <input type="text" class="form-control" name="u_name" placeholder="Enter Your Username" value="" required="">
+                        <small class="form-text text-muted">Note: You will not be able to change username once your account has been created.</small>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label font-weight-bold"> Email: </label>
+                        <input type="email" class="form-control" name="email" placeholder="Enter Email" value="" required="">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label font-weight-bold"> Password: </label>
+                        <input type="password" class="form-control" name="pass" placeholder="Enter Password" required="">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label font-weight-bold"> Confirm Password: </label>
+                        <input type="password" class="form-control" name="con_pass" placeholder="Confirm Password" required="">
+                    </div>
+                    <input type="hidden" class="form-control" name="referral" value="">
+                    <input type="hidden" name="timezone" value="60">
+                    <input type="submit" name="register" class="btn btn-success btn-block" value="Register Now">
+                </form>
+                <div class="clearfix"></div>
+                <div class="text-center">or, register with either:</div>
+                <hr class="">
+                <div class="line mt-3"><span></span></div>
+                <div class="text-center">
+                    <a href="#" onclick="window.location = 'https://www.facebook.com/v2.10/dialog/oauth?client_id=2104842466470242&amp;state=655a3a318fb011031af87b8cd0ab52c3&amp;response_type=code&amp;sdk=php-sdk-5.7.0&amp;redirect_uri=https%3A%2F%2Fwww.gigtodo.com%2Ffb-callback&amp;scope=email';" class="btn btn-primary btn-fb-connect">
+                        <i class="fa fa-facebook"></i> FACEBOOK
+                    </a>
+                    <a href="#" onclick="window.location = 'https://accounts.google.com/o/oauth2/auth?response_type=code&amp;access_type=online&amp;client_id=926378892464-07r4u47v8dh6i26kajn9rkkjs0hk5na2.apps.googleusercontent.com&amp;redirect_uri=https%3A%2F%2Fwww.gigtodo.com%2Fg-callback&amp;state&amp;scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fplus.login%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email&amp;approval_prompt=auto';" class="btn btn-danger btn-gplus-connect ">
+                        <i class="fa fa-google-plus"></i> GOOGLE
+                    </a>
+                </div>
+                <div class="clearfix"></div>
+                <div class="text-center mt-3 text-muted">
+                    Already Have An Account?          <a href="#" class="text-success" data-toggle="modal" data-target="#login-modal" data-dismiss="modal">Log In.</a>
+                </div>
+            </div>
+            <!-- modal-body Ends -->
+        </div>
+    </div>
+</div>

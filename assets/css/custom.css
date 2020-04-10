@@ -1,0 +1,24 @@
+/*
+Author Name: Pixinal Studio
+Author Email: info@pixinal.com
+Author URL: https://www.Pixinal.com
+Script Version: v1.4.1
+NB: If changes don't apply, try adding "!important" For example:
+.btn {
+    color: blue !important;
+}
+
+*/
+
+/********** Start Writing Your Own Custom CSS Code Here ***********/
+
+.btn-success:hover {
+    color: #fff;
+    background-color: #0069d9;
+    border-color: #0062cc;
+}
+#logo-nil{
+    max-width: 75px;
+    margin-top: 3px;
+    margin-left: 70px;
+}
