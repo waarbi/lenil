@@ -67,6 +67,7 @@ class DemandeController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($demande);
             $entityManager->flush();
+            $this->addFlash('success', 'La demande a été créée');
 
             return $this->redirectToRoute('demande_index');
         }
@@ -105,6 +106,7 @@ class DemandeController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
+            $this->addFlash('success', 'La demande a été bien modifiée');
 
             return $this->redirectToRoute('demande_index');
         }
@@ -127,6 +129,22 @@ class DemandeController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($demande);
             $entityManager->flush();
+        $this->addFlash('success', 'La demande a été bien supprimée');
+
+        return $this->redirectToRoute('demande_index');
+    }
+    /**
+     * @Route("/suspendre/{id}", name="demande_suspendre")
+     * @param Demande $demande
+     * @return Response
+     */
+    public function suspendreDemande(Demande $demande): Response
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $demande->setStatusId(Demande::REQUEST_STATUS_INACTIVE);
+        $entityManager->persist($demande);
+        $entityManager->flush();
+        $this->addFlash('success', 'La demande a été bien suspendue');
 
         return $this->redirectToRoute('demande_index');
     }
