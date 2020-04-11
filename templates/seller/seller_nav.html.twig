@@ -150,6 +150,14 @@
                     Inbox Messages   </a>
                 <a class="dropdown-item" href="{{ path('account_index') }}">
                     Mon Profil   </a>#}
+                <a class="dropdown-item dropdown-toggle" href="#" data-toggle="collapse" data-target="#requests">
+                    Demandes   </a>
+                <div id="requests" class="dropdown-submenu collapse">
+                    <a class="dropdown-item" href="{{ path('demande_new') }}">
+                        Faites une demande      </a>
+                    <a class="dropdown-item" href="{{ path('demande_index') }}">
+                        Gérer vos demandes      </a>
+                </div>
                 <a class="dropdown-item" href="{{ path('account_profile') }}">
                     Mes Paramètres   </a>
 
@@ -157,7 +165,7 @@
                     Mes Services   </a>
 
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="{{ path('account_logout') }}">
+                <a class="dropdown-item" id="logout-link" href="{{ path('account_logout') }}">
                     Déconnexion   </a>
             </div>
         </div></li>

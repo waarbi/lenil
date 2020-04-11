@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Demande{% endblock %}
+
+{% block body %}
+    <h1>Edit Demande</h1>
+
+    {{ include('demande/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('demande_index') }}">back to list</a>
+
+    {{ include('demande/_delete_form.html.twig') }}
+{% endblock %}
+{% block javascripts %}
+    <script>
+        $('#appbundle_demande_category').change(function () {
+            var categorySelector = $(this);
+            // Request the neighborhoods of the selected city.
+            $.ajax({
+                url: "{{ path('get_sous_category_by_category') }}",
+                type: "GET",
+                dataType: "JSON",
+                data: {
+                    catid: categorySelector.val()
+                },
+                success: function (souscategories) {
+                    var sousCategorySelect = $("#appbundle_demande_sousCategory");
+                    // Remove current options
+                    sousCategorySelect.html('');
+                    // Empty value ...
+                    sousCategorySelect.append('<option value> Sélectionner une sous catégorie de ' + categorySelector.find("option:selected").text() + ' ...</option>');
+
+                    $.each(souscategories, function (key, souscategory) {
+                        sousCategorySelect.append('<option value="' + souscategory.id + '">' + souscategory.title + '</option>');
+                    });
+                },
+                error: function (err) {
+                    alert("An error ocurred while loading data ...");
+                }
+            });
+        });
+    </script>
+{% endblock %}
