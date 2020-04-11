@@ -144,8 +144,5 @@ class SousCategory
 
         return $this;
     }
-    
-
-
 
 }

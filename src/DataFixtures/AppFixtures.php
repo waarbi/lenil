@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\Category;
+use App\Entity\Delivery;
 use App\Entity\LanguageName;
 use App\Entity\Level;
 use App\Entity\Pays;
@@ -225,6 +226,14 @@ Caricatures de dessins animés')->setDescription('It is a long established fact 
             $oneLevel = new Level();
             $oneLevel->setName($name);
             $manager->persist($oneLevel);
+        }
+
+        //Delivery
+        $deliveries = ['1 Days', '2 Days','2 Days', '3 Days','4 Days', '5 Days', '6 Days', '7 Days'];
+        foreach ($deliveries as $name){
+            $oneDelivery= new Delivery();
+            $oneDelivery->setTitle($name);
+            $manager->persist($oneDelivery);
         }
         $manager->flush();
 

@@ -1,0 +1,185 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    <link href="{{ asset('build/css/create_proposal.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block title %}Creation de service{% endblock %}
+
+{% block body %}
+    <nav id="tabs">
+        <div class="container">
+
+            <div class="breadcrumb flat mb-0 nav" role="tablist">
+                <a class="nav-link active" href="#overview">Overview</a>
+
+                <a class="nav-link d-none " href="#video">Video Settings</a>
+
+                <a class="nav-link  " href="#pricing">Pricing</a>
+
+                <a class="nav-link " href="#description">Description &amp; FAQ</a>
+                <a class="nav-link " href="#requirements">Requirements</a>
+                <a class="nav-link " href="#gallery">Gallery</a>
+                <a class="nav-link " href="#publish">Submit For Approval</a>
+            </div>
+
+        </div>
+
+    </nav>
+
+    <div class="container mt-5 mb-5"><!--- container Starts --->
+        <div class="row"><!--- row Starts --->
+            <div class="col-md-8">
+                <div class="tab-content card card-body"><!--- tab-content Starts --->
+                    <div class="tab-pane fade show active" id="overview">
+
+                        <form action="#" method="post" class="proposal-form"><!--- form Starts -->
+
+                            <div class="form-group row"><!--- form-group row Starts --->
+                                <div class="col-md-3">Proposal Title</div>
+                                <div class="col-md-9"><textarea name="proposal_title" rows="3" required="" placeholder="I Will" class="form-control"></textarea></div>
+                                <small class="form-text text-danger"></small>
+                            </div><!--- form-group row Ends --->
+
+                            <div class="form-group row"><!--- form-group row Starts --->
+                                <div class="col-md-3"> Category </div>
+                                <div class="col-md-9">
+                                    <select name="proposal_cat_id" id="category" class="form-control mb-3" required="">
+                                        {% for category in categories_yes %}
+                                            <option value="" class="hidden"> Select A Category </option>
+                                            <option value="{{ category.id }}">{{ category.title }} </option>
+                                        {% endfor %}
+                                    </select>
+                                    <small class="form-text text-danger"></small>
+                                    <select name="proposal_child_id" id="sub-category" class="form-control" required="" style="display: none;">
+                                        <option value="" class="hidden"> Select A Sub Category </option>
+                                    </select>
+                                </div>
+                            </div><!--- form-group row Ends --->
+
+                            <div class="form-group row"><!--- form-group row Starts --->
+                                <div class="col-md-3">Delivery Time</div>
+                                <div class="col-md-9">
+                                    <select name="delivery_id" class="form-control" required="">
+                                        <option value="1">1 Day</option>
+                                        <option value="2">2 Days</option>
+                                        <option value="3">3 Days</option>
+                                        <option value="4">4 Days</option>
+                                        <option value="5">5 Days</option>
+                                        <option value="6">6 Days</option>
+                                        <option value="7">7 Days</option>
+                                        <option value="8">5 minutes</option>
+                                    </select>
+                                </div>
+                                <small class="form-text text-danger"></small>
+                            </div><!--- form-group row Ends --->
+
+                            <div class="form-group row"><!--- form-group row Starts --->
+                                <div class="col-md-3">Tags</div>
+                                <div class="col-md-9">
+                                    <div class="bootstrap-tagsinput"><input type="text" placeholder=""></div><input type="text" name="proposal_tags" class="form-control sr-only" data-role="tagsinput">
+                                    <small class="form-text text-danger"></small>
+                                </div>
+                            </div><!--- form-group row Ends --->
+                            <div class="form-group text-right mb-0"><!--- form-group Starts --->
+                                <a href="view_proposals" class="btn btn-secondary">Cancel</a>
+                                <input class="btn btn-success" type="submit" name="submit" value="Save &amp; Continue">
+                            </div><!--- form-group Starts --->
+
+                        </form><!--- form Ends -->
+                    </div>
+                </div><!--- tab-content Ends --->
+            </div>
+        </div><!--- row Ends --->
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        $("#category").change(function(){
+            $("#sub-category").show();
+            var category_id = $(this).val();
+            $.ajax({
+                url:'{{ path('get_sub_category') }}',
+                method:"POST",
+                dataType: 'json',
+                data:{
+                    "category_id":category_id
+                },
+                success:function(data){
+                    $("#sub-category").html(data);
+                    console.log(data);
+                }
+            });
+        });
+        $(".proposal-form").on('submit', function(event){
+            event.preventDefault();
+            var form_data = new FormData(this);
+            form_data.append('proposal_id',591);
+            $('#wait').addClass("loader");
+            $.ajax({
+                method: "POST",
+                url: "ajax/save_proposal",
+                data: form_data,
+                async: false,cache: false,contentType: false,processData: false
+            }).done(function(data){
+                console.log(data);
+                videoOrNotVideo = data;
+                $('#wait').removeClass("loader");
+                if(data == "error"){
+                    swal({type: 'warning',text: 'You Must Need To Fill Out All Fields Before Updating The Details.'});
+                }else if(data == "error_img"){
+                    swal({type: 'warning',text: 'You Must Need To Add At Least 1 Image In Proposal To Continue.'});
+                }else if(data != "error" || data != "error_img"){
+                    swal({
+                        type: 'success',
+                        text: 'Details Saved.',
+                        timer: 1000,
+                        onOpen: function(){
+                            swal.showLoading();
+                        }
+                    }).then(function(){
+                        var section = $("input[type='hidden'][name='section']");
+                        var current_section = $("input[type='hidden'][name='section']").val();
+
+                        if(data == "video"){
+                            $('#tabs a[href="#pricing"]').addClass('d-none');
+                            $('#tabs a[href="#video"]').removeClass('d-none');
+                        }else if(data == "not-video"){
+                            $('#tabs a[href="#pricing"]').removeClass('d-none');
+                            $('#tabs a[href="#video"]').addClass('d-none');
+                        }
+
+                        if(current_section == "overview"){
+                            $('#overview').removeClass('show active');
+                            if(data == "video"){
+                                section.val("video");
+                                $('#video').addClass('show active');
+                                $('#tabs a[href="#video"]').addClass('active');
+                            }else{
+                                section.val("pricing");
+                                $('#pricing').addClass('show active');
+                                $('#tabs a[href="#pricing"]').addClass('active');
+                            }
+                        }else if(current_section == "description"){
+                            section.val("requirements");
+                            $('#description').removeClass('show active');
+                            $('#requirements').addClass('show active');
+                            $('#tabs a[href="#requirements"]').addClass('active');
+                        }else if(current_section == "requirements"){
+                            section.val("gallery");
+                            $('#requirements').removeClass('show active');
+                            $('#gallery').addClass('show active');
+                            $('#tabs a[href="#gallery"]').addClass('active');
+                        }else if(current_section == "gallery"){
+                            $('#gallery').removeClass('show active');
+                            $('#publish').addClass('show active');
+                            $('#tabs a[href="#publish"]').addClass('active');
+                        }
+
+                    });
+                }
+            });
+        });
+    </script>
+{% endblock %}
