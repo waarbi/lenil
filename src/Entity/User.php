@@ -64,6 +64,14 @@ class User implements UserInterface
      */
     private $confirmationToken;
     /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $tokenPassword;
+    /**
+     * @ORM\Column(type="datetime",nullable=true)
+     */
+    private $createdTokenPasswordAt;
+    /**
      * @ORM\Column(type="boolean")
      */
     private $enabled = false;
@@ -170,6 +178,39 @@ class User implements UserInterface
     public function getFullName() {
         return "{$this->firstName} {$this->lastName}";
     }
+
+    /**
+     * @return mixed
+     */
+    public function getTokenPassword()
+    {
+        return $this->tokenPassword;
+    }
+
+    /**
+     * @param mixed $tokenPassword
+     */
+    public function setTokenPassword($tokenPassword): void
+    {
+        $this->tokenPassword = $tokenPassword;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCreatedTokenPasswordAt()
+    {
+        return $this->createdTokenPasswordAt;
+    }
+
+    /**
+     * @param mixed $createdTokenPasswordAt
+     */
+    public function setCreatedTokenPasswordAt($createdTokenPasswordAt): void
+    {
+        $this->createdTokenPasswordAt = $createdTokenPasswordAt;
+    }
+
     /**
      * @ORM\Column(type="datetime")
      */

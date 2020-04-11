@@ -47,6 +47,9 @@ class SousCategory
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="sous_categories")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="category_id", referencedColumnName="id")
+     * })
      */
     private $category;
 
@@ -144,8 +147,11 @@ class SousCategory
 
         return $this;
     }
-    
 
+    public function __toString()
+    {
+        return $this->getTitle();
+    }
 
 
 }

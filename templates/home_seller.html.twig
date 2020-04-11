@@ -8,12 +8,21 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-
+    {% if app.user is not null and app.user.enabled == false %}
+        <div class="alert alert-warning clearfix activate-email-class mb-0">
+            <div class="float-left mt-2">
+                <i style="font-size: 125%;" class="fa fa-exclamation-circle"></i>
+                Veuillez activer votre compte. Un email de confirmation sera envoyé à: {{ app.user.email }}. Si vous avez besoin d'aide, contactez le support client <a href="{{ path('contact_support') }}" style="color: #856404;font-weight: bold;">Support client</a>.  </div>
+            <div class="float-right">
+                <button id="send-email" class="btn btn-success btn-sm float-right text-white">Renvoyer Email</button>
+            </div>
+        </div>
+        <br>
+    {% endif %}
     {{ include('seller/seller_home.html.twig') }}
-
 {% endblock %}
 {% block javascripts %}
-    <script type="application/javascript">
+    <script type="text/javascript">
         $(document).ready(function () {
             var userfullname = {{ app.user.fullName|json_encode|raw }};
             if (sessionStorage.getItem('connected') !== "ok") {
