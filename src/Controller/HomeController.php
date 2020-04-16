@@ -5,6 +5,7 @@ namespace App\Controller;
 
 
 use App\Entity\Contact;
+use App\Entity\Demande;
 use App\Form\ContactType;
 use App\Services\ContactNotification;
 use Doctrine\ORM\EntityManagerInterface;
@@ -37,6 +38,7 @@ class HomeController extends AbstractController
         $categories_cards = $manager->getRepository('App\Entity\Category')->findBy(array('in_card' => true));
 
         $categories_card = array_merge($sous_categories_card,$categories_cards);
+
         if (is_null($this->getUser())){
             return $this->render('home_anonym.html.twig',
                 array(
@@ -44,10 +46,12 @@ class HomeController extends AbstractController
                     'categories_card' => $categories_card,
                 ));
         }else{
+            $demandesActives = $manager->getRepository('App\Entity\Demande')->findAllActivesDemandeOfOthersUsers($this->getUser()->getId());
+
             return $this->render('home_seller.html.twig',
                 array(
                     'categories_yes' => $categories_yes,
-                    'categories_card' => $categories_card,
+                    'demandesActives' => $demandesActives
                 ));
         }
 

@@ -101,6 +101,10 @@ class User implements UserInterface
      */
     private $comments;
     /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Demande", mappedBy="author", orphanRemoval=true)
+     */
+    private $demandes;
+    /**
      * @ORM\ManyToMany(targetEntity="Skill", inversedBy="users")
      * @ORM\JoinColumn(nullable=true)
      */
@@ -240,6 +244,7 @@ class User implements UserInterface
         $this->comments = new ArrayCollection();
         $this->skills = new ArrayCollection();
         $this->languages = new ArrayCollection();
+        $this->demandes = new ArrayCollection();
     }
 
     public function getRoles()
@@ -462,6 +467,37 @@ class User implements UserInterface
             // set the owning side to null (unless already changed)
             if ($language->getUser() === $this) {
                 $language->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Demande[]
+     */
+    public function getDemandes(): Collection
+    {
+        return $this->demandes;
+    }
+
+    public function addDemande(Demande $demande): self
+    {
+        if (!$this->demandes->contains($demande)) {
+            $this->demandes[] = $demande;
+            $demande->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDemande(Demande $demande): self
+    {
+        if ($this->demandes->contains($demande)) {
+            $this->demandes->removeElement($demande);
+            // set the owning side to null (unless already changed)
+            if ($demande->getAuthor() === $this) {
+                $demande->setAuthor(null);
             }
         }
 

@@ -316,7 +316,15 @@
                 $('.mp-gig-top-nav li:eq(0)').addClass("selected");
             }
         });
-
+        $("#logout-link").click(function () {
+            swal({
+                text: "Au Revoir !",
+                icon: "success",
+                timer: 3000,
+            }).then(
+                sessionStorage.setItem("connected", "ko")
+            );
+        });
     });
 </script>
 {% block javascripts %}

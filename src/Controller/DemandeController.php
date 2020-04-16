@@ -35,10 +35,10 @@ class DemandeController extends AbstractController
     public function index(DemandeRepository $demandeRepository): Response
     {
 
-        $demandesActives = $demandeRepository->findBy(array('statusId' => Demande::REQUEST_STATUS_ACTIVE));
-        $demandeEncours = $demandeRepository->findBy(array('statusId' => Demande::REQUEST_STATUS_INPROGRESS));
-        $demandeSuspendues = $demandeRepository->findBy(array('statusId' => Demande::REQUEST_STATUS_INACTIVE));
-        $demandeAnnulees = $demandeRepository->findBy(array('statusId' => Demande::REQUEST_STATUS_CANCELLED));
+        $demandesActives = $demandeRepository->findBy(array('statusId' => Demande::REQUEST_STATUS_ACTIVE,'auteur'=>$this->getUser()->getId()));
+        $demandeEncours = $demandeRepository->findBy(array('statusId' => Demande::REQUEST_STATUS_INPROGRESS,'auteur'=>$this->getUser()->getId()));
+        $demandeSuspendues = $demandeRepository->findBy(array('statusId' => Demande::REQUEST_STATUS_INACTIVE,'auteur'=>$this->getUser()->getId()));
+        $demandeAnnulees = $demandeRepository->findBy(array('statusId' => Demande::REQUEST_STATUS_CANCELLED,'auteur'=>$this->getUser()->getId()));
 
 
 
@@ -65,6 +65,7 @@ class DemandeController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
+            $demande->setAuteur($this->getUser());
             $entityManager->persist($demande);
             $entityManager->flush();
             $this->addFlash('success', 'La demande a été créée');
@@ -105,6 +106,7 @@ class DemandeController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $demande->setAuteur($this->getUser());
             $this->getDoctrine()->getManager()->flush();
             $this->addFlash('success', 'La demande a été bien modifiée');
 

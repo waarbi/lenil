@@ -18,22 +18,25 @@ class DemandeRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Demande::class);
     }
+    public function findAllActivesDemandeOfOthersUsers($auteur)
+    {
+        return $this->createQueryBuilder('d')
+            ->andWhere('d.auteur != :id')
+            ->setParameter('id', $auteur)
+            ->andWhere('d.statusId = :active')
+            ->setParameter('active', Demande::REQUEST_STATUS_ACTIVE)
+            ->orderBy('d.createdAt', 'DESC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
 
     // /**
     //  * @return Demande[] Returns an array of Demande objects
     //  */
     /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('d')
-            ->andWhere('d.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('d.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
+
     */
 
     /*
