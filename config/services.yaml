@@ -5,6 +5,7 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     images_directory: '%kernel.project_dir%/public/uploads/images'
+    session_max_idle_time: 600
 
 services:
     # default configuration for services in *this* file
@@ -33,7 +34,12 @@ services:
             $targetDirectory: '%images_directory%'
     App\Services\MailerService:
 
-
+    App\Security\SessionIdleListener:
+        bind:
+            $maxIdleTime: '%session_max_idle_time%'
+            $session: '@session'
+        tags:
+            - { name: kernel.event_listener, event: kernel.request }
 
 
     # add more service definitions when explicit configuration is needed

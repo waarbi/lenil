@@ -62,6 +62,7 @@ Encore
         // copies to {output}/static
         { from: './assets/images', to: 'images' },
         { from: './assets/fonts', to: 'fonts' },
+        { from: './assets/admin', to: 'admin' },
         { from: './assets/js', to: 'js' }
     ]))
     // will require an extra script tag for runtime.js
