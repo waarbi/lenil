@@ -2,6 +2,7 @@
 
 {% block stylesheets %}
     <link href="{{ asset('build/css/create_proposal.css') }}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.3.0/min/dropzone.min.css">
 {% endblock %}
 
 {% block title %}Creation de service{% endblock %}
@@ -31,155 +32,240 @@
         <div class="row"><!--- row Starts --->
             <div class="col-md-8">
                 <div class="tab-content card card-body"><!--- tab-content Starts --->
-                    <div class="tab-pane fade show active" id="overview">
+                    <!--- form Starts -->
+                    {{ form_start(form, { 'attr': {'class': 'proposal-form'} }) }}
+                    <div class="tab-pane show active" id="overview">
+                        <div class="form-group row"><!--- form-group row Starts --->
+                            <div class="col-md-3">Proposal Title</div>
+                            <div class="col-md-9">
+                                {{ form_widget(form.title, { 'attr': {'class': 'form-control','placeholder': 'Titre du service'} }) }}
+                            </div>
+                            <small class="form-text text-danger"></small>
+                        </div><!--- form-group row Ends --->
 
-                        <form action="#" method="post" class="proposal-form"><!--- form Starts -->
-
-                            <div class="form-group row"><!--- form-group row Starts --->
-                                <div class="col-md-3">Proposal Title</div>
-                                <div class="col-md-9"><textarea name="proposal_title" rows="3" required="" placeholder="I Will" class="form-control"></textarea></div>
+                        <div class="form-group row"><!--- form-group row Starts --->
+                            <div class="col-md-3"> Category </div>
+                            <div class="col-md-9">
+                                {{ form_widget(form.category, { 'attr': {'class': 'form-control'} }) }}
                                 <small class="form-text text-danger"></small>
-                            </div><!--- form-group row Ends --->
+                                {{ form_widget(form.subcategory, { 'attr': {'class': 'form-control'} }) }}
+                            </div>
+                        </div><!--- form-group row Ends --->
 
-                            <div class="form-group row"><!--- form-group row Starts --->
-                                <div class="col-md-3"> Category </div>
-                                <div class="col-md-9">
-                                    <select name="proposal_cat_id" id="category" class="form-control mb-3" required="">
-                                        {% for category in categories_yes %}
-                                            <option value="" class="hidden"> Select A Category </option>
-                                            <option value="{{ category.id }}">{{ category.title }} </option>
-                                        {% endfor %}
-                                    </select>
-                                    <small class="form-text text-danger"></small>
-                                    <select name="proposal_child_id" id="sub-category" class="form-control" required="" style="display: none;">
-                                        <option value="" class="hidden"> Select A Sub Category </option>
-                                    </select>
-                                </div>
-                            </div><!--- form-group row Ends --->
+                        <div class="form-group row"><!--- form-group row Starts --->
+                            <div class="col-md-3">Delivery Time</div>
+                            <div class="col-md-9">
+                                {{ form_widget(form.deliveryTime, { 'attr': {'class': 'form-control'} }) }}
+                            </div>
+                            <small class="form-text text-danger"></small>
+                        </div><!--- form-group row Ends --->
 
-                            <div class="form-group row"><!--- form-group row Starts --->
-                                <div class="col-md-3">Delivery Time</div>
-                                <div class="col-md-9">
-                                    <select name="delivery_id" class="form-control" required="">
-                                        <option value="1">1 Day</option>
-                                        <option value="2">2 Days</option>
-                                        <option value="3">3 Days</option>
-                                        <option value="4">4 Days</option>
-                                        <option value="5">5 Days</option>
-                                        <option value="6">6 Days</option>
-                                        <option value="7">7 Days</option>
-                                        <option value="8">5 minutes</option>
-                                    </select>
-                                </div>
-                                <small class="form-text text-danger"></small>
-                            </div><!--- form-group row Ends --->
+                        <button class="btn btn-success next float-right" type="button" >Suivant</button>
+                        <!--- form-group Starts --->
 
-                            <div class="form-group row"><!--- form-group row Starts --->
-                                <div class="col-md-3">Tags</div>
-                                <div class="col-md-9">
-                                    <div class="bootstrap-tagsinput"><input type="text" placeholder=""></div><input type="text" name="proposal_tags" class="form-control sr-only" data-role="tagsinput">
-                                    <small class="form-text text-danger"></small>
-                                </div>
-                            </div><!--- form-group row Ends --->
-                            <div class="form-group text-right mb-0"><!--- form-group Starts --->
-                                <a href="view_proposals" class="btn btn-secondary">Cancel</a>
-                                <input class="btn btn-success" type="submit" name="submit" value="Save &amp; Continue">
-                            </div><!--- form-group Starts --->
-
-                        </form><!--- form Ends -->
+                        {#                        {{ form_end(form) }}<!--- form Ends -->#}
                     </div>
+                    <div class="tab-pane" id="pricing">
+                        <h5 class="font-weight-normal float-left">Pricing</h5>
+                        <div class="float-right switch-box">
+                            <span class="text">Fixed Price :</span>
+                            <label class="switch">
+                                <input type="checkbox" class="pricing" checked="">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+
+                        <div class="clearfix"></div>
+
+                        <hr class="mt-0">
+
+                        <div class="form-group row proposal-price justify-content-center">
+                            <div class="col-md-7">
+                                <div class="input-group">
+                                    <span class="input-group-addon font-weight-bold">$</span>
+                                    {{ form_widget(form.price, { 'attr': {'class': 'form-control','enctype':'multipart/form-data'} }) }}
+                                </div>
+                                <small>If you want to use packages, you need to set this field value to 0. </small>
+                            </div>
+                        </div>
+
+                        <button class="btn btn-secondary previous float-left " type="button" >Précédent</button>
+                        <button class="btn btn-success next float-right" type="button" >Suivant</button>
+
+                    </div>
+
+                    <div class="tab-pane" id="description">
+                        <h5 class="font-weight-normal">Description</h5>
+                        <hr>
+                        <p class="small mb-2"> Project Details </p>
+
+                        <div class="form-group">
+                            {{ form_widget(form.description, { 'attr': {'class': 'form-control'} }) }}
+                            <small class="form-text text-danger"></small>
+                        </div>
+
+                        <button class="btn btn-secondary previous float-left " type="button" >Précédent</button>
+                        <button class="btn btn-success next float-right" type="button" >Suivant</button>
+                    </div>
+                    <div class="tab-pane" id="gallery">
+                        <h5 class="font-weight-normal">Build Your Proposal Gallery</h5>
+                        <h6 class="font-weight-normal">Add memorable content to your gallery to set yourself apart from competitors.</h6>
+
+                        <hr>
+                        <div class="form-group">
+                            <div class="col-sm-10">
+                                <div class="dropzone" id="image"></div>
+                            </div>
+                        </div>
+                        <button class="btn btn-secondary previous float-left " type="button" >Précédent</button>
+                        <button class="btn btn-success save float-right" type="submit" id="submit-all">Valider</button>
+                    </div>
+                    {{ form_end(form) }}
                 </div><!--- tab-content Ends --->
+
             </div>
         </div><!--- row Ends --->
     </div>
 {% endblock %}
 
 {% block javascripts %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.3.0/min/dropzone.min.js"></script>
     <script>
-        $("#category").change(function(){
-            $("#sub-category").show();
-            var category_id = $(this).val();
-            $.ajax({
-                url:'{{ path('get_sub_category') }}',
-                method:"POST",
-                dataType: 'json',
-                data:{
-                    "category_id":category_id
-                },
-                success:function(data){
-                    $("#sub-category").html(data);
-                    console.log(data);
+        // init,configure dropzone
+        Dropzone.autoDiscover = false;
+
+        function randomString(length) {
+            var text = "";
+            var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            for( var i=0; i < length; i++ ) {
+                text += possible.charAt(Math.floor(Math.random() * possible.length));
+            }
+            return text;
+        }
+
+
+
+        $(document).ready(function () {
+            var browsers = ["Opera", "Edge", "Chrome", "Safari", "Firefox", "MSIE", "Trident"];
+            var userbrowser, useragent = navigator.userAgent;
+            for(var i = 0; i < browsers.length; i++) {
+                if( useragent.indexOf(browsers[i]) > -1 ) {
+                    userbrowser = browsers[i];
+                    break;
+                }
+            };
+
+            $("#pricing").hide();
+            $("#description").hide();
+            $("#gallery").hide();
+            $("#appbundle_proposal_subcategory").hide();
+
+            $("#appbundle_proposal_category").change(function () {
+                $("#appbundle_proposal_subcategory").show();
+            });
+
+            var current_fs, next_fs, previous_fs;
+
+            function steps(e){
+                if (e.parent().is(":visible")) {
+                    current_fs = e.parent();
+                    next_fs = e.parent().next();
+
+                    $("#tabs .breadcrumb a").eq($("div").index(next_fs)).addClass("active");
+
+                    next_fs.show();
+
+                    current_fs.hide();
+
+                } else if (e.parent().next().is(":visible")) {
+                    current_fs = e.parent();
+                    next_fs = e.parent().next();
+                }
+                next_fs.show();
+                current_fs.hide();
+            }
+
+            $(".next").click(function() {
+                steps($(this));
+            });
+
+            $(".previous").click(function(){
+
+                current_fs = $(this).parent();
+                previous_fs = $(this).parent().prev();
+                $("#tabs .breadcrumb a").eq($("div").index(next_fs)).removeClass("active");
+
+                previous_fs.show();
+
+                current_fs.hide();
+            });
+
+            var myDropzone = new Dropzone("#image",{
+                url: "{{ path('create_proposal') }}",
+                paramName: 'file',
+                maxFiles: 4,
+                autoProcessQueue: false,
+                acceptedFiles: 'image/*',
+                maxFilesize: 3,  // in Mb
+                addRemoveLinks: true,
+                dictDefaultMessage: "Glisser-déposer les images que vous souhaitez uploader",
+                dictCancelUpload: "Annuler",
+                dictRemoveFile: "Supprimer",
+                dictMaxFilesExceeded: "Vous ne pouvez uploader que cinq(5) fichiers",
+                MaxFilesExceeded:"le nombre de fichiers est 4",
+                dictFileTooBig: "Fichier trop grand (Max: 3MB)",
+                init: function () {
+                    var submitButton = document.querySelector("#submit-all");
+
+                    myDropzone = this;
+                    submitButton.addEventListener("click", function () {
+                        myDropzone.processQueue();
+                    });
+                    this.on("addedfile", function(file) {
+                        var randomId = randomString(20);
+                        file.previewElement.id = randomId;
+
+                        $('.proposal-form').append('<input id="'+ randomId +'" type="hidden" name="proposals_photos[]" value="' + file + '">');
+                    });
+                    this.on("complete", function () {
+
+                        if(this.getQueuedFiles().length == 0 && this.getUploadingFiles().length == 0){
+                            var _this = this;
+                            _this.removeAllFiles();
+                        }
+                    });
                 }
             });
+
         });
-        $(".proposal-form").on('submit', function(event){
-            event.preventDefault();
-            var form_data = new FormData(this);
-            form_data.append('proposal_id',591);
-            $('#wait').addClass("loader");
+        </script>
+    <script>
+        $('#appbundle_proposal_category').change(function () {
+            var categorySelector = $(this);
+            // Request the neighborhoods of the selected city.
             $.ajax({
-                method: "POST",
-                url: "ajax/save_proposal",
-                data: form_data,
-                async: false,cache: false,contentType: false,processData: false
-            }).done(function(data){
-                console.log(data);
-                videoOrNotVideo = data;
-                $('#wait').removeClass("loader");
-                if(data == "error"){
-                    swal({type: 'warning',text: 'You Must Need To Fill Out All Fields Before Updating The Details.'});
-                }else if(data == "error_img"){
-                    swal({type: 'warning',text: 'You Must Need To Add At Least 1 Image In Proposal To Continue.'});
-                }else if(data != "error" || data != "error_img"){
-                    swal({
-                        type: 'success',
-                        text: 'Details Saved.',
-                        timer: 1000,
-                        onOpen: function(){
-                            swal.showLoading();
-                        }
-                    }).then(function(){
-                        var section = $("input[type='hidden'][name='section']");
-                        var current_section = $("input[type='hidden'][name='section']").val();
+                url: "{{ path('get_sous_category_by_category') }}",
+                type: "GET",
+                dataType: "JSON",
+                data: {
+                    catid: categorySelector.val()
+                },
+                success: function (souscategories) {
+                    var sousCategorySelect = $("#appbundle_proposal_subcategory");
+                    // Remove current options
+                    sousCategorySelect.html('');
+                    // Empty value ...
+                    sousCategorySelect.append('<option value> Sélectionner une sous catégorie de ' + categorySelector.find("option:selected").text() + ' ...</option>');
 
-                        if(data == "video"){
-                            $('#tabs a[href="#pricing"]').addClass('d-none');
-                            $('#tabs a[href="#video"]').removeClass('d-none');
-                        }else if(data == "not-video"){
-                            $('#tabs a[href="#pricing"]').removeClass('d-none');
-                            $('#tabs a[href="#video"]').addClass('d-none');
-                        }
-
-                        if(current_section == "overview"){
-                            $('#overview').removeClass('show active');
-                            if(data == "video"){
-                                section.val("video");
-                                $('#video').addClass('show active');
-                                $('#tabs a[href="#video"]').addClass('active');
-                            }else{
-                                section.val("pricing");
-                                $('#pricing').addClass('show active');
-                                $('#tabs a[href="#pricing"]').addClass('active');
-                            }
-                        }else if(current_section == "description"){
-                            section.val("requirements");
-                            $('#description').removeClass('show active');
-                            $('#requirements').addClass('show active');
-                            $('#tabs a[href="#requirements"]').addClass('active');
-                        }else if(current_section == "requirements"){
-                            section.val("gallery");
-                            $('#requirements').removeClass('show active');
-                            $('#gallery').addClass('show active');
-                            $('#tabs a[href="#gallery"]').addClass('active');
-                        }else if(current_section == "gallery"){
-                            $('#gallery').removeClass('show active');
-                            $('#publish').addClass('show active');
-                            $('#tabs a[href="#publish"]').addClass('active');
-                        }
-
+                    $.each(souscategories, function (key, souscategory) {
+                        sousCategorySelect.append('<option value="' + souscategory.id + '">' + souscategory.title + '</option>');
                     });
+                },
+                error: function (err) {
+                    alert("An error ocurred while loading data ...");
                 }
             });
         });
     </script>
+
 {% endblock %}

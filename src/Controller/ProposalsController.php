@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\Category;
 use App\Entity\Proposal;
 use App\Entity\ProposalImage;
-use App\Entity\SousCategory;
 use App\Entity\User;
 use App\Form\ProposalType;
 use App\Services\FileUploader;
@@ -15,9 +14,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
-use Symfony\Component\Serializer\Serializer;
 
 class ProposalsController extends AbstractController
 {
@@ -39,25 +35,37 @@ class ProposalsController extends AbstractController
     }
 
     /**
-     * @Route("/subcategory", name="get_sub_category")
+     * Returns a JSON string with the sousCategory of the Category with the providen id.
+     *@Route("/get/souscategory", name="get_sous_category_by_category")
      * @param Request $request
-     * @param EntityManagerInterface $manager
-     * @return Response
+     * @return JsonResponse
      */
-    public function getSubCategory(Request $request, EntityManagerInterface $manager)
+    public function sousCategoryOfCategory(Request $request)
     {
-        $category_id = $request->request->get("category_id");
+        // Get Entity manager and repository
+        $em = $this->getDoctrine()->getManager();
+        $repoSousCategory = $em->getRepository("App\Entity\SousCategory");
 
-        $categorie = $manager->getRepository(SousCategory::class)->findByCategory($category_id);
+        // Search the neighborhoods that belongs to the city with the given id as GET parameter "cityid"
+        $sousCategories = $repoSousCategory->createQueryBuilder("q")
+            ->where("q.category = :catid")
+            ->setParameter("catid", $request->query->get("catid"))
+            ->getQuery()
+            ->getResult();
 
-            dd($categorie);
-//        $serializer = new Serializer(new JsonEncoder());
-//        $json = $serializer->serialize($categorie , 'json');
+        $responseArray = array();
+        foreach($sousCategories as $sousCategory){
+            $responseArray[] = array(
+                "id" => $sousCategory->getId(),
+                "title" => $sousCategory->getTitle()
+            );
+        }
 
-       // $companyCopy = $serializer->deserialize($json, Company::class, 'json');
-        return new JsonResponse($json  );
+        // Return array with structure of the neighborhoods of the providen city id
+        return new JsonResponse($responseArray);
 
-
+        // e.g
+        // [{"id":"3","name":"Treasure Island"},{"id":"4","name":"Presidio of San Francisco"}]
     }
 
     /**
@@ -69,13 +77,16 @@ class ProposalsController extends AbstractController
      */
     public function create(Request $request, EntityManagerInterface $manager, FileUploader $fileUploader)
     {
+
         $proposal = new Proposal();
         $form = $this->createForm(ProposalType::class, $proposal);
         $form->handleRequest($request);
 
         // Check is valid
         if ($form->isSubmitted() && $form->isValid()) {
-            $files = $request->request->get("files");
+
+            $files= $request->files->get("file");
+
             $proposal->setSeller($this->getUser());
             $manager->persist($proposal);
             $manager->flush();
@@ -84,23 +95,21 @@ class ProposalsController extends AbstractController
 
             foreach ($files as $file)
             {
-//                $filename = md5(uniqid()).'.'.$file->guessExtension();
-//                $file->move($this->getParameter('uploads'), $filename);
                 $adFileName = $fileUploader->upload($file);
-                $media->setFileName($adFileName); // Same entity, that is being updated
-                $media->setPath("testetststs");
+                $media->setFileName($adFileName);
                 $media->setProposal($proposal);
                 $manager->persist($media);
                 $manager->flush();
             }
-            $this->addFlash('success', 'Congratulations! Your post is created');
+            $this->addFlash('success', 'Congratulations! Your proposal is created');
 
             return $this->redirectToRoute('admin_entries');
         }
 
         return $this->render('proposals/create.html.twig', [
-            'proposalForm' => $form->createView(),
+            'form' => $form->createView(),
             'categories_yes' => $this->categories_yes,
         ]);
     }
+
 }

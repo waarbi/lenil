@@ -6,7 +6,6 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ProposalImageRepository")
- * @ORM\Table(name="proposal_images")
  */
 class ProposalImage
 {
@@ -17,24 +16,20 @@ class ProposalImage
      */
     private $id;
 
-
-
     /**
      * @ORM\Column(type="string", length=255)
      */
     private $file_name;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\ManyToOne(targetEntity="App\Entity\Proposal", inversedBy="proposalImages")
      */
-    private $path;
-    
+    private $proposal;
 
     public function getId(): ?int
     {
         return $this->id;
     }
-
 
     public function getFileName(): ?string
     {
@@ -48,17 +43,15 @@ class ProposalImage
         return $this;
     }
 
-    public function getPath(): ?string
+    public function getProposal(): ?Proposal
     {
-        return $this->path;
+        return $this->proposal;
     }
 
-    public function setPath(string $path): self
+    public function setProposal(?Proposal $proposal): self
     {
-        $this->path = $path;
+        $this->proposal = $proposal;
 
         return $this;
     }
-
-
 }

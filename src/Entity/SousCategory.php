@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -54,6 +56,16 @@ class SousCategory
     private $category;
 
     private $parent_id;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Proposal", mappedBy="subcategory")
+     */
+    private $proposals;
+
+    public function __construct()
+    {
+        $this->proposals = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -151,6 +163,37 @@ class SousCategory
     public function __toString()
     {
         return $this->getTitle();
+    }
+
+    /**
+     * @return Collection|Proposal[]
+     */
+    public function getProposals(): Collection
+    {
+        return $this->proposals;
+    }
+
+    public function addProposal(Proposal $proposal): self
+    {
+        if (!$this->proposals->contains($proposal)) {
+            $this->proposals[] = $proposal;
+            $proposal->setSubcategory($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProposal(Proposal $proposal): self
+    {
+        if ($this->proposals->contains($proposal)) {
+            $this->proposals->removeElement($proposal);
+            // set the owning side to null (unless already changed)
+            if ($proposal->getSubcategory() === $this) {
+                $proposal->setSubcategory(null);
+            }
+        }
+
+        return $this;
     }
 
 

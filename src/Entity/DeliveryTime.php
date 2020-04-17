@@ -32,9 +32,16 @@ class DeliveryTime
      */
     private $demandes;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Proposal", mappedBy="deleveryTime", orphanRemoval=true)
+     */
+    private $proposals;
+
+
     public function __construct()
     {
         $this->demandes = new ArrayCollection();
+        $this->proposals = new ArrayCollection();
     }
 
     public function getName(): ?string
@@ -84,4 +91,36 @@ class DeliveryTime
     {
         return $this->name;
     }
+
+    /**
+     * @return Collection|Proposal[]
+     */
+    public function getProposals(): Collection
+    {
+        return $this->proposals;
+    }
+
+    public function addProposal(Proposal $proposal): self
+    {
+        if (!$this->proposals->contains($proposal)) {
+            $this->proposals[] = $proposal;
+            $proposal->setDeleveryTime($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProposal(Proposal $proposal): self
+    {
+        if ($this->proposals->contains($proposal)) {
+            $this->proposals->removeElement($proposal);
+            // set the owning side to null (unless already changed)
+            if ($proposal->getDeleveryTime() === $this) {
+                $proposal->setDeleveryTime(null);
+            }
+        }
+
+        return $this;
+    }
+
 }

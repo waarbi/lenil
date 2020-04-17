@@ -2,11 +2,14 @@
 
 namespace App\Entity;
 
+use Cocur\Slugify\Slugify;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ProposalRepository")
- * @ORM\Table(name="proposals")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Proposal
 {
@@ -55,15 +58,37 @@ class Proposal
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="proposals")
-     * @ORM\JoinColumn(nullable=false)
+     * * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="category_id", referencedColumnName="id")
+     * })
      */
     private $category;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Delivery", inversedBy="proposals")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\ManyToOne(targetEntity="App\Entity\SousCategory", inversedBy="proposals")
+     * * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="subcategory_id", referencedColumnName="id")
+     * })
      */
-    private $delivery;
+    private $subcategory;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\DeliveryTime", inversedBy="proposals")
+     * * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="delivery_time_id", referencedColumnName="id")
+     * })
+     */
+    private $deliveryTime;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\ProposalImage", mappedBy="proposal")
+     */
+    private $proposalImages;
+
+    public function __construct()
+    {
+        $this->proposalImages = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -166,15 +191,77 @@ class Proposal
         return $this;
     }
 
-    public function getDelivery(): ?Delivery
+
+    public function getSubcategory(): ?SousCategory
     {
-        return $this->delivery;
+        return $this->subcategory;
     }
 
-    public function setDelivery(?Delivery $delivery): self
+    public function setSubcategory(?SousCategory $subcategory): self
     {
-        $this->delivery = $delivery;
+        $this->subcategory = $subcategory;
 
         return $this;
     }
+
+    public function getDeliveryTime(): ?DeliveryTime
+    {
+        return $this->deliveryTime;
+    }
+
+    public function setDeliveryTime(?DeliveryTime $deliveryTime): self
+    {
+        $this->deliveryTime = $deliveryTime;
+
+        return $this;
+    }
+
+    /**
+     * Permet d'initialiser le  slug !
+     *
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     *
+     * @return void
+     */
+    public function initializeSlug(){
+
+        if(empty($this->slug)){
+            $slugify = new Slugify();
+            $this->slug = $slugify->slugify($this->title);
+        }
+    }
+
+    /**
+     * @return Collection|ProposalImage[]
+     */
+    public function getProposalImages(): Collection
+    {
+        return $this->proposalImages;
+    }
+
+    public function addProposalImage(ProposalImage $proposalImage): self
+    {
+        if (!$this->proposalImages->contains($proposalImage)) {
+            $this->proposalImages[] = $proposalImage;
+            $proposalImage->setProposal($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProposalImage(ProposalImage $proposalImage): self
+    {
+        if ($this->proposalImages->contains($proposalImage)) {
+            $this->proposalImages->removeElement($proposalImage);
+            // set the owning side to null (unless already changed)
+            if ($proposalImage->getProposal() === $this) {
+                $proposalImage->setProposal(null);
+            }
+        }
+
+        return $this;
+    }
+
+
 }

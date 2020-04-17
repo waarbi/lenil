@@ -3156,6 +3156,7 @@ Tell your buyer what you need to get started (Optional) <br>
 
 
                             gallery.on('click', '.pic:not(.add-video,.video-added,.disable)',function(){
+                                alert("ok");
                                 var name = $(this).children("input[type=hidden]").attr("name");
                                 if(userbrowser == "Edge" || userbrowser == "Safari"){
                                     $("input[type=file]").click();
