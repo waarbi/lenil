@@ -81,7 +81,7 @@ class Proposal
     private $deliveryTime;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\ProposalImage", mappedBy="proposal")
+     * @ORM\OneToMany(targetEntity="App\Entity\ProposalImage", mappedBy="proposal", orphanRemoval=true)
      */
     private $proposalImages;
 

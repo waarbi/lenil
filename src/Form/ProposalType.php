@@ -43,7 +43,6 @@ class ProposalType extends AbstractType
                 'title',
                 TextType::class,
                 [
-                    'constraints' => [new NotBlank()],
                     'required' => true,
                     'label' => 'Titre',
                     'attr' => ['class' => 'form-control', 'autofocus' =>true]
@@ -54,7 +53,6 @@ class ProposalType extends AbstractType
                 'description',
                 TextareaType::class,
                 [
-                    'constraints' => [new NotBlank()],
                     'label' => 'Description',
                     'required' => false,
                     'attr' => ['class' => 'form-control']
@@ -74,7 +72,6 @@ class ProposalType extends AbstractType
                 'price',
                 NumberType::class,
                 [
-                    'constraints' => [new NotBlank()],
                     'label' => 'Prix',
                     'required' => true,
                     'attr' => ['class' => 'form-control' , 'placeholder' => 'Renseigner le prix du service svp!']

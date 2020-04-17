@@ -22,7 +22,8 @@ class ProposalImage
     private $file_name;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Proposal", inversedBy="proposalImages")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Proposal", inversedBy="proposalImages", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=true)
      */
     private $proposal;
 
