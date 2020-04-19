@@ -8,12 +8,12 @@
         "/build/css/home_css.css"
       ]
     },
-    "css/font_awesome": {
+    "css/animate_css": {
       "js": [
         "/build/runtime.js"
       ],
       "css": [
-        "/build/css/font_awesome.css"
+        "/build/css/animate_css.css"
       ]
     },
     "css/bootstrap_css": {
@@ -112,12 +112,12 @@
         "/build/css/freelancers_back.css"
       ]
     },
-    "css/animate_css": {
+    "css/font_awesome": {
       "js": [
         "/build/runtime.js"
       ],
       "css": [
-        "/build/css/animate_css.css"
+        "/build/css/font_awesome.css"
       ]
     },
     "css/inbox_style": {

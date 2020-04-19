@@ -28,7 +28,7 @@ border-bottom: 0px;
 
 #tabs .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
     border:0px;
-    border-bottom: 3px solid #3578e5 !important;
+    border-bottom: 3px solid #0066FF !important;
     color:black !important;
     border-radius: 0px;
 }
@@ -99,7 +99,7 @@ border-bottom: 0px;
   position: absolute;
   top: 0;
   left: 30px;
-  background: #3578e5;
+  background: #0066FF;
   font-size: 14px;
 }
 

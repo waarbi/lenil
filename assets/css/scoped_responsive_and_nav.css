@@ -9279,7 +9279,7 @@ a.arrow-up::after {
 .gnav-header #search-query:focus,
 .gnav-header #search-query:active {
     outline: none;
-    border: 1px solid #3578e5;
+    border: 1px solid #0066FF;
     background: #FFF;
     /*box-shadow: 0 0 0 1000px #fff inset;*/
 }
@@ -9334,7 +9334,7 @@ a.arrow-up::after {
     line-height: 17px;
     height: 34px;
     padding: 7px 15px 8px;
-    background-color: #3578e5 !important;
+    background-color: #0066FF !important;
 }
 
 .gnav-header .search-button-wrapper .btn-primary.search-mobile {
@@ -11532,8 +11532,8 @@ a.close.ss-delete:hover {
 */
 .gnav-header .sign-in-link a:hover {
    background: #fff;
-    border:1px solid #3578e5;
-    color: #3578e5;
+    border:1px solid #0066FF;
+    color: #0066FF;
 }
 
 .ui-toolkit .default-button.default-button.default-button__orange-outline {
@@ -11628,7 +11628,7 @@ a.close.ss-delete:hover {
 .badge-orange.badge-orange,
 .ui-toolkit .badge-orange.badge-orange,
 .ui-toolkit .badge.badge-primary {
-    background-color: #3578e5 !important;
+    background-color: #0066FF !important;
     color: #fff !important;
     font-weight: bold !important;
     border-radius: 100px !important;

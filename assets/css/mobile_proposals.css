@@ -420,7 +420,7 @@ margin-top: -5px;
     left: 21px;
     top: 25px;
     font-size: 8px;
-    color: #3578e5;
+    color: #0066FF;
 }
 
 .seller-info-wrapper{
@@ -1176,7 +1176,7 @@ article, aside, figure, footer, header, hgroup, nav, section, main {
 .mp-gig .see-more,
 .mp-gig .see-less {
 
-color: #3578e5;
+color: #0066FF;
 
 text-decoration: none;
 
@@ -1207,7 +1207,7 @@ text-decoration: none;
     left: 47px;
     margin-top: -10px;
     font-size: 10px;
-    color: #3578e5;
+    color: #0066FF;
 }
 
 /*.m-b-5 {
@@ -1363,7 +1363,7 @@ font-size: 15px;
     text-transform: uppercase;
     padding: 0.35rem 0.7rem;   
     color: white !important;
-    background: #3578e5 !important;
+    background: #0066FF !important;
 }
 
 

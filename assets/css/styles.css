@@ -35,7 +35,7 @@ html {
 }
 
 h1, h2, h3 {
-	color: #3578e5 ;
+	color: #0066FF ;
 }
 
 .modal-backdrop.show:first-child{
@@ -193,7 +193,7 @@ color: #afb8bc;
 	color: red !important;
 }
 .lenil-color{
-	color: #3578e5 !important;
+	color: #0066FF !important;
 }
 .gnav-header .notifications-dropdown {
 margin-left: -145px;
@@ -259,7 +259,7 @@ header .dropdown-menu{
 	right: 0;
 }
 .logo{
-  color: #3578e5;
+  color: #0066FF;
 	font-size: 31.18px;
    font-family: 'Mosk-Thin-100';
 	padding-top: 10px;
@@ -284,7 +284,7 @@ header .input-group{
 border-radius: 0px 3px 3px 0px;
 
 	font-size: 13px;
-	background: #3578e5;
+	background: #0066FF;
 	color:#fff;
 	transition: 0.4s;
 	-o-transition: 0.4s;
@@ -295,8 +295,8 @@ border-radius: 0px 3px 3px 0px;
 }
 .btn_search:hover , .btn_join:hover{
 	background: #fff;
-	border:1px solid #3578e5;
-	color: #3578e5;
+	border:1px solid #0066FF;
+	color: #0066FF;
 }
 
 
@@ -465,7 +465,7 @@ margin-bottom:10px;
 
 .swal2-popup .swal2-styled.swal2-confirm {
 
-	background-color: #3578e5 !important;
+	background-color: #0066FF !important;
 
 	}
 
@@ -476,7 +476,7 @@ margin-bottom:10px;
 
 .swal2-popup .swal2-styled.swal2-confirm {
 
-	background-color: #3578e5 !important;
+	background-color: #0066FF !important;
 
 }
 
@@ -509,7 +509,7 @@ margin-bottom:10px;
 	 left:14px;
 	 top:27px;
 	 font-size:8px;
-	 color:#3578e5;
+	 color:#0066FF;
 
 }
 
@@ -825,7 +825,7 @@ height: 16px;
 	width: 430px !important;
 }
 .input-group-append{
-	background: #3578e5;
+	background: #0066FF;
 	width: 54px;
 	text-align: center;
 	display: block;
@@ -904,7 +904,7 @@ font-size:18px;
 }
 
 .timer h5{
-	color: #3578e5;
+	color: #0066FF;
 	font-size: 14px;
 }
 .timer p{
@@ -943,12 +943,12 @@ font-size:18px;
 }
 .top h3 span{
 	font-size: 18.19px;
-	color: #3578e5;
+	color: #0066FF;
 	font-weight: 700;
 }
 .dil{
 	cursor:pointer;
-	color: #3578e5;
+	color: #0066FF;
 	
 }
 .dil1{
@@ -999,7 +999,7 @@ font-size:18px;
 }
 .btn_view{
 	font-size: 10.56px;
-	color: #3578e5;
+	color: #0066FF;
 	font-family: 'Montserrat-Regular';
 	text-transform: uppercase;
 	margin: 0 auto;
@@ -1007,7 +1007,7 @@ font-size:18px;
 	width: 112px;
 	height: 40px;
 	background: #fff;
-	border:2px solid #3578e5;
+	border:2px solid #0066FF;
 	border-radius: 5px;
 	margin-top: 30px;
 	transition: 0.4s;
@@ -1016,7 +1016,7 @@ font-size:18px;
 	-moz-transition: 0.4s;
 }
 .btn_view:hover{
-	background: #3578e5;
+	background: #0066FF;
 	color: #fff;
 }
 
@@ -1530,11 +1530,11 @@ right:0;
 		display: none;
 	}
 	.navbar-light .navbar-brand{
-		color: #3578e5;
+		color: #0066FF;
 		margin: 10px 0;
 	}
 	.navbar-light .navbar-toggler{
-		border-color: #3578e5;
+		border-color: #0066FF;
 	}
 	footer ul li a{
 		font-size: 12px;
@@ -2295,7 +2295,7 @@ box-shadow:0px 0px 8px rgba(0,0,0,0.4);
 }
 .nav-pills .nav-link.active{
 	color: #fff !important;
-	background-color: #3578e5 !important;
+	background-color: #0066FF !important;
 }
 .box-inscription {
 
@@ -2337,13 +2337,13 @@ font-size:17px;
 .box-login .text-center a{
 
 	font-size:15px;
-	color: #3578e5;
+	color: #0066FF;
 
 }
 
 .box-login .fa.fa-unlock-alt {
 
-	color: #3578e5;
+	color: #0066FF;
 	font-size: 130%;
 }
 
@@ -2437,7 +2437,7 @@ width: 100%;
 	height:50px;
 }
 .user-home-sidebar-sec .card-body a:hover {
-	color: #3578e5 !important;
+	color: #0066FF !important;
 }
 .user-home-sidebar-sec .text-dropping {
 	font-size: 90% !important;
@@ -2690,13 +2690,13 @@ margin-right:-15px !important;
 
 .contacts-sidebar .active {
 
-	color: #3578e5 !important;
+	color: #0066FF !important;
 }
 
 
 .bottom-tabs-dash .active {
 
- color: #3578e5 !important;
+ color: #0066FF !important;
 
 }
 
@@ -2838,7 +2838,7 @@ font-size:40px !important;
 
 {
 
-	color: #3578e5 !important;
+	color: #0066FF !important;
 }
 
 .cart-order-details p {
@@ -2942,7 +2942,7 @@ font-size:40px !important;
 
 .order-page .nav-link.active {
 
-	color: #3578e5 !important;
+	color: #0066FF !important;
 }
 
 
@@ -3028,7 +3028,7 @@ color:#00b22D;
 	border:1px solid #e6e6e6;
 	border-radius:5px;
 	box-shadow:0 1px 5px rgba(0, 0, 0, 0.1);
-	color: #3578e5 !important;
+	color: #0066FF !important;
 }
 
 
@@ -3194,7 +3194,7 @@ background:green;
 }
 
 input:checked + .slider {
-  background-color: #3578e5;
+  background-color: #0066FF;
 }
 
 input:focus + .slider {
@@ -3214,7 +3214,7 @@ input:checked + .slider:before {
 
 .view-proposals .btn-toggle.active{
 
-	background-color:#3578e5 !important;
+	background-color:#0066FF !important;
 }
 
 .view-proposals .btn-toggle.btn-lg{
@@ -3291,7 +3291,7 @@ padding:12px;
 
 .modal-body .order-details .request-div .price {
 	font-size:22px;
-	color:#3578e5;
+	color:#0066FF;
 }
 
 .modal-body .order-details .request-div p{
@@ -3492,7 +3492,7 @@ display: none;
 
 .modal-body .order-details .offer-div .price{
 	font-size:20px;
-	color:#3578e5;
+	color:#0066FF;
 }
 
 /*** Manage Contacts Page Styles ***/
@@ -3589,7 +3589,7 @@ display: none;
 
 #display-request .offer-div .price{
 	font-size:30px;
-	color:#3578e5;
+	color:#0066FF;
 }
 
 #display-request .offer-div p{
@@ -3605,7 +3605,7 @@ display: none;
 
 .message-div .message-offer .price, .message-div-hover .message-offer .price{
 	font-size:36px;
-	color:#3578e5;
+	color:#0066FF;
 }
 
 .message-div .message-offer p, .message-div-hover .message-offer p{
@@ -3745,8 +3745,8 @@ border-top:1px solid #E1E3DF;
 	height: 51px;
 	border-radius: 33px;
 	background: transparent;
-	border: 1px solid #3578e5;
-	color: #3578e5;
+	border: 1px solid #0066FF;
+	color: #0066FF;
 	text-align: center;
 	font-weight: 500;
 	margin: 10px 10px 10px 10px;
@@ -3754,7 +3754,7 @@ border-top:1px solid #E1E3DF;
 
 .card_user .get_btn:hover{
 
-	background:#3578e5;
+	background:#0066FF;
 	color:white;
 
 }
@@ -3891,7 +3891,7 @@ font-weight: 500;
 	position: relative;
 	left: 135px;
 	font-size: 50px;
-	color: #3578e5;
+	color: #0066FF;
 }
 
 
@@ -3969,7 +3969,7 @@ font-weight: 500;
 	position: relative;
 	left: 135px;
 	font-size: 50px;
-	color: #3578e5;
+	color: #0066FF;
 }
 
 
@@ -4277,5 +4277,5 @@ font-size: 18px;
   border-bottom: 1px solid #fff;
 }
 .navbar-brand:focus, .navbar-brand:hover{
-  color: #3578e5;
+  color: #0066FF;
 }

@@ -33,17 +33,16 @@ class HomeController extends AbstractController
      */
     public function home(EntityManagerInterface $manager)
     {
-        $sous_categories_card = $manager->getRepository('App\Entity\SousCategory')->findBy(array('in_card' => true));
         $categories_cards = $manager->getRepository('App\Entity\Category')->findBy(array('in_card' => true));
 
-        $categories_card = array_merge($sous_categories_card,$categories_cards);
-
-
         if (is_null($this->getUser())){
+            $proposals = $manager->getRepository(Proposal::class)->findAll();
+
             return $this->render('home_anonym.html.twig',
                 array(
                     'categories_yes' =>  $this->categories_yes,
-                    'categories_card' => $categories_card,
+                    'categories_card' => $categories_cards,
+                    'proposals'      => $proposals,
                 ));
         }else{
 
@@ -52,7 +51,7 @@ class HomeController extends AbstractController
             return $this->render('home_seller.html.twig',
                 array(
                     'categories_yes' => $this->categories_yes,
-                    'categories_card' => $categories_card,
+                    'categories_card' => $categories_cards,
                     'proposals'      => $proposals,
                     'demandesActives' => $demandesActives
                 ));
