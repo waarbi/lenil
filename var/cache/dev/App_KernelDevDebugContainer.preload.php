@@ -5,8 +5,8 @@
 
 use Symfony\Component\DependencyInjection\Dumper\Preloader;
 
-require dirname(__DIR__, 3).'/vendor/autoload.php';
-require __DIR__.'/ContainerHmiMe90/App_KernelDevDebugContainer.php';
+require dirname(__DIR__, 3).'\\vendor/autoload.php';
+require __DIR__.'/ContainerXiQeQQc/App_KernelDevDebugContainer.php';
 
 $classes = [];
 $classes[] = 'Symfony\Bundle\FrameworkBundle\FrameworkBundle';
@@ -31,6 +31,7 @@ $classes[] = 'Symfony\Component\HttpFoundation\RequestMatcher';
 $classes[] = 'Symfony\Component\DependencyInjection\ServiceLocator';
 $classes[] = 'App\Controller\AccountController';
 $classes[] = 'App\Controller\AdminAccountController';
+$classes[] = 'App\Controller\AdminDashboardController';
 $classes[] = 'App\Controller\CategoryController';
 $classes[] = 'App\Controller\DemandeController';
 $classes[] = 'App\Controller\FreelancerController';
@@ -44,6 +45,7 @@ $classes[] = 'App\Form\ContactType';
 $classes[] = 'App\Form\DemandeType';
 $classes[] = 'App\Form\ForgotPasswordType';
 $classes[] = 'App\Form\LangueType';
+$classes[] = 'App\Form\OffreType';
 $classes[] = 'App\Form\PasswordUpdateType';
 $classes[] = 'App\Form\ProposalType';
 $classes[] = 'App\Form\RegistrationType';
@@ -66,6 +68,7 @@ $classes[] = 'App\Repository\SkillRepository';
 $classes[] = 'App\Repository\SkillsNameRepository';
 $classes[] = 'App\Repository\SousCategoryRepository';
 $classes[] = 'App\Repository\UserRepository';
+$classes[] = 'App\Security\SessionIdleListener';
 $classes[] = 'App\Services\ContactNotification';
 $classes[] = 'App\Services\FileUploader';
 $classes[] = 'App\Services\MailerService';
@@ -425,6 +428,8 @@ $classes[] = 'Symfony\Component\DependencyInjection\ContainerInterface';
 $classes[] = 'Symfony\Component\HttpKernel\DependencyInjection\ServicesResetter';
 $classes[] = 'Symfony\Component\HttpFoundation\Session\Session';
 $classes[] = 'Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage';
+$classes[] = 'Symfony\Component\HttpFoundation\Session\Storage\Handler\StrictSessionHandler';
+$classes[] = 'Symfony\Component\HttpFoundation\Session\Storage\Handler\NativeFileSessionHandler';
 $classes[] = 'Symfony\Component\HttpFoundation\Session\Storage\MetadataBag';
 $classes[] = 'Symfony\Component\HttpKernel\EventListener\SessionListener';
 $classes[] = 'Symfony\Component\String\Slugger\AsciiSlugger';

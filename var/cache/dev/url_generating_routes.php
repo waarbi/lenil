@@ -28,6 +28,7 @@ return [
     'send_mail_for_activate_account' => [['username'], ['_controller' => 'App\\Controller\\AccountController::sendMailForActiveAccount'], [], [['variable', '/', '[^/]++', 'username', true], ['text', '/account']], [], []],
     'admin_account_login' => [[], ['_controller' => 'App\\Controller\\AdminAccountController::login'], [], [['text', '/admin/login']], [], []],
     'admin_account_logout' => [[], ['_controller' => 'App\\Controller\\AdminAccountController::logout'], [], [['text', '/admin/logout']], [], []],
+    'admin_dashboard' => [[], ['_controller' => 'App\\Controller\\AdminDashboardController::index'], [], [['text', '/admin']], [], []],
     'category_services' => [['slug'], ['_controller' => 'App\\Controller\\CategoryController::getServicesByCategory'], [], [['variable', '/', '[^/]++', 'slug', true], ['text', '/categories']], [], []],
     'demande_index' => [[], ['_controller' => 'App\\Controller\\DemandeController::index'], [], [['text', '/demande/']], [], []],
     'demande_new' => [[], ['_controller' => 'App\\Controller\\DemandeController::new'], [], [['text', '/demande/new']], [], []],

@@ -161,9 +161,14 @@
                 </div>
                 <a class="dropdown-item" href="{{ path('account_profile') }}">
                     Mes Paramètres   </a>
-
-                <a class="dropdown-item" href="{{ path('create_proposal') }}">
-                    Mes Services   </a>
+                <a class="dropdown-item dropdown-toggle" href="#" data-toggle="collapse" data-target="#service">
+                    Services   </a>
+                <div id="service" class="dropdown-submenu collapse">
+                    <a class="dropdown-item" href="{{ path('create_proposal') }}">
+                        Créer un service      </a>
+                    <a class="dropdown-item" href="#manage_contacts?my_sellers">
+                        Gérer vos services      </a>
+                </div>
 
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" id="logout-link" href="{{ path('account_logout') }}">

@@ -494,7 +494,7 @@ class User implements UserInterface
         if (!$this->demandes->contains($demande)) {
             $this->demandes[] = $demande;
             $demande->setAuthor($this);
-          
+        }
     }
       /**
      * @return Collection|Proposal[]

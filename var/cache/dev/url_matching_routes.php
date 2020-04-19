@@ -21,6 +21,7 @@ return [
         '/account/profile' => [[['_route' => 'account_profile', '_controller' => 'App\\Controller\\AccountController::profile'], null, null, null, false, false, null]],
         '/admin/login' => [[['_route' => 'admin_account_login', '_controller' => 'App\\Controller\\AdminAccountController::login'], null, null, null, false, false, null]],
         '/admin/logout' => [[['_route' => 'admin_account_logout', '_controller' => 'App\\Controller\\AdminAccountController::logout'], null, null, null, false, false, null]],
+        '/admin' => [[['_route' => 'admin_dashboard', '_controller' => 'App\\Controller\\AdminDashboardController::index'], null, null, null, false, false, null]],
         '/demande' => [[['_route' => 'demande_index', '_controller' => 'App\\Controller\\DemandeController::index'], null, ['GET' => 0], null, true, false, null]],
         '/demande/new' => [[['_route' => 'demande_new', '_controller' => 'App\\Controller\\DemandeController::new'], null, ['GET' => 0, 'POST' => 1], null, false, false, null]],
         '/demande/get/souscategory' => [[['_route' => 'get_sous_category_by_category', '_controller' => 'App\\Controller\\DemandeController::sousCategoryOfCategory'], null, null, null, false, false, null]],
