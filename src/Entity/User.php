@@ -219,6 +219,13 @@ class User implements UserInterface
      * @ORM\Column(type="datetime")
      */
     private $createdAt;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Proposal", mappedBy="seller", orphanRemoval=true)
+     */
+    private $proposals;
+
+
     /**
      * Permet d'initialiser le  slug !
      *
@@ -245,6 +252,7 @@ class User implements UserInterface
         $this->skills = new ArrayCollection();
         $this->languages = new ArrayCollection();
         $this->demandes = new ArrayCollection();
+        $this->proposals = new ArrayCollection();
     }
 
     public function getRoles()
@@ -486,6 +494,21 @@ class User implements UserInterface
         if (!$this->demandes->contains($demande)) {
             $this->demandes[] = $demande;
             $demande->setAuthor($this);
+          
+    }
+      /**
+     * @return Collection|Proposal[]
+     */
+    public function getProposals(): Collection
+    {
+        return $this->proposals;
+    }
+
+    public function addProposal(Proposal $proposal): self
+    {
+        if (!$this->proposals->contains($proposal)) {
+            $this->proposals[] = $proposal;
+            $proposal->setSeller($this);
         }
 
         return $this;
@@ -500,7 +523,20 @@ class User implements UserInterface
                 $demande->setAuthor(null);
             }
         }
+      return $this;
+     }   
+      
+    public function removeProposal(Proposal $proposal): self
+    {
+        if ($this->proposals->contains($proposal)) {
+            $this->proposals->removeElement($proposal);
+            // set the owning side to null (unless already changed)
+            if ($proposal->getSeller() === $this) {
+                $proposal->setSeller(null);
+            }
+        }
 
         return $this;
     }
+
 }
