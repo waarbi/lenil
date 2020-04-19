@@ -68,6 +68,14 @@ class Demande
      */
     private $deliveryTime;
     /**
+     * @var User
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="demandes")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="auteur_id", referencedColumnName="id")
+     * })
+     */
+    private $auteur;
+    /**
      * @ORM\Column(type="integer", nullable=true)
      */
     private $budget;
@@ -215,6 +223,18 @@ class Demande
                 $offer->setDemande(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getAuteur(): ?User
+    {
+        return $this->auteur;
+    }
+
+    public function setAuteur(?User $auteur): self
+    {
+        $this->auteur = $auteur;
 
         return $this;
     }

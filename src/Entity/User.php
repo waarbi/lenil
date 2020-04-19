@@ -101,6 +101,10 @@ class User implements UserInterface
      */
     private $comments;
     /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Demande", mappedBy="author", orphanRemoval=true)
+     */
+    private $demandes;
+    /**
      * @ORM\ManyToMany(targetEntity="Skill", inversedBy="users")
      * @ORM\JoinColumn(nullable=true)
      */
@@ -247,6 +251,7 @@ class User implements UserInterface
         $this->comments = new ArrayCollection();
         $this->skills = new ArrayCollection();
         $this->languages = new ArrayCollection();
+        $this->demandes = new ArrayCollection();
         $this->proposals = new ArrayCollection();
     }
 
@@ -477,6 +482,21 @@ class User implements UserInterface
     }
 
     /**
+     * @return Collection|Demande[]
+     */
+    public function getDemandes(): Collection
+    {
+        return $this->demandes;
+    }
+
+    public function addDemande(Demande $demande): self
+    {
+        if (!$this->demandes->contains($demande)) {
+            $this->demandes[] = $demande;
+            $demande->setAuthor($this);
+          
+    }
+      /**
      * @return Collection|Proposal[]
      */
     public function getProposals(): Collection
@@ -494,6 +514,18 @@ class User implements UserInterface
         return $this;
     }
 
+    public function removeDemande(Demande $demande): self
+    {
+        if ($this->demandes->contains($demande)) {
+            $this->demandes->removeElement($demande);
+            // set the owning side to null (unless already changed)
+            if ($demande->getAuthor() === $this) {
+                $demande->setAuthor(null);
+            }
+        }
+      return $this;
+     }   
+      
     public function removeProposal(Proposal $proposal): self
     {
         if ($this->proposals->contains($proposal)) {
@@ -506,6 +538,5 @@ class User implements UserInterface
 
         return $this;
     }
-
 
 }

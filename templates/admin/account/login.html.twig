@@ -1,62 +1,142 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Connexion à l'administration</title>
-     <link rel="stylesheet" href="{{ asset('build/css/app.css') }}">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+
+    <meta charset="utf-8">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Lenil - Admin Login</title>
+    <meta name="description" content="Admin login. You will need admin credentials to access the admin panel. Reset your password if you have trouble remebering it.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="apple-touch-icon" href="apple-icon.png">
+    <!-- <link rel="shortcut icon" href="favicon.ico"> -->
+    <link rel="stylesheet" href="{{ asset('build/admin/css/normalize.css') }}">
+    <link rel="stylesheet" href="{{ asset('build/admin/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('build/admin/css/animate.css') }}">
+    <link rel="stylesheet" href="{{ asset('build/admin/css/font-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('build/admin/css/themify-icons.css') }}">
+    <link rel="stylesheet" href="{{ asset('build/admin/css/flag-icon.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('build/admin/css/cs-skin-elastic.css') }}">
+    <!-- <link rel="stylesheet" href="assets/css/bootstrap-select.less"> -->
+    <link rel="stylesheet" href="{{ asset('build/admin/scss/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('build/admin/css/sweat_alert.css') }}">
+
+    <!-- <script type="text/javascript" src="{{ asset('build/admin/js/ie.js') }}"></script> -->
+    <script type="text/javascript" src="{{ asset('build/admin/js/sweat_alert.js') }}"></script>
+
+
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
+
+    <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/html5shiv/3.7.3/html5shiv.min.js"></script> -->
+
     <style>
-        body {
-            display:flex;
-            justify-content: center;
-            height: 100vh;
+
+        .swal2-popup .swal2-styled.swal2-confirm {
+
+            background-color: #3578e5 !important;
         }
 
-        .card {
-            margin-top:10%;
+        .log-width{
+
+            width: 550px;
+            margin: 0 auto;
         }
+
     </style>
 
 </head>
-<body>
-    <div class="col-md-4">
-    <div class="card bg-light">
-        <div class="card-header">
-              <h4 class="card-title">
-                  <i class="fas fa-lock"></i>
-                  Connexion à l'administration
-              </h4>
+<body class="bg-dark">
 
-        </div>
-        <div class="card-body">
-            {% if hasError %}
-                <div class="alert alert-warning">
-                    <p>Les informations que vous avez fournies ne sont pas bonnes !</p>
-                </div>
-            {% endif %}
-              <form method="post" action="">
-                      <div class="form-group"><label for="_username">Email</label>
-                      <input type="text" class="form-control" placeholder="Adresse email ..." name="_username" value="{{username}}"></div>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 
-                      <div class="form-group"><label for="_password">Mot de passe</label>
-                      <input type="password" class="form-control" placeholder="Mot de passe ..." name="_password"></div>
+<div class="sufee-login d-flex align-content-center flex-wrap">
+    <div class="container">
+        <div class="login-content">
+            <div class="login-logo pb-4">
+                <a href="#">
+                    <h2 class="text-white"> Lenil  <span class="badge badge-primary p-2 font-weight-bold">ADMIN</span></h2>
+                </a>
+            </div>
+
+
+            <div class="login-form">
+                {% if hasError %}
+                    <div class="alert alert-danger">Une erreur est survenue, le nom d'utilisateur ou le mot de passe est invalide</div>
+                {% endif %}
+
+                <form action="{{ path('admin_account_login') }}" id="myform" method="post" autocomplete="off">
+
                     <div class="form-group">
-                        <button type="submit" class="btn btn-primary">
-                            <i class="fas fa-lock-open"></i>
-                            Connexion !
-                        </button>
-                        <a href="{{path('homepage')}}" class="btn btn-link">
 
-                            <i class="fas fa-arrow-circle-left"></i>
-                            Retour au site
-                        </a>
+                        <label>Login</label>
+
+                        <input type="email" required class="input form-control" value="" placeholder="Entrer votre email" name="_username" >
+
                     </div>
-              </form>
+
+                    <div class="form-group">
+
+                        <label>Mot de pass</label>
+
+                        <input type="password" required class="pass form-control" value=" " placeholder="Entrer votre mot de pass" name="_password" >
+
+                    </div>
+
+                    <div class="checkbox pb-2">
+
+                        <label>
+
+                        </label>
+
+                        <label class="pull-right">
+
+
+
+                        </label>
+
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-flat m-b-30 m-t-30" name="admin_login"><i class="fa fa-unlock-alt" aria-hidden="true"></i>
+                        Connexion</button>
+                    <a href="{{path('homepage')}}" class="btn btn-link">
+
+                        <i class="fa fa-arrow-circle-left" aria-hidden="true"></i>
+                        Retour au site
+                    </a>
+                </form>
+
+
+            </div>
 
         </div>
+
     </div>
-    </div>
+
+</div>
+
+<script>
+
+    $(document).ready(function(){
+        let haserror = '{{ hasError }}'
+            console.log(haserror)
+
+        setTimeout(function(){
+
+            document.getElementById("myform").reset();
+
+            $(".pass").val("");
+
+        },100);
+
+
+    });
+
+</script>
+
+<script src="{{ asset('build/admin/js/plugins.js') }}"></script>
+
 </body>
+
 </html>
+

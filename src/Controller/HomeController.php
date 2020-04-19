@@ -5,6 +5,7 @@ namespace App\Controller;
 
 
 use App\Entity\Contact;
+use App\Entity\Demande;
 use App\Entity\Proposal;
 use App\Form\ContactType;
 use App\Services\ContactNotification;
@@ -33,7 +34,6 @@ class HomeController extends AbstractController
      */
     public function home(EntityManagerInterface $manager)
     {
-        $categories_yes = $manager->getRepository('App\Entity\Category')->findBy(array('featured' => true));
         $sous_categories_card = $manager->getRepository('App\Entity\SousCategory')->findBy(array('in_card' => true));
         $categories_cards = $manager->getRepository('App\Entity\Category')->findBy(array('in_card' => true));
 
@@ -43,16 +43,19 @@ class HomeController extends AbstractController
         if (is_null($this->getUser())){
             return $this->render('home_anonym.html.twig',
                 array(
-                    'categories_yes' => $categories_yes,
+                    'categories_yes' =>  $this->categories_yes,
                     'categories_card' => $categories_card,
                 ));
         }else{
+
+            $demandesActives = $manager->getRepository('App\Entity\Demande')->findAllActivesDemandeOfOthersUsers($this->getUser()->getId());
             $proposals = $manager->getRepository(Proposal::class)->findBySeller($this->getUser()->getId());
             return $this->render('home_seller.html.twig',
                 array(
-                    'categories_yes' => $categories_yes,
+                    'categories_yes' => $this->categories_yes,
                     'categories_card' => $categories_card,
-                    'proposals'      => $proposals
+                    'proposals'      => $proposals,
+                    'demandesActives' => $demandesActives
                 ));
         }
 

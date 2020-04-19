@@ -1,6 +1,6 @@
 <div class="append-modal">
 
-    <div id="submit-proposal-details" class="modal fade" style="display: none;" aria-hidden="true"> <!-- Continue's Code -->
+    <div id="submit-proposal-details" id="myModal"  class="modal fade" style="display: none;" aria-hidden="true"> <!-- Continue's Code -->
 
         <div class="modal-dialog">
 
@@ -19,14 +19,14 @@
                     <div class="request-summary"><!--- request-summary Starts --->
 
 
-                        <img src="https://www.gigtodo.com/user_images/10157731856482910.jpg" width="50" height="50" class="rounded-circle">
+                        <img src="" id="image-demandeur" width="50" height="50" class="rounded-circle">
 
 
                         <div id="request-description"><!--- request-description Starts --->
 
-                            <h6 class="text-success mb-1"> 123 </h6>
+                            <h6 class="text-success mb-1" id="title"></h6>
 
-                            <p> 123 </p>
+                            <p id="description"> 123 </p>
 
                         </div><!--- request-description Ends --->
 
@@ -36,13 +36,13 @@
 
                         <div class="selected-proposal p-3"><!--- selected-proposal p-3 Starts --->
 
-                            <h5> I will make a beatiful logo. </h5>
+                            <h5> Mon offre de service </h5>
 
                             <hr>
 
                             <input type="hidden" name="proposal_id" value="164">
 
-                            <input type="hidden" name="request_id" value="188">
+                            <input type="hidden" name="request_id" id="demandeId" value="">
 
                             <div class="form-group"><!--- form-group Starts --->
 
@@ -89,7 +89,7 @@
 
                             <button type="button" class="btn btn-secondary" data-dismiss="modal" data-toggle="modal" data-target="#send-offer-modal">Back</button>
 
-                            <button type="submit" class="btn btn-success">Submit Offer</button>
+                            <button type="submit" class="btn btn-success">Valider mon offre</button>
 
                         </div><!--- modal-footer Ends --->
 
@@ -102,96 +102,7 @@
             <div id="insert_offer"></div>
 
 
-            <script>
-
-                $(document).ready(function(){
-
-                    $("#proposal-details-form").submit(function(event){
-
-                        event.preventDefault();
-
-                        description = $("textarea[name='description']").val();
-
-                        delivery_time = $("select[name='delivery_time']").val();
-
-                        amount = $("input[name='amount']").val();
-
-                        if(description == "" | delivery_time == "" | amount == ""){
-
-                            swal({
-                                type: 'warning',
-                                text: 'You Must Need To Fill Out All Fields Before Submitting Offer.'
-                            });
-
-                        }else{
-
-
-                            $.ajax({
-
-                                method: "POST",
-                                url: "https://www.gigtodo.com/requests/insert_offer",
-                                data: $('#proposal-details-form').serialize()
-
-                            }).done(function(data){
-
-                                $("#submit-proposal-details").modal('hide');
-
-                                $("#insert_offer").html(data);
-
-                            });
-
-
-                        }
-
-                    });
-
-
-                });
-
-            </script></div>
+          </div>
 
     </div> <!-- Continue end -->
-
-    <script>
-
-        $(document).ready(function(){
-
-            $("#send-offer-modal").modal("show");
-
-            $("#submit-proposal").attr("disabled", "disabled");
-
-            $(".radio-custom-label").click(function(){
-
-                $("#submit-proposal").removeAttr("disabled");
-
-            });
-
-
-            $("#submit-proposal").click(function(){
-
-                proposal_id = document.querySelector('input[name="proposal_id"]:checked').value;
-
-                request_id = "188";
-
-                $.ajax({
-
-                    method: "POST",
-
-                    url: "https://www.gigtodo.com/requests/submit_proposal_details",
-
-                    data: { proposal_id: proposal_id, request_id: request_id }
-
-                })
-
-                    .done(function(data){
-
-                        $("#submit-proposal-details .modal-dialog").html(data);
-
-                    });
-
-
-            });
-
-        });
-
-    </script></div>
+</div>
