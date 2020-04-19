@@ -4,6 +4,7 @@
 namespace App\Controller;
 
 
+use App\Entity\Proposal;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -44,6 +45,7 @@ class sellerController extends AbstractController
     public function dashboardSeller(EntityManagerInterface $manager)
     {
        $user = $this->getUser();
+
         return $this->render('seller/dashboard.html.twig',
             array(
                'seller' => $user,

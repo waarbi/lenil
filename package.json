@@ -20,5 +20,10 @@
         "codemirror": "^5.52.0",
         "jquery": "^3.4.1",
         "owl.carousel": "^2.3.4"
-    }
+    },
+    "name": "lenil",
+    "version": "1.0.0",
+    "main": "index.js",
+    "repository": "https://github.com/waarbi/lenil.git",
+    "author": "Raby NDIAYE <raby.ndiaye@paydunya.com>"
 }

@@ -53,9 +53,16 @@ class Category
 
     private $parent_id;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Proposal", mappedBy="category", orphanRemoval=true)
+     */
+    private $proposals;
+
+
     public function __construct()
     {
         $this->sous_categories = new ArrayCollection();
+        $this->proposals = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -185,6 +192,40 @@ class Category
 
         return $this;
     }
+
+    /**
+     * @return Collection|Proposal[]
+     */
+    public function getProposals(): Collection
+    {
+        return $this->proposals;
+    }
+
+    public function addProposal(Proposal $proposal): self
+    {
+        if (!$this->proposals->contains($proposal)) {
+            $this->proposals[] = $proposal;
+            $proposal->setCategory($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProposal(Proposal $proposal): self
+    {
+        if ($this->proposals->contains($proposal)) {
+            $this->proposals->removeElement($proposal);
+            // set the owning side to null (unless already changed)
+            if ($proposal->getCategory() === $this) {
+                $proposal->setCategory(null);
+            }
+        }
+
+        return $this;
+    }
+
+
+
 
     public function __toString()
     {

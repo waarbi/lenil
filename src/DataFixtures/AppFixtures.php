@@ -227,8 +227,9 @@ Caricatures de dessins animés')->setDescription('It is a long established fact 
             $oneLevel->setName($name);
             $manager->persist($oneLevel);
         }
-        $manager->flush();
-        //LanguageNames
+
+        //Delivery
+        
         $deliveries = ['1 jour', '2 jours','3 jours', '4 jours', '5 jours', '6 jours', '7 jours', '5 minutes'];
         foreach ($deliveries as $name){
             $delivery = new DeliveryTime();
