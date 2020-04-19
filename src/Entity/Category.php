@@ -37,6 +37,10 @@ class Category
      */
     private $in_card;
     /**
+     * @ORM\Column(type="string", name="card_picture",length=255)
+     */
+    private $cardPicture;
+    /**
      * @ORM\Column(type="string", length=255)
      */
     private $title;
@@ -222,6 +226,22 @@ class Category
         }
 
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCardPicture()
+    {
+        return $this->cardPicture;
+    }
+
+    /**
+     * @param mixed $cardPicture
+     */
+    public function setCardPicture($cardPicture): void
+    {
+        $this->cardPicture = $cardPicture;
     }
 
 

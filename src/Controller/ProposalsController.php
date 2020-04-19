@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Category;
 use App\Entity\Proposal;
 use App\Entity\ProposalImage;
+use App\Entity\Role;
 use App\Entity\User;
 use App\Form\ProposalType;
 use App\Services\FileUploader;
@@ -27,6 +28,7 @@ class ProposalsController extends AbstractController
     {
         $this->categories_yes = $manager->getRepository(Category::class)->findBy(array('featured' => true));
         $this->session = $session;
+        $this->userRepo = $manager->getRepository(User::class);
     }
     /**
      * @Route("/proposals", name="my_proposals")
@@ -60,6 +62,7 @@ class ProposalsController extends AbstractController
             $manager->persist($media);
             $manager->flush();
             $output['uploaded'] = true;
+            $output['fileName'] = $adFileName;
         };
 
         return new JsonResponse($output);
@@ -88,7 +91,13 @@ class ProposalsController extends AbstractController
             {
                 $media->setProposal($proposal);
                 $proposal->addProposalImage($media);
+                $roleSeller = new Role();
+
+                $roleSeller->setTitle(Role::ROLE_SELLER);
+                $this->getUser()->addUserRole($roleSeller);
+
                 $manager->persist($media);
+                $manager->persist($roleSeller);
                 $manager->flush();
             }
 

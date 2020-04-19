@@ -66,15 +66,15 @@
                                  style="transform: translate3d(0px, 0px, 0px); transition: all 0s ease 0s; width: 1611px;">
 
 
-                                {% for i in 0..5 %}
+                                {% for category in categories_card %}
                                     <div class="owl-item" style="width: 250.4px; margin-right: 18px;">
                                         <div class="card-box">
                                             <div>
                                                 <a href="#categories/graphics-design/photoshop-editing"
                                                    class="subcategory">
-                                                    <h4><small>Color Your Dreams</small>Illustrations</h4>
+                                                    <h4><small></small>{{category.title}}</h4>
                                                     <picture>
-                                                        <img src="#card_images/four.jpg">
+                                                        <img src="build/images/card/{{ category.getCardPicture }}">
                                                     </picture>
                                                 </a>
                                             </div>

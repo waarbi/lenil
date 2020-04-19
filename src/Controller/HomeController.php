@@ -20,7 +20,6 @@ class HomeController extends AbstractController
 
     private $categories_yes;
 
-
     public function __construct(EntityManagerInterface $manage)
     {
         $this->categories_yes = $manage->getRepository('App\Entity\Category')->findBy(array('featured' => true));

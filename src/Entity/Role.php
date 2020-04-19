@@ -11,6 +11,9 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Role
 {
+    const ROLE_ADMIN = 'ROLE_ADMIN';
+    const ROLE_SELLER = 'ROLE_SELLER';
+    const ROLE_BUYER = 'ROLE_BUYER';
 
 
     /**
