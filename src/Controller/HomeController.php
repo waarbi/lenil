@@ -18,7 +18,6 @@ class HomeController extends AbstractController
 
     private $categories_yes;
 
-
     public function __construct(EntityManagerInterface $manage)
     {
         $this->categories_yes = $manage->getRepository('App\Entity\Category')->findBy(array('featured' => true));
@@ -41,7 +40,7 @@ class HomeController extends AbstractController
             return $this->render('home_anonym.html.twig',
                 array(
                     'categories_yes' => $categories_yes,
-                    'categories_card' => $categories_card,
+                    'categories_card' => $categories_cards,
                 ));
         }else{
             return $this->render('home_seller.html.twig',
