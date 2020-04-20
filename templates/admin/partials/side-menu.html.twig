@@ -5,14 +5,14 @@
                 <i class="fa fa-bars"></i>
             </button>
             <a class="navbar-brand" href="index?dashboard">
-                GigToDo <span class="badge badge-success p-2 font-weight-bold">ADMIN</span>
+                Lenil <span class="badge badge-success p-2 font-weight-bold">ADMIN</span>
             </a>
             <a class="navbar-brand hidden" href="./"><span class="badge badge-success pt-2 pb-2">A</span></a>
         </div>
         <div id="main-menu" class="main-menu collapse navbar-collapse">
             <ul class="nav navbar-nav">
                 <li class="pt-5">
-                    <a href="index?dashboard"> <i class="menu-icon fa fa-dashboard"></i>Dashboard </a>
+                    <a href="{{ path('admin_dashboard') }}"> <i class="menu-icon fa fa-dashboard"></i>Dashboard </a>
                 </li>
                 <li class="menu-item-has-children dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Settings"> <i class="menu-icon fa fa-cog"></i> Settings</a>
@@ -20,15 +20,10 @@
                         <li><i class="fa  fa-arrow-circle-right"></i><a href="index?general_settings">General Settings</a></li>
                         <li><i class="fa  fa-arrow-circle-right"></i><a href="index?layout_settings">Layout Settings</a></li>
                         <li><i class="fa  fa-arrow-circle-right"></i><a href="index?payment_settings">Payment Settings</a></li>
-                        <li><i class="fa  fa-arrow-circle-right"></i><a href="index?mail_settings">Mail Server Settings</a></li>
-                        <li><i class="fa  fa-arrow-circle-right"></i><a href="index?app_update">Application Update</a></li>
                     </ul>
                 </li>
                 <li>
-                    <a href="index?plugins"> <i class="menu-icon fa fa-plug" aria-hidden="true"></i> Plugins</a>
-                </li>
-                <li>
-                    <a href="index?view_proposals"> <i class="menu-icon fa fa-table"></i>Proposals/Services
+                    <a href="index?view_proposals"> <i class="menu-icon fa fa-table"></i>Services
                         <span class="badge badge-success">3</span>
                     </a>
                 </li>
@@ -51,7 +46,7 @@
                 </li>
                 <li class="menu-item-has-children dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="Reports">
-                        <i class="menu-icon fa fa-flag"></i>Reports / Abuses
+                        <i class="menu-icon fa fa-flag"></i>Reports
                     </a>
                     <ul class="sub-menu children dropdown-menu">
                         <li><i class="fa  fa-arrow-circle-right"></i><a href="index?order_reports">Order Reports</a></li>

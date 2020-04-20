@@ -37,7 +37,7 @@ class Category
      */
     private $in_card;
     /**
-     * @ORM\Column(type="string", name="card_picture",length=255)
+     * @ORM\Column(type="string", name="card_picture",nullable=true,length=255)
      */
     private $cardPicture;
     /**
