@@ -1,7 +1,7 @@
 /public/build/
 
 /var/
-/vendor/
+/vendor/*
 ###< symfony/framework-bundle ###
 
 ###> symfony/phpunit-bridge ###
@@ -13,6 +13,6 @@ phpunit.xml.dist
 
 ###> symfony/webpack-encore-bundle ###
 /node_modules/
-.idea
+.idea/*
 ###< symfony/webpack-encore-bundle ###
 .env
