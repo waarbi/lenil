@@ -14,6 +14,5 @@ phpunit.xml.dist
 ###> symfony/webpack-encore-bundle ###
 /node_modules/
 .idea
-
 ###< symfony/webpack-encore-bundle ###
 .env
