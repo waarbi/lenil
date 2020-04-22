@@ -4,7 +4,7 @@ namespace App\Entity\Admin;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\GeneralSettingRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\Admin\GeneralSettingRepository")
  */
 class GeneralSetting
 {
@@ -34,12 +34,6 @@ class GeneralSetting
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $siteAuthor;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $siteLogo;
-
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
@@ -69,6 +63,10 @@ class GeneralSetting
     {
         return $this->siteTitle;
     }
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $siteEmail;
 
     public function setSiteTitle(?string $siteTitle): self
     {
@@ -113,18 +111,6 @@ class GeneralSetting
         return $this;
     }
 
-    public function getSiteLogo(): ?string
-    {
-        return $this->siteLogo;
-    }
-
-    public function setSiteLogo(?string $siteLogo): self
-    {
-        $this->siteLogo = $siteLogo;
-
-        return $this;
-    }
-
     public function getGoogleRecaptchaSiteKey(): ?string
     {
         return $this->googleRecaptchaSiteKey;
@@ -159,6 +145,22 @@ class GeneralSetting
         $this->EnableKnowledgeBank = $EnableKnowledgeBank;
 
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSiteEmail()
+    {
+        return $this->siteEmail;
+    }
+
+    /**
+     * @param mixed $siteEmail
+     */
+    public function setSiteEmail($siteEmail): void
+    {
+        $this->siteEmail = $siteEmail;
     }
 
     public function getEnableMaintenanceMode(): ?bool

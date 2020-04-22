@@ -2,29 +2,75 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Admin\GeneralPaymentSetting;
+use App\Entity\Admin\GeneralSetting;
+use App\Entity\Admin\HomePageSection;
+use App\Entity\Admin\LandingPageSlide;
+use App\Entity\Admin\PaypalSetting;
+use App\Entity\Admin\StripeSetting;
 use App\Entity\Category;
 use App\Entity\DeliveryTime;
 use App\Entity\LanguageName;
 use App\Entity\Level;
 use App\Entity\Pays;
+use App\Entity\Role;
 use App\Entity\SkillsName;
 use App\Entity\SousCategory;
+use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
+use Faker\Factory;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class AppFixtures extends Fixture
 {
+    private $encoder;
+
+    public function __construct(UserPasswordEncoderInterface $encoder){
+        $this->encoder = $encoder;
+    }
     public function load(ObjectManager $manager)
     {
+
+        //country
+        //pays
+        $pays = [];
+        $paysName = ['SENEGAL', 'MALI', 'COTE D\'IVOIRE','MAURITANIE', 'CAMEROUN', 'GAMBIE'];
+        foreach ($paysName as $name){
+            $lepays = new Pays();
+            $lepays->setName($name);
+            $manager->persist($lepays);
+            $pays [] = $lepays;
+        }
+        //user
+        $faker = Factory::create('FR-fr');
+
+        $adminRole = new Role();
+        $adminRole->setTitle('ROLE_ADMIN');
+        $manager->persist($adminRole);
+
+        $adminUser = new User();
+        $adminUser->setFirstName('Lenil')
+            ->setPays($pays[1])
+            ->setLastName('Tech')
+            ->setEmail('lenil@symfony.com')
+            ->setHash($this->encoder->encodePassword($adminUser, 'password'))
+            ->setPicture('tof-admin.png')
+            ->setDescription('<p>' . join('</p><p>', $faker->paragraphs(3)) . '</p>')
+            ->addUserRole($adminRole);
+
+        $manager->persist($adminUser);
+
+        //categories et sous categories
         $cat1 = new Category();
         $cat1->setTitle('Graphics & Design')->setDescription('It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.')
-        ->setFeatured(true)->setImage('p1.png')->setSlug('graphics-design');
+        ->setFeatured(true)->setImage('p1.png')->setInCard(true)->setSlug('graphics-design')->setCardPicture('1.jpg');
         $manager->persist($cat1);
         $manager->flush();
         //sous categories de Graphics & Design
             $sous_cat1 = new SousCategory();
             $sous_cat1->setTitle('Logo Design')->setDescription('It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.')
-                ->setFeatured(false)->setImage('1.jpg')->setSlug('logo-design')->setCategory($cat1)->setInCard(true);
+                ->setFeatured(false)->setSlug('logo-design')->setCategory($cat1);
             $manager->persist($sous_cat1);
 
             $sous_cat2 = new SousCategory();
@@ -99,7 +145,7 @@ Caricatures de dessins animés')->setDescription('It is a long established fact 
 
         $cat2 = new Category();
         $cat2->setTitle('Marketing Digital')->setDescription('It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.')
-            ->setFeatured(true)->setImage('p2.jpg')->setSlug('digital-marketing')->setInCard(true);
+            ->setFeatured(true)->setImage('p2.png')->setSlug('digital-marketing')->setInCard(true)->setCardPicture('2.jpg');
         $manager->persist($cat2);
         $manager->flush();
 
@@ -169,17 +215,17 @@ Caricatures de dessins animés')->setDescription('It is a long established fact 
 
         $cat3 = new Category();
         $cat3->setTitle('Rédaction & traduction')->setDescription('It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.')
-            ->setFeatured(true)->setImage('p4.png')->setSlug('writing-translation')->setInCard(true);
+            ->setFeatured(true)->setImage('p4.png')->setSlug('writing-translation')->setInCard(true)->setCardPicture('3.jpg');
         $manager->persist($cat3);
 
         $cat4 = new Category();
         $cat4->setTitle('Video & Animation')->setDescription('It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.')
-            ->setFeatured(true)->setImage('p3.png')->setSlug('video-animation')->setInCard(true);
+            ->setFeatured(true)->setImage('p3.png')->setSlug('video-animation')->setInCard(true)->setCardPicture('4.jpg');
         $manager->persist($cat4);
 
         $cat5 = new Category();
         $cat5->setTitle('Programmation')->setDescription('It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.')
-            ->setFeatured(true)->setImage('p5.png')->setSlug('programming-tech')->setParentId(null);
+            ->setFeatured(true)->setImage('p5.png')->setSlug('programming-tech')->setInCard(true)->setCardPicture('5.jpg');
         $manager->persist($cat5);
 
         $cat6 = new Category();
@@ -197,15 +243,6 @@ Caricatures de dessins animés')->setDescription('It is a long established fact 
             ->setFeatured(true)->setImage('p8.png')->setSlug('music-audio')->setParentId(null);
         $manager->persist($cat8);
 
-        //country
-        //pays
-        $paysName = ['SENEGAL', 'MALI', 'COTE D\'IVOIRE','MAURITANIE', 'CAMEROUN', 'GAMBIE'];
-        foreach ($paysName as $name){
-            $lepays = new Pays();
-            $lepays->setName($name);
-            $manager->persist($lepays);
-            $pays [] = $lepays;
-        }
         //SkillsName
         $skills = ['HTML, CSS3, BOOTSRAP','Javascript, Ajax, JQuery','PHP','PhotoShop','Laravel','Marketing digital'];
         foreach ($skills as $name){
@@ -236,7 +273,44 @@ Caricatures de dessins animés')->setDescription('It is a long established fact 
             $delivery->setName($name);
             $manager->persist($delivery);
         }
-        $manager->flush();
+        //general settings
+        $generalSetting = new GeneralSetting();
+        $generalSetting->setSiteAuthor('Waarbi')->setSiteTitle('Lenil | Plateforme des freelancers africains')
+            ->setSiteDescription('La mission de lenil est de lutter contre le chomage en Afrique. Lenil connecte les entreprises avec des talants en Afrique qui offrant des services numériques.')
+            ->setEnableKnowledgeBank(true)->setEnableMaintenanceMode(false)->setGoogleRecaptchaSecretKey('rechapchatCleSecret')->setGoogleRecaptchaSiteKey('RecapchatCleSITE')->setSiteKeywords('freelancer africain, tech, fiverr africain, services numériques,online marketplace, emploi des jeunes, talents africains')
+            ->setSiteEmail('contact@lenil.tech');
+        $manager->persist($generalSetting);
 
+
+        //section des slides au niveau de la homePage
+        $sectionHomePage = new HomePageSection();
+        $sectionHomePage->setHeading('ARRETEZ DE REVER ET REALISEZ VOS PROJETS')->setShortHeading('Trouver les meilleurs freelancers africains');
+        $manager->persist($sectionHomePage);
+
+        //slider
+        $slider1 = new LandingPageSlide();
+        $slider1->setTitle('slider1')->setImageName('cover-main-one.png')->setIsActivate(true);
+        $slider2 = new LandingPageSlide();
+        $slider2->setTitle('slider1')->setImageName('cover-main-two.png')->setIsActivate(true);
+        $manager->persist($slider1);
+        $manager->persist($slider2);
+
+        //paramètres generaux de paiements
+        $paiement = new GeneralPaymentSetting();
+        $paiement->setCommissionProcessing(5)->setDurationFeatured(2)->setPriceFeaturedProposal(10);
+        $manager->persist($paiement);
+
+        // Paramètre paiement Paypal
+        $paypal = new PaypalSetting();
+        $paypal->setEmail('contact@lenil.tech')->setAppClientId(111111212121)->setAppClientSecret('cleSecretApiPaypal')->setCurrency('EUR')->setEnabled(true)->setPaypalSandbox(true);
+        $manager->persist($paypal);
+
+        //paramètre paiement stripe
+        $stripe = new StripeSetting();
+        $stripe->setEnabled(true)->setCurrency('EUR')->setPublishableKey('publishabledKey')->setSecretKey('SecretKepStripe');
+        $manager->persist($stripe);
+
+
+        $manager->flush();
     }
 }

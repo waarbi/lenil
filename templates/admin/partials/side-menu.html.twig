@@ -4,10 +4,10 @@
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-menu">
                 <i class="fa fa-bars"></i>
             </button>
-            <a class="navbar-brand" href="index?dashboard">
-                Lenil <span class="badge badge-success p-2 font-weight-bold">ADMIN</span>
+            <a class="navbar-brand" href="{{ path('admin_dashboard') }}">
+                Lenil <span class="badge badge-primary p-2 font-weight-bold">ADMIN</span>
             </a>
-            <a class="navbar-brand hidden" href="./"><span class="badge badge-success pt-2 pb-2">A</span></a>
+            <a class="navbar-brand hidden" href="./"><span class="badge badge-primary pt-2 pb-2">A</span></a>
         </div>
         <div id="main-menu" class="main-menu collapse navbar-collapse">
             <ul class="nav navbar-nav">
@@ -15,19 +15,19 @@
                     <a href="{{ path('admin_dashboard') }}"> <i class="menu-icon fa fa-dashboard"></i>Dashboard </a>
                 </li>
                 <li class="menu-item-has-children dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Settings"> <i class="menu-icon fa fa-cog"></i> Settings</a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Settings"> <i class="menu-icon fa fa-cog"></i> Paramètres</a>
                     <ul class="sub-menu children dropdown-menu">
-                        <li><i class="fa  fa-arrow-circle-right"></i><a href="index?general_settings">General Settings</a></li>
-                        <li><i class="fa  fa-arrow-circle-right"></i><a href="index?layout_settings">Layout Settings</a></li>
-                        <li><i class="fa  fa-arrow-circle-right"></i><a href="index?payment_settings">Payment Settings</a></li>
+                        <li><i class="fa  fa-arrow-circle-right"></i><a href="{{ path('update_general_setting') }}">General</a></li>
+                        <li><i class="fa  fa-arrow-circle-right"></i><a href="{{ path('update_text_slider_in_layout_setting') }}">Layout</a></li>
+                        <li><i class="fa  fa-arrow-circle-right"></i><a href="{{ path('update_general_paiment_setting') }}">Option de paiement</a></li>
                     </ul>
                 </li>
                 <li>
                     <a href="index?view_proposals"> <i class="menu-icon fa fa-table"></i>Services
-                        <span class="badge badge-success">3</span>
+                        <span class="badge badge-primary">{{ nbProposal }}</span>
                     </a>
                 </li>
-                <li class="menu-item-has-children dropdown">
+              {#  <li class="menu-item-has-children dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-cube"></i>Accounting</a>
                     <ul class="sub-menu children dropdown-menu">
                         <li><i class="fa  fa-arrow-circle-right"></i><a href="index?sales"> Sales</a></li>
@@ -66,7 +66,7 @@
                 </li>
                 <li>
                     <a href="index?buyer_requests"> <i class="menu-icon fa fa-table"></i>Buyer Requests
-                        <span class="badge badge-success">1</span>
+                        <span class="badge badge-primary">1</span>
                     </a>
                 </li>
                 <li class="menu-item-has-children dropdown">
@@ -78,49 +78,49 @@
                 </li>
                 <li>
                     <a href="index?view_notifications"> <i class="menu-icon fa fa-bell"></i>Alerts
-                        <span class="badge badge-success">261</span>
+                        <span class="badge badge-primary">261</span>
                     </a>
-                </li>
+                </li>#}
                 <li class="menu-item-has-children dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-cubes"></i>Categories</a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-cubes"></i>Catégories</a>
                     <ul class="sub-menu children dropdown-menu">
-                        <li><i class="fa  fa-arrow-circle-right"></i><a href="index?insert_cat"> Insert Category</a></li>
-                        <li><i class="fa  fa-arrow-circle-right"></i><a href="index?view_cats"> View Categories</a></li>
+                        <li><i class="fa  fa-arrow-circle-right"></i><a href="index?insert_cat"> Créer une Catégorie</a></li>
+                        <li><i class="fa  fa-arrow-circle-right"></i><a href="index?view_cats"> Gérer les catégories</a></li>
                     </ul>
                 </li>
                 <li class="menu-item-has-children dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-stack-exchange"></i>Sub Categories</a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-stack-exchange"></i>Sous Catégories</a>
                     <ul class="sub-menu children dropdown-menu">
-                        <li><i class="fa  fa-arrow-circle-right"></i><a href="index?insert_child_cat">Insert Sub Category</a></li>
-                        <li><i class="fa  fa-arrow-circle-right"></i><a href="index?view_child_cats">View Sub Categories</a></li>
+                        <li><i class="fa  fa-arrow-circle-right"></i><a href="index?insert_child_cat">Créer une sous Catégorie</a></li>
+                        <li><i class="fa  fa-arrow-circle-right"></i><a href="index?view_child_cats">Gérer les sous catégories</a></li>
                     </ul>
                 </li>
                 <li class="menu-item-has-children dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-calendar"></i>Delivery Times</a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-calendar"></i>Délais de livraison</a>
                     <ul class="sub-menu children dropdown-menu">
-                        <li><i class="fa  fa-arrow-circle-right"></i><a href="index?insert_delivery_time">Insert Delivery Time</a></li>
-                        <li><i class="fa  fa-arrow-circle-right"></i><a href="index?view_delivery_times">View Delivery Time</a></li>
+                        <li><i class="fa  fa-arrow-circle-right"></i><a href="index?insert_delivery_time">Créer un délais de livraison</a></li>
+                        <li><i class="fa  fa-arrow-circle-right"></i><a href="index?view_delivery_times">Gérer les délais de livraison</a></li>
                     </ul>
                 </li>
                 <li class="menu-item-has-children dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-language"></i> Seller Languages</a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-language"></i>Langues</a>
                     <ul class="sub-menu children dropdown-menu">
-                        <li><i class="fa  fa-arrow-circle-right"></i><a href="index?insert_seller_language"> Insert Seller Language</a></li>
-                        <li><i class="fa  fa-arrow-circle-right"></i><a href="index?view_seller_languages"> View Seller Languages</a></li>
+                        <li><i class="fa  fa-arrow-circle-right"></i><a href="index?insert_seller_language">Créer une langue</a></li>
+                        <li><i class="fa  fa-arrow-circle-right"></i><a href="index?view_seller_languages"> Gérer les langues</a></li>
                     </ul>
                 </li>
                 <li class="menu-item-has-children dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Seller Skills"> <i class="menu-icon fa fa-flash"></i> Seller Skills</a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Seller Skills"> <i class="menu-icon fa fa-flash"></i>Compétences</a>
                     <ul class="sub-menu children dropdown-menu">
-                        <li><i class="fa  fa-arrow-circle-right"></i><a href="index?insert_seller_skill"> Insert Seller Skill</a></li>
-                        <li><i class="fa  fa-arrow-circle-right"></i><a href="index?view_seller_skills"> View Seller Skills</a></li>
+                        <li><i class="fa  fa-arrow-circle-right"></i><a href="index?insert_seller_skill">Créer une compétence</a></li>
+                        <li><i class="fa  fa-arrow-circle-right"></i><a href="index?view_seller_skills">Gérer les compétences</a></li>
                     </ul>
                 </li>
                 <li>
-                    <a href="index?view_seller_levels"> <i class="menu-icon fa fa-bell"></i>Seller Levels
+                    <a href="index?view_seller_levels"> <i class="menu-icon fa fa-bell"></i>Niveau des freelancers
                     </a>
                 </li>
-                <li class="menu-item-has-children dropdown">
+                {#<li class="menu-item-has-children dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Customer Support"> <i class="menu-icon fa fa-phone-square"></i> Customer Support</a>
                     <ul class="sub-menu children dropdown-menu">
                         <li><i class="fa  fa-arrow-circle-right"></i><a href="index?customer_support_settings" title="Customer Support Settings">Support Settings
@@ -142,26 +142,26 @@
                         <li><i class="menu-icon fa fa-arrow-circle-right"></i><a href="index?insert_coupon"> Insert Coupon</a></li>
                         <li><i class="menu-icon fa fa-arrow-circle-right"></i><a href="index?view_coupons"> View Coupons</a></li>
                     </ul>
-                </li>
+                </li>#}
                 <li class="menu-item-has-children dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Seller Skills"> <i class="menu-icon fa  fa-picture-o"></i> Slides</a>
                     <ul class="sub-menu children dropdown-menu">
-                        <li><i class="menu-icon fa fa-arrow-circle-right"></i><a href="index?insert_slide"> Insert Slide</a></li>
-                        <li><i class="menu-icon fa fa-arrow-circle-right"></i><a href="index?view_slides"> View Slides</a></li>
+                        <li><i class="menu-icon fa fa-arrow-circle-right"></i><a href="index?insert_slide"> Créer Slide</a></li>
+                        <li><i class="menu-icon fa fa-arrow-circle-right"></i><a href="index?view_slides"> Gérer Slides</a></li>
                     </ul>
                 </li>
-                <li class="menu-item-has-children dropdown">
+                {#<li class="menu-item-has-children dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Seller Skills"> <i class="menu-icon fa fa-table"></i> Terms &amp; Conditions</a>
                     <ul class="sub-menu children dropdown-menu">
                         <li><i class="menu-icon fa fa-arrow-circle-right"></i><a href="index?insert_term"> Insert Term</a></li>
                         <li><i class="menu-icon fa fa-arrow-circle-right"></i><a href="index?view_terms"> View Terms</a></li>
                     </ul>
-                </li>
+                </li>#}
                 <li>
-                    <a href="index?view_sellers"> <i class="menu-icon fa fa-users"></i> All Users </a>
+                    <a href="index?view_sellers"> <i class="menu-icon fa fa-users"></i> Utilisateurs </a>
                 </li>
 
-                <li>
+{#                <li>
                     <a href="index?view_orders"> <i class="menu-icon fa fa-eye"></i> View Orders </a>
                 </li>
 
@@ -181,40 +181,28 @@
                         <li><i class="menu-icon fa fa-arrow-circle-right"></i><a href="index?view_inbox_files"> Messages Files</a></li>
                         <li><i class="menu-icon fa fa-arrow-circle-right"></i><a href="index?view_order_files"> Orders Files</a></li>
                     </ul>
-                </li>
+                </li>#}
                 <li class="menu-item-has-children dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="Seller Skills">
-                        <i class="menu-icon fa fa-book"></i> Knowledge Bank
+                        <i class="menu-icon fa fa-book"></i> Guide
                     </a>
                     <ul class="sub-menu children dropdown-menu">
-                        <li><i class="menu-icon fa fa-arrow-circle-right"></i><a href="index?insert_article_cat"> Insert Article Category</a></li>
-                        <li><i class="menu-icon fa fa-arrow-circle-right"></i><a href="index?view_article_cats"> View Article Categories</a></li>
-                        <li><i class="menu-icon fa fa-arrow-circle-right"></i><a href="index?insert_article"> Insert Article</a></li>
-                        <li><i class="menu-icon fa fa-arrow-circle-right"></i><a href="index?view_articles"> View Articles</a></li>
-                    </ul>
-                </li>
-                <li class="menu-item-has-children dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="Languages">
-                        <i class="menu-icon fa fa-language"></i> Languages
-                    </a>
-                    <ul class="sub-menu children dropdown-menu">
-                        <li>
-                            <i class="menu-icon fa fa-arrow-circle-right"></i><a href="index?insert_language">Insert Language</a>
-                        </li>
-                        <li><i class="menu-icon fa fa-arrow-circle-right"></i><a href="index?view_languages"> View Languages</a></li>
+                        <li><i class="menu-icon fa fa-arrow-circle-right"></i><a href="index?insert_article_cat"> Créer une Catégorie d'article</a></li>
+                        <li><i class="menu-icon fa fa-arrow-circle-right"></i><a href="index?view_article_cats"> Gérer les catégories d'articles</a></li>
+                        <li><i class="menu-icon fa fa-arrow-circle-right"></i><a href="index?insert_article"> Créer un article</a></li>
+                        <li><i class="menu-icon fa fa-arrow-circle-right"></i><a href="index?view_articles">Gérer les articles</a></li>
                     </ul>
                 </li>
                 <li class="menu-item-has-children dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Seller Skills"> <i class="menu-icon fa fa-users"></i> Admins</a>
                     <ul class="sub-menu children dropdown-menu">
-                        <li><i class="menu-icon fa fa-arrow-circle-right"></i><a href="index?admin_logs"> Admin Logs</a></li>
-                        <li><i class="menu-icon fa fa-arrow-circle-right"></i><a href="index?insert_user"> Insert Admin</a></li>
-                        <li><i class="menu-icon fa fa-arrow-circle-right"></i><a href="index?view_users"> View Admins</a></li>
-                        <li><i class="menu-icon fa fa-arrow-circle-right"></i><a href="index?user_profile=10"> Edit My Profile</a></li>
+                        <li><i class="menu-icon fa fa-arrow-circle-right"></i><a href="index?insert_user"> Créer un admin</a></li>
+                        <li><i class="menu-icon fa fa-arrow-circle-right"></i><a href="index?view_users"> Gérer les admins</a></li>
+                        <li><i class="menu-icon fa fa-arrow-circle-right"></i><a href="index?user_profile=10"> Editer Mon Profil</a></li>
                     </ul>
                 </li>
                 <li>
-                    <a href="logout"> <i class="menu-icon fa fa-power-off"></i> Logout </a>
+                    <a href="{{ path('admin_account_logout') }}"> <i class="menu-icon fa fa-power-off"></i> Déconnexion </a>
                 </li>
             </ul>
         </div>

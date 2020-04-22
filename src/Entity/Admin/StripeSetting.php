@@ -4,7 +4,7 @@ namespace App\Entity\Admin;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\StripeSettingRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\Admin\StripeSettingRepository")
  */
 class StripeSetting
 {

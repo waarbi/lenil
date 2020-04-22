@@ -4,6 +4,9 @@
 namespace App\Controller;
 
 
+use App\Entity\Admin\GeneralSetting;
+use App\Entity\Admin\HomePageSection;
+use App\Entity\Admin\LandingPageSlide;
 use App\Entity\Contact;
 use App\Entity\Demande;
 use App\Entity\Proposal;
@@ -17,12 +20,17 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class HomeController extends AbstractController
 {
+    private $generalSettings;
 
     private $categories_yes;
+    private $sectionLayout;
 
     public function __construct(EntityManagerInterface $manage)
     {
         $this->categories_yes = $manage->getRepository('App\Entity\Category')->findBy(array('featured' => true));
+        $this->generalSettings = $manage->getRepository(GeneralSetting::class)->findAll()[0];
+        $this->sectionLayout = $manage->getRepository(HomePageSection::class)->findAll()[0];
+
 
     }
 
@@ -37,12 +45,16 @@ class HomeController extends AbstractController
 
         if (is_null($this->getUser())){
             $proposals = $manager->getRepository(Proposal::class)->findAll();
+            $sliders = $manager->getRepository(LandingPageSlide::class)->findAll();
 
             return $this->render('home_anonym.html.twig',
                 array(
                     'categories_yes' =>  $this->categories_yes,
                     'categories_card' => $categories_cards,
                     'proposals'      => $proposals,
+                    'generalSettings' => $this->generalSettings,
+                    'sectionLayout' => $this->sectionLayout,
+                    'sliders' => $sliders
                 ));
         }else{
 
@@ -53,7 +65,9 @@ class HomeController extends AbstractController
                     'categories_yes' => $this->categories_yes,
                     'categories_card' => $categories_cards,
                     'proposals'      => $proposals,
-                    'demandesActives' => $demandesActives
+                    'demandesActives' => $demandesActives,
+                    'generalSettings' => $this->generalSettings
+
                 ));
         }
 

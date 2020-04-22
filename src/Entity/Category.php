@@ -24,7 +24,7 @@ class Category
     private $slug;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $image;
 
@@ -89,10 +89,12 @@ class Category
 
     /**
      * @param mixed $in_card
+     * @return Category
      */
-    public function setInCard($in_card): void
+    public function setInCard($in_card): Category
     {
         $this->in_card = $in_card;
+        return $this;
     }
 
     public function setSlug(string $slug): self

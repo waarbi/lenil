@@ -4,7 +4,7 @@ namespace App\Entity\Admin;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\LandingPageSlideRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\Admin\LandingPageSlideRepository")
  */
 class LandingPageSlide
 {
@@ -24,6 +24,11 @@ class LandingPageSlide
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $imageName;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $isActivate;
 
     public function getId(): ?int
     {
@@ -53,4 +58,23 @@ class LandingPageSlide
 
         return $this;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getIsActivate()
+    {
+        return $this->isActivate;
+    }
+
+    /**
+     * @param mixed $isActivate
+     * @return LandingPageSlide
+     */
+    public function setIsActivate($isActivate): self
+    {
+        $this->isActivate = $isActivate;
+        return $this;
+    }
+
 }

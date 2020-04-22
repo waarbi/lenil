@@ -13,6 +13,12 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Proposal
 {
+    const REQUEST_STATUS_ACTIVE = 1; // active
+    const REQUEST_STATUS_INACTIVE = 2; // supendue
+    const REQUEST_STATUS_INPROGRESS = 3; //en cours de validation
+    const REQUEST_STATUS_CANCELLED = 4; // désapprouvé
+
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -34,6 +40,10 @@ class Proposal
      * @ORM\Column(type="string", length=255)
      */
     private $slug;
+    /**
+     * @ORM\Column(type="integer",name="status_id", nullable=true)
+     */
+    private $statusId = Proposal::REQUEST_STATUS_INPROGRESS;
 
     /**
      * @ORM\Column(type="decimal", precision=5, scale=2)
