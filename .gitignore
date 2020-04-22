@@ -2,6 +2,7 @@
 /.env
 
 /var/
+/var/log/
 /vendor/
 ###< symfony/framework-bundle ###
 
@@ -20,6 +21,7 @@
 ###> OS/IDE file ###
 .DS_Store
 .idea
+.idea/workspace.xml
 *.iml
 ###< OS/IDE file ###
 

@@ -69,11 +69,11 @@
                                     <div class="owl-item" style="width: 250.4px; margin-right: 18px;">
                                         <div class="card-box">
                                             <div>
-                                                <a href="#categories/graphics-design/photoshop-editing"
+                                                <a href="#"
                                                    class="subcategory">
                                                     <h4><small></small>{{category.title}}</h4>
                                                     <picture>
-                                                        <img src="build/images/card/{{ category.getCardPicture }}">
+                                                        <img src="uploads/images/card/{{ category.getCardPicture }}">
                                                     </picture>
                                                 </a>
                                             </div>
@@ -110,7 +110,7 @@
                                 <div class="col-md-3 col-6">
                                     <a href="{{ path('category_services',{slug: category.slug}) }}">
                                         <div class="grn_box">
-                                            <img src="{{ asset('build/images/card/'~category.image) }}"
+                                            <img src="{{ asset('uploads/images/card/'~category.image) }}"
                                                  class="mx-auto d-block">
                                             <p>{{ category.title }}</p>
                                         </div>
