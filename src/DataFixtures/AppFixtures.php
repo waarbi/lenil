@@ -291,7 +291,7 @@ Caricatures de dessins animés')->setDescription('It is a long established fact 
         $slider1 = new LandingPageSlide();
         $slider1->setTitle('slider1')->setImageName('cover-main-one.png')->setIsActivate(true);
         $slider2 = new LandingPageSlide();
-        $slider2->setTitle('slider1')->setImageName('cover-main-two.png')->setIsActivate(true);
+        $slider2->setTitle('slider2')->setImageName('cover-main-two.png')->setIsActivate(false);
         $manager->persist($slider1);
         $manager->persist($slider2);
 
