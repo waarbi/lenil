@@ -12,10 +12,6 @@ class SousCategoryType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('slug')
-            ->add('image')
-            ->add('featured')
-            ->add('in_card')
             ->add('title')
             ->add('description')
             ->add('category')

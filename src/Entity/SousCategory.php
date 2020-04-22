@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Cocur\Slugify\Slugify;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
@@ -9,6 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\SousCategoryRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class SousCategory
 {
@@ -23,25 +25,10 @@ class SousCategory
      * @ORM\Column(type="string", length=255)
      */
     private $slug;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $image;
-
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $featured;
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
-    private $in_card;
     /**
      * @ORM\Column(type="string", length=255)
      */
     private $title;
-
     /**
      * @ORM\Column(type="string", length=255)
      */
@@ -54,8 +41,6 @@ class SousCategory
      * })
      */
     private $category;
-
-    private $parent_id;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Proposal", mappedBy="subcategory")
@@ -77,49 +62,10 @@ class SousCategory
         return $this->slug;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getInCard()
-    {
-        return $this->in_card;
-    }
-
-    /**
-     * @param mixed $in_card
-     */
-    public function setInCard($in_card): void
-    {
-        $this->in_card = $in_card;
-    }
 
     public function setSlug(string $slug): self
     {
         $this->slug = $slug;
-
-        return $this;
-    }
-
-    public function getImage(): ?string
-    {
-        return $this->image;
-    }
-
-    public function setImage(string $image): self
-    {
-        $this->image = $image;
-
-        return $this;
-    }
-
-    public function getFeatured(): ?bool
-    {
-        return $this->featured;
-    }
-
-    public function setFeatured(bool $featured): self
-    {
-        $this->featured = $featured;
 
         return $this;
     }
@@ -159,7 +105,21 @@ class SousCategory
 
         return $this;
     }
+    /**
+     * Permet d'initialiser le  slug !
+     *
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     *
+     * @return void
+     */
+    public function initializeSlug(){
 
+        if(empty($this->slug)){
+            $slugify = new Slugify();
+            $this->slug = $slugify->slugify($this->title. ' ' .substr($this->description, 0, 10));
+        }
+    }
     public function __toString()
     {
         return $this->getTitle();

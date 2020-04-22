@@ -4,11 +4,9 @@
 namespace App\Controller\Admin;
 
 
-use App\Entity\Admin\GeneralSetting;
 use App\Entity\Category;
 use App\Entity\Proposal;
 use App\Form\Admin\CategoryType;
-use App\Form\Admin\GeneralSettingType;
 use App\Services\FileUploader;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
