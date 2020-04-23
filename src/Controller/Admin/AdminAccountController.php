@@ -24,7 +24,6 @@ class AdminAccountController extends AbstractController
             'username' => $username
         ]);
     }
-    
     /**
      * Permet de se déconnecter
      * 

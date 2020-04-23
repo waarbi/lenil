@@ -6,10 +6,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\DeliveryTime;
 use App\Entity\Proposal;
-use App\Entity\SousCategory;
 use App\Form\Admin\DeliveryTimeType;
-use App\Form\Admin\SousCategoryType;
-use App\Services\FileUploader;
 use App\Services\PaginationService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -34,12 +31,11 @@ class AdminDeliveryTimeController extends AbstractController
 
     /**
      * @Route("/index/page/{page<\d+>?1}", name="admin_index_delivery_time", methods={"GET","POST"})
-     * @param Request $request
      * @param $page
      * @param PaginationService $paginationService
      * @return Response
      */
-    public function indexAdminDeliveryTime(Request $request, $page,PaginationService $paginationService): Response
+    public function indexAdminDeliveryTime( $page,PaginationService $paginationService): Response
     {
         $paginationService->setEntityClass(DeliveryTime::class)->setPage($page);
         return $this->render('admin/deliverytime/index.html.twig', [
@@ -53,7 +49,6 @@ class AdminDeliveryTimeController extends AbstractController
      * @Route("/create/", name="admin_create_delivery_time", methods={"GET","POST"})
      * @param Request $request
      * @return Response
-     * @throws \Exception
      */
     public function create(Request $request): Response
     {

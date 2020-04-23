@@ -7,7 +7,6 @@ namespace App\Controller\Admin;
 use App\Entity\Proposal;
 use App\Entity\SousCategory;
 use App\Form\Admin\SousCategoryType;
-use App\Services\FileUploader;
 use App\Services\PaginationService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -32,12 +31,11 @@ class AdminSubCategoryController extends AbstractController
 
     /**
      * @Route("/index/page/{page<\d+>?1}", name="admin_index_sub_category", methods={"GET","POST"})
-     * @param Request $request
      * @param $page
      * @param PaginationService $paginationService
      * @return Response
      */
-    public function indexAdminSubCategory(Request $request, $page,PaginationService $paginationService): Response
+    public function indexAdminSubCategory($page,PaginationService $paginationService): Response
     {
         $paginationService->setEntityClass(SousCategory::class)->setPage($page);
         return $this->render('admin/subcategory/index.html.twig', [
@@ -50,11 +48,9 @@ class AdminSubCategoryController extends AbstractController
     /**
      * @Route("/create/", name="admin_create_sub_category", methods={"GET","POST"})
      * @param Request $request
-     * @param FileUploader $uploader
      * @return Response
-     * @throws \Exception
      */
-    public function create(Request $request, FileUploader $uploader): Response
+    public function create(Request $request): Response
     {
         $subCategory = new SousCategory();
         $form = $this->createForm(SousCategoryType::class, $subCategory);
@@ -78,10 +74,9 @@ class AdminSubCategoryController extends AbstractController
     /**
      * @Route("/SubCategory/delete/{id}", name="admin_delete_sub_category")
      * @param SousCategory $sousCategory
-     * @param FileUploader $fileUploader
      * @return Response
      */
-    public function deleteSubCategory(SousCategory $sousCategory, FileUploader $fileUploader): Response
+    public function deleteSubCategory(SousCategory $sousCategory): Response
     {
 
         $this->manager->remove($sousCategory);
@@ -95,10 +90,9 @@ class AdminSubCategoryController extends AbstractController
      * @Route("/SubCategory/edit/{id}", name="admin_edit_sub_category", methods={"GET","POST"})
      * @param Request $request
      * @param SousCategory $sousCategory
-     * @param FileUploader $uploader
      * @return Response
      */
-    public function editSubCategory(Request $request, SousCategory $sousCategory, FileUploader $uploader): Response
+    public function editSubCategory(Request $request, SousCategory $sousCategory): Response
     {
         $form = $this->createForm(SousCategoryType::class, $sousCategory);
         $form->handleRequest($request);

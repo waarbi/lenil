@@ -9,6 +9,7 @@ use App\Entity\Proposal;
 use App\Form\Admin\CategoryType;
 use App\Services\FileUploader;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -31,10 +32,9 @@ class AdminCategoryController extends AbstractController
 
     /**
      * @Route("/index/", name="admin_index_category", methods={"GET","POST"})
-     * @param Request $request
      * @return Response
      */
-    public function indexAdminCategory(Request $request): Response
+    public function indexAdminCategory(): Response
     {
       $categories = $this->manager->getRepository(Category::class)->findAll();
 
@@ -50,7 +50,7 @@ class AdminCategoryController extends AbstractController
      * @param Request $request
      * @param FileUploader $uploader
      * @return Response
-     * @throws \Exception
+     * @throws Exception
      */
     public function create(Request $request, FileUploader $uploader): Response
     {
@@ -108,7 +108,7 @@ class AdminCategoryController extends AbstractController
      * @param Category $category
      * @param FileUploader $uploader
      * @return Response
-     * @throws \Exception
+     * @throws Exception
      */
     public function editCategories(Request $request, Category $category, FileUploader $uploader): Response
     {
@@ -122,7 +122,7 @@ class AdminCategoryController extends AbstractController
             $imageIcon = $form['image']->getData();
 
             if ($imageIcon) {
-                $uploader->deleteCategoryImageCard($imageOld);
+                if ($imageOld)$uploader->deleteCategoryImageCard($imageOld);
                 $fileName = $uploader->uploadCategoryImageCard($imageIcon);
                 $category->setImage($fileName);
             }else{
@@ -131,7 +131,7 @@ class AdminCategoryController extends AbstractController
             $imageCard = $form['cardPicture']->getData();
 
             if ($imageCard) {
-                $uploader->deleteCategoryImageCard($imageCardOld);
+                if ($imageCardOld)$uploader->deleteCategoryImageCard($imageCardOld);
                 $adFileName = $uploader->uploadCategoryImageCard($imageCard);
                 $category->setCardPicture($adFileName);
             }else{

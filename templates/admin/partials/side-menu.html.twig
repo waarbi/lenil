@@ -187,10 +187,10 @@
                         <i class="menu-icon fa fa-book"></i> Guide
                     </a>
                     <ul class="sub-menu children dropdown-menu">
-                        <li><i class="menu-icon fa fa-arrow-circle-right"></i><a href="index?insert_article_cat"> Créer une Catégorie d'article</a></li>
-                        <li><i class="menu-icon fa fa-arrow-circle-right"></i><a href="index?view_article_cats"> Gérer les catégories d'articles</a></li>
-                        <li><i class="menu-icon fa fa-arrow-circle-right"></i><a href="index?insert_article"> Créer un article</a></li>
-                        <li><i class="menu-icon fa fa-arrow-circle-right"></i><a href="index?view_articles">Gérer les articles</a></li>
+                        <li><i class="menu-icon fa fa-arrow-circle-right"></i><a href="{{ path('admin_create_article_category') }}"> Créer une Catégorie d'article</a></li>
+                        <li><i class="menu-icon fa fa-arrow-circle-right"></i><a href="{{ path('admin_index_article_category') }}"> Gérer les catégories d'articles</a></li>
+                        <li><i class="menu-icon fa fa-arrow-circle-right"></i><a href="{{ path('admin_create_article') }}"> Créer un article</a></li>
+                        <li><i class="menu-icon fa fa-arrow-circle-right"></i><a href="{{ path('admin_index_article') }}">Gérer les articles</a></li>
                     </ul>
                 </li>
                 <li class="menu-item-has-children dropdown">

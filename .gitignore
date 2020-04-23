@@ -28,5 +28,6 @@
 ###> ASSETS ###
 /node_modules/
 /public/build/
+/public/bundles/
 /public/uploads
 ###< ASSETS ###

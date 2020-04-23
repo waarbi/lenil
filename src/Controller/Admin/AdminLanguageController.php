@@ -4,16 +4,9 @@
 namespace App\Controller\Admin;
 
 
-use App\Entity\DeliveryTime;
 use App\Entity\LanguageName;
 use App\Entity\Proposal;
-use App\Entity\SkillsName;
-use App\Entity\SousCategory;
-use App\Form\Admin\DeliveryTimeType;
 use App\Form\Admin\LanguageNameType;
-use App\Form\Admin\SkillsNameType;
-use App\Form\Admin\SousCategoryType;
-use App\Services\FileUploader;
 use App\Services\PaginationService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -38,12 +31,11 @@ class AdminLanguageController extends AbstractController
 
     /**
      * @Route("/index/page/{page<\d+>?1}", name="admin_index_language", methods={"GET","POST"})
-     * @param Request $request
      * @param $page
      * @param PaginationService $paginationService
      * @return Response
      */
-    public function indexAdminLanguage(Request $request, $page,PaginationService $paginationService): Response
+    public function indexAdminLanguage($page,PaginationService $paginationService): Response
     {
         $paginationService->setEntityClass(LanguageName::class)->setPage($page);
         return $this->render('admin/language/index.html.twig', [
@@ -57,7 +49,6 @@ class AdminLanguageController extends AbstractController
      * @Route("/create/", name="admin_create_language", methods={"GET","POST"})
      * @param Request $request
      * @return Response
-     * @throws \Exception
      */
     public function create(Request $request): Response
     {

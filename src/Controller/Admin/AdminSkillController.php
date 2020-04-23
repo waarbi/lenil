@@ -4,14 +4,9 @@
 namespace App\Controller\Admin;
 
 
-use App\Entity\DeliveryTime;
 use App\Entity\Proposal;
 use App\Entity\SkillsName;
-use App\Entity\SousCategory;
-use App\Form\Admin\DeliveryTimeType;
 use App\Form\Admin\SkillsNameType;
-use App\Form\Admin\SousCategoryType;
-use App\Services\FileUploader;
 use App\Services\PaginationService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -36,12 +31,11 @@ class AdminSkillController extends AbstractController
 
     /**
      * @Route("/index/page/{page<\d+>?1}", name="admin_index_skills", methods={"GET","POST"})
-     * @param Request $request
      * @param $page
      * @param PaginationService $paginationService
      * @return Response
      */
-    public function indexAdminSkill(Request $request, $page,PaginationService $paginationService): Response
+    public function indexAdminSkill($page,PaginationService $paginationService): Response
     {
         $paginationService->setEntityClass(SkillsName::class)->setPage($page);
         return $this->render('admin/skills/index.html.twig', [
@@ -55,7 +49,6 @@ class AdminSkillController extends AbstractController
      * @Route("/create/", name="admin_create__skill", methods={"GET","POST"})
      * @param Request $request
      * @return Response
-     * @throws \Exception
      */
     public function create(Request $request): Response
     {

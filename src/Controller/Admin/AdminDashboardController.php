@@ -3,7 +3,6 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Admin\GeneralSetting;
-use App\Entity\DeliveryTime;
 use App\Entity\Proposal;
 use App\Entity\SellerLevel;
 use App\Entity\User;
@@ -54,12 +53,11 @@ class AdminDashboardController extends AbstractController
     }
     /**
      * @Route("/seller/level/page/{page<\d+>?1}", name="admin_index_seller_level", methods={"GET","POST"})
-     * @param Request $request
      * @param $page
      * @param PaginationService $paginationService
      * @return Response
      */
-    public function indexAdminSellerLevel(Request $request, $page,PaginationService $paginationService): Response
+    public function indexAdminSellerLevel($page,PaginationService $paginationService): Response
     {
         $paginationService->setEntityClass(SellerLevel::class)->setPage($page);
         return $this->render('admin/dashboard/seller-level-index.html.twig', [

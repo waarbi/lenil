@@ -1,10 +1,12 @@
 <?php
 
 namespace App\Entity\Admin;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\ArticleCategoryRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\Admin\ArticleCategoryRepository")
  */
 class ArticleCategory
 {
@@ -24,31 +26,15 @@ class ArticleCategory
      * @ORM\Column(type="boolean", nullable=true)
      */
     private $position;
-
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Admin\Article",cascade={"remove"}, mappedBy="category")
      */
-    private $heading;
+    private $articles;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
-    private $status;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $categoryArticle;
-
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $content;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $topImage;
+    public function __construct()
+    {
+        $this->articles = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -79,62 +65,33 @@ class ArticleCategory
         return $this;
     }
 
-    public function getHeading(): ?string
+    /**
+     * @return Collection|Article[]
+     */
+    public function getArticles(): Collection
     {
-        return $this->heading;
+        return $this->articles;
     }
 
-    public function setHeading(?string $heading): self
+    public function addArticle(Article $article): self
     {
-        $this->heading = $heading;
+        if (!$this->articles->contains($article)) {
+            $this->articles[] = $article;
+            $article->setCategory($this);
+        }
 
         return $this;
     }
 
-    public function getStatus(): ?bool
+    public function removeArticle(Article $article): self
     {
-        return $this->status;
-    }
-
-    public function setStatus(?bool $status): self
-    {
-        $this->status = $status;
-
-        return $this;
-    }
-
-    public function getCategoryArticle(): ?string
-    {
-        return $this->categoryArticle;
-    }
-
-    public function setCategoryArticle(?string $categoryArticle): self
-    {
-        $this->categoryArticle = $categoryArticle;
-
-        return $this;
-    }
-
-    public function getContent(): ?string
-    {
-        return $this->content;
-    }
-
-    public function setContent(?string $content): self
-    {
-        $this->content = $content;
-
-        return $this;
-    }
-
-    public function getTopImage(): ?string
-    {
-        return $this->topImage;
-    }
-
-    public function setTopImage(?string $topImage): self
-    {
-        $this->topImage = $topImage;
+        if ($this->articles->contains($article)) {
+            $this->articles->removeElement($article);
+            // set the owning side to null (unless already changed)
+            if ($article->getCategory() === $this) {
+                $article->setCategory(null);
+            }
+        }
 
         return $this;
     }
