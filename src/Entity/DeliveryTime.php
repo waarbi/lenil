@@ -37,7 +37,7 @@ class DeliveryTime
     private $demandes;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Proposal", mappedBy="deleveryTime", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Proposal", mappedBy="deliveryTime", orphanRemoval=true)
      */
     private $proposals;
 

@@ -273,5 +273,17 @@ class Proposal
         return $this;
     }
 
+    public function getStatusId(): ?int
+    {
+        return $this->statusId;
+    }
+
+    public function setStatusId(?int $statusId): self
+    {
+        $this->statusId = $statusId;
+
+        return $this;
+    }
+
 
 }

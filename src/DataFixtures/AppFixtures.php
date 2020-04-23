@@ -14,6 +14,7 @@ use App\Entity\LanguageName;
 use App\Entity\Level;
 use App\Entity\Pays;
 use App\Entity\Role;
+use App\Entity\SellerLevel;
 use App\Entity\SkillsName;
 use App\Entity\SousCategory;
 use App\Entity\User;
@@ -266,10 +267,12 @@ class AppFixtures extends Fixture
 
         //Delivery
         
-        $deliveries = ['1 jour', '2 jours','3 jours', '4 jours', '5 jours', '6 jours', '7 jours', '5 minutes'];
-        foreach ($deliveries as $name){
+        $deliveries = ['Jusqu\'à 1 jour'=>'1 jour','Jusqu\'à 2 jours'=> '2 jours','Jusqu\'à 3 jours'=>'3 jours','Jusqu\'à 4 jours'=> '4 jours', 'Jusqu\'à 5 jours'=>'5 jours','Jusqu\'à 6 jours'=> '6 jours', 'Jusqu\'à 7 jours'=>'7 jours', 'Juste 5 minutes'=>'5 minutes'];
+
+        foreach ($deliveries as $key => $value) {
             $delivery = new DeliveryTime();
-            $delivery->setName($name);
+            $delivery->setTitle($key);
+            $delivery->setName($value);
             $manager->persist($delivery);
         }
         //general settings
@@ -309,6 +312,14 @@ class AppFixtures extends Fixture
         $stripe->setEnabled(true)->setCurrency('EUR')->setPublishableKey('publishabledKey')->setSecretKey('SecretKepStripe');
         $manager->persist($stripe);
 
+        //sellerLevel
+        $sellerLevelName =  ['Haut niveau','Niveau 2', 'Niveau 1', 'Nouveau vendeur' ];
+
+        foreach ($sellerLevelName as $item){
+            $level = new SellerLevel();
+            $level->setName($item);
+            $manager->persist($level);
+        }
 
         $manager->flush();
     }

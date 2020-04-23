@@ -101,7 +101,7 @@ class User implements UserInterface
      */
     private $comments;
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Demande", mappedBy="author", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Demande", mappedBy="auteur")
      */
     private $demandes;
     /**
@@ -114,6 +114,11 @@ class User implements UserInterface
      * @ORM\JoinColumn(nullable=true)
      */
     private $languages;
+    /**
+     * @ORM\ManyToOne(targetEntity="SellerLevel", inversedBy="users")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $level;
 
     public function getId(): ?int
     {
@@ -535,6 +540,18 @@ class User implements UserInterface
                 $proposal->setSeller(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getLevel(): ?SellerLevel
+    {
+        return $this->level;
+    }
+
+    public function setLevel(?SellerLevel $level): self
+    {
+        $this->level = $level;
 
         return $this;
     }

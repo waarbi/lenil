@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Repository\Admin;
+namespace App\Repository;
 
-use App\Entity\SellerLevel;
+use App\Entity\Admin\SellerLevel;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
