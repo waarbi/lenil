@@ -98,22 +98,22 @@
                 <li class="menu-item-has-children dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-calendar"></i>Délais de livraison</a>
                     <ul class="sub-menu children dropdown-menu">
-                        <li><i class="fa  fa-arrow-circle-right"></i><a href="index?insert_delivery_time">Créer un délais de livraison</a></li>
-                        <li><i class="fa  fa-arrow-circle-right"></i><a href="index?view_delivery_times">Gérer les délais de livraison</a></li>
+                        <li><i class="fa  fa-arrow-circle-right"></i><a href="{{ path('admin_create_delivery_time') }}">Créer un délais de livraison</a></li>
+                        <li><i class="fa  fa-arrow-circle-right"></i><a href="{{ path('admin_index_delivery_time') }}">Gérer les délais de livraison</a></li>
                     </ul>
                 </li>
                 <li class="menu-item-has-children dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-language"></i>Langues</a>
                     <ul class="sub-menu children dropdown-menu">
-                        <li><i class="fa  fa-arrow-circle-right"></i><a href="index?insert_seller_language">Créer une langue</a></li>
-                        <li><i class="fa  fa-arrow-circle-right"></i><a href="index?view_seller_languages"> Gérer les langues</a></li>
+                        <li><i class="fa  fa-arrow-circle-right"></i><a href="{{ path('admin_create_language') }}">Créer une langue</a></li>
+                        <li><i class="fa  fa-arrow-circle-right"></i><a href="{{ path('admin_index_language') }}"> Gérer les langues</a></li>
                     </ul>
                 </li>
                 <li class="menu-item-has-children dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Seller Skills"> <i class="menu-icon fa fa-flash"></i>Compétences</a>
                     <ul class="sub-menu children dropdown-menu">
-                        <li><i class="fa  fa-arrow-circle-right"></i><a href="index?insert_seller_skill">Créer une compétence</a></li>
-                        <li><i class="fa  fa-arrow-circle-right"></i><a href="index?view_seller_skills">Gérer les compétences</a></li>
+                        <li><i class="fa  fa-arrow-circle-right"></i><a href="{{ path('admin_create__skill') }}">Créer une compétence</a></li>
+                        <li><i class="fa  fa-arrow-circle-right"></i><a href="{{ path('admin_index_skills') }}">Gérer les compétences</a></li>
                     </ul>
                 </li>
                 <li>

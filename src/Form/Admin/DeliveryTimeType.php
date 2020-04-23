@@ -13,6 +13,7 @@ class DeliveryTimeType extends AbstractType
     {
         $builder
             ->add('name')
+            ->add('title')
         ;
     }
 

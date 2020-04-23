@@ -10,7 +10,7 @@
         <div class="col-sm-4">
             <div class="page-header float-left">
                 <div class="page-title">
-                    <h1><i class="menu-icon fa fa-cubes"></i> Sous Catégorie </h1>
+                    <h1><i class="menu-icon fa fa-calendar"></i> Délais de Livraison</h1>
                 </div>
             </div>
         </div>
@@ -18,10 +18,8 @@
             <div class="page-header float-right">
                 <div class="page-title">
                     <ol class="breadcrumb text-right">
-                        <li class="active"><a href="{{ path('admin_create_sub_category') }}" class="btn btn-primary">
-
-                                <i class="fa fa-plus-circle text-white"></i> <span class="text-white">Ajouter sous catégorie</span>
-
+                        <li class="active"><a href="{{ path('admin_create_delivery_time') }}" class="btn btn-primary">
+                                <i class="fa fa-plus-circle text-white"></i> <span class="text-white">Ajouter délais livraison</span>
                             </a></li>
                     </ol>
                 </div>
@@ -41,7 +39,7 @@
 
                         <h4 class="h4">
 
-                            <i class="fa fa-money-bill-alt"></i> Toutes les sous categories
+                            <i class="fa fa-money-bill-alt"></i> Voir les délais de livraison
 
                         </h4>
 
@@ -52,42 +50,47 @@
                         <table class="table table-bordered"><!--- table table-bordered table-hover Starts --->
 
                             <thead>
+
                             <tr>
-                                <th>Id</th>
-                                <th>Title</th>
-                                <th>Description</th>
-                                <th>Title</th>
-                                <th>Delete</th>
-                                <th>Edit</th>
+
+                                <th> Id </th>
+
+                                <th>Titre </th>
+
+                                <th> Listing Titre </th>
+
+                                <th> Delete </th>
+
+                                <th> Edit</th>
+
                             </tr>
+
                             </thead>
                             <tbody><!--- tbody Starts --->
 
-                            {% for subcategory in pagination.data  %}
+                            {% for delivery in pagination.data  %}
                                 <tr>
 
-                                    <td>{{ subcategory.id }}</td>
+                                    <td>{{ delivery.id }}</td>
 
-                                    <td>{{ subcategory.title }}</td>
+                                    <td>{{ delivery.title }}</td>
 
-                                    <td width="400">{{ subcategory.description }}</td>
-
-                                    <td>{% if subcategory.category %} {{subcategory.category.title}} {% endif %}</td>
+                                    <td width="400">{{ delivery.name }}</td>
 
                                     <td>
-                                        <a href="{{ path('admin_delete_sub_category', {id : subcategory.id}) }}" class="btn btn-danger">
+                                        <a href="{{ path('admin_delete_delivery_time', {id : delivery.id}) }}" class="btn btn-danger">
 
                                             <i class="fa fa-trash text-white"></i> <span class="text-white">Supprimer</span>
                                         </a>
                                     </td>
                                     <td>
-                                        <a href="{{ path('admin_edit_sub_category', {id: subcategory.id}) }}" class="btn btn-primary">
+                                        <a href="{{ path('admin_edit_delivery_time', {id: delivery.id}) }}" class="btn btn-primary">
                                             <i class="fa fa-pencil text-white"></i> <span class="text-white">Editer</span>
                                         </a>
                                     </td>
                                 </tr>
                             {% else %}
-                                <p>Pas de sous catégorie</p>
+                                <p>Pas de délais de livraison</p>
                             {% endfor %}
                             </tbody>
                         </table>

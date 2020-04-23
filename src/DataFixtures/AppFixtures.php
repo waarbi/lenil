@@ -219,17 +219,17 @@ class AppFixtures extends Fixture
 
         $cat4 = new Category();
         $cat4->setTitle('Video & Animation')->setDescription('It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.')
-            ->setFeatured(true)->setImage('p3.png')->setSlug('video-animation')->setInCard(true);
+            ->setFeatured(true)->setImage('p3.png')->setSlug('video-animation')->setCardPicture('4.jpg')->setInCard(true);
         $manager->persist($cat4);
 
         $cat5 = new Category();
         $cat5->setTitle('Programmation')->setDescription('It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.')
-            ->setFeatured(true)->setImage('p5.png')->setSlug('programming-tech')->setInCard(true);
+            ->setFeatured(true)->setImage('p5.png')->setCardPicture('2.jpg')->setSlug('programming-tech')->setInCard(true);
         $manager->persist($cat5);
 
         $cat6 = new Category();
         $cat6->setTitle('Business')->setDescription('It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.')
-            ->setFeatured(true)->setImage('p6.png')->setSlug('business')->setParentId(null);
+            ->setFeatured(true)->setImage('p6.png')->setCardPicture('3.jpg')->setSlug('business')->setParentId(null);
         $manager->persist($cat6);
 
         $cat7 = new Category();
@@ -239,7 +239,7 @@ class AppFixtures extends Fixture
 
         $cat8 = new Category();
         $cat8->setTitle('Music & Audio')->setDescription('It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.')
-            ->setFeatured(true)->setImage('p8.png')->setSlug('music-audio')->setParentId(null);
+            ->setFeatured(true)->setImage('p8.png')->setSlug('music-audio')->setCardPicture('5.jpg')->setParentId(null);
         $manager->persist($cat8);
 
         //SkillsName

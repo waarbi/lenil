@@ -27,5 +27,6 @@
 
 ###> ASSETS ###
 /node_modules/
-/public/uploads/
+/public/build/
+/public/uploads
 ###< ASSETS ###

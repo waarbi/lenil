@@ -24,6 +24,7 @@
         "symfony/notifier": "5.0.*",
         "symfony/orm-pack": "*",
         "symfony/process": "5.0.*",
+        "symfony/profiler-pack": "^1.0",
         "symfony/security-bundle": "5.0.*",
         "symfony/serializer": "5.0.*",
         "symfony/serializer-pack": "*",
@@ -41,7 +42,6 @@
         "doctrine/doctrine-fixtures-bundle": "^3.3",
         "fzaninotto/faker": "^1.9",
         "symfony/debug-pack": "*",
-        "symfony/profiler-pack": "*",
         "symfony/test-pack": "*"
     },
     "config": {

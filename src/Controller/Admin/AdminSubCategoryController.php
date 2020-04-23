@@ -81,7 +81,7 @@ class AdminSubCategoryController extends AbstractController
      * @param FileUploader $fileUploader
      * @return Response
      */
-    public function deleteCategory(SousCategory $sousCategory, FileUploader $fileUploader): Response
+    public function deleteSubCategory(SousCategory $sousCategory, FileUploader $fileUploader): Response
     {
 
         $this->manager->remove($sousCategory);
@@ -98,7 +98,7 @@ class AdminSubCategoryController extends AbstractController
      * @param FileUploader $uploader
      * @return Response
      */
-    public function editCategories(Request $request, SousCategory $sousCategory, FileUploader $uploader): Response
+    public function editSubCategory(Request $request, SousCategory $sousCategory, FileUploader $uploader): Response
     {
         $form = $this->createForm(SousCategoryType::class, $sousCategory);
         $form->handleRequest($request);
