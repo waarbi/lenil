@@ -21,8 +21,8 @@ a.support-que i.close-popup {left:22px}
 .hero .search-box .search-placeholder {position:absolute;top:1px;width:100%;left:50%;-webkit-transform:translate(-50%);transform:translate(-50%);color:#677177;pointer-events:none;line-height:38px;-webkit-transition:left .3s;transition:left .3s;text-align:center;font-size:.86em}
 .hero .search-box .search-placeholder .placeholder-text {color:#677177;pointer-events:none;line-height:38px;-webkit-transition:left .3s;transition:left .3s;text-align:center;font-size:.86em}
 .hero #sm-search {padding:12px 10px 12px 42px;width:100%;border-radius:19px;outline:none;border:none;font:inherit;font-size:.85em;-webkit-box-shadow:0 2px 4px 0 rgba(0,0,0,.1);box-shadow:0 2px 4px 0 rgba(0,0,0,.1)}
-.hero .search-box.focus .search-magnifier {color:#fff !important;background:#1DBF73 !important;border-radius:50% !important;height:24px;width:24px;text-align:center;line-height:24px;display:inline-block}
-.hero .search-box .search-magnifier {color:#1DBF73 !important}
+.hero .search-box.focus .search-magnifier {color:#fff !important;background:#0066FF !important;border-radius:50% !important;height:24px;width:24px;text-align:center;line-height:24px;display:inline-block}
+.hero .search-box .search-magnifier {color:#0066FF !important}
 .hero .search-box .search-magnifier {margin-right:3px;position:relative}
 .hero .search-box.focus {text-align:left}
  .hero .search-box.focus .search-placeholder .placeholder-text {display:none}

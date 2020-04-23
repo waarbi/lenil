@@ -2,12 +2,17 @@
 
 namespace App\Entity;
 
+use Cocur\Slugify\Slugify;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CategoriesRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Category
 {
@@ -24,7 +29,11 @@ class Category
     private $slug;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\File(
+     *     mimeTypes={"image/jpeg", "image/png", "image/gif"},
+     *     mimeTypesMessage = "Please upload a valid Image"
+     *     )
      */
     private $image;
 
@@ -37,21 +46,29 @@ class Category
      */
     private $in_card;
     /**
-     * @ORM\Column(type="string", name="card_picture",length=255)
+     * @ORM\Column(type="string", name="card_picture",nullable=true)
+      * @Assert\File(
+     *     mimeTypes={"image/jpeg", "image/png", "image/gif"},
+     *     mimeTypesMessage = "Please upload a valid Image"
+     *     )
      */
+
     private $cardPicture;
     /**
      * @ORM\Column(type="string", length=255)
      */
     private $title;
-
+    /**
+     * @ORM\Column(nullable=false, type="datetime")
+     */
+    private $updatedAt;
     /**
      * @ORM\Column(type="string", length=255)
      */
     private $description;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\SousCategory", mappedBy="category")
+     * @ORM\OneToMany(targetEntity="App\Entity\SousCategory",cascade={"remove"}, mappedBy="category")
      */
     private $sous_categories;
 
@@ -67,8 +84,20 @@ class Category
     {
         $this->sous_categories = new ArrayCollection();
         $this->proposals = new ArrayCollection();
+        $this->updatedAt = new \DateTime('now');
+
+    }
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
     }
 
+    public function setUpdatedAt(\DateTimeInterface $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
     public function getId(): ?int
     {
         return $this->id;
@@ -89,10 +118,12 @@ class Category
 
     /**
      * @param mixed $in_card
+     * @return Category
      */
-    public function setInCard($in_card): void
+    public function setInCard($in_card): Category
     {
         $this->in_card = $in_card;
+        return $this;
     }
 
     public function setSlug(string $slug): self
@@ -107,10 +138,12 @@ class Category
         return $this->image;
     }
 
-    public function setImage(string $image): self
+    public function setImage(string $image= null): self
     {
-        $this->image = $image;
-
+        if ($this->image instanceof UploadedFile){
+            $this->updatedAt = new \DateTime('now');
+        }
+            $this->image = $image;
         return $this;
     }
 
@@ -237,14 +270,36 @@ class Category
     }
 
     /**
-     * @param mixed $cardPicture
+     * @param string $cardPicture
+     * @return Category
+     * @throws \Exception
      */
-    public function setCardPicture($cardPicture): void
+    public function setCardPicture(string $cardPicture = null):self
     {
         $this->cardPicture = $cardPicture;
+        if ($this->cardPicture instanceof UploadedFile){
+            $this->updatedAt = new \DateTime('now');
+        }
+        $this->cardPicture = $cardPicture;
+
+        return $this;
     }
 
+    /**
+     * Permet d'initialiser le  slug !
+     *
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     *
+     * @return void
+     */
+    public function initializeSlug(){
 
+        if(empty($this->slug)){
+            $slugify = new Slugify();
+            $this->slug = $slugify->slugify($this->title. ' ' .substr($this->description, 0, 10));
+        }
+    }
 
 
     public function __toString()

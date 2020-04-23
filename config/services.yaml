@@ -5,8 +5,11 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     images_directory: '%kernel.project_dir%/public/uploads/images'
+    images_category_directory: '%kernel.project_dir%/public/uploads/images/card'
     session_max_idle_time: 600
-
+    maintenance:
+        statut: false
+        ipAuthorized: ["::1","192.168.1.101"]
 services:
     # default configuration for services in *this* file
     _defaults:
@@ -32,6 +35,7 @@ services:
     App\Services\FileUploader:
         arguments:
             $targetDirectory: '%images_directory%'
+            $imageCategoryDirectory: '%images_category_directory%'
     App\Services\MailerService:
 
     App\Security\SessionIdleListener:
@@ -40,7 +44,10 @@ services:
             $session: '@session'
         tags:
             - { name: kernel.event_listener, event: kernel.request }
-
+    App\EventListener\MaintenanceListener:
+        tags:
+            - { name: kernel.event_listener, event: kernel.request }
+        arguments: ['%maintenance%']
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

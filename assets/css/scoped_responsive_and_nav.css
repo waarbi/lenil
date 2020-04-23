@@ -8993,12 +8993,6 @@ a.arrow-up::after {
     color: #888;
 }
 
-.gnav-header .account-nav>li.sign-in-link:before,
-.gnav-header .account-nav>li.register-link:before,
-.gnav-header .account-nav>li:first-child:before {
-    content: none;
-}
-
 .gnav-header .browse-nav {
     position: static;
     display: block;
@@ -9413,6 +9407,13 @@ a.arrow-up::after {
     border: 0 none;
     margin: 0;
     padding: 0;
+    color: #555;
+    font-weight: 500;
+}
+
+.gnav-header .account-nav>li:hover{
+    text-decoration: none !important;
+    color: #0066FF !important;
 }
 
 .mobile .gnav-header .account-nav li a:active,
@@ -10009,7 +10010,9 @@ only screen and (min-device-pixel-ratio: 1.5) {
     display: block;
     margin-top: 20px;
 }
-
+.weight-500{
+    font-weight: 500;
+}
 .gnav-header .register-link a,
 .gnav-header .sign-in-link a{
     height: auto;
@@ -10019,7 +10022,7 @@ only screen and (min-device-pixel-ratio: 1.5) {
     float: left;
     padding: 8px;
     line-height: 16px;
-    font-size: 14px;
+    font-size: 16px;
     border: 1px solid;
     text-decoration: none;
     border-radius: 3px;
@@ -11250,7 +11253,7 @@ a.text-orange.text-orange,
 .card-available-notice a,
 .similar-target-heading a {
     color: #222 !important;
-    text-decoration: underline !important;
+    text-decoration: underline ;
 }
 
 button.show-discount:hover,
@@ -11357,8 +11360,8 @@ a.text-orange.text-orange:active,
 
 .apply-nav-height .sell-on-gigtodo-link a:hover,
 .gnav-header .register-link a:hover {
-    color: #595959 !important;
-    text-decoration: underline !important;
+    color: #595959 ;
+    text-decoration: underline ;
 }
 
 .sign-in-link a:hover {

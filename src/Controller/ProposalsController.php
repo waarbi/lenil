@@ -10,6 +10,7 @@ use App\Entity\User;
 use App\Form\ProposalType;
 use App\Services\FileUploader;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,6 +19,10 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * @Route("/proposals")
+ * @IsGranted("IS_AUTHENTICATED_FULLY")
+ */
 class ProposalsController extends AbstractController
 {
     private $categories_yes;
@@ -31,7 +36,7 @@ class ProposalsController extends AbstractController
         $this->userRepo = $manager->getRepository(User::class);
     }
     /**
-     * @Route("/proposals", name="my_proposals")
+     * @Route("/", name="my_proposals")
      */
     public function index()
     {
@@ -69,7 +74,7 @@ class ProposalsController extends AbstractController
     }
 
     /**
-     * @Route("/proposals/create", name="create_proposal")
+     * @Route("/create", name="create_proposal")
      * @param Request $request
      * @param EntityManagerInterface $manager
      * @param FileUploader $fileUploader

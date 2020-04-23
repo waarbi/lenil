@@ -22,6 +22,10 @@ class DeliveryTime
      * @ORM\Column(type="string", length=255)
      */
     private $name;
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $title;
 
     public function getId(): ?int
     {
@@ -33,7 +37,7 @@ class DeliveryTime
     private $demandes;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Proposal", mappedBy="deleveryTime", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Proposal", mappedBy="deliveryTime", orphanRemoval=true)
      */
     private $proposals;
 
@@ -119,6 +123,17 @@ class DeliveryTime
                 $proposal->setDeleveryTime(null);
             }
         }
+
+        return $this;
+    }
+    public function getTitle(): ?string
+    {
+        return $this->title;
+    }
+
+    public function setTitle(string $title): self
+    {
+        $this->title = $title;
 
         return $this;
     }

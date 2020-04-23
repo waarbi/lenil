@@ -57,6 +57,13 @@ Encore
     .addStyleEntry('css/user_nav_styles_','./assets/css/user_nav_styles.css')
     .addStyleEntry('css/vesta_homepage_css','./assets/css/vesta_homepage.css')
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
+    .copyFiles([
+        {from: './node_modules/ckeditor/', to: 'ckeditor/[path][name].[ext]', pattern: /\.(js|css)$/, includeSubdirectories: false},
+        {from: './node_modules/ckeditor/adapters', to: 'ckeditor/adapters/[path][name].[ext]'},
+        {from: './node_modules/ckeditor/lang', to: 'ckeditor/lang/[path][name].[ext]'},
+        {from: './node_modules/ckeditor/plugins', to: 'ckeditor/plugins/[path][name].[ext]'},
+        {from: './node_modules/ckeditor/skins', to: 'ckeditor/skins/[path][name].[ext]'}
+    ])
     .splitEntryChunks()
     .addPlugin(new CopyWebpackPlugin([
         // copies to {output}/static

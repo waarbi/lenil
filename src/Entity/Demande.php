@@ -60,19 +60,13 @@ class Demande
     private $offers;
 
     /**
-     * @var DeliveryTime
-     * @ORM\ManyToOne(targetEntity="DeliveryTime")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="delivery_time", referencedColumnName="id")
-     * })
+     * @ORM\ManyToOne(targetEntity="DeliveryTime", inversedBy="demandes")
+     * @ORM\JoinColumn(name="delivery_time", referencedColumnName="id")
      */
     private $deliveryTime;
     /**
-     * @var User
      * @ORM\ManyToOne(targetEntity="User", inversedBy="demandes")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="auteur_id", referencedColumnName="id")
-     * })
+     * @ORM\JoinColumn(name="auteur_id", referencedColumnName="id")
      */
     private $auteur;
     /**
