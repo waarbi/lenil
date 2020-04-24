@@ -1,0 +1,36 @@
+<div class="modal fade login" id="login-modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <!-- Modal header start -->
+                <i class="fa fa-sign-in fa-log"></i>
+                <h5 class="modal-title">Se connecter à votre compte</h5>
+                <button class="close" type="button" data-dismiss="modal"><span>×</span></button>
+            </div>
+            <!-- Modal header end -->
+            <div class="modal-body">
+                <!-- Modal body start -->
+                <form action="{{ path('account_login') }}" method="post">
+                    <div class="form-group">
+                        <label class="form-group-label"> Email:</label>
+                        <input type="email" class="form-control" name="username_parameter" placeholder="Entrer votre email" value="" required="">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-group-label"> Mot de pass:</label>
+                        <input type="password" class="form-control" name="seller_pass" placeholder="Entrer votre mot de pass" required="">
+                    </div>
+                    <input type="submit" name="login" class="btn btn-success btn-block" value="Connexion">
+                </form>
+                <div class="clearfix"></div>
+                <div class="text-center mt-3">
+                    <a href="#" class="text-success" data-toggle="modal" data-target="#register-modal" data-dismiss="modal">
+                        S'inscrire ?          </a>
+                    &nbsp; &nbsp; | &nbsp; &nbsp;
+                    <a href="#" class="text-success" data-toggle="modal" data-target="#forgot-modal" data-dismiss="modal">
+                        Mot de pass oublié ?          </a>
+                </div>
+            </div>
+            <!-- Modal body ends -->
+        </div>
+    </div>
+</div>

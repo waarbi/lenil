@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="fr" class="ui-toolkit">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    {% block meta %}{% endblock %}
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,300,100" rel="stylesheet">
+    <link href="{{ asset('build/css/bootstrap_css.css') }}" rel="stylesheet">
+    <link href="{{ asset('build/css/custom_css.css') }}" rel="stylesheet">
+    <link href="{{ asset('build/css/animate_css.css') }}" rel="stylesheet">
+    <!-- Custom css code from modified in admin panel --->
+    <link href="{{ asset('build/css/styles.css') }}" rel="stylesheet">
+    <link href="{{ asset('build/css/categories_nav_styles.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="{{ asset('build/css/owl_carousel_css.css') }}" rel="stylesheet">
+    <link href="{{ asset('build/css/owl_theme_default_css.css') }}" rel="stylesheet">
+    <link href="{{ asset('build/css/croppie_css.css') }}" rel="stylesheet">
+    <link href="{{ asset('build/css/sweat_alert_css.css') }}" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css" rel="stylesheet">
+    <link href="{{ asset('build/css/knowledge_bank_css.css') }}" rel="stylesheet">
+    <link rel="shortcut icon" href="{{ asset('build/images/logo-ico.ico') }}" type="image/x-icon"/>
+    <link href="{{ asset('build/css/scoped_responsive_and_nav.css') }}" rel="stylesheet">
+    <link href="{{ asset('build/css/vesta_homepage_css.css') }}" rel="stylesheet">
+    <link href="{{ asset('build/css/desktop_proposals.css') }}" rel="stylesheet">
+
+    <!-- Optional: include a polyfill for ES6 Promises for IE11 and Android browser -->
+    {#         <script type="text/javascript" src="{{ asset('build/js/sweat_alert.js') }}"></script>
+            <script type="text/javascript" src="{{ asset('build/js/jquery.js') }}"></script> #}
+
+    <style>.swal2-popup .swal2-styled.swal2-confirm {
+            background-color: #0066FF;
+        }</style>
+    {% block stylesheets %}
+
+    {% endblock %}
+</head>
+<body class="is-responsive">
+
+{{ include('partials/header.html.twig') }}
+
+{% block body %}{% endblock %}
+
+
+
+
+
+{{ include('partials/footer.html.twig') }}
+
+{#     <script type="text/javascript" src="{{ asset('build/js/msdropdown.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('build/js/sticky.js') }}"></script>
+    <script type="text/javascript" id="custom-js" src="{{ asset('build/js/customjs.js') }}" data-logged-id="" data-base-url="/" data-enable-sound=""></script>
+    <script type="text/javascript" src="{{ asset('build/js/summernote.js') }}"></script> #}
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.sticky/1.0.4/jquery.sticky.min.js"></script>
+<link rel="stylesheet" href="http://www.marghoobsuleman.com/mywork/jcomponents/image-dropdown/samples/css/msdropdown/dd.css">
+<script src="http://www.marghoobsuleman.com/mywork/jcomponents/image-dropdown/samples/js/msdropdown/jquery.dd.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="{{ asset('build/js/croppie.js') }}" ></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.3.0/min/dropzone.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+{{ include('modals/knowledge-bank.html.twig') }}
+
+<script type="application/javascript">
+    $(document).ready(function(){
+        $(document).on('click','.dropdown-menu',function(event){
+            event.stopPropagation();
+        });
+
+        $(".dropdown-menu .dropdown-item.dropdown-toggle").click(function(){
+            $('.collapse.dropdown-submenu').collapse('hide');
+        });
+        $(function(){
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+        $(function(){
+            $('[data-toggle="popover"]').popover();
+        });
+
+        //// Categories Dropdown Code
+        $(".top-nav-item").mouseover(function(){
+            $(".body-sub-width").addClass("display-none");
+            $(".top-nav-item").removeClass("active");
+            var node_id = $(this).data('node-id');
+            $(this).addClass("active");
+            $(".body-sub-width[data-node-id="+node_id+"]").removeClass("display-none");
+        });
+
+        $(".ui-toolkit .cat-nav").mouseleave(function(){
+            $(".top-nav-item").removeClass("active");
+            $(".body-sub-width").addClass("display-none");
+        });
+
+        $('#mobilemenu').click(function(){
+            $('html body').css('overflow','hidden');
+            $('.cat-mobile').show();
+            $('.mobile-subnav').addClass("display-none");
+            $(".mobile-catnav-back-btn").addClass("display-none");
+            $("#mobile-sub-catnav-header-title").text("");
+            $("#mobile-catnav-header-title").removeClass("display-none");
+            $(".mobile-cat-nav").addClass("slideInUp slower");
+            $(".mobile-topnav").removeClass("display-none").addClass("slideInUp slower");
+            if($(window).width() <= 421){
+                $(".mobile-catnav-wrapper").css({"top" : "44px"});
+            }else if($(window).width() <= 639){
+                $(".mobile-catnav-wrapper").css({"top" : "60px"});
+            }
+        });
+
+        $(".cat-mobile .mobile-topnav ul li").click(function(){
+            $(".top-nav-item").removeClass("active");
+            var u_id = $(this).data('uid');
+            var name = $(this).data('name');
+            $("#mobile-sub-catnav-header-title").text(name);
+            $("#mobile-catnav-header-title").addClass("display-none");
+            $(".mobile-catnav-back-btn").removeClass("display-none");
+            $(".mobile-topnav").addClass("display-none");
+            $("#mobile-sub-catnav-content-"+u_id).removeClass("display-none").addClass("slideInRight slower");
+            $("#mobile-sub-catnav-content-"+u_id+" ul").removeClass("display-none");
+        });
+
+        $(".cat-mobile .mobile-catnav-back-btn").click(function(){
+            $('.mobile-subnav').addClass("display-none");
+            $(".mobile-catnav-back-btn").addClass("display-none");
+            $("#mobile-sub-catnav-header-title").text("");
+            $("#mobile-catnav-header-title").removeClass("display-none");
+            $(".mobile-topnav").removeClass("slideInUp display-none").addClass("slideInLeft slower");
+        });
+
+        $('.cat-mobile .overlay-close').click(function(){
+            $('.cat-mobile').hide();
+            $('html body').removeAttr('style');
+        });
+
+        $(function(){
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+        $(function(){
+            $('[data-toggle="popover"]').popover();
+        });
+
+        //// Category Dropdown Code
+        $(".top-nav-item").mouseover(function(){
+            $(".body-sub-width").addClass("display-none");
+            $(".top-nav-item").removeClass("active");
+            var node_id = $(this).data('node-id');
+            $(this).addClass("active");
+            $(".body-sub-width[data-node-id="+node_id+"]").removeClass("display-none");
+        });
+
+        $(".ui-toolkit .cat-nav").mouseleave(function(){
+            $(".top-nav-item").removeClass("active");
+            $(".body-sub-width").addClass("display-none");
+        });
+
+        $('#mobilemenu').click(function(){
+            $('html body').css('overflow','hidden');
+            $('.cat-mobile').show();
+            $('.mobile-subnav').addClass("display-none");
+            $(".mobile-catnav-back-btn").addClass("display-none");
+            $("#mobile-sub-catnav-header-title").text("");
+            $("#mobile-catnav-header-title").removeClass("display-none");
+            $(".mobile-cat-nav").addClass("slideInUp slower");
+            $(".mobile-topnav").removeClass("display-none").addClass("slideInUp slower");
+            if($(window).width() <= 421){
+                $(".mobile-catnav-wrapper").css({"top" : "44px"});
+            }else if($(window).width() <= 639){
+                $(".mobile-catnav-wrapper").css({"top" : "60px"});
+            }
+        });
+
+        $(".cat-mobile .mobile-topnav ul li").click(function(){
+            $(".top-nav-item").removeClass("active");
+            var u_id = $(this).data('uid');
+            var name = $(this).data('name');
+            $("#mobile-sub-catnav-header-title").text(name);
+            $("#mobile-catnav-header-title").addClass("display-none");
+            $(".mobile-catnav-back-btn").removeClass("display-none");
+            $(".mobile-topnav").addClass("display-none");
+            $("#mobile-sub-catnav-content-"+u_id).removeClass("display-none").addClass("slideInRight slower");
+            $("#mobile-sub-catnav-content-"+u_id+" ul").removeClass("display-none");
+        });
+
+        $(".cat-mobile .mobile-catnav-back-btn").click(function(){
+            $('.mobile-subnav').addClass("display-none");
+            $(".mobile-catnav-back-btn").addClass("display-none");
+            $("#mobile-sub-catnav-header-title").text("");
+            $("#mobile-catnav-header-title").removeClass("display-none");
+            $(".mobile-topnav").removeClass("slideInUp display-none").addClass("slideInLeft slower");
+        });
+
+        $('.cat-mobile .overlay-close').click(function(){
+            $('.cat-mobile').hide();
+            $('html body').removeAttr('style');
+        });
+        /// Mobile Category Menu Code Enye ////
+
+        /// Mobile User Menu Code Starts ////
+        $("#usermenu, .bell, .message").click(function(){
+            if($(window).width() <= 629){
+                $('html body').css('overflow','hidden');
+                $('.user-mobile').show();
+                $('.mobile-subnav').addClass("display-none");
+                $('.mobile-tertiarynav').addClass("display-none");
+                $(".mobile-catnav-back-btn").addClass("display-none");
+                $(".user-mobile #mobile-sub-catnav-header-title").text("");
+                $(".user-mobile #mobile-catnav-header-title").removeClass("display-none");
+                $(".mobile-cat-nav").addClass("slideInUp slower");
+                $(".mobile-topnav").removeClass("display-none").addClass("slideInUp slower");
+                if($(window).width() <= 421){
+                    $(".mobile-catnav-wrapper").css({"top" : "44px"});
+                }else if($(window).width() <= 639){
+                    $(".mobile-catnav-wrapper").css({"top" : "60px"});
+                }
+            }
+        });
+
+        $(".user-mobile .mobile-topnav ul li").click(function(){
+            $(".top-nav-item").removeClass("active");
+            var u_id = $(this).data('uid');
+            var name = $(this).data('name');
+            $(".user-mobile #mobile-sub-catnav-header-title").text(name);
+            $(".user-mobile #mobile-catnav-header-title").addClass("display-none");
+            $(".user-mobile .mobile-catnav-back-btn").removeClass("display-none");
+            $(".user-mobile .mobile-topnav").addClass("display-none");
+            $(".user-mobile #mobile-sub-catnav-content-"+u_id).removeClass("display-none").addClass("slideInRight slower");
+            $(".user-mobile #mobile-sub-catnav-content-"+u_id+" ul").removeClass("display-none");
+        });
+
+        $(".user-mobile .mobile-catnav-back-btn").click(function(){	var subnav_id = $(this).attr('data-subnav-id');
+            if(subnav_id == "0"){
+                $('.user-mobile .mobile-subnav').addClass("display-none");
+                $('.user-mobile .mobile-tertiarynav').addClass("display-none");
+                $(".user-mobile .mobile-catnav-back-btn").addClass("display-none");
+                $(".user-mobile #mobile-sub-catnav-header-title").text("");
+                $(".user-mobile #mobile-catnav-header-title").removeClass("display-none");
+                $(".user-mobile .mobile-topnav").removeClass("slideInUp display-none").addClass("slideInLeft slower");
+            }else{
+                $(".user-mobile #mobile-sub-catnav-header-title").text("Dashboard");
+                $('.user-mobile .mobile-tertiarynav').addClass("display-none");
+                $(this).attr("data-subnav-id","0");
+                $(".user-mobile #"+subnav_id).removeClass("display-none").addClass("slideInRight slower");
+            }
+        });
+
+        $(".user-mobile .mobile-subnav ul li").click(function(){
+            $(".top-nav-item").removeClass("active");
+            var u_id = $(this).data('uid');
+            var name = $(this).data('name');
+            var parent_id = $(this).parent().parent().attr('id');
+            $(".user-mobile #mobile-sub-catnav-header-title").text(name);
+            $(".user-mobile #mobile-catnav-header-title").addClass("display-none");
+            $(".user-mobile .mobile-catnav-back-btn").removeClass("display-none");
+            $(".user-mobile .mobile-catnav-back-btn").attr("data-subnav-id",parent_id);
+            $(".user-mobile .mobile-subnav").addClass("display-none");
+            $(".user-mobile #mobile-tertiary-nav-"+u_id).removeClass("display-none").addClass("slideInRight slower");
+            $(".user-mobile #mobile-tertiary-nav-"+u_id+" ul").removeClass("display-none");
+        });
+
+        $('.user-mobile .overlay-close').click(function(){
+            $('.user-mobile').hide();
+            $('html body').removeAttr('style');
+        });
+
+        /// Mobile User Menu Code Ends ////
+
+        // Cache selectors
+        var lastId,
+            topMenu = $("#mainNav"),
+            topMenuHeight = topMenu.outerHeight() + 1,
+
+            // All list items
+            menuItems = topMenu.find("a"),
+
+            // Anchors corresponding to menu items
+            scrollItems = menuItems.map(function () {
+                var item = $($(this).attr("href"));
+                if (item.length) {return item;}
+            });
+
+        // Bind click handler to menu items
+
+        // so we can get a fancy scroll animation
+        menuItems.click(function (e) {
+            var href = $(this).attr("href"),
+                offsetTop = href === "#" ? 0 : $(href).offset().top - topMenuHeight + 1;
+            $('html, body').stop().animate({scrollTop: offsetTop },850);
+            // e.preventDefault();
+        });
+
+        // Bind to scroll
+        $(window).scroll(function(){
+            var scrollTop = $(window).scrollTop();
+            if(scrollTop > 0){
+                // Get container scroll position
+                var fromTop = $(this).scrollTop() + topMenuHeight;
+                // Get id of current scroll item
+                var cur = scrollItems.map(function () {
+                    if ($(this).offset().top < fromTop)
+                        return this;
+                });
+                // Get the id of the current element
+                cur = cur[cur.length - 1];
+                var id = cur && cur.length ? cur[0].id : "";
+                if(lastId !== id){
+                    lastId = id;
+                    // Set/remove active class
+                    menuItems.parent().removeClass("selected").end().filter('*[href="#' + id + '"]').parent().addClass("selected");
+                }
+            }else{
+                $('.mp-gig-top-nav li:eq(0)').addClass("selected");
+            }
+        });
+        $("#logout-link").click(function () {
+            swal({
+                text: "Au Revoir !",
+                icon: "success",
+                timer: 3000,
+            }).then(
+                sessionStorage.setItem("connected", "ko")
+            );
+        });
+    });
+</script>
+{% block javascripts %}
+{% endblock %}
+
+
+</body>
+</html>

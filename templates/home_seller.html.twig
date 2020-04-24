@@ -1,0 +1,85 @@
+{% block stylesheets %}
+{% endblock %}
+    {% block title %}{{ generalSettings.siteTitle }}{% endblock %}
+{% block meta %}
+    <meta name="description" content="{{ generalSettings.siteDescription }}"/>
+    <meta name="keywords" content="{{ generalSettings.siteKeywords }}"/>
+{% endblock %}
+{% extends "base.html.twig" %}
+
+{% block body %}
+    {% if app.user is not null and app.user.enabled == false %}
+        <div class="alert alert-warning clearfix activate-email-class mb-0">
+            <div class="float-left mt-2">
+                <i style="font-size: 125%;" class="fa fa-exclamation-circle"></i>
+                Veuillez activer votre compte. Un email de confirmation sera envoyé à: {{ app.user.email }}. Si vous
+                avez besoin d'aide, contactez le support client <a href="{{ path('contact_support') }}"
+                                                                   style="color: #856404;font-weight: bold;">Support
+                    client</a>.
+            </div>
+            <div class="float-right">
+                <button id="send-email" class="btn btn-success btn-sm float-right text-white">Renvoyer Email</button>
+            </div>
+        </div>
+        <br>
+    {% endif %}
+    {{ include('seller/seller_home.html.twig') }}
+{% endblock %}
+{% block javascripts %}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var userfullname = {{ app.user.fullName|json_encode|raw }};
+            if (sessionStorage.getItem('connected') !== "ok") {
+                swal({
+                    text: "Bienvenue, " + userfullname,
+                    icon: "success",
+                    timer: 3000,
+                }).then(
+                    sessionStorage.setItem('connected', 'ok')
+                );
+
+            }
+            $("#send-email").click(function () {
+                $.ajax({
+                    method: "GET",
+                    url: "{{ path('send_mail_for_activate_account',{username: app.user.email }) }}",
+                    success: function (response) {
+                        if (response) {
+                            swal({
+                                text: "Mail de confirmation envoyé. Merci de consulter vos emails.",
+                                icon: "success",
+                                timer: 3000,
+                            })
+                        }
+                    }
+                });
+            });
+            // Sticky Code start //
+            if ($(window).width() < 767) {
+            } else {
+                $(".sticky-start").sticky({
+                    topSpacing: 20,
+                    zIndex: 500,
+                    bottomSpacing: 400,
+                });
+            }
+
+// Sticky code ends //
+
+        });
+        $("#submit-proposal").click(function () {
+            var demandeId = $(this).data('id');
+            var demandeDescr = $(this).data('description');
+            var demandeTitle = $(this).data('title');
+            var demandeImage = $(this).data('picture');
+
+            $(".modal-body #demandeId").val(demandeId);
+            $(".modal-body #description").html(demandeDescr);
+            $(".modal-body #title").html(demandeTitle);
+            $(".modal-body #image-demandeur").attr("src", demandeImage);
+        })
+        ;
+
+    </script>
+
+{% endblock %}

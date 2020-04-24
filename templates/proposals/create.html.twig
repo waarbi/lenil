@@ -1,0 +1,255 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    <link href="{{ asset('build/css/create_proposal.css') }}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.3.0/min/dropzone.min.css">
+{% endblock %}
+
+{% block title %}Creation de service{% endblock %}
+
+{% block body %}
+    <nav id="tabs">
+        <div class="container">
+
+            <div class="breadcrumb flat mb-0 nav" role="tablist">
+                <a class="nav-link active" href="#overview">Overview</a>
+
+                <a class="nav-link d-none " href="#video">Video Settings</a>
+
+                <a class="nav-link  " href="#pricing">Pricing</a>
+
+                <a class="nav-link " href="#description">Description &amp; FAQ</a>
+                <a class="nav-link " href="#requirements">Requirements</a>
+                <a class="nav-link " href="#gallery">Gallery</a>
+                <a class="nav-link " href="#publish">Submit For Approval</a>
+            </div>
+
+        </div>
+
+    </nav>
+
+    <div class="container mt-5 mb-5"><!--- container Starts --->
+        <div class="row"><!--- row Starts --->
+            <div class="col-md-8">
+                <div class="tab-content card card-body"><!--- tab-content Starts --->
+                    <!--- form Starts -->
+                    {{ form_start(form, { 'attr': {'class': 'proposal-form'} }) }}
+                    <div class="tab-pane show active" id="overview">
+                        <div class="form-group row"><!--- form-group row Starts --->
+                            <div class="col-md-3">Proposal Title</div>
+                            <div class="col-md-9">
+                                {{ form_widget(form.title, { 'attr': {'class': 'form-control','placeholder': 'Titre du service'} }) }}
+                            </div>
+                            <small class="form-text text-danger"></small>
+                        </div><!--- form-group row Ends --->
+
+                        <div class="form-group row"><!--- form-group row Starts --->
+                            <div class="col-md-3"> Category </div>
+                            <div class="col-md-9">
+                                {{ form_widget(form.category, { 'attr': {'class': 'form-control'} }) }}
+                                <small class="form-text text-danger"></small>
+                                {{ form_widget(form.subcategory, { 'attr': {'class': 'form-control'} }) }}
+                            </div>
+                        </div><!--- form-group row Ends --->
+
+                        <div class="form-group row"><!--- form-group row Starts --->
+                            <div class="col-md-3">Delivery Time</div>
+                            <div class="col-md-9">
+                                {{ form_widget(form.deliveryTime, { 'attr': {'class': 'form-control'} }) }}
+                            </div>
+                            <small class="form-text text-danger"></small>
+                        </div><!--- form-group row Ends --->
+
+                        <button class="btn btn-success next float-right" type="button" >Suivant</button>
+                        <!--- form-group Starts --->
+
+                        {#                        {{ form_end(form) }}<!--- form Ends -->#}
+                    </div>
+                    <div class="tab-pane" id="pricing">
+                        <h5 class="font-weight-normal float-left">Pricing</h5>
+                        <div class="float-right switch-box">
+                            <span class="text">Fixed Price :</span>
+                            <label class="switch">
+                                <input type="checkbox" class="pricing" checked="">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+
+                        <div class="clearfix"></div>
+
+                        <hr class="mt-0">
+
+                        <div class="form-group row proposal-price justify-content-center">
+                            <div class="col-md-7">
+                                <div class="input-group">
+                                    <span class="input-group-addon font-weight-bold">€</span>
+                                    {{ form_widget(form.price, { 'attr': {'class': 'form-control','enctype':'multipart/form-data'} }) }}
+                                </div>
+                                <small></small>
+                            </div>
+                        </div>
+
+                        <button class="btn btn-secondary previous float-left " type="button" >Précédent</button>
+                        <button class="btn btn-success next float-right" type="button" >Suivant</button>
+
+                    </div>
+
+                    <div class="tab-pane" id="description">
+                        <h5 class="font-weight-normal">Description</h5>
+                        <hr>
+                        <p class="small mb-2"> Project Details </p>
+
+                        <div class="form-group">
+                            {{ form_widget(form.description, { 'attr': {'class': 'form-control'} }) }}
+                            <small class="form-text text-danger"></small>
+                        </div>
+
+                        <button class="btn btn-secondary previous float-left " type="button" >Précédent</button>
+                        <button class="btn btn-success next float-right" type="button" >Suivant</button>
+                    </div>
+                    <div class="tab-pane" id="gallery">
+                        <h5 class="font-weight-normal">Créez votre galerie</h5>
+                        <h6 class="font-weight-normal">Ajouter des photos pour votre services.</h6>
+
+                        <hr>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label required" for="">Default Image</label>
+                            <div class="col-sm-10">
+                                <div class="dropzone"></div>
+                            </div>
+                        </div>
+                        <button class="btn btn-secondary previous float-left " type="button" >Précédent</button>
+                        <button class="btn btn-success save float-right" type="submit" id="submit-all">Valider</button>
+                    </div>
+                    {{ form_end(form) }}
+                </div><!--- tab-content Ends --->
+
+            </div>
+        </div><!--- row Ends --->
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script type="application/javascript">
+        // init,configure dropzone
+        function randomString(length) {
+            var text = "";
+            var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            for( var i=0; i < length; i++ ) {
+                text += possible.charAt(Math.floor(Math.random() * possible.length));
+            }
+            return text;
+        }
+
+
+
+        $(document).ready(function () {
+            var browsers = ["Opera", "Edge", "Chrome", "Safari", "Firefox", "MSIE", "Trident"];
+            var userbrowser, useragent = navigator.userAgent;
+            for(var i = 0; i < browsers.length; i++) {
+                if( useragent.indexOf(browsers[i]) > -1 ) {
+                    userbrowser = browsers[i];
+                    break;
+                }
+            };
+
+            $("#pricing").hide();
+            $("#description").hide();
+            $("#gallery").hide();
+            $("#appbundle_proposal_subcategory").hide();
+
+            $("#appbundle_proposal_category").change(function () {
+                $("#appbundle_proposal_subcategory").show();
+            });
+
+            var current_fs, next_fs, previous_fs;
+
+            function steps(e){
+                if (e.parent().is(":visible")) {
+                    current_fs = e.parent();
+                    next_fs = e.parent().next();
+
+                    $("#tabs .breadcrumb a").eq($("div").index(next_fs)).addClass("active");
+
+                    next_fs.show();
+
+                    current_fs.hide();
+
+                } else if (e.parent().next().is(":visible")) {
+                    current_fs = e.parent();
+                    next_fs = e.parent().next();
+                }
+                next_fs.show();
+                current_fs.hide();
+            }
+
+            $(".next").click(function() {
+                steps($(this));
+            });
+
+            $(".previous").click(function(){
+
+                current_fs = $(this).parent();
+                previous_fs = $(this).parent().prev();
+                $("#tabs .breadcrumb a").eq($("div").index(next_fs)).removeClass("active");
+
+                previous_fs.show();
+
+                current_fs.hide();
+            });
+
+        });
+        Dropzone.autoDiscover = false;
+        var dropzone_default = new Dropzone(".dropzone", {
+            url: '{{ path('uploadproposalimagehandler') }}' ,
+            maxFiles: 4,
+            dictMaxFilesExceeded: 'Only 4 Images can be uploaded',
+            acceptedFiles: 'image/*',
+            maxFilesize: 3,  // in Mb
+            addRemoveLinks: true,
+            init: function () {
+                this.on("maxfilesexceeded", function(file) {
+                    this.removeFile(file);
+                });
+                this.on("sending", function(file, xhr, formData) {
+                    // send additional data with the file as POST data if needed.
+                    // formData.append("key", "value");
+                });
+                this.on("success", function(file, response) {
+                    if (response.uploaded)
+                        alert('File Uploaded: ' + response.fileName);
+                });
+            }
+        });
+
+    </script>
+    <script>
+        $('#appbundle_proposal_category').change(function () {
+            var categorySelector = $(this);
+            // Request the neighborhoods of the selected city.
+            $.ajax({
+                url: "{{ path('get_sous_category_by_category') }}",
+                type: "GET",
+                dataType: "JSON",
+                data: {
+                    catid: categorySelector.val()
+                },
+                success: function (souscategories) {
+                    var sousCategorySelect = $("#appbundle_proposal_subcategory");
+                    // Remove current options
+                    sousCategorySelect.html('');
+                    // Empty value ...
+                    sousCategorySelect.append('<option value> Sélectionner une sous catégorie de ' + categorySelector.find("option:selected").text() + ' ...</option>');
+
+                    $.each(souscategories, function (key, souscategory) {
+                        sousCategorySelect.append('<option value="' + souscategory.id + '">' + souscategory.title + '</option>');
+                    });
+                },
+                error: function (err) {
+                    alert("An error ocurred while loading data ...");
+                }
+            });
+        });
+    </script>
+
+{% endblock %}

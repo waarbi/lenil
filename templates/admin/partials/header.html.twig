@@ -1,0 +1,45 @@
+<header id="header" class="header">
+    <div class="header-menu">  <div class="col-sm-7">
+        </div>
+
+        <div class="col-sm-5">
+
+            <div class="user-area dropdown float-right">
+
+                <button class="btn btn-outline-secondary btn-sm dropdown-toggle text=white" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+
+                    <img src="{{ asset('/uploads/images/default/'~user.picture) }}" width="30" height="30" class="rounded-circle text-white">
+
+
+                    &nbsp; {{ user.fullname }}  &nbsp; <span class="caret"></span>
+
+
+                </button>
+
+
+
+                <div class="user-menu dropdown-menu">
+
+                    <a class="nav-link" href="{{ path('admin_dashboard') }}"><i class="fa fa-dashboard"></i> Dashboard</a>
+
+                    <a class="nav-link" href="#"><i class="fa fa-user"></i> Mon Profil</a>
+
+                    <div class="dropdown-divider"></div>
+
+                    <a class="nav-link" href="{{ path('admin_account_logout') }}"><i class="fa fa-power-off"></i> Déconnexion</a>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</header>
+{% for label, messages in app.flashes %}
+    <div class="alert alert-{{ label }} mb-0 text-center">
+        {% for message in messages %}
+            <p>{{ message | raw }}</p>
+        {% endfor %}
+    </div>
+
+{% endfor %}

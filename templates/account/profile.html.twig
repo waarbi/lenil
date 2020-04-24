@@ -1,0 +1,136 @@
+ {% extends "base.html.twig" %}  
+
+ {% block title %}Paramétrage du compte utilisateur{% endblock %}
+
+ {% block body %}
+     <div class="container-fluid mt-5 mb-5">
+         <div class="row terms-page" style="">
+             <div class="col-md-3 mb-3">
+                 <div class="card">
+                     <div class="card-body">
+                         <ul class="nav nav-pills flex-column mt-2">
+                             <li class="nav-item">
+                                 <a data-toggle="pill" href="#profile_settings" class="nav-link active">
+                                     Paramétrer mon profil				</a>
+                             </li>
+                             <li class="nav-item">
+                                 <a data-toggle="pill" href="#account_settings" class="nav-link">
+                                     Paramétrer mon compte							</a>
+                             </li>
+                         </ul>
+                     </div>
+                 </div>
+             </div>
+             <div class="col-md-9">
+                 <div class="card">
+                     <div class="card-body">
+                         <div class="tab-content">
+                             <div id="profile_settings" class="tab-pane fade active show">
+                                 <h2 class="mb-4">Paramétrage Profil</h2>
+                                 <hr>
+                                 {{ form_start(formProfil) }}
+                                     <div class="form-group row">
+                                         {{ form_label(formProfil.firstName, null, {'label_attr': {'class': 'col-md-3 col-form-label'}}) }}
+                                         <div class="col-md-8">
+                                             <div class="red-color">
+                                                 {{ form_errors(formProfil.firstName,{ 'attr': {'class': 'red-color'} }) }}
+                                             </div>
+                                             {{ form_widget(formProfil.firstName, { 'attr': {'class': 'form-control'} }) }}
+                                         </div>
+                                     </div>
+                                    <div class="form-group row">
+                                         {{ form_label(formProfil.lastName, null, {'label_attr': {'class': 'col-md-3 col-form-label'}}) }}
+                                         <div class="col-md-8">
+                                             <div class="red-color">
+                                                 {{ form_errors(formProfil.lastName,{ 'attr': {'class': 'red-color'} }) }}
+                                             </div>
+                                             {{ form_widget(formProfil.lastName, { 'attr': {'class': 'form-control'} }) }}
+                                         </div>
+                                     </div>
+
+                                     <div class="form-group row">
+                                         {{ form_label(formProfil.email, null, {'label_attr': {'class': 'col-md-3 col-form-label'}}) }}
+                                         <div class="col-md-8">
+                                             <div class="red-color">
+                                                 {{ form_errors(formProfil.email,{ 'attr': {'class': 'red-color'} }) }}
+                                             </div>
+                                             {{ form_widget(formProfil.email, { 'attr': {'class': 'form-control'} }) }}
+                                         </div>
+                                     </div>
+
+                                     <div class="form-group row"><!-- form-group row Starts -->
+                                         {{ form_label(formProfil.pays, null, {'label_attr': {'class': 'col-md-3 col-form-label'}}) }}
+                                         <div class="col-md-8">
+                                             {{ form_widget(formProfil.pays, { 'attr': {'class': 'form-control'} }) }}
+                                         </div>
+                                     </div><!-- form-group row Ends -->
+
+                                     <div class="form-group row">
+                                         {{ form_label(formProfil.picture, null, {'label_attr': {'class': 'col-md-3 col-form-label'}}) }}
+                                         <div class="col-md-8">
+                                             <div class="red-color">
+                                                 {{ form_errors(formProfil.picture,{ 'attr': {'class': 'red-color'} }) }}
+                                             </div>
+                                             {{ form_widget(formProfil.picture, { 'attr': {'class': 'form-control'} }) }}
+                                         </div>
+                                     </div>
+
+                                     <div class="form-group row">
+                                         {{ form_label(formProfil.description, null, {'label_attr': {'class': 'col-md-3 col-form-label'}}) }}
+                                         <div class="col-md-8">
+                                             <div class="red-color">
+                                                 {{ form_errors(formProfil.description,{ 'attr': {'class': 'red-color'} }) }}
+                                             </div>
+                                             {{ form_widget(formProfil.description, { 'attr': {'class': 'form-control'} }) }}
+                                         </div>
+                                     </div>
+                                     <button type="submit" name="submit" class="btn btn-success float-right">
+                                         <i class="fa fa-floppy-o"></i> Enregistrer
+                                     </button>
+                                 {{ form_end(formProfil) }}
+                             </div>
+                             <div id="account_settings" class="tab-pane fade">
+                                 <h2 class="mb-4">Paramétrage Compte</h2>
+                                 <hr>
+                                 {{ form_start(formPassword,{ 'attr': {'class': 'clearfix mb-3'} }) }}
+                                 <div class="form-group row">
+                                     {{ form_label(formPassword.oldPassword, null, {'label_attr': {'class': 'col-md-4 col-form-label'}}) }}
+
+                                     <div class="col-md-8">
+                                         <div class="red-color">
+                                             {{ form_errors(formPassword.oldPassword,{ 'attr': {'class': 'red-color'} }) }}
+                                         </div>
+                                         {{ form_widget(formPassword.oldPassword, { 'attr': {'class': 'form-control'} }) }}
+                                     </div>
+                                 </div>
+                                 <div class="form-group row">
+                                     {{ form_label(formPassword.newPassword, null, {'label_attr': {'class': 'col-md-4 col-form-label'}}) }}
+                                     <div class="col-md-8">
+                                         <div class="red-color">
+                                             {{ form_errors(formPassword.newPassword,{ 'attr': {'class': 'red-color'} }) }}
+                                         </div>
+                                         {{ form_widget(formPassword.newPassword, { 'attr': {'class': 'form-control'} }) }}
+                                     </div>
+                                 </div>
+
+                                 <div class="form-group row">
+                                     {{ form_label(formPassword.confirmPassword, null, {'label_attr': {'class': 'col-md-4 col-form-label'}}) }}
+                                     <div class="col-md-8">
+                                         <div class="red-color">
+                                             {{ form_errors(formPassword.confirmPassword,{ 'attr': {'class': 'red-color'} }) }}
+                                         </div>
+                                         {{ form_widget(formPassword.confirmPassword, { 'attr': {'class': 'form-control'} }) }}
+                                     </div>
+                                 </div>
+                                 <button type="submit" name="change_password" class="btn btn-success float-right"><i class="fa fa-floppy-o"></i>Changer Mot de Pass</button>
+
+                                 {{ form_end(formPassword) }}
+                             </div>
+                         </div>
+                     </div>
+                 </div>
+             </div>
+         </div>
+     </div>
+
+ {% endblock %}

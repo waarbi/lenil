@@ -1,0 +1,55 @@
+<div class="row mt-2 mb-3">
+    <div class="col-md-12">
+        <h2 class="float-left">Demandes récentes des acheteurs</h2>
+        <button type="button" onclick="location.href='requests/buyer_requests'" class="float-right btn btn-success">VOIR TOUT</button>
+    </div>
+</div>
+<div class="row buyer-requests">
+    <div class="col-md-12">
+        <div class="table-responsive box-table">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>Description des demandes</th>
+                    <th>Offres</th>
+                    <th>Durée</th>
+                    <th>Budget</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for demande in demandesActives %}
+                    <tr id="request_tr_106">
+                        <td>
+                            <img src="{{ asset('/uploads/images/'~demande.auteur.picture) }}" class="request-img rounded-circle">
+                            <div class="request-description">
+                                <h6>{{ demande.auteur.fullName }}</h6>
+                                <h6 class="text-success">{{ demande.title }}</h6>
+                                <p class="lead">{{ demande.description }}</p>
+
+                            </div>
+                        </td>
+                        <td>{% if demande.offers is not empty %}{{ demande.offers |length}} {% else %} 0 {% endif %}</td>
+                        <td>{{ demande.deliveryTime }}</td>
+                        <td class="text-success">
+                            {{ demande.budget }} €                                     <br>
+                            <button class="btn btn-success" id="submit-proposal" data-toggle="modal" data-description="{{ demande.description }}" data-title="{{ demande.title }}" data-picture="{{ asset('/uploads/images/'~demande.auteur.picture) }}" data-id="{{ demande.id }}" data-dismiss="modal" data-target="#submit-proposal-details" title="Choose an offer before clicking continue">Proposer une offre</button>
+                        </td>
+
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="7">no records found</td>
+                    </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+            <center>
+                <a href="requests/buyer_requests.php" class="btn btn-success btn-lg mb-3">
+                    <i class="fa fa-spinner"></i> Voir plus
+                </a>
+            </center>
+        </div>
+    </div>
+</div>
+

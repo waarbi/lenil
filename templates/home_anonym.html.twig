@@ -1,0 +1,265 @@
+{% block stylesheets %}
+{% endblock %}
+    {% block title %}{{ generalSettings.siteTitle }}{% endblock %}
+{% block meta %}
+    <meta name="description" content="{{ generalSettings.siteDescription }}"/>
+    <meta name="keywords" content="{{ generalSettings.siteKeywords }}"/>
+{% endblock %}
+{% extends "base.html.twig" %}
+
+{% block body %}
+        <div id="demo1" class="main carousel slide" data-ride="carousel">
+            <ul class="carousel-indicators">
+                <li data-target="#demo1" data-slide-to="0" class="active"></li>
+                <li data-target="#demo1" data-slide-to="1"></li>
+                <li data-target="#demo1" data-slide-to="2"></li>
+            </ul>
+            <div class="carousel-inner">
+                <div class="carousel-caption">
+                        <h1>{{ sectionLayout.heading }}</h1>
+                        <h5>{{ sectionLayout.shortHeading }}</h5>
+                    <div class="row">
+                        <div class="offset-md-3 col-md-5 col-12">
+                            <form action="" method="post">
+                                <div class="input-group space20">
+                                    <input type="text" name="search_query" class="form-control" value="" placeholder="">
+                                    <div class="input-group-append move-icon-up">
+                                        <button name="search" type="submit" class="search_button">
+                                            <img src="{{ asset('build/images/srch2.png') }}" class="srch2">
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                            <a href="{{ path('start_selling') }}" class="btn btn-success btn-lg btn_start_selling"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                Vendez un service</a>
+                        </div>
+                    </div>
+                </div>
+            {% for slide in sliders %}
+                <div class="carousel-item {% if slide.isActivate == true %} active {% endif %}">
+                    <img src="/uploads/images/{{ slide.imageName }}">
+                </div>
+
+            {% endfor %}
+            </div>
+            <a class="carousel-control-prev " href="#demo1" data-slide="prev" style="width: 6%; opacity: 1;">
+                <i class="fa fa-arrow-circle-o-left fa-3x"></i>
+            </a>
+            <a class="carousel-control-next" href="#demo1" data-slide="next" style="width: 6%; opacity: 1;">
+                <i class="fa fa-arrow-circle-o-right fa-3x"></i>
+            </a>
+        </div>
+        <!-- end main -->
+        <!-- start market -->
+        <div class="container mb-5 cards" style="max-width: 1360px !important;">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="mt-5 mb-1 ">Services professionnels les plus populaires</h1>
+                    <p class="subHeading mb-4 ">Réalisez votre projet à temps par des professionnels hautement
+                        qualifiés</p>
+                    <div class="owl-carousel home-cards-carousel owl-theme owl-loaded owl-drag">
+                        <!--- owl-carousel home-cards-carousel Starts --->
+
+                        <div class="owl-stage-outer">
+                            <div class="owl-stage"
+                                 style="transform: translate3d(0px, 0px, 0px); transition: all 0s ease 0s; width: 1611px;">
+
+
+                                {% for category in categories_card %}
+                                    <div class="owl-item" style="width: 250.4px; margin-right: 18px;">
+                                        <div class="card-box">
+                                            <div>
+                                                <a href="#"
+                                                   class="subcategory">
+                                                    <h4><small></small>{{category.title}}</h4>
+                                                    <picture>
+                                                        <img src="uploads/images/card/{{ category.getCardPicture }}">
+                                                    </picture>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+
+                            </div>
+                        </div>
+                        <div class="owl-nav">
+                            <button type="button" role="presentation" class="owl-prev disabled"><span
+                                        aria-label="Previous"></span></button>
+                            <button type="button" role="presentation" class="owl-next"><span aria-label="Next"></span>
+                            </button>
+                        </div>
+                        <div class="owl-dots">
+                            <button role="button" class="owl-dot active"><span></span></button>
+                            <button role="button" class="owl-dot"><span></span></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- start market -->
+        <section class="market">
+            <div class="container" style="max-width: 1360px !important;">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2>Explorez le marché</h2>
+                        <h4>Inspirez-vous pour bâtir votre entreprise</h4>
+                        <div class="row space80">
+
+                            {% for category in categories_yes %}
+                                <div class="col-md-3 col-6">
+                                    <a href="{{ path('category_services',{slug: category.slug}) }}">
+                                        <div class="grn_box">
+                                            <img src="{{ asset('uploads/images/card/'~category.image) }}"
+                                                 class="mx-auto d-block">
+                                            <p>{{ category.title }}</p>
+                                        </div>
+                                    </a>
+                                </div>
+                                {% if loop.index > 4 %}
+                                    <div class="space80 hidden-xs"></div>
+                                    <div class="space20 visible-xs"></div>
+                                {% endif %}
+                            {% endfor %}
+
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="timer">
+            <div class="container" style="max-width: 1335px !important;">
+                <div class="row">
+                    <div class="col-md-4 pad0">
+                        <div class="box">
+                            <h5>Vos conditions</h5>
+                            <p>Tout ce dont vous avez besoin pour simplifier votre liste de tâches, peu importe votre
+                                budget.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 pad0">
+                        <div class="blu_box">
+                            <img src="{{ asset('build/images/box_images/time.png') }}"
+                                 class="img-fluid mx-auto d-block">
+                        </div>
+                    </div>
+                    <div class="col-md-4 pad0">
+                        <div class="box">
+                            <h5>Votre calendrier</h5>
+                            <p>Trouvez des services en fonction de vos objectifs et de vos délais, c'est aussi
+                                simple.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 pad0">
+                        <div class="blu_box1">
+                            <img src="{{ asset('build/images/box_images/desk.png') }}"
+                                 class="img-fluid mx-auto d-block">
+                        </div>
+                    </div>
+                    <div class="col-md-4 pad0">
+                        <div class="box">
+                            <h5>En toute sécurité</h5>
+                            <p>Votre paiement est toujours sécurisé, Lenil est conçu pour protéger votre tranquillité
+                                d'esprit.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 pad0">
+                        <div class="blu_box1">
+                            <img src="{{ asset('build/images/box_images/tv.png') }}" class="img-fluid mx-auto d-block">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- start top -->
+        <section class="top mb-0">
+            <div class="container" style="max-width: 1360px !important;">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1 class="text-center">
+                            Principaux services en vedette</h1>
+                        <h4 class="text-center">Des conseils pratiques à chaque étape</h4>
+                    </div>
+                    <span class="pull-right text-success"><a href="featured_proposals">Voir plus</a></span>
+                    <div class="mt-5">
+                        <!--- home-featured-carousel Starts --->
+                        <div class="row">
+                            <!--- row Starts -->
+                            {% for proposal in proposals %}
+                                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 mb-3 pr-lg-1">
+                                    <div class="proposal-card-base mp-proposal-card"><!--- proposal-card-base mp-proposal-card Starts --->
+                                        <a href="#proposals/ashleytharma1/i-will-design-a-logo-and-brand-for-you">
+                                            <img src="{{ asset('/uploads/images/'~proposal.proposalImages.first().getFileName()) }}" class="img-fluid">
+                                        </a>
+                                        <div class="proposal-card-caption"><!--- proposal-card-caption Starts --->
+                                            <div class="proposal-seller-info"><!--- gig-seller-info Starts --->
+                                                <span class="fit-avatar s24">
+                                        <img src="{{ asset('/uploads/images/'~proposal.seller.picture) }}" class="rounded-circle" width="32" height="32">
+                                    </span>
+                                                <div class="seller-info-wrapper">
+                                                    <a href="#ashleytharma1" class="seller-name">{{ proposal.seller.fullName}}</a>
+                                                    <div class="gig-seller-tooltip">  Débutant   </div>
+                                                </div>
+                                            </div><!--- gig-seller-info Ends --->
+                                            <a href="#proposals/ashleytharma1/i-will-design-a-logo-and-brand-for-you" class="proposal-link-main js-proposal-card-imp-data">
+                                                <h3>{{ proposal.title }}</h3>
+                                            </a>
+                                            <div class="rating-badges-container">
+                                    <span class="proposal-rating">
+                                    <svg class="fit-svg-icon full_star" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg" width="15" height="15"><path d="M1728 647q0 22-26 48l-363 354 86 500q1 7 1 20 0 21-10.5 35.5t-30.5 14.5q-19 0-40-12l-449-236-449 236q-22 12-40 12-21 0-31.5-14.5t-10.5-35.5q0-6 2-20l86-500-364-354q-25-27-25-48 0-37 56-46l502-73 225-455q19-41 49-41t49 41l225 455 502 73q56 9 56 46z"></path></svg>
+                                    <span>
+                                    <strong>{{ proposal.rating}}</strong>
+                                    (5)
+                                    </span>
+                                    </span>
+                                            </div>
+                                        </div><!--- proposal-card-caption Ends --->
+                                        <footer class="proposal-card-footer"><!--- proposal-card-footer Starts --->
+                                            <div class="proposal-fav">
+                                                <a class="icn-list proposal-offer" data-id="3">
+                                                    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 497.68 497.68" style="enable-background:new 0 0 497.68 497.68;" data-toggle="tooltip" data-placement="top" title="" data-original-title="Affiliate Link">
+
+                                                        <path style="fill:#F2B233;" d="M464.04,404.82c0,97.6-96,92-215.2,92s-215.2,4.8-215.2-92c0-97.6,96-260,215.2-260
+	                                            C368.04,145.62,464.04,308.02,464.04,404.82z"></path>
+                                                        <path style="fill:#DD981D;" d="M248.84,145.62c119.2,0,215.2,162.4,215.2,260s-96,92-215.2,92"></path>
+                                                        <path style="fill:#F2B233;" d="M144.04,44.82c0-47.2,47.2-44.8,104.8-44.8s104.8-2.4,104.8,44.8s-47.2,126.4-104.8,126.4
+	                                            S144.04,92.02,144.04,44.82z"></path>
+                                                        <path style="fill:#DD981D;" d="M248.84,0.02c57.6,0,104.8-2.4,104.8,44.8s-47.2,126.4-104.8,126.4"></path>
+                                                        <path style="fill:#04AF76;" d="M340.84,154.42c0,8-6.4,14.4-14.4,14.4h-155.2c-8,0-14.4-6.4-14.4-14.4v-4c0-8,6.4-14.4,14.4-14.4
+	                                            h156c8,0,14.4,6.4,14.4,14.4v4H340.84z"></path>
+                                                        <path style="fill:#008C61;" d="M168.84,136.82h158.4c8,0,14.4,6.4,14.4,14.4v4c0,8-8,14.4-16,14.4"></path>
+                                                        <circle style="fill:#04AF76;" cx="248.84" cy="339.22" r="96"></circle>
+                                                        <path style="fill:#008C61;" d="M180.84,271.22c37.6-37.6,98.4-37.6,136,0s37.6,98.4,0,136"></path>
+                                                        <path style="fill:#FFF6E1;" d="M240.84,416.82v-20c-16-0.8-24.8-4-32-8l4.8-21.6c8,4,18.4,8,30.4,8c10.4,0,17.6-4,17.6-11.2
+	                                                s-5.6-11.2-20-16c-20-6.4-32.8-16-32.8-33.6c0-16,7.2-28.8,31.2-32.8v-16.8h16v16c16,0.8,21.6,3.2,27.2,6.4l-4.8,20.8
+	                                                c-4.8-2.4-12.8-6.4-26.4-6.4c-12,0-16,4.8-16,10.4c0,6.4,6.4,9.6,22.4,16c21.6,8,30.4,17.6,30.4,34.4s-8.8,30.4-32.8,34.4v20H240.84
+	                                            z"></path>
+                                                        <g>
+                                                            <path style="fill:#FFEEBD;" d="M248.84,264.82v36.8c0,0,2.4,0,4,0c13.6,0,21.6,4,26.4,6.4l4.8-20.8c-6.4-3.2-11.2-6.4-27.2-6.4v-16
+		                                        H248.84z"></path>
+                                                            <path style="fill:#FFEEBD;" d="M259.24,327.22c-4-1.6-8-3.2-10.4-4v27.2c8,4,12.8,8,12.8,13.6c0,6.4-4.8,9.6-12.8,11.2v41.6h8
+		                                                    v-20.8c24-4,32.8-17.6,32.8-34.4C289.64,344.82,280.84,335.22,259.24,327.22z"></path>
+                                                        </g>
+
+                                                    </svg>
+                                                </a>
+
+
+                                                <i data-id="3" href="#" class="fa fa-heart proposal-favorite dil1" data-toggle="tooltip" data-placement="top" title="" data-original-title="Favorite"></i>
+                                            </div>
+                                            <div class="proposal-price">
+                                                <a><small>STARTING AT</small>€{{ proposal.price}}</a>
+                                            </div>
+                                        </footer><!--- proposal-card-footer Ends --->
+                                    </div><!--- proposal-card-base mp-proposal-card Ends --->        </div>
+                            {% endfor %}
+                        </div>
+                        <!--- row Ends -->
+                    </div>
+                </div>
+            </div>
+        </section>
+{% endblock %}
