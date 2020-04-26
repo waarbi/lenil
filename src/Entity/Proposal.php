@@ -13,10 +13,12 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Proposal
 {
-    const REQUEST_STATUS_ACTIVE = 1; // active
-    const REQUEST_STATUS_INACTIVE = 2; // supendue
-    const REQUEST_STATUS_INPROGRESS = 3; //en cours de validation
-    const REQUEST_STATUS_CANCELLED = 4; // désapprouvé
+    const PROPOSAL_STATUS_ACTIVE = 1; // active
+    const PROPOSAL_STATUS_PAUSE = 2; // supendue
+    const PROPOSAL_STATUS_INPROGRESS = 3; //en cours de validation
+    const PROPOSAL_STATUS_DECLINED = 4; // décline
+    const PROPOSAL_STATUS_MODIFICATION_REQUIRED = 5; // soumettre pour modification
+    const PROPOSAL_STATUS_TRUSH = 6; // dans la poubelle
 
 
     /**
@@ -43,7 +45,15 @@ class Proposal
     /**
      * @ORM\Column(type="integer",name="status_id", nullable=true)
      */
-    private $statusId = Proposal::REQUEST_STATUS_INPROGRESS;
+    private $statusId = Proposal::PROPOSAL_STATUS_INPROGRESS;
+    /**
+     * @ORM\Column(type="boolean",nullable=true)
+     */
+    private $featured;
+    /**
+     * @ORM\Column(type="boolean",nullable=true)
+     */
+    private $topRated;
 
     /**
      * @ORM\Column(type="decimal", precision=5, scale=2)
@@ -284,6 +294,32 @@ class Proposal
 
         return $this;
     }
+    public function getFeatured(): ?bool
+    {
+        return $this->featured;
+    }
 
+    public function setFeatured(bool $featured): self
+    {
+        $this->featured = $featured;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTopRated()
+    {
+        return $this->topRated;
+    }
+
+    /**
+     * @param mixed $topRated
+     */
+    public function setTopRated($topRated): void
+    {
+        $this->topRated = $topRated;
+    }
 
 }

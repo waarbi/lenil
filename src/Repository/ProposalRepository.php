@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Admin\ProposalSearchProperty;
 use App\Entity\Proposal;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -19,32 +20,33 @@ class ProposalRepository extends ServiceEntityRepository
         parent::__construct($registry, Proposal::class);
     }
 
-    // /**
-    //  * @return Proposal[] Returns an array of Proposal objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('p.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+    public function getSearchAd(ProposalSearchProperty $searchProperty, $limit, $offset){
+        $query = $this->createQueryBuilder('proposal')->setMaxResults($limit);
+        if ($searchProperty->getMaxPrice()){
+            $query = $query->andWhere('proposal.price <= :price')
+                ->setParameter('price',$searchProperty->getMaxPrice());
+        }
+        if ($searchProperty->getCategory()){
+            $query = $query->andWhere('proposal.category = :category')
+                ->setParameter('category',$searchProperty->getCategory());
+        }
+        if ($searchProperty->getSubcategory()){
+            $query = $query->andWhere('proposal.subcategory = :subcategory')
+                ->setParameter('subcategory',$searchProperty->getSubcategory());
+        }
+        if ($searchProperty->getDeliveryTime()){
+            $query = $query->andWhere('proposal.deliveryTime = :delivery')
+                ->setParameter('delivery',$searchProperty->getDeliveryTime());
+        }
+        if (false === is_null($offset))
+            $query->setFirstResult($offset);
 
-    /*
-    public function findOneBySomeField($value): ?Proposal
-    {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        if (false === is_null($limit))
+            $query->setMaxResults($limit);
+
+        return $query->getQuery()->getResult();
+
+
     }
-    */
+
 }

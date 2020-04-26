@@ -4,7 +4,9 @@ namespace App\Form\Admin;
 
 use App\Entity\Admin\LandingPageSlide;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\RadioType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -29,6 +31,15 @@ class LandingPageSlideType extends AbstractType
                 ]
             ))
             ->add('isActivate')
+            ->add('onHomePageAnonym',CheckboxType::class, array(
+                'label' => 'Mettre sur la page d\'accueil du site',
+                'required' => false
+            ))
+            ->add('onHomePageSeller', CheckboxType::class, array(
+                'label' => 'Mettre sur la page d\'accueil du vendeur',
+                'required' => false
+            ))
+
         ;
     }
 

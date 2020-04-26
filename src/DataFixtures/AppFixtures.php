@@ -43,6 +43,16 @@ class AppFixtures extends Fixture
             $manager->persist($lepays);
             $pays [] = $lepays;
         }
+        //sellerLevel
+        $sellerLevel = [];
+        $sellerLevelName =  ['Haut niveau','Niveau 2', 'Niveau 1', 'Nouveau vendeur' ];
+        foreach ($sellerLevelName as $item){
+            $level = new SellerLevel();
+            $level->setName($item);
+            $manager->persist($level);
+            $sellerLevel [] = $level;
+        }
+
         //user
         $faker = Factory::create('FR-fr');
 
@@ -58,9 +68,40 @@ class AppFixtures extends Fixture
             ->setHash($this->encoder->encodePassword($adminUser, 'password'))
             ->setPicture('tof-admin.png')
             ->setDescription('<p>' . join('</p><p>', $faker->paragraphs(3)) . '</p>')
+            ->setLevel($faker->randomElement($sellerLevel))
             ->addUserRole($adminRole);
 
         $manager->persist($adminUser);
+
+        //Nous gérons les utilisateurs
+        $users = [];
+        $genres = ['male', 'female'];
+
+        for($i = 1; $i <= 20; $i++) {
+            $user = new User();
+            $genre =$faker->randomElement($genres);
+            $picture = 'https://randomuser.me/api/portraits/';
+            $pictureId =$faker->numberBetween(1, 99) . '.jpg';
+            $picture .= ($genre == 'male' ? 'men/': 'women/') . $pictureId;
+
+            $hash = $this->encoder->encodePassword($user, 'password');
+
+            $user->setFirstName($faker->firstname)
+                ->setLastName($faker->Lastname)
+                ->setEmail($faker->email)
+                ->setDescription('<p>' . join('</p><p>', $faker->paragraphs(3)) . '</p>')
+                ->setHash($hash)
+                ->setPicture($picture)
+                ->setPays($faker->randomElement($pays))
+                ->setLevel($faker->randomElement($sellerLevel))
+                ->setEnabled($faker->boolean);
+
+            $manager->persist($user);
+            $users[] = $user;
+
+        }
+
+
 
         //categories et sous categories
         $cat1 = new Category();
@@ -291,11 +332,18 @@ class AppFixtures extends Fixture
 
         //slider
         $slider1 = new LandingPageSlide();
-        $slider1->setTitle('slider1')->setImageName('cover-main-one.png')->setIsActivate(true);
+        $slider1->setTitle('slider1')->setImageName('cover-main-one.png')->setIsActivate(true)->setOnHomePageAnonym(true)->setOnHomePageSeller(false);
         $slider2 = new LandingPageSlide();
-        $slider2->setTitle('slider2')->setImageName('cover-main-two.png')->setIsActivate(false);
+        $slider2->setTitle('slider2')->setImageName('cover-main-two.png')->setIsActivate(false)->setOnHomePageAnonym(true)->setOnHomePageSeller(false);
+        $slider3 = new LandingPageSlide();
+        $slider3->setTitle('slider1')->setImageName('cover-main-one.png')->setIsActivate(true)->setOnHomePageAnonym(false)->setOnHomePageSeller(true);
+        $slider4 = new LandingPageSlide();
+        $slider4->setTitle('slider2')->setImageName('cover-main-two.png')->setIsActivate(false)->setOnHomePageAnonym(false)->setOnHomePageSeller(true);
+
         $manager->persist($slider1);
         $manager->persist($slider2);
+        $manager->persist($slider3);
+        $manager->persist($slider4);
 
         //paramètres generaux de paiements
         $paiement = new GeneralPaymentSetting();
@@ -304,7 +352,7 @@ class AppFixtures extends Fixture
 
         // Paramètre paiement Paypal
         $paypal = new PaypalSetting();
-        $paypal->setEmail('contact@lenil.tech')->setAppClientId(111111212121)->setAppClientSecret('cleSecretApiPaypal')->setCurrency('EUR')->setEnabled(true)->setPaypalSandbox(true);
+        $paypal->setEmail('contact@lenil.tech')->setAppClientId('appClientIdPAYPAL')->setAppClientSecret('cleSecretApiPaypal')->setCurrency('EUR')->setEnabled(true)->setPaypalSandbox(true);
         $manager->persist($paypal);
 
         //paramètre paiement stripe

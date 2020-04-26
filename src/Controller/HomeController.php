@@ -5,12 +5,10 @@ namespace App\Controller;
 
 
 use App\Entity\Admin\Article;
-use App\Entity\Admin\ArticleCategory;
 use App\Entity\Admin\GeneralSetting;
 use App\Entity\Admin\HomePageSection;
 use App\Entity\Admin\LandingPageSlide;
 use App\Entity\Contact;
-use App\Entity\Demande;
 use App\Entity\Proposal;
 use App\Form\ContactType;
 use App\Services\ContactNotification;
@@ -48,9 +46,10 @@ class HomeController extends AbstractController
     {
         $categories_cards = $manager->getRepository('App\Entity\Category')->findBy(array('in_card' => true));
 
-        if (is_null($this->getUser())){
+
+        if (!$this->get('security.authorization_checker')->isGranted('ROLE_USER')){
             $proposals = $manager->getRepository(Proposal::class)->findAll();
-            $sliders = $manager->getRepository(LandingPageSlide::class)->findAll();
+            $sliders = $manager->getRepository(LandingPageSlide::class)->findBy(array('onHomePageAnonym' => true));
 
             return $this->render('home_anonym.html.twig',
                 array(
@@ -65,13 +64,16 @@ class HomeController extends AbstractController
 
             $demandesActives = $manager->getRepository('App\Entity\Demande')->findAllActivesDemandeOfOthersUsers($this->getUser()->getId());
             $proposals = $manager->getRepository(Proposal::class)->findBySeller($this->getUser()->getId());
+            $sliders = $manager->getRepository(LandingPageSlide::class)->findBy(array('onHomePageSeller' => true));
+
             return $this->render('home_seller.html.twig',
                 array(
                     'categories_yes' => $this->categories_yes,
                     'categories_card' => $categories_cards,
                     'proposals'      => $proposals,
                     'demandesActives' => $demandesActives,
-                    'generalSettings' => $this->generalSettings
+                    'generalSettings' => $this->generalSettings,
+                    'sliders' => $sliders
 
                 ));
         }

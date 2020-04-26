@@ -26,7 +26,7 @@ class AdminCategoryController extends AbstractController
     public function __construct(EntityManagerInterface $manager)
     {
         $this->manager = $manager;
-        $this->nbProposal = $this->manager->getRepository(Proposal::class)->findBy(array('statusId' => Proposal::REQUEST_STATUS_INPROGRESS));
+        $this->nbProposal = $this->manager->getRepository(Proposal::class)->findBy(array('statusId' => Proposal::PROPOSAL_STATUS_INPROGRESS));
 
     }
 

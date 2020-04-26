@@ -2,6 +2,7 @@
 
 namespace App\Entity\Admin;
 use Doctrine\ORM\Mapping as ORM;
+use phpDocumentor\Reflection\Types\Boolean;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\Admin\LandingPageSlideRepository")
@@ -29,6 +30,15 @@ class LandingPageSlide
      * @ORM\Column(type="boolean", nullable=true)
      */
     private $isActivate;
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $onHomePageAnonym;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $onHomePageSeller;
 
     public function getId(): ?int
     {
@@ -75,6 +85,29 @@ class LandingPageSlide
     {
         $this->isActivate = $isActivate;
         return $this;
+    }
+
+    public function getOnHomePageAnonym(): ?bool
+    {
+        return $this->onHomePageAnonym;
+    }
+
+    public function setOnHomePageAnonym(?bool $onHomePageAnonym): self
+    {
+        $this->onHomePageAnonym = $onHomePageAnonym;
+        return $this;
+    }
+
+    public function getOnHomePageSeller(): ?bool
+    {
+        return $this->onHomePageSeller;
+    }
+
+    public function setOnHomePageSeller(?bool $onHomePageSeller): self
+    {
+        $this->onHomePageSeller = $onHomePageSeller;
+        return $this;
+
     }
 
 }

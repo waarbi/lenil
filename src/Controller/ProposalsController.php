@@ -11,6 +11,7 @@ use App\Form\ProposalType;
 use App\Services\FileUploader;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,7 +22,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/proposals")
- * @IsGranted("IS_AUTHENTICATED_FULLY")
+ * @Security("is_granted('ROLE_USER')", message="vous n'avez pas le droit d'acceder a cette ressource")
  */
 class ProposalsController extends AbstractController
 {

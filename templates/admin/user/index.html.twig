@@ -1,0 +1,166 @@
+{% block stylesheets %}
+{% endblock %}
+    {% block title %}Administration | Lenil {% endblock %}
+
+{% extends "admin/base.html.twig" %}
+
+{% block body %}
+    <div class="breadcrumbs">
+        <div class="col-sm-4">
+            <div class="page-header float-left">
+                <div class="page-title">
+                    <h1><i class="menu-icon fa fa-users"></i> Utilisateurs </h1>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-8">
+            <div class="page-header float-right">
+                <div class="page-title">
+                    <ol class="breadcrumb text-right">
+                        <li class="active">Tous les utilisateurs</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+
+        <div class="row"><!--- 2 row Starts --->
+            <div class="col-lg-12"><!--- col-lg-12 Starts --->
+                <div class="card"><!--- card Starts --->
+                    <div class="card-body"><!--- card-body Starts --->
+                        <h4 class="mb-4"> Stats sur les utilisateurs <small>Total Utilisateurs ({{ totalUsers }})</small> </h4>
+                        <div class="row"><!--- row Starts --->
+                            <div class="text-center border-box col-md-3"><!---- text-center border-box col-md-3 Starts --->
+                                <p>Haut Niveau </p>
+                                <h2>{{ nbTopRated }}</h2>
+                            </div><!---- text-center border-box col-md-3 Ends --->
+                            <div class="text-center border-box col-md-3"><!---- text-center border-box col-md-3 Starts --->
+                                <p>Niveau 2</p>
+                                <h2>{{ nbNiveau2 }}</h2>
+                            </div><!---- text-center border-box col-md-3 Ends --->
+                            <div class="text-center border-box col-md-3"><!---- text-center border-box col-md-3 Starts --->
+                                <p>Niveau 1</p>
+                                <h2>{{ nbNiveau1 }}</h2>
+                            </div><!---- text-center border-box col-md-3 Ends --->
+                            <div class="text-center col-md-3"><!---- text-center col-md-3 Starts --->
+                                <p>Nouveau vendeur</p>
+                                <h2>{{ nbNouveauVendeur }}</h2>
+                            </div><!---- text-center col-md-3 Ends --->
+                        </div>
+                        <!--- row Ends --->
+                    </div>
+                    <!--- card-body Ends --->
+                </div>
+                <!--- card Ends --->
+            </div>
+            <!--- col-lg-12 Ends --->
+        </div>
+        <!--- 2 row Ends --->
+        <div class="row mt-4">
+            <!--- 3 row Starts --->
+            <div class="col-lg-12">
+                <!--- col-lg-12 Starts --->
+                <div class="card">
+                    <!--- card Starts --->
+                    <div class="card-header"><!--- card-header Starts --->
+                        <h4 class="h4"> <i class="fa fa-money-bill-alt"></i> Voir tous les utilisateurs</h4>
+                    </div><!--- card-header Ends --->
+                    <div class="card-body"><!--- card-body Starts --->
+                        <div class="row"><!--- row Starts --->
+                            <div class="offset-lg-4 col-md-4">
+                                    {{ form_start(formSearchUser) }}
+                                    <div class="input-group mb-3 mt-3 mt-lg-0">
+                                        {{ form_widget(formSearchUser.name, { 'attr': {'class': 'form-control'} }) }}
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" type="submit"><i class="fa fa-search"></i></button>
+                                        </div>
+                                    </div>
+                                    {{ form_end(formSearchUser) }}
+
+                            </div>
+
+                        </div><!--- row Ends ---->
+
+
+                        <div class="table-responsive"><!--- table-responsive Starts --->
+
+                            <table class="table table-bordered"><!--- table table-bordered table-hover Starts --->
+
+                                <thead><!--- thead Starts --->
+
+                                <tr>
+
+                                    <th>Id</th>
+
+                                    <th>Nom</th>
+
+                                    <th>Email</th>
+
+                                    <th>Niveau</th>
+
+                                    <th>Email vérifié</th>
+
+                                    <th>Date d'inscription</th>
+
+                                    <th>Actions</th>
+                                </tr>
+                                </thead><!--- thead Ends --->
+                                <tbody><!--- tbody Starts --->
+                                {% for utilisateur in pagination.data %}
+                                <tr>
+                                    <td>{{ utilisateur.id }}</td>
+                                    <td>{{ utilisateur.fullName }}</td>
+                                    <td>{{ utilisateur.email }}</td>
+                                    <td>{{ utilisateur.level.name }}</td>
+                                    <td>{% if utilisateur.enabled == true %} Oui {% else %} Non {% endif %}</td>
+                                    <td>{{ utilisateur.createdAt | date('d/m/Y') }}</td>
+                                    <td width="150px;">
+                                        <div class="dropdown"><!--- dropdown Starts --->
+                                            <button class="btn btn-success dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">Actions</button>
+                                            <div class="dropdown-menu" style="margin-left: -125px; position: absolute; transform: translate3d(91px, 38px, 0px); top: 0px; left: 0px; will-change: transform;" x-placement="bottom-start"><!--- dropdown-menu Starts --->
+
+                                                <a class="dropdown-item" href="{{ path('admin_show_user',{id:utilisateur.id}) }}">
+                                                    <i class="fa fa-info-circle"></i> Voir Détails
+                                                </a>
+                                                <a target="_blank" class="dropdown-item" href="?_switch_user={{ utilisateur.email }}">
+                                                    <i class="fa fa-sign-in"></i>Se connecter en tant que {{ utilisateur.fullName }}
+                                                </a>
+                                                <a class="dropdown-item" href="{{ path('admin_bann_or_unlock_user',{id: utilisateur.id}) }}">
+                                                {% if utilisateur.enabled == true %}
+                                                    <i class="fa fa-ban"></i> Bloquer l'utilisateur
+                                                {% else %}
+                                                        <i class="fa fa-unlock"></i> Débloquer l'utilisateur
+                                                {% endif %}
+                                                </a>
+                                            </div><!--- dropdown-menu Ends --->
+                                        </div><!--- dropdown Ends --->
+                                    </td>
+                                </tr>
+                                {% else %}
+                                    <p>Pas de services</p>
+                                {% endfor %}
+                                </tbody><!--- tbody Ends --->
+                            </table><!--- table table-bordered table-hover Ends --->
+                        </div><!--- table-responsive Ends --->
+                        <div class="d-flex justify-content-center"><!--- d-flex justify-content-center Starts --->
+
+                            <ul class="pagination"><!--- pagination Starts --->
+                                {% if pagination.data|length > 0 %}
+                                    {{ pagination.display() }}
+                                {% endif %}
+                            </ul><!--- pagination Ends --->
+
+                        </div><!--- d-flex justify-content-center Ends --->
+
+
+                    </div><!--- card-body Ends --->
+
+                </div><!--- card Ends --->
+
+            </div><!--- col-lg-12 Ends --->
+
+        </div><!--- 3 row Ends --->
+
+    </div>
+{% endblock %}
