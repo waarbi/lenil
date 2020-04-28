@@ -31,6 +31,14 @@ class UserRepository extends ServiceEntityRepository
 
         if (false === is_null($limit))
             $query->setMaxResults($limit);
+        return $query->getQuery()->getResult();
+    }
+    public function getSearchUserByStringName(string  $searchKey){
+        $query = $this->createQueryBuilder('user')
+            ->where("user.firstName LIKE :searchFirstname")
+            ->setParameter("searchFirstname", '%'.$searchKey.'%')
+            ->orWhere("user.lastName LIKE :searchLastname")
+            ->setParameter("searchLastname",'%'.$searchKey.'%');
 
         return $query->getQuery()->getResult();
 

@@ -20,16 +20,16 @@
                         <h5>{{ sectionLayout.shortHeading }}</h5>
                     <div class="row">
                         <div class="offset-md-3 col-md-5 col-12">
-                            <form action="" method="post">
+                            {{ form_start(formSearchServices,{ 'attr': {'method': 'POST'}}) }}
                                 <div class="input-group space20">
-                                    <input type="text" name="search_query" class="form-control" value="" placeholder="">
+                                    {{ form_widget(formSearchServices.title, { 'attr': {'class': 'form-control','name': '_query','placeholder': 'Rechercher un service'} }) }}
                                     <div class="input-group-append move-icon-up">
-                                        <button name="search" type="submit" class="search_button">
+                                        <button type="submit" class="search_button">
                                             <img src="{{ asset('build/images/srch2.png') }}" class="srch2">
                                         </button>
                                     </div>
                                 </div>
-                            </form>
+                            {{ form_end(formSearchServices) }}
                             <a href="{{ path('start_selling') }}" class="btn btn-success btn-lg btn_start_selling"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                                 Vendez un service</a>
                         </div>

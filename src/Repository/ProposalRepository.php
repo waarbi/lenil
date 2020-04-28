@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Admin\ProposalSearchProperty;
 use App\Entity\Proposal;
+use App\Entity\ProposalSearchByTitle;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -46,6 +47,54 @@ class ProposalRepository extends ServiceEntityRepository
 
         return $query->getQuery()->getResult();
 
+    }
+    public function getSearchProposalByTitle(ProposalSearchByTitle $searchByTitle){
+        $query = $this->createQueryBuilder('proposal')
+            ->where("proposal.title LIKE :searchTitle")
+            ->setParameter("searchTitle", '%'.$searchByTitle->getTitle().'%')
+            ->orWhere("proposal.description LIKE :searchDescription")
+            ->setParameter("searchDescription",'%'.$searchByTitle->getTitle().'%');
+        return $query->getQuery()->getResult();
+
+    }
+    public function getSearchProposalByStringTitle(string  $searchKey){
+        $query = $this->createQueryBuilder('proposal')
+            ->where("proposal.title LIKE :searchTitle")
+            ->setParameter("searchTitle", '%'.$searchKey.'%')
+            ->orWhere("proposal.description LIKE :searchDescription")
+            ->setParameter("searchDescription",'%'.$searchKey.'%');
+        return $query->getQuery()->getResult();
+
+    }
+
+    public function loadSearchProposal(string  $searchKey, array $onlineFilter, array $categoriesFilter, array $deliveryFilter, array $levelFilter){
+        $query = $this->createQueryBuilder('proposal')
+            ->where("proposal.title LIKE :searchTitle")
+            ->setParameter("searchTitle", '%'.$searchKey.'%')
+            ->orWhere("proposal.description LIKE :searchDescription")
+            ->setParameter("searchDescription",'%'.$searchKey.'%');
+
+        if (!empty($categoriesFilter)){
+            $query = $query->andWhere('proposal.category IN (:idsCat)')
+                ->setParameter('idsCat', $categoriesFilter);
+        }
+        if (!empty($deliveryFilter)){
+            $query = $query->andWhere('proposal.deliveryTime IN (:idsDelivery)')
+                ->setParameter('idsDelivery', $deliveryFilter);
+        }
+        if (!empty($levelFilter) || !empty($onlineFilter) ){
+            $query = $query->join('proposal.seller', 'user');
+        }
+        if (!empty($levelFilter)){
+            $query = $query->andwhere('user.level IN (:idsLevels)')
+                ->setParameter('idsLevels',$levelFilter );
+        }
+        if (!empty($onlineFilter)){
+            $query = $query->andwhere('user.online = :online')
+                ->setParameter('online', true);
+        }
+
+        return $query->getQuery()->getResult();
 
     }
 

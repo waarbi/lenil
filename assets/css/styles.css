@@ -1894,8 +1894,8 @@ video.embed-responsive {
 }
 
 .checkbox-success input[type="checkbox"]:checked + span::before {
-	background-color: #00a64b;
-	border-color: #00a64b;
+	background-color: #0066FF;
+	border-color: #0066FF;
 }
 
 .checkbox-success input[type="checkbox"]:checked + span::after {
