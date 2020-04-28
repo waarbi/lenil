@@ -61,12 +61,12 @@ class Proposal
     private $price;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="integer", length=255, nullable=true)
      */
     private $views;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $rating;
 
@@ -163,24 +163,24 @@ class Proposal
         return $this;
     }
 
-    public function getViews(): ?string
+    public function getViews(): ?int
     {
         return $this->views;
     }
 
-    public function setViews(?string $views): self
+    public function setViews(?int $views): self
     {
         $this->views = $views;
 
         return $this;
     }
 
-    public function getRating(): ?string
+    public function getRating(): ?int
     {
         return $this->rating;
     }
 
-    public function setRating(?string $rating): self
+    public function setRating(?int $rating): self
     {
         $this->rating = $rating;
 

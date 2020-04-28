@@ -38,7 +38,6 @@ class HomeController extends AbstractController
         $this->sectionLayout = $manage->getRepository(HomePageSection::class)->findAll()[0];
         $this->manager = $manage;
 
-
     }
 
     /**
@@ -50,7 +49,6 @@ class HomeController extends AbstractController
     public function home(EntityManagerInterface $manager, Request $request)
     {
         $categories_cards = $manager->getRepository('App\Entity\Category')->findBy(array('in_card' => true));
-
 
         $proposalSearch = new ProposalSearchByTitle();
         $formSearchServices = $this->createForm(ProposalSearchByTitleType::class, $proposalSearch);
@@ -89,7 +87,7 @@ class HomeController extends AbstractController
         }
 
         if (!$this->get('security.authorization_checker')->isGranted('ROLE_USER')){
-            $proposals = $manager->getRepository(Proposal::class)->findAll();
+            $proposals = $manager->getRepository(Proposal::class)->findBy(array(), null, $limit = 8);
             $sliders = $manager->getRepository(LandingPageSlide::class)->findBy(array('onHomePageAnonym' => true));
 
             return $this->render('home_anonym.html.twig',
@@ -164,9 +162,7 @@ class HomeController extends AbstractController
         }
         $responseArray = array();
         foreach($articleByTitle as $article){
-            /**
-             * @var Article $article
-             */
+            /**@var Article $article */
             $responseArray[] = array(
                 "id" => $article->getId(),
                 "title" => $article->getTitle(),
@@ -244,8 +240,8 @@ class HomeController extends AbstractController
                 "sellerName" => $proposal->getSeller()->getFullName(),
                 "sellerLevel" => $proposal->getSeller()->getLevel()->getName(),
                 "proposalTitle" => $proposal->getTitle(),
-                "proposalRating" => $proposal->getRating(),
-                "proposalViews" => $proposal->getViews(),
+                "proposalRating" => $proposal->getRating()? $proposal->getRating():'',
+                "proposalViews" => $proposal->getViews() ? $proposal->getViews():'',
                 "proposalPrice" => $proposal->getPrice(),
                 "proposalUrl" => '/proposal/'.$proposal->getSlug(),
             );
