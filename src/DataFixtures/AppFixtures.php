@@ -21,11 +21,12 @@ use App\Entity\SkillsName;
 use App\Entity\SousCategory;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Faker\Factory;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-class AppFixtures extends Fixture
+class AppFixtures extends Fixture implements FixtureGroupInterface
 {
     private $encoder;
 
@@ -413,5 +414,9 @@ class AppFixtures extends Fixture
         }
 
         $manager->flush();
+    }
+    public static function getGroups(): array
+    {
+        return ['group1'];
     }
 }

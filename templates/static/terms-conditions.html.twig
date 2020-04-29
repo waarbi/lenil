@@ -1,0 +1,51 @@
+{% block stylesheets %}
+{% endblock %}
+    {% block title %}Lenil | Termes et conditions{% endblock %}
+{% block meta %}
+    <meta name="description" content="{{ generalSettings.siteDescription }}"/>
+    <meta name="keywords" content="{{ generalSettings.siteKeywords }}"/>
+{% endblock %}
+{% extends "base.html.twig" %}
+
+{% block body %}
+    <div class="container-fluid mt-5 mb-5">
+        <div class="row mb-4">
+            <div class="col-md-12 text-center">
+                <h1>Conditions générales d'utilisation</h1>
+                <p class="lead pb-4"> Conditions générales, politique de remboursement, politique de prix et de promotion</p>
+            </div>
+        </div>
+        <div class="row terms-page" style="">
+            <div class="col-md-3 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <ul class="nav nav-pills flex-column mt-2">
+                            {% for term in termes %}
+                            <li class="nav-item">
+                                <a class="nav-link {% if loop.index == 1 %} active show {% endif %}" data-toggle="pill" href="#{{ term.id }}">
+                                    {{ term.title }}</a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="tab-content">
+                            {% for term in termes %}
+                            <div id="{{ term.id }}" class="tab-pane fade {% if loop.index == 1 %} active show {% endif %}">
+                                <h2 class="mb-4">{{ term.title }}</h2>
+                                <p class="text-justify">
+                                <p>{{ term.content | raw }}</p>
+                                <p></p>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -87,7 +87,7 @@ class HomeController extends AbstractController
         }
 
         if (!$this->get('security.authorization_checker')->isGranted('ROLE_USER')){
-            $proposals = $manager->getRepository(Proposal::class)->findBy(array(), null, $limit = 8);
+            $proposals = $manager->getRepository(Proposal::class)->findBy(array(), null, $limit = 10);
             $sliders = $manager->getRepository(LandingPageSlide::class)->findBy(array('onHomePageAnonym' => true));
 
             return $this->render('home_anonym.html.twig',
@@ -230,11 +230,14 @@ class HomeController extends AbstractController
         $searchKey = $request->get('searchKey');
 
         $proposals = $this->manager->getRepository(Proposal::class)->loadSearchProposal($searchKey, $onlineFilter,$categoriesFilter,$deliveryFilter,$levelFilter);
-
+        $results = array(
+            "count_proposals" => 0,
+            "proposals" => array(),
+        );
         $proposalsArrayResult = array();
         foreach($proposals as $proposal){
             /**@var Proposal $proposal */
-            $proposalsArrayResult[] = array(
+            $proposalsArrayResult [] = array(
                 "proposalFirstImage" => $proposal->getProposalImages()[0]->getFileName(),
                 "sellerAvatar" => $proposal->getSeller()->getPicture(),
                 "sellerName" => $proposal->getSeller()->getFullName(),
@@ -246,6 +249,10 @@ class HomeController extends AbstractController
                 "proposalUrl" => '/proposal/'.$proposal->getSlug(),
             );
         }
-        return new JsonResponse($proposalsArrayResult);
+        $results = array(
+            "count_proposals" => count($proposalsArrayResult),
+            "proposals" => $proposalsArrayResult,
+        );
+        return new JsonResponse($results);
     }
 }

@@ -23,7 +23,7 @@ class ArticleRepository extends ServiceEntityRepository
     public function getSearchArticleByTitle($title){
         $query =  $this->createQueryBuilder('article')
             ->where("article.title LIKE :keySearch")
-            ->setParameter("keySearch", '%'.$title.'%');
+            ->setParameter("keySearch", '%'.$title.'%')->orWhere("article.content LIKE :searchIncontent")->setParameter("searchIncontent", '%'.$title.'%');
 
         return $query->getQuery()->getResult();
     }

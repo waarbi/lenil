@@ -1,10 +1,12 @@
 <?php
 
 namespace App\Entity\Admin;
+use Cocur\Slugify\Slugify;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\Admin\ArticleRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Article
 {
@@ -19,6 +21,11 @@ class Article
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $title;
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $slug;
+
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
@@ -26,7 +33,7 @@ class Article
     private $status;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Admin\ArticleCategory", inversedBy="articles")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Admin\ArticleCategory", inversedBy="articles", fetch="EAGER")
      * @ORM\JoinColumn(name="article_category_id", referencedColumnName="id")
      */
     private $articleCategory;
@@ -105,4 +112,41 @@ class Article
 
         return $this;
     }
+
+    /**
+     * Permet d'initialiser le  slug !
+     *
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     *
+     * @return void
+     * @throws \Exception
+     */
+    public function initializeSlug(){
+        if(empty($this->createdAt)){
+            $this->createdAt = new \DateTime();
+        }
+
+        if(empty($this->slug)){
+            $slugify = new Slugify();
+            $this->slug = $slugify->slugify($this->title. '-' .$this->getArticleCategory()->getTitle());
+        }
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    /**
+     * @param mixed $slug
+     */
+    public function setSlug($slug): void
+    {
+        $this->slug = $slug;
+    }
+
 }
