@@ -39,6 +39,11 @@ class HomeController extends AbstractController
 
     }
 
+    function UniqueRandomNumbersWithinRange($min, $max, $quantity) {
+        $numbers = range($min, $max);
+        shuffle($numbers);
+        return array_slice($numbers, 0, $quantity);
+    }
     /**
      * @Route("/", name="homepage")
      * @param EntityManagerInterface $manager
@@ -66,7 +71,7 @@ class HomeController extends AbstractController
             $demandesActives = $manager->getRepository('App\Entity\Demande')->findAllActivesDemandeOfOthersUsers($this->getUser()->getId());
             //$proposals = $manager->getRepository(Proposal::class)->findBySeller($this->getUser()->getId());
             $qb = $manager->createQueryBuilder();
-            $featured_proposals = $qb->add('select', 'p')
+            $featuredProposals = $qb->add('select', 'p')
                 ->add('from', 'App\Entity\Proposal p')
                 ->add('where', 'p.seller = :seller')
                 ->setParameter('seller', $this->getUser())
@@ -74,13 +79,42 @@ class HomeController extends AbstractController
                 ->setMaxResults(8)
                 ->getQuery()
                 ->getResult();
+
+            $topProposals = $manager->getRepository(Proposal::class)->findBy(array('statusId' => Proposal::REQUEST_STATUS_ACTIVE,'seller'=>$this->getUser()->getId(), 'level'=> 3));
+
+            $repo = $manager->getRepository(Proposal::class);
+            $status = Proposal::REQUEST_STATUS_ACTIVE;
+            $quantity = 8; // We only want 5 rows (however think in increase this value if you have previously removed rows on the table)
+
+// This is the number of rows in the database
+// You can use another method according to your needs
+            $totalRowsTable = $repo->createQueryBuilder('p')->select('count(p.id)')
+                                    ->add('where', 'p.seller = :seller')
+                                    ->setParameter('seller', $this->getUser())
+                                    ->andwhere('p.statusId ='.$status)->getQuery()->getSingleScalarResult();
+            // This will be in this case 10 because i have 10 records on this table
+            $random_ids = $this->UniqueRandomNumbersWithinRange(1,$totalRowsTable,$quantity);
+
+// var_dump($random_ids);
+// outputs for example:
+// array(1,5,2,8,3);
+
+            $randomProposals = $repo->createQueryBuilder('a')
+                ->where('a.id IN (:ids)') // if is another field, change it
+                ->setParameter('ids', $random_ids)
+                ->setMaxResults(8)// Add this line if you want to give a limit to the records (if all the ids exists then you would like to give a limit)
+                ->getQuery()
+                ->getResult();
+
             return $this->render('home_seller.html.twig',
                 array(
-                    'categories_yes' => $this->categories_yes,
-                    'categories_card' => $categories_cards,
-                    'demandesActives' => $demandesActives,
-                    'generalSettings' => $this->generalSettings,
-                    'featured_proposals'      => $featured_proposals
+                    'categories_yes'      => $this->categories_yes,
+                    'categories_card'     => $categories_cards,
+                    'demandesActives'     => $demandesActives,
+                    'generalSettings'     => $this->generalSettings,
+                    'featuredProposals'   => $featuredProposals,
+                    'topProposals'        => $topProposals,
+                    'randomProposals'     => $randomProposals
 
                 ));
         }

@@ -60,6 +60,13 @@
                             <small class="form-text text-danger"></small>
                         </div><!--- form-group row Ends --->
 
+                        <div class="form-group row"><!--- form-group row Starts --->
+                            <div class="col-md-3">Tags</div>
+                            <div class="col-md-9">
+                                {{ form_widget(form.tags, { 'attr': {'class': 'form-control','placeholder': 'Mots clés'} }) }}
+                            </div>
+                            <small class="form-text text-danger"></small>
+                        </div><!--- form-group row Ends --->
                         <button class="btn btn-success next float-right" type="button" >Suivant</button>
                         <!--- form-group Starts --->
 
@@ -130,6 +137,8 @@
 {% endblock %}
 
 {% block javascripts %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/additional-methods.min.js"></script>
     <script type="application/javascript">
         // init,configure dropzone
         function randomString(length) {
@@ -140,9 +149,6 @@
             }
             return text;
         }
-
-
-
         $(document).ready(function () {
             var browsers = ["Opera", "Edge", "Chrome", "Safari", "Firefox", "MSIE", "Trident"];
             var userbrowser, useragent = navigator.userAgent;
@@ -161,7 +167,67 @@
             $("#appbundle_proposal_category").change(function () {
                 $("#appbundle_proposal_subcategory").show();
             });
+            var form_proposal = $('.proposal-form');
+            form_proposal.validate({
+                errorElement: "span",
+                errorClass: "help-block",
+                highlight: function(element, errorClass, validClass) {
+                    $(element)
+                        .closest(".form-group")
+                        .addClass("has-error text-danger");
+                },
+                unhighlight: function(element, errorClass, validClass) {
+                    $(element)
+                        .closest(".form-group")
+                        .removeClass("has-error");
+                },
+            });
+            $("#appbundle_proposal_title").rules("add", {
+                required:true,
+                messages: {
+                    required: "Veuillez renseigner le titre du service svp!"
+                }
+            });
 
+            $("#appbundle_proposal_description").rules("add", {
+                required:true,
+                 // max: 255,
+                messages: {
+                    required: "Veuillez renseigner la description du service svp!",
+                     // max: "la description doit centenir 255 caractères"
+                }
+            });
+
+            $("#appbundle_proposal_category").rules("add", {
+                required:true,
+                messages: {
+                    required: "Veuillez selection une  catégory svp!"
+                }
+            });
+            $("#appbundle_proposal_subcategory").rules("add", {
+                required:true,
+                messages: {
+                    required: "Veuillez selection une sous catégory svp!"
+                }
+            });
+            $("#appbundle_proposal_price").rules("add", {
+                required:true,
+                messages: {
+                    required: "Veuillez renseigner le prix de votre service svp!"
+                }
+            });
+            $("#appbundle_proposal_deliveryTime").rules("add", {
+                required:true,
+                messages: {
+                    required: "Veuillez saisir un ou des mot(s) clé(s)"
+                }
+            });
+            $("#appbundle_proposal_tags").rules("add", {
+                required:true,
+                messages: {
+                    required: "V!"
+                }
+            });
             var current_fs, next_fs, previous_fs;
 
             function steps(e){
@@ -184,7 +250,9 @@
             }
 
             $(".next").click(function() {
-                steps($(this));
+                if(form_proposal.valid() === true){
+                    steps($(this));
+                }
             });
 
             $(".previous").click(function(){
@@ -203,6 +271,8 @@
         var dropzone_default = new Dropzone(".dropzone", {
             url: '{{ path('uploadproposalimagehandler') }}' ,
             maxFiles: 4,
+            thumbnailWidth: 120,
+            thumbnailHeight: 120,
             dictMaxFilesExceeded: 'Only 4 Images can be uploaded',
             acceptedFiles: 'image/*',
             maxFilesize: 3,  // in Mb
@@ -211,7 +281,7 @@
                 this.on("maxfilesexceeded", function(file) {
                     this.removeFile(file);
                 });
-                this.on("sending", function(file, xhr, formData) {
+                this.on("thumbnail", function(file, xhr, formData) {
                     // send additional data with the file as POST data if needed.
                     // formData.append("key", "value");
                 });

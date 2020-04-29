@@ -54,12 +54,7 @@ class Proposal
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $views;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $rating;
-
+    
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="proposals")
      * @ORM\JoinColumn(nullable=false)
@@ -94,6 +89,33 @@ class Proposal
      * @ORM\OneToMany(targetEntity="App\Entity\ProposalImage", mappedBy="proposal", orphanRemoval=true)
      */
     private $proposalImages;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $featured;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Level", inversedBy="proposals")
+     */
+    private $level;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Language", inversedBy="proposals")
+     */
+    private $language;
+
+    /**
+     * @ORM\Column(type="decimal", precision=4, scale=1)
+     */
+    private $rating;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $tags;
+
+
 
     public function __construct()
     {
@@ -165,17 +187,6 @@ class Proposal
         return $this;
     }
 
-    public function getRating(): ?string
-    {
-        return $this->rating;
-    }
-
-    public function setRating(?string $rating): self
-    {
-        $this->rating = $rating;
-
-        return $this;
-    }
 
     public function getSeller(): ?User
     {
@@ -284,6 +295,67 @@ class Proposal
 
         return $this;
     }
+
+    public function getFeatured(): ?bool
+    {
+        return $this->featured;
+    }
+
+    public function setFeatured(?bool $featured): self
+    {
+        $this->featured = $featured;
+
+        return $this;
+    }
+
+    public function getLevel(): ?Level
+    {
+        return $this->level;
+    }
+
+    public function setLevel(?Level $level): self
+    {
+        $this->level = $level;
+
+        return $this;
+    }
+
+    public function getLanguage(): ?Language
+    {
+        return $this->language;
+    }
+
+    public function setLanguage(?Language $language): self
+    {
+        $this->language = $language;
+
+        return $this;
+    }
+
+    public function getRating(): ?string
+    {
+        return $this->rating;
+    }
+
+    public function setRating(string $rating): self
+    {
+        $this->rating = $rating;
+
+        return $this;
+    }
+
+    public function getTags(): ?string
+    {
+        return $this->tags;
+    }
+
+    public function setTags(?string $tags): self
+    {
+        $this->tags = $tags;
+
+        return $this;
+    }
+    
 
 
 }

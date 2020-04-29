@@ -1,16 +1,537 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ProposalsController!{% endblock %}
+{% block title %}Liste des services{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello Rabya! ✅</h1>
-
-
-</div>
+    <div class="row"><!-- row Starts -->
+        <div class="col-md-12 mt-5 mb-3"><!-- col-md-12 mt-5 mb-3 Starts -->
+            <h1 class="pull-left">Voir mes services</h1>
+            <label class="pull-right lead"><!-- pull-right lead Starts -->
+                Vacation Mode:
+                <button id="turn_on_seller_vaction" data-toggle="button" class="btn btn-lg btn-toggle">
+                    <div class="toggle-handle"></div>
+                </button>
+            </label><!-- pull-right lead Ends -->
+            <script>
+                $(document).ready(function(){
+                    $(document).on('click','#turn_on_seller_vaction', function(){
+                        seller_id = "26";
+                        $.ajax({
+                            method:"POST",
+                            url: "seller_vacation_modal",
+                            data: { seller_id: seller_id, turn_on: 'on' }
+                        }).done(function(data){
+                            $('.append-modal').html(data);
+                        });
+                    });
+                    $(document).on('click','#turn_off_seller_vaction', function(){
+                        seller_id = "26";
+                        $.ajax({
+                            method:"POST",
+                            url: "seller_vacation",
+                            data: { seller_id: seller_id, turn_off: 'off' }
+                        }).done(function(){
+                            $("#turn_off_seller_vaction").attr('id','turn_on_seller_vaction');
+                            swal({
+                                type: 'success',
+                                text: 'Vacation switched OFF.',
+                                padding: 40,
+                            });
+                        });
+                    });
+                });
+            </script>
+        </div>
+        <div class="append-modal"></div>
+        <div class="col-md-12">
+            <a href="{{ path('create_proposal') }}" class="btn btn-success pull-right">
+                <i class="fa fa-plus-circle"></i> Ajouter un nouveau service
+            </a>
+            <div class="clearfix"></div>
+            <ul class="nav nav-tabs flex-column flex-sm-row mt-4">
+                <li class="nav-item">
+                    <a href="#active-proposals" data-toggle="tab" class="nav-link make-black">
+                        Services actifs <span class="badge badge-success">{{ proposalsActives|length }}</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#pause-proposals" data-toggle="tab" class="nav-link make-black">
+                        Services inactifs <span class="badge badge-success">{{ proposalsSuspendues|length }}</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#pending-proposals" data-toggle="tab" class="nav-link make-black">
+                        Services en cours <span class="badge badge-success">{{ proposalsEncours|length }}</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#cancelled-proposals" data-toggle="tab" class="nav-link make-black">
+                        Services en annulés <span class="badge badge-success">{{ proposalsAnnulees|length }}</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#modification-proposals" data-toggle="tab" class="nav-link make-black active">
+                        Requires Modification <span class="badge badge-success">1</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#draft-proposals" data-toggle="tab" class="nav-link make-black">
+                        Draft <span class="badge badge-success">12</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#declined-proposals" data-toggle="tab" class="nav-link make-black">
+                        Declined <span class="badge badge-success">2</span>
+                    </a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div id="active-proposals" class="tab-pane fade">
+                    <div class="table-responsive box-table mt-4">
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr>
+                                <th>Proposal's Title</th>
+                                <th>Proposal's Price </th>
+                                <th>Views</th>
+                                <th>Orders</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for proposal in  proposalsActives %}
+                                <tr>
+                                    <td class="proposal-title">{{ proposal.title }}</td>
+                                    <td class="text-success"> ${{ proposal.price }} </td>
+                                    <td>{{ proposal.views }}</td>
+                                    <td>{{ proposal.rating }}</td>
+                                    <td class="text-center">
+                                        <div class="dropdown">
+                                            <button class="btn btn-success dropdown-toggle" data-toggle="dropdown"></button>
+                                            <div class="dropdown-menu">
+                                                <a href="tyrone/i-will-make-a-beatiful-logo" class="dropdown-item"> Preview </a>
+                                                <a href="#" class="dropdown-item" id="featured-button-164">Make Proposal Featured</a>
+                                                <a href="pause_proposal?proposal_id=164" class="dropdown-item"> Deactivate Proposal</a>
+                                                <a href="view_coupons?proposal_id=164" class="dropdown-item"> View Coupons</a>
+                                                <a href="view_referrals?proposal_id=164" class="dropdown-item"> View Referrals</a>
+                                                <a href="edit_proposal?proposal_id=164" class="dropdown-item"> Edit </a>
+                                                <a href="delete_proposal?proposal_id=164" class="dropdown-item"> Delete </a>
+                                            </div>
+                                        </div>
+                                        <script>
+                                            $("#featured-button-164").click(function(){
+                                                proposal_id = "164";
+                                                $.ajax({
+                                                    method: "POST",
+                                                    url: "pay_featured_listing",
+                                                    data: {proposal_id: proposal_id }
+                                                }).done(function(data){
+                                                    $("#featured-proposal-modal").html(data);
+                                                });
+                                            });
+                                        </script>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                        {% if proposalsActives is empty %}
+                            <center><h3 class="pt-4 pb-4"><i class="fa fa-smile-o"></i> Vous n'avez actuellement aucune proposition / service actif</h3></center>
+                        {% endif %}
+                    </div>
+                </div>
+                <div id="pause-proposals" class="tab-pane fade">
+                    <div class="table-responsive box-table mt-4">
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr>
+                                <th>Proposal's Title</th>
+                                <th>Proposal's Price </th>
+                                <th>Views</th>
+                                <th>Orders</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for proposals_suspens in proposalsSuspendues %}
+                                <tr>
+                                    <td class="proposal-title"> {{ proposals_suspens.title }}</td>
+                                    <td class="text-success"> ${{ proposals_suspens.price }} </td>
+                                    <td>{{ proposals_suspens.views }}</td>
+                                    <td>{{ proposals_suspens.rating }}</td>
+                                    <td class="text-center">
+                                        <div class="dropdown">
+                                            <button class="btn btn-success dropdown-toggle" data-toggle="dropdown"></button>
+                                            <div class="dropdown-menu">
+                                                <a href="tyrone/webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign" class="dropdown-item"> Preview </a>
+                                                <a href="activate_proposal?proposal_id=199" class="dropdown-item"> Activate Proposal </a>
+                                                <a href="view_referrals?proposal_id=199" class="dropdown-item"> View Referrals</a>
+                                                <a href="edit_proposal?proposal_id=199" class="dropdown-item"> Edit </a>
+                                                <a href="delete_proposal?proposal_id=199" class="dropdown-item"> Delete </a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                        {% if proposalsSuspendues is empty %}
+                            <center><h3 class="pt-4 pb-4"><i class="fa fa-smile-o"></i> Vous n'avez actuellement aucune proposition / service suspendu.</h3></center>					</div>
+                      {% endif %}
+                    </div>
+                </div>
+                <div id="pending-proposals" class="tab-pane fade">
+                    <div class="table-responsive box-table mt-4">
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr>
+                                <th>Proposal's Title</th>
+                                <th>Proposal's Price </th>
+                                <th>Views</th>
+                                <th>Orders</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for proposals_pending in proposalsEncours %}
+                                <tr>
+                                    <td class="proposal-title"> {{ proposals_pending.title }}</td>
+                                    <td class="text-success"> ${{ proposals_pending.price }} </td>
+                                    <td>{{ proposals_pending.views}}</td>
+                                    <td>{{ proposals_pending.rating }}</td>
+                                    <td class="text-center">
+                                        <div class="dropdown">
+                                            <button class="btn btn-success dropdown-toggle" data-toggle="dropdown"></button>
+                                            <div class="dropdown-menu">
+                                                <a href="tyrone/webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign" class="dropdown-item"> Preview </a>
+                                                <a href="activate_proposal?proposal_id=199" class="dropdown-item"> Activate Proposal </a>
+                                                <a href="view_referrals?proposal_id=199" class="dropdown-item"> View Referrals</a>
+                                                <a href="edit_proposal?proposal_id=199" class="dropdown-item"> Edit </a>
+                                                <a href="delete_proposal?proposal_id=199" class="dropdown-item"> Delete </a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                        {% if proposalsEncours is empty %}
+                            <center><h3 class="pt-4 pb-4"><i class="fa fa-smile-o"></i> Vous n'avez actuellement aucune proposition / service en attente</h3></center>
+                        {% endif %}
+                    </div>
+                </div>
+                <div id="cancelled-proposals" class="tab-pane fade">
+                    <div class="table-responsive box-table mt-4">
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr>
+                                <th>Proposal's Title</th>
+                                <th>Proposal's Price </th>
+                                <th>Views</th>
+                                <th>Orders</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for proposals_cancelled in proposalsAnnulees %}
+                                <tr>
+                                    <td class="proposal-title"> {{ proposals_cancelled.title }}</td>
+                                    <td class="text-success"> ${{ proposals_cancelled.price }} </td>
+                                    <td>{{ proposals_cancelled.views}}</td>
+                                    <td>{{ proposals_cancelled.rating }}</td>
+                                    <td class="text-center">
+                                        <div class="dropdown">
+                                            <button class="btn btn-success dropdown-toggle" data-toggle="dropdown"></button>
+                                            <div class="dropdown-menu">
+                                                <a href="tyrone/webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign" class="dropdown-item"> Preview </a>
+                                                <a href="activate_proposal?proposal_id=199" class="dropdown-item"> Activate Proposal </a>
+                                                <a href="view_referrals?proposal_id=199" class="dropdown-item"> View Referrals</a>
+                                                <a href="edit_proposal?proposal_id=199" class="dropdown-item"> Edit </a>
+                                                <a href="delete_proposal?proposal_id=199" class="dropdown-item"> Delete </a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                        {% if proposalsAnnulees is empty %}
+                            <center><h3 class="pt-4 pb-4"><i class="fa fa-smile-o"></i> Vous n'avez actuellement aucune proposition / service annulé.</h3></center>					</div>
+                       {% endif %}
+                </div>
+                <div id="modification-proposals" class="tab-pane fade show active">
+                    <div class="table-responsive box-table mt-4">
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr>
+                                <th>Modification Proposal Title</th>
+                                <th>Modification Message</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td class="proposal-title"> ergerge </td>
+                                <td> </td>
+                                <td class="text-center">
+                                    <div class="dropdown">
+                                        <button class="btn btn-success dropdown-toggle" data-toggle="dropdown"></button>
+                                        <div class="dropdown-menu">
+                                            <a href="submit_approval?proposal_id=171" class="dropdown-item"> Submit For Approval </a>
+                                            <a href="tyrone/ergerge" class="dropdown-item"> Preview </a>
+                                            <a href="edit_proposal?proposal_id=171" class="dropdown-item"> Edit </a>
+                                            <a href="delete_proposal?proposal_id=171" class="dropdown-item"> Delete </a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div id="draft-proposals" class="tab-pane fade show">
+                    <div class="table-responsive box-table mt-4">
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr>
+                                <th>Proposal's Title</th>
+                                <th>Proposal's Price </th>
+                                <th>Views</th>
+                                <th>Orders</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td class="proposal-title"> zvzxcv </td>
+                                <td class="text-success"> $5 </td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td class="text-center">
+                                    <div class="dropdown">
+                                        <button class="btn btn-success dropdown-toggle" data-toggle="dropdown"></button>
+                                        <div class="dropdown-menu">
+                                            <a href="edit_proposal?proposal_id=157" class="dropdown-item"> Edit </a>
+                                            <a href="delete_proposal?proposal_id=157" class="dropdown-item"> Delete </a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="proposal-title"> zgzsgsagsa </td>
+                                <td class="text-success"> $5 </td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td class="text-center">
+                                    <div class="dropdown">
+                                        <button class="btn btn-success dropdown-toggle" data-toggle="dropdown"></button>
+                                        <div class="dropdown-menu">
+                                            <a href="edit_proposal?proposal_id=202" class="dropdown-item"> Edit </a>
+                                            <a href="delete_proposal?proposal_id=202" class="dropdown-item"> Delete </a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="proposal-title"> acascscs </td>
+                                <td class="text-success"> $3223 </td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td class="text-center">
+                                    <div class="dropdown">
+                                        <button class="btn btn-success dropdown-toggle" data-toggle="dropdown"></button>
+                                        <div class="dropdown-menu">
+                                            <a href="edit_proposal?proposal_id=216" class="dropdown-item"> Edit </a>
+                                            <a href="delete_proposal?proposal_id=216" class="dropdown-item"> Delete </a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="proposal-title"> i will do  </td>
+                                <td class="text-success"> $5 </td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td class="text-center">
+                                    <div class="dropdown">
+                                        <button class="btn btn-success dropdown-toggle" data-toggle="dropdown"></button>
+                                        <div class="dropdown-menu">
+                                            <a href="edit_proposal?proposal_id=313" class="dropdown-item"> Edit </a>
+                                            <a href="delete_proposal?proposal_id=313" class="dropdown-item"> Delete </a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="proposal-title"> Test </td>
+                                <td class="text-success"> $5 </td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td class="text-center">
+                                    <div class="dropdown">
+                                        <button class="btn btn-success dropdown-toggle" data-toggle="dropdown"></button>
+                                        <div class="dropdown-menu">
+                                            <a href="edit_proposal?proposal_id=314" class="dropdown-item"> Edit </a>
+                                            <a href="delete_proposal?proposal_id=314" class="dropdown-item"> Delete </a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="proposal-title"> dâd </td>
+                                <td class="text-success"> $5 </td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td class="text-center">
+                                    <div class="dropdown">
+                                        <button class="btn btn-success dropdown-toggle" data-toggle="dropdown"></button>
+                                        <div class="dropdown-menu">
+                                            <a href="edit_proposal?proposal_id=319" class="dropdown-item"> Edit </a>
+                                            <a href="delete_proposal?proposal_id=319" class="dropdown-item"> Delete </a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="proposal-title"> gthjgh </td>
+                                <td class="text-success"> $50 </td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td class="text-center">
+                                    <div class="dropdown">
+                                        <button class="btn btn-success dropdown-toggle" data-toggle="dropdown"></button>
+                                        <div class="dropdown-menu">
+                                            <a href="edit_proposal?proposal_id=484" class="dropdown-item"> Edit </a>
+                                            <a href="delete_proposal?proposal_id=484" class="dropdown-item"> Delete </a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="proposal-title"> I will make your website run 2x faster </td>
+                                <td class="text-success"> $5 </td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td class="text-center">
+                                    <div class="dropdown">
+                                        <button class="btn btn-success dropdown-toggle" data-toggle="dropdown"></button>
+                                        <div class="dropdown-menu">
+                                            <a href="edit_proposal?proposal_id=515" class="dropdown-item"> Edit </a>
+                                            <a href="delete_proposal?proposal_id=515" class="dropdown-item"> Delete </a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="proposal-title"> ddddddddddddddddddddddddddddddddddddd </td>
+                                <td class="text-success"> $23 </td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td class="text-center">
+                                    <div class="dropdown">
+                                        <button class="btn btn-success dropdown-toggle" data-toggle="dropdown"></button>
+                                        <div class="dropdown-menu">
+                                            <a href="edit_proposal?proposal_id=589" class="dropdown-item"> Edit </a>
+                                            <a href="delete_proposal?proposal_id=589" class="dropdown-item"> Delete </a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="proposal-title"> sQDq </td>
+                                <td class="text-success"> $5 </td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td class="text-center">
+                                    <div class="dropdown">
+                                        <button class="btn btn-success dropdown-toggle" data-toggle="dropdown"></button>
+                                        <div class="dropdown-menu">
+                                            <a href="edit_proposal?proposal_id=590" class="dropdown-item"> Edit </a>
+                                            <a href="delete_proposal?proposal_id=590" class="dropdown-item"> Delete </a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="proposal-title"> Raba </td>
+                                <td class="text-success"> $5 </td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td class="text-center">
+                                    <div class="dropdown">
+                                        <button class="btn btn-success dropdown-toggle" data-toggle="dropdown"></button>
+                                        <div class="dropdown-menu">
+                                            <a href="edit_proposal?proposal_id=591" class="dropdown-item"> Edit </a>
+                                            <a href="delete_proposal?proposal_id=591" class="dropdown-item"> Delete </a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="proposal-title"> I will yes </td>
+                                <td class="text-success"> $5 </td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td class="text-center">
+                                    <div class="dropdown">
+                                        <button class="btn btn-success dropdown-toggle" data-toggle="dropdown"></button>
+                                        <div class="dropdown-menu">
+                                            <a href="edit_proposal?proposal_id=599" class="dropdown-item"> Edit </a>
+                                            <a href="delete_proposal?proposal_id=599" class="dropdown-item"> Delete </a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div id="declined-proposals" class="tab-pane fade show">
+                    <div class="table-responsive box-table mt-4">
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr>
+                                <th>Proposal's Title</th>
+                                <th>Proposal's Price </th>
+                                <th>Views</th>
+                                <th>Orders</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td class="proposal-title"> sasa </td>
+                                <td class="text-success"> $25 </td>
+                                <td>2</td>
+                                <td>0</td>
+                                <td class="text-center">
+                                    <div class="dropdown">
+                                        <button class="btn btn-success dropdown-toggle" data-toggle="dropdown"></button>
+                                        <div class="dropdown-menu">
+                                            <a href="delete_proposal?proposal_id=123" class="dropdown-item"> Delete </a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="proposal-title"> This is a proposal title  </td>
+                                <td class="text-success"> $5 </td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td class="text-center">
+                                    <div class="dropdown">
+                                        <button class="btn btn-success dropdown-toggle" data-toggle="dropdown"></button>
+                                        <div class="dropdown-menu">
+                                            <a href="delete_proposal?proposal_id=181" class="dropdown-item"> Delete </a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

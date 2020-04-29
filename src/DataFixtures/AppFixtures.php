@@ -303,14 +303,14 @@ class AppFixtures extends Fixture
         $manager->persist($paiement);
 
         // Paramètre paiement Paypal
-        $paypal = new PaypalSetting();
-        $paypal->setEmail('contact@lenil.tech')->setAppClientId(111111212121)->setAppClientSecret('cleSecretApiPaypal')->setCurrency('EUR')->setEnabled(true)->setPaypalSandbox(true);
-        $manager->persist($paypal);
-
-        //paramètre paiement stripe
-        $stripe = new StripeSetting();
-        $stripe->setEnabled(true)->setCurrency('EUR')->setPublishableKey('publishabledKey')->setSecretKey('SecretKepStripe');
-        $manager->persist($stripe);
+//        $paypal = new PaypalSetting();
+//        $paypal->setEmail('contact@lenil.tech')->setAppClientId(111111212121)->setAppClientSecret('cleSecretApiPaypal')->setCurrency('EUR')->setEnabled(true)->setPaypalSandbox(true);
+//        $manager->persist($paypal);
+//
+//        //paramètre paiement stripe
+//        $stripe = new StripeSetting();
+//        $stripe->setEnabled(true)->setCurrency('EUR')->setPublishableKey('publishabledKey')->setSecretKey('SecretKepStripe');
+//        $manager->persist($stripe);
 
         //sellerLevel
         $sellerLevelName =  ['Haut niveau','Niveau 2', 'Niveau 1', 'Nouveau vendeur' ];

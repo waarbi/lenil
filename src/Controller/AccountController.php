@@ -201,14 +201,20 @@ class AccountController extends AbstractController
             $manager->flush();
         }
 
+        $qb = $manager->createQueryBuilder();
+        $proposals = $qb->add('select', 'p')
+            ->add('from', 'App\Entity\Proposal p')
+            ->add('where', 'p.seller = :seller')
+            ->setParameter('seller', $this->getUser())
+            ->getQuery()
+            ->getResult();
 
         return $this->render('seller/index.html.twig', [
             'user' => $this->getUser(),
             'categories_yes' => $this->categories_yes,
-            'formSkill' => $formSkill->createView(),
-            'formLanguage' => $formLanguage->createView()
-
-
+            'formSkill'      => $formSkill->createView(),
+            'formLanguage'   => $formLanguage->createView(),
+            'proposals'      => $proposals
         ]);
     }
     /**
