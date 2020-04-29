@@ -2,7 +2,9 @@
 
 namespace App\Repository;
 
+use App\Entity\Admin\ProposalSearchProperty;
 use App\Entity\Proposal;
+use App\Entity\ProposalSearchByTitle;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -19,32 +21,81 @@ class ProposalRepository extends ServiceEntityRepository
         parent::__construct($registry, Proposal::class);
     }
 
-    // /**
-    //  * @return Proposal[] Returns an array of Proposal objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('p.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+    public function getSearchAd(ProposalSearchProperty $searchProperty, $limit, $offset){
+        $query = $this->createQueryBuilder('proposal')->setMaxResults($limit);
+        if ($searchProperty->getMaxPrice()){
+            $query = $query->andWhere('proposal.price <= :price')
+                ->setParameter('price',$searchProperty->getMaxPrice());
+        }
+        if ($searchProperty->getCategory()){
+            $query = $query->andWhere('proposal.category = :category')
+                ->setParameter('category',$searchProperty->getCategory());
+        }
+        if ($searchProperty->getSubcategory()){
+            $query = $query->andWhere('proposal.subcategory = :subcategory')
+                ->setParameter('subcategory',$searchProperty->getSubcategory());
+        }
+        if ($searchProperty->getDeliveryTime()){
+            $query = $query->andWhere('proposal.deliveryTime = :delivery')
+                ->setParameter('delivery',$searchProperty->getDeliveryTime());
+        }
+        if (false === is_null($offset))
+            $query->setFirstResult($offset);
 
-    /*
-    public function findOneBySomeField($value): ?Proposal
-    {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        if (false === is_null($limit))
+            $query->setMaxResults($limit);
+
+        return $query->getQuery()->getResult();
+
     }
-    */
+    public function getSearchProposalByTitle(ProposalSearchByTitle $searchByTitle){
+        $query = $this->createQueryBuilder('proposal')
+            ->where("proposal.title LIKE :searchTitle")
+            ->setParameter("searchTitle", '%'.$searchByTitle->getTitle().'%')
+            ->orWhere("proposal.description LIKE :searchDescription")
+            ->setParameter("searchDescription",'%'.$searchByTitle->getTitle().'%');
+        return $query->getQuery()->getResult();
+
+    }
+    public function getSearchProposalByStringTitle(string  $searchKey){
+        $query = $this->createQueryBuilder('proposal')
+            ->where("proposal.title LIKE :searchTitle")
+            ->setParameter("searchTitle", '%'.$searchKey.'%')
+            ->orWhere("proposal.description LIKE :searchDescription")
+            ->setParameter("searchDescription",'%'.$searchKey.'%');
+        return $query->getQuery()->getResult();
+
+    }
+
+    public function loadSearchProposal(string  $searchKey, array $onlineFilter, array $categoriesFilter, array $deliveryFilter, array $levelFilter){
+        $query = $this->createQueryBuilder('proposal')
+            ->where("proposal.title LIKE :searchTitle")
+            ->setParameter("searchTitle", '%'.$searchKey.'%')
+            ->orWhere("proposal.description LIKE :searchDescription")
+            ->setParameter("searchDescription",'%'.$searchKey.'%');
+
+        if (!empty($categoriesFilter)){
+            $query = $query->andWhere('proposal.category IN (:idsCat)')
+                ->setParameter('idsCat', $categoriesFilter);
+        }
+        if (!empty($deliveryFilter)){
+            $query = $query->andWhere('proposal.deliveryTime IN (:idsDelivery)')
+                ->setParameter('idsDelivery', $deliveryFilter);
+        }
+        if (!empty($levelFilter) || !empty($onlineFilter) ){
+            $query = $query->join('proposal.seller', 'user');
+        }
+        if (!empty($levelFilter)){
+            $query = $query->andwhere('user.level IN (:idsLevels)')
+                ->setParameter('idsLevels',$levelFilter );
+        }
+        if (!empty($onlineFilter)){
+            $query = $query->andwhere('user.online = :online')
+                ->setParameter('online', true);
+        }
+
+        return $query->getQuery()->getResult();
+
+    }
+
 }

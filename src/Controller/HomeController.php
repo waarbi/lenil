@@ -5,14 +5,16 @@ namespace App\Controller;
 
 
 use App\Entity\Admin\Article;
-use App\Entity\Admin\ArticleCategory;
 use App\Entity\Admin\GeneralSetting;
 use App\Entity\Admin\HomePageSection;
 use App\Entity\Admin\LandingPageSlide;
 use App\Entity\Contact;
-use App\Entity\Demande;
+use App\Entity\DeliveryTime;
 use App\Entity\Proposal;
+use App\Entity\ProposalSearchByTitle;
+use App\Entity\User;
 use App\Form\ContactType;
+use App\Form\ProposalSearchByTitleType;
 use App\Services\ContactNotification;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -36,7 +38,6 @@ class HomeController extends AbstractController
         $this->sectionLayout = $manage->getRepository(HomePageSection::class)->findAll()[0];
         $this->manager = $manage;
 
-
     }
 
     function UniqueRandomNumbersWithinRange($min, $max, $quantity) {
@@ -45,17 +46,54 @@ class HomeController extends AbstractController
         return array_slice($numbers, 0, $quantity);
     }
     /**
-     * @Route("/", name="homepage")
+     * @Route("/", name="homepage", methods={"GET","POST"})
      * @param EntityManagerInterface $manager
+     * @param Request $request
      * @return Response
      */
-    public function home(EntityManagerInterface $manager)
+    public function home(EntityManagerInterface $manager, Request $request)
     {
         $categories_cards = $manager->getRepository('App\Entity\Category')->findBy(array('in_card' => true));
 
-        if (is_null($this->getUser())){
-            $proposals = $manager->getRepository(Proposal::class)->findAll();
-            $sliders = $manager->getRepository(LandingPageSlide::class)->findAll();
+        $proposalSearch = new ProposalSearchByTitle();
+        $formSearchServices = $this->createForm(ProposalSearchByTitleType::class, $proposalSearch);
+        $formSearchServices->handleRequest($request);
+        $proposalsSearchResult = array();
+        if ($request->get('search_query')){
+            $proposalsSearchResult = $this->manager->getRepository(Proposal::class)->getSearchProposalByStringTitle($request->get('search_query'));
+        }
+        if ($formSearchServices->isSubmitted() && $formSearchServices->isValid()) {
+            $proposalsSearchResult = $this->manager->getRepository(Proposal::class)->getSearchProposalByTitle($proposalSearch);
+        }
+        if ($request->get('search_query') || $formSearchServices->isSubmitted() && $formSearchServices->isValid()){
+            $deliveyTimes  = array();
+            $categories  = array();
+            $sellers = array();
+            foreach ($proposalsSearchResult as $proposal){
+                /**@var Proposal $proposal  */
+                $deliveyTimes [] = $proposal->getDeliveryTime();
+                $categories [] = $proposal->getCategory();
+                $sellers [] = $proposal->getSeller();
+            }
+            $levelsUsers = array();
+            foreach (array_unique($sellers) as $user){
+                /**@var User $user */
+                $levelsUsers [] = $user->getLevel();
+            }
+
+            return $this->render('proposals/search-result.html.twig', array(
+                'searchQuery' => $request->get('search_query') ? $request->get('search_query') : $proposalSearch->getTitle(),
+                'proposalsSearch' =>$proposalsSearchResult,
+                'filterCategories' => array_unique($categories),
+                'filterDeliveryTimes' =>array_unique($deliveyTimes),
+                'filterLevels' => array_unique($levelsUsers),
+                'categories_yes' =>  $this->categories_yes,
+            ));
+        }
+
+        if (!$this->get('security.authorization_checker')->isGranted('ROLE_USER')){
+            $proposals = $manager->getRepository(Proposal::class)->findBy(array(), null, $limit = 10);
+            $sliders = $manager->getRepository(LandingPageSlide::class)->findBy(array('onHomePageAnonym' => true));
 
             return $this->render('home_anonym.html.twig',
                 array(
@@ -64,12 +102,14 @@ class HomeController extends AbstractController
                     'proposals'      => $proposals,
                     'generalSettings' => $this->generalSettings,
                     'sectionLayout' => $this->sectionLayout,
-                    'sliders' => $sliders
+                    'sliders' => $sliders,
+                    'formSearchServices' => $formSearchServices->createView()
                 ));
         }else{
 
             $demandesActives = $manager->getRepository('App\Entity\Demande')->findAllActivesDemandeOfOthersUsers($this->getUser()->getId());
-            //$proposals = $manager->getRepository(Proposal::class)->findBySeller($this->getUser()->getId());
+            $proposals = $manager->getRepository(Proposal::class)->findBySeller($this->getUser()->getId());
+            $sliders = $manager->getRepository(LandingPageSlide::class)->findBy(array('onHomePageSeller' => true));
             $qb = $manager->createQueryBuilder();
             $featuredProposals = $qb->add('select', 'p')
                 ->add('from', 'App\Entity\Proposal p')
@@ -84,25 +124,18 @@ class HomeController extends AbstractController
 
             $repo = $manager->getRepository(Proposal::class);
             $status = Proposal::REQUEST_STATUS_ACTIVE;
-            $quantity = 8; // We only want 5 rows (however think in increase this value if you have previously removed rows on the table)
+            $quantity = 8;
 
-// This is the number of rows in the database
-// You can use another method according to your needs
             $totalRowsTable = $repo->createQueryBuilder('p')->select('count(p.id)')
                                     ->add('where', 'p.seller = :seller')
                                     ->setParameter('seller', $this->getUser())
                                     ->andwhere('p.statusId ='.$status)->getQuery()->getSingleScalarResult();
-            // This will be in this case 10 because i have 10 records on this table
             $random_ids = $this->UniqueRandomNumbersWithinRange(1,$totalRowsTable,$quantity);
-
-// var_dump($random_ids);
-// outputs for example:
-// array(1,5,2,8,3);
 
             $randomProposals = $repo->createQueryBuilder('a')
                 ->where('a.id IN (:ids)') // if is another field, change it
                 ->setParameter('ids', $random_ids)
-                ->setMaxResults(8)// Add this line if you want to give a limit to the records (if all the ids exists then you would like to give a limit)
+                ->setMaxResults(8)
                 ->getQuery()
                 ->getResult();
 
@@ -112,10 +145,10 @@ class HomeController extends AbstractController
                     'categories_card'     => $categories_cards,
                     'demandesActives'     => $demandesActives,
                     'generalSettings'     => $this->generalSettings,
+                    'sliders'             => $sliders,
                     'featuredProposals'   => $featuredProposals,
                     'topProposals'        => $topProposals,
                     'randomProposals'     => $randomProposals
-
                 ));
         }
 
@@ -157,26 +190,14 @@ class HomeController extends AbstractController
      */
     public function searchArticle(Request $request)
     {
-
-        // Search the neighborhoods that belongs to the city with the given id as GET parameter "cityid"
-
-        $articleByTitle = array();
         if ($request->query->get("keySearch")){
-            $articleByTitle = $this->manager->getRepository(Article::class)->createQueryBuilder("q")
-                ->where("q.title LIKE :keySearch")
-                ->setParameter("keySearch", '%'.$request->query->get("keySearch").'%')
-                ->getQuery()
-                ->getResult();
+            $articleByTitle = $this->manager->getRepository(Article::class)->getSearchArticleByTitle($request->query->get("keySearch"));
         }else{
             $articleByTitle = $this->manager->getRepository(Article::class)->findAll();
         }
-
-
         $responseArray = array();
         foreach($articleByTitle as $article){
-            /**
-             * @var Article $article
-             */
+            /**@var Article $article */
             $responseArray[] = array(
                 "id" => $article->getId(),
                 "title" => $article->getTitle(),
@@ -185,11 +206,88 @@ class HomeController extends AbstractController
                 "categoryName" => $article->getArticleCategory()->getTitle()
             );
         }
-
-        // Return array with structure of the neighborhoods of the providen city id
         return new JsonResponse($responseArray);
+    }
+    /**
+     *@Route("/get/search/service_user", name="get_result_search_service_user")
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function searchServiceOrUser(Request $request)
+    {
+        $results = array(
+            "count_proposals" => 0,
+            "count_sellers" => 0,
+            "proposals" => array(),
+            "sellers" => array()
+        );
 
-        // e.g
-        // [{"id":"3","name":"Treasure Island"},{"id":"4","name":"Presidio of San Francisco"}]
+        if ($request->query->get("search_query")){
+            $serviceByNameOrDescription = $this->manager->getRepository(Proposal::class)->getSearchProposalByStringTitle($request->query->get("search_query"));
+            $servicesArray = array();
+            foreach($serviceByNameOrDescription as $service){
+                /** @var Proposal $service */
+                $servicesArray[] = array(
+                    "title" => $service->getTitle(),
+                    "url" => '/proposal/'.$service->getSlug(),
+                );
+            }
+            $userByLastnameOrFirstname = $this->manager->getRepository(User::class)->getSearchUserByStringName($request->query->get("search_query"));
+            $usersArray = array();
+            foreach($userByLastnameOrFirstname as $user){
+                /**@var User $user */
+                $usersArray[] = array(
+                    "name" => $user->getFullName(),
+                    "url" => '/freelancer/'.$user->getSlug(),
+                );
+            }
+            $results = array(
+                "count_proposals" => count($servicesArray),
+                "count_sellers" => count($usersArray),
+                "proposals" => $servicesArray,
+                "sellers" => $usersArray
+            );
+        }
+        return new JsonResponse($results);
+    }
+    /**
+     *@Route("/load/search/proposal", name="load_search_proposal")
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function loadSearchProposalResult(Request $request)
+    {
+
+        $onlineFilter = json_decode($request->get('json_online_seller'));
+        $categoriesFilter = json_decode($request->get('json_categories'));
+        $deliveryFilter = json_decode($request->get('json_delivery'));
+        $levelFilter = json_decode($request->get('json_level_seller'));
+        $searchKey = $request->get('searchKey');
+
+        $proposals = $this->manager->getRepository(Proposal::class)->loadSearchProposal($searchKey, $onlineFilter,$categoriesFilter,$deliveryFilter,$levelFilter);
+        $results = array(
+            "count_proposals" => 0,
+            "proposals" => array(),
+        );
+        $proposalsArrayResult = array();
+        foreach($proposals as $proposal){
+            /**@var Proposal $proposal */
+            $proposalsArrayResult [] = array(
+                "proposalFirstImage" => $proposal->getProposalImages()[0]->getFileName(),
+                "sellerAvatar" => $proposal->getSeller()->getPicture(),
+                "sellerName" => $proposal->getSeller()->getFullName(),
+                "sellerLevel" => $proposal->getSeller()->getLevel()->getName(),
+                "proposalTitle" => $proposal->getTitle(),
+                "proposalRating" => $proposal->getRating()? $proposal->getRating():'',
+                "proposalViews" => $proposal->getViews() ? $proposal->getViews():'',
+                "proposalPrice" => $proposal->getPrice(),
+                "proposalUrl" => '/proposal/'.$proposal->getSlug(),
+            );
+        }
+        $results = array(
+            "count_proposals" => count($proposalsArrayResult),
+            "proposals" => $proposalsArrayResult,
+        );
+        return new JsonResponse($results);
     }
 }

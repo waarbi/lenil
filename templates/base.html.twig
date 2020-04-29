@@ -16,6 +16,7 @@
     <link href="{{ asset('build/css/categories_nav_styles.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="{{ asset('build/css/owl_carousel_css.css') }}" rel="stylesheet">
+    <link href="{{ asset('build/css/easy_autocomplete_css.css') }}" rel="stylesheet">
     <link href="{{ asset('build/css/owl_theme_default_css.css') }}" rel="stylesheet">
     <link href="{{ asset('build/css/croppie_css.css') }}" rel="stylesheet">
     <link href="{{ asset('build/css/sweat_alert_css.css') }}" rel="stylesheet">
@@ -330,7 +331,46 @@
                 sessionStorage.setItem("connected", "ko")
             );
         });
+        $("#search-query").keyup(function(e){
+            var val = $(this).val();
+            if(val != ""){
+                $.ajax({
+                    url: "{{ path('get_result_search_service_user') }}",
+                    data: {search_query:val},
+                    type:'GET',
+                    dataType: "JSON",
+                    success: function(response){
+                        proposals = response.proposals;
+                        sellers = response.sellers;
+                        var html = "";
+                        if (response.count_proposals){
+                            html += "<aside><li> <i class='fa fa-paint-brush'></i> Services </li><ul>";
+                            $.each(proposals, function (key, proposal) {
+                                html += "<li><a href='"+proposal.url+"'>"+proposal.title+"</a></li>";
+                            });
+                            html += "</ul></aside>";
+                        }
+                        if (response.count_sellers){
+                            html += "<aside><li> <i class='fa fa-user'></i> Freelancers </li><ul>";
+                            $.each(sellers, function (key, seller) {
+                                html += "<li><a href='"+seller.url+"'>"+seller.name+"</a></li>";
+                            });
+                            html += "</ul></aside>";
+                        }
+                        if(response.count_proposals == 0 & response.count_sellers == 0){
+                            var html = "<li class='text-center'><b>Aucun résultat ne correspond à votre recherche.</b></li>";
+                        }
+                        $('.search-bar-panel').html(html);
+                    }
+                });
+                $('.search-bar-panel').removeClass('d-none');
+            }else{
+                $('.search-bar-panel').addClass('d-none');
+            }
+        });
     });
+
+
 </script>
 {% block javascripts %}
 {% endblock %}

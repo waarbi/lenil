@@ -23,7 +23,7 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="index?view_proposals"> <i class="menu-icon fa fa-table"></i>Services
+                    <a href="{{ path('admin_index_proposals') }}"> <i class="menu-icon fa fa-table"></i>Services
                         <span class="badge badge-primary">{{ nbProposal }}</span>
                     </a>
                 </li>
@@ -144,21 +144,21 @@
                     </ul>
                 </li>#}
                 <li class="menu-item-has-children dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Seller Skills"> <i class="menu-icon fa  fa-picture-o"></i> Slides</a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Seller Skills"> <i class="menu-icon fa  fa-picture-o"></i> Slides Home Vendeur</a>
                     <ul class="sub-menu children dropdown-menu">
-                        <li><i class="menu-icon fa fa-arrow-circle-right"></i><a href="index?insert_slide"> Créer Slide</a></li>
-                        <li><i class="menu-icon fa fa-arrow-circle-right"></i><a href="index?view_slides"> Gérer Slides</a></li>
+                        <li><i class="menu-icon fa fa-arrow-circle-right"></i><a href="{{ path('add_new_slide_setting') }}"> Créer Slide</a></li>
+                        <li><i class="menu-icon fa fa-arrow-circle-right"></i><a href="{{ path('slide_seller_home_page') }}"> Gérer Slides</a></li>
                     </ul>
                 </li>
-                {#<li class="menu-item-has-children dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Seller Skills"> <i class="menu-icon fa fa-table"></i> Terms &amp; Conditions</a>
+                <li class="menu-item-has-children dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Seller Skills"> <i class="menu-icon fa fa-table"></i> Termes &amp; Conditions</a>
                     <ul class="sub-menu children dropdown-menu">
-                        <li><i class="menu-icon fa fa-arrow-circle-right"></i><a href="index?insert_term"> Insert Term</a></li>
-                        <li><i class="menu-icon fa fa-arrow-circle-right"></i><a href="index?view_terms"> View Terms</a></li>
+                        <li><i class="menu-icon fa fa-arrow-circle-right"></i><a href="{{path('admin_create_termes')}}"> Créer Termes</a></li>
+                        <li><i class="menu-icon fa fa-arrow-circle-right"></i><a href="{{path('admin_index_termes')}}"> Gérer les termes</a></li>
                     </ul>
-                </li>#}
+                </li>
                 <li>
-                    <a href="index?view_sellers"> <i class="menu-icon fa fa-users"></i> Utilisateurs </a>
+                    <a href="{{ path('admin_index_utilisateurs') }}"> <i class="menu-icon fa fa-users"></i> Utilisateurs </a>
                 </li>
 
 {#                <li>

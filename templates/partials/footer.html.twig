@@ -12,9 +12,10 @@
             <div class="col-md-2 col-12">
                 <h3 class="h3Border" data-target="#collapseabout">A PROPOS</h3>
                 <ul class="collapse show list-unstyled" id="collapseabout">
-                    <li class="list-unstyled-item"><a href="/terms_and_conditions"><i class="fa fa-file-text-o"></i> Termes & Conditions</a></li>
+                    <li class="list-unstyled-item"><a href="{{ path('terms_conditions') }}"><i class="fa fa-file-text-o"></i> Termes & Conditions</a></li>
                     <li class="list-unstyled-item"><a href="{{ path('contact_support') }}"><i class="fa fa-comments"></i> Support Client</a></li>
-                    <li class="list-unstyled-item"><a href="/how-it-works"><i class="fa fa-question-circle"></i> Comment ça marche ?</a></li>
+                    <li class="list-unstyled-item"><a href="{{ path('comment_ca_marche') }}"><i class="fa fa-question-circle"></i> Comment ça marche ?</a></li>
+                    <li class="list-unstyled-item"><a href="{{ path('guide_pratique') }}"><i class="fa fa-book"></i> Base de connaissances</a></li>
                 </ul>
             </div>
             <div class="col-md-3 col-12">

@@ -77,11 +77,13 @@ class SellerLevel
                 $user->setLevel(null);
             }
         }
-
         return $this;
     }
 
-
+    public function __toString()
+    {
+        return $this->name;
+    }
 
 
 

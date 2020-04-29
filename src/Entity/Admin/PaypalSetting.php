@@ -31,7 +31,7 @@ class PaypalSetting
     private $currency;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $appClientId;
 
@@ -86,18 +86,6 @@ class PaypalSetting
         return $this;
     }
 
-    public function getAppClientId(): ?int
-    {
-        return $this->appClientId;
-    }
-
-    public function setAppClientId(?int $appClientId): self
-    {
-        $this->appClientId = $appClientId;
-
-        return $this;
-    }
-
     public function getAppClientSecret(): ?string
     {
         return $this->AppClientSecret;
@@ -121,4 +109,17 @@ class PaypalSetting
 
         return $this;
     }
+
+    public function getAppClientId()
+    {
+        return $this->appClientId;
+    }
+
+
+    public function setAppClientId(?string $appClientId): self
+    {
+        $this->appClientId = $appClientId;
+        return $this;
+    }
+
 }

@@ -76,6 +76,10 @@ class User implements UserInterface
      */
     private $enabled = false;
     /**
+     * @ORM\Column(type="boolean")
+     */
+    private $online = true;
+    /**
      *@Assert\EqualTo(propertyPath="hash", message="Vous n'avez pas correctement confirmé votre mot de passe !")
      *
      */
@@ -374,6 +378,22 @@ class User implements UserInterface
         $this->enabled = $enabled;
     }
 
+    /**
+     * @return bool
+     */
+    public function isOnline(): bool
+    {
+        return $this->online;
+    }
+
+    /**
+     * @param bool $online
+     */
+    public function setOnline(bool $online): void
+    {
+        $this->online = $online;
+    }
+
     public function addUserRole(Role $userRole): self
     {
         if (!$this->userRoles->contains($userRole)) {
@@ -554,6 +574,11 @@ class User implements UserInterface
         $this->level = $level;
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->getFullName();
     }
 
 }

@@ -1,0 +1,248 @@
+{% block stylesheets %}
+{% endblock %}
+    {% block title %}Administration | Lenil {% endblock %}
+
+{% extends "admin/base.html.twig" %}
+
+{% block body %}
+    <div class="breadcrumbs">
+        <div class="col-sm-4">
+            <div class="page-header float-left">
+                <div class="page-title">
+                    <h1><i class="menu-icon fa fa-user"></i> Utilisateur de lenil</h1>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-8">
+            <div class="page-header float-right">
+                <div class="page-title">
+                    <ol class="breadcrumb text-right">
+                        <li class="active">Voir Détails du vendeur</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <!--- 2 row Starts --->
+            <div class="col-lg-12">
+                <!--- col-lg-12 Starts --->
+                <div class="card"><!--- card Starts --->
+                    <div class="card-header">
+                        <!--- card-header Starts --->
+                        <h4 class="h4">
+                            <i class="fa fa-info-circle text-success"></i>
+                            Infos de {{ utilisateur.fullName }}
+                        </h4>
+                    </div>
+                    <!--- card-header Ends --->
+                    <div class="card-body row">
+                        <!--- card-body row Starts --->
+                        <div class="col-md-4">
+                            <!--- col-md-4 Starts --->
+                            <div class="seller-info mb-3">
+                                <!--- seller-info mb-3 Starts --->
+                                <img src="../user_images/empty-image.png" class="rounded img-fluid">
+                                <div class="seller-info-title">
+                                    <!--- seller-info-title Starts --->
+                                    <span class="seller-info-inner">{{ utilisateur.lastName }}</span>
+                                    <span class="seller-info-type"> {{ utilisateur.pays.name }} </span>
+                                </div>
+                                <!--- seller-info-title Ends --->
+                            </div>
+                            <!--- seller-info mb-3 Ends --->
+                            <div class="mb-3">
+                                <!--- mb-3 Starts --->
+                                <div class="widget-content-expanded">
+                                    <!--- widget-content-expanded Starts --->
+                                    <p class="lead">
+                                        <span class="font-weight-bold"> Nom : </span>
+                                        {{ utilisateur.fullName }}
+                                    </p>
+                                    <p class="lead">
+                                        <span class="font-weight-bold"> Email : </span>
+                                        {{ utilisateur.email }}
+                                    </p>
+                                    <p class="lead">
+                                        <span class="font-weight-bold"> Niveau : </span>
+                                        New Seller{{ utilisateur.level.name }}
+                                    </p>
+                                    <p class="lead">
+                                        <span class="font-weight-bold"> Email Vérifié : </span>
+                                        {% if utilisateur.enabled == true  %} Oui {% else %} Non {% endif %}
+                                    </p>
+                                    <p class="lead">
+                                        <span class="font-weight-bold"> Pays : </span>
+                                         {{ utilisateur.pays.name }}
+                                    </p>
+                                    <p class="lead">
+                                        <span class="font-weight-bold"> Register Date : </span>
+                                        {{ utilisateur.createdAt | date('d/m/Y') }}
+                                    </p>
+                                </div>
+                            </div>
+                            <!--- mb-3 Ends --->
+                            <div class="mb-3">
+                                <!--- mb-3 Starts --->
+                                <hr class="dotted">
+                                <h5 class="text-muted font-weight-bold">A PROPOS</h5>
+                                <p>
+                                    {{ utilisateur.description | raw }}
+                                </p>
+
+                            </div>
+                            <!--- mb-3 Ends --->
+
+                        </div>
+                        <!--- col-md-4 Ends --->
+
+                        <div class="col-md-8">
+                            <!--- col-md-8 Starts --->
+
+                            <h3 class="pb-1">
+                                Commandes de  {{ utilisateur.lastName }} </h3>
+
+                            <div class="row box">
+                                <!--- row box Starts --->
+
+                                <div class="text-center border-box col-md-3">
+                                    <!--- text-center border-box col-md-3 Starts --->
+
+                                    <p> Commandes annulées</p>
+                                    <h2>{{ nbCannceledOrder }}</h2>
+
+                                </div>
+                                <!--- text-center border-box col-md-3 Ends --->
+
+
+                                <div class="text-center border-box col-md-3">
+                                    <!--- text-center border-box col-md-3 Starts --->
+
+                                    <p> Commande livrée</p>
+                                    <h2>{{ nbDeliveredOrder }}</h2>
+
+                                </div>
+                                <!--- text-center border-box col-md-3 Ends --->
+
+
+                                <div class="text-center border-box col-md-3">
+                                    <!--- text-center border-box col-md-3 Starts --->
+
+                                    <p> Commande complète</p>
+                                    <h2>{{ nbCompletedOrder }}</h2>
+
+                                </div>
+                                <!--- text-center border-box col-md-3 Ends --->
+
+                                <div class="text-center border-box col-md-3">
+                                    <!--- text-center border-box col-md-3 Starts --->
+                                    <p>Commande en cours</p>
+                                    <h2>{{ nbCurrentOrder }}</h2>
+
+                                </div>
+                                <!--- text-center border-box col-md-3 Ends --->
+
+
+                            </div>
+                            <!--- row box Ends --->
+
+
+                            <h3 class="pb-1">
+                                les revenus de {{ utilisateur.fullName }} </h3>
+                            <div class="row box">
+                                <!--- row box Starts --->
+                                <!--- text-center border-box col-md-3 Ends --->
+
+                                <div class="text-center border-box col-md-3">
+                                    <!--- text-center border-box col-md-3 Starts --->
+                                    <p>utilisés dans les services</p>
+                                    <h2>{{ totalRevenueUsedProposal }}</h2>
+                                </div>
+                                <!--- text-center border-box col-md-3 Ends --->
+
+
+                                <div class="text-center border-box col-md-3">
+                                    <!--- text-center border-box col-md-3 Starts --->
+
+                                    <p> En attente </p>
+                                    <h2>{{ totalRevenuePending }}</h2>
+                                </div>
+                                <!--- text-center border-box col-md-3 Ends --->
+
+
+                                <div class="text-center border-box col-md-3">
+                                    <!--- text-center border-box col-md-3 Starts --->
+
+                                    <p> Revenu disponible</p>
+                                    <h2>{{ totalRevenueDisponible }}</h2>
+
+                                </div>
+                                <!--- text-center border-box col-md-3 Ends --->
+
+
+                            </div>
+                            <!--- row box Ends --->
+                            <h2>
+                                Ses services</h2>
+
+                            <div class="table-responsive pt-1">
+                                <!--- table-responsive mt-4 Starts --->
+                                <table class="table table-bordered">
+                                    <!--- table table-bordered table-hover Starts --->
+                                    <thead>
+                                    <!--- thead Starts --->
+                                    <tr>
+                                        <th>Titre</th>
+                                        <th>Image</th>
+                                        <th>Prix</th>
+                                        <th>Statut</th>
+                                    </tr>
+                                    </thead>
+                                    <!--- thead Ends --->
+                                    <tbody>
+                                    <!--- tbody Starts --->
+                                    {% for proposal in utilisateur.proposals %}
+                                    <tr>
+                                        <td>{{ proposal.title }}</td>
+                                        <td><img src="/uploads/images/{{ proposal.getProposalImages[0].getFileName }}" width="70" height="60"></td>
+                                        <td>{{ proposal.price }} €</td>
+                                        <td>
+                                            {% if proposal.statusId == 1 %}
+                                                Active
+                                            {% elseif proposal.statusId == 2 %}
+                                                Pause
+                                            {% elseif proposal.statusId == 3 %}
+                                                En cours de validation
+                                            {% elseif proposal.statusId == 4 %}
+                                                Décliné
+                                            {% elseif proposal.statusId == 6 %}
+                                                Corbeille
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    {% else %}
+                                        <tr>
+                                            <td colspan="4">
+                                                <h3 class="text-center pt-1 pb-1">Cet utilisateur n'a pas encore de proposer de services </h3>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                    <!--- tbody Ends --->
+                                </table>
+                                <!--- table table-bordered table-hover Ends --->
+                            </div>
+                            <!--- table-responsive mt-4 Ends --->
+                        </div>
+                        <!--- col-md-8 Ends --->
+                    </div>
+                    <!--- card-body row Ends --->
+                </div>
+                <!--- card Ends --->
+            </div>
+            <!--- col-lg-12 Ends --->
+        </div>
+        <!--- 2 rownds --->
+    </div>
+{% endblock %}

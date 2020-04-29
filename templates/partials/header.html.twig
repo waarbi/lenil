@@ -20,19 +20,20 @@
             </button>
             <div class="catnav-search-bar search-browse-wrapper with-catnav">
                 <div class="search-browse-inner">
-                    <form id="gnav-search" class="search-nav expanded-search apply-nav-height" method="post">
-                        <div class="gnav-search-inner clearable">
-                            <label for="search-query" class="screen-reader-only"></label>
-                            <div class="search-input-wrapper text-field-wrapper">
-                                <input id="search-query" class="rounded" name="search_query" placeholder="Find Services" value="" autocomplete="off">
+
+                        <form id="gnav-search" class="search-nav expanded-search apply-nav-height" action="{{ path('homepage') }}" method="post">
+                            <div class="gnav-search-inner clearable">
+                                <label for="search-query" class="screen-reader-only"></label>
+                                <div class="search-input-wrapper text-field-wrapper">
+                                    <input id="search-query" class="rounded" name="search_query" required placeholder="Trouver un services" value="" autocomplete="off">
+                                </div>
+                                <div class="search-button-wrapper hide">
+                                    <button class="btn btn-primary weight-500" name="search" type="submit" value="Search">
+                                        Rechercher                </button>
+                                </div>
                             </div>
-                            <div class="search-button-wrapper hide">
-                                <button class="btn btn-primary weight-500" name="search" type="submit" value="Search">
-                                    Rechercher                </button>
-                            </div>
-                        </div>
-                        <ul class="search-bar-panel d-none"></ul>
-                    </form>
+                            <ul class="search-bar-panel d-none"></ul>
+                        </form>
                 </div>
             </div>
             <ul class="account-nav apply-nav-height">

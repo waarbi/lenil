@@ -13,10 +13,12 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Proposal
 {
-    const REQUEST_STATUS_ACTIVE = 1; // active
-    const REQUEST_STATUS_INACTIVE = 2; // supendue
-    const REQUEST_STATUS_INPROGRESS = 3; //en cours de validation
-    const REQUEST_STATUS_CANCELLED = 4; // désapprouvé
+    const PROPOSAL_STATUS_ACTIVE = 1; // active
+    const PROPOSAL_STATUS_PAUSE = 2; // supendue
+    const PROPOSAL_STATUS_INPROGRESS = 3; //en cours de validation
+    const PROPOSAL_STATUS_DECLINED = 4; // décline
+    const PROPOSAL_STATUS_MODIFICATION_REQUIRED = 5; // soumettre pour modification
+    const PROPOSAL_STATUS_TRUSH = 6; // dans la poubelle
 
 
     /**
@@ -43,7 +45,16 @@ class Proposal
     /**
      * @ORM\Column(type="integer",name="status_id", nullable=true)
      */
-    private $statusId = Proposal::REQUEST_STATUS_INPROGRESS;
+    private $statusId = Proposal::PROPOSAL_STATUS_INPROGRESS;
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $featured = false;
+    
+    /**
+     * @ORM\Column(type="boolean",nullable=true)
+     */
+    private $topRated;
 
     /**
      * @ORM\Column(type="decimal", precision=5, scale=2)
@@ -51,10 +62,16 @@ class Proposal
     private $price;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="integer", length=255, nullable=true)
      */
     private $views;
     
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $rating;
+
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="proposals")
      * @ORM\JoinColumn(nullable=false)
@@ -89,26 +106,7 @@ class Proposal
      * @ORM\OneToMany(targetEntity="App\Entity\ProposalImage", mappedBy="proposal", orphanRemoval=true)
      */
     private $proposalImages;
-
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $featured;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Level", inversedBy="proposals")
-     */
-    private $level;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Language", inversedBy="proposals")
-     */
-    private $language;
-
-    /**
-     * @ORM\Column(type="decimal", precision=4, scale=1)
-     */
-    private $rating;
+    
 
     /**
      * @ORM\Column(type="text", nullable=true)
@@ -175,18 +173,29 @@ class Proposal
         return $this;
     }
 
-    public function getViews(): ?string
+    public function getViews(): ?int
     {
         return $this->views;
     }
 
-    public function setViews(?string $views): self
+    public function setViews(?int $views): self
     {
         $this->views = $views;
 
         return $this;
     }
 
+    public function getRating(): ?int
+    {
+        return $this->rating;
+    }
+
+    public function setRating(?int $rating): self
+    {
+        $this->rating = $rating;
+
+        return $this;
+    }
 
     public function getSeller(): ?User
     {
@@ -295,53 +304,24 @@ class Proposal
 
         return $this;
     }
-
     public function getFeatured(): ?bool
     {
         return $this->featured;
     }
 
-    public function setFeatured(?bool $featured): self
+    public function setFeatured(bool $featured): self
     {
         $this->featured = $featured;
 
         return $this;
     }
 
-    public function getLevel(): ?Level
+    /**
+     * @return mixed
+     */
+    public function getTopRated()
     {
-        return $this->level;
-    }
-
-    public function setLevel(?Level $level): self
-    {
-        $this->level = $level;
-
-        return $this;
-    }
-
-    public function getLanguage(): ?Language
-    {
-        return $this->language;
-    }
-
-    public function setLanguage(?Language $language): self
-    {
-        $this->language = $language;
-
-        return $this;
-    }
-
-    public function getRating(): ?string
-    {
-        return $this->rating;
-    }
-
-    public function setRating(string $rating): self
-    {
-        $this->rating = $rating;
-
-        return $this;
+        return $this->topRated;
     }
 
     public function getTags(): ?string
@@ -357,5 +337,12 @@ class Proposal
     }
     
 
+    /**
+     * @param mixed $topRated
+     */
+    public function setTopRated($topRated): void
+    {
+        $this->topRated = $topRated;
+    }
 
 }
