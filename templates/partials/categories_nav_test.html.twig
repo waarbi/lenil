@@ -6,7 +6,7 @@
                 {% for category in categories_yes %}
                     <li class="top-nav-item pt-xs-1 pb-xs-1 pl-xs-2 pr-xs-2 display-flex-xs align-items-center text-center"
                         data-linkable="true" data-ui="top-nav-category-link" data-node-id="c-{{ loop.index }}">
-                        <a href="{{ path('category_services',{slug: category.slug}) }}">
+                        <a href="{{ path('category_services',{categorySlug: category.slug, subcategorySlug: 'services'}) }}">
                             {{ category.title }}
                         </a>
                     </li>
@@ -21,14 +21,24 @@
                      data-ui="sub-nav" aria-hidden="true" data-node-id="c-{{ loop.index }}">
                     <div class="width-full display-flex-xs">
                         <ul class="list-unstyled display-inline-block col-xs-3 p-xs-3 pl-xs-5" role="presentation">
-                            {% for sousCategory in category.getSousCategories %}
+                            {% for sousCategory in category.getSousCategories | slice(0, 6)%}
                             <li>
                                 <a class="display-block text-gray text-body-larger pt-xs-1"
-                                   href="{{ path('category_services',{slug: sousCategory.slug}) }}">
+                                   href="{{ path('category_services',{categorySlug: category.slug, subcategorySlug: sousCategory.slug}) }}">
                                     {{ sousCategory.title }} </a>
                             </li>
                             {% endfor %}
                         </ul>
+                        <ul class="list-unstyled display-inline-block col-xs-3 p-xs-3 pl-xs-5" role="presentation">
+                            {% for sousCategory in category.getSousCategories | slice(7, categories_yes|length) %}
+                                <li>
+                                    <a class="display-block text-gray text-body-larger pt-xs-1"
+                                       href="{{ path('category_services',{categorySlug: category.slug, subcategorySlug: sousCategory.slug}) }}">
+                                        {{ sousCategory.title }} </a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+
                     </div>
                 </div>
             {% endif %}

@@ -28,7 +28,7 @@
                                     <input id="search-query" class="rounded" name="search_query" required placeholder="Trouver un services" value="" autocomplete="off">
                                 </div>
                                 <div class="search-button-wrapper hide">
-                                    <button class="btn btn-primary weight-500" name="search" type="submit" value="Search">
+                                    <button class="btn btn-primary" name="search" type="submit" value="Search">
                                         Rechercher                </button>
                                 </div>
                             </div>
@@ -38,22 +38,23 @@
             </div>
             <ul class="account-nav apply-nav-height">
                 {% if app.user is null %}
-                    <li class="register-link">
-                        <a href="{{ path('index_freelancers') }}">Freelancers</a>
-                    </li>
-                    <li class="register-link">
-                        <a href="{{ path('start_selling') }}">
+                <li class="register-link">
+                    <a href="{{ path('index_freelancers') }}">Freelancers</a>
+                </li>
+                <li class="sell-on-gigtodo-link d-none d-lg-block">
+                    <a href="{{ path('start_selling') }}">
               <span class="sell-copy">
               Devenir vendeur          </span>
-                        </a>
-                    </li>
-                    <li class="register-link">
-                        <a href="{{ path('account_login') }}">Se connecter</a>
-                    </li>
-                    <li class="sign-in-link mr-lg-0 mr-3">
-                        <a href="{{ path('account_register') }}" class="btn btn_join" style="color: white;" >
-                            S'inscrire          </a>
-                    </li>
+
+                    </a>
+                </li>
+                <li class="register-link">
+                    <a href="{{ path('account_login') }}">Se connecter</a>
+                </li>
+                <li class="sign-in-link mr-lg-0 mr-3">
+                    <a href="{{ path('account_register') }}" class="btn btn_join" style="color: white;" >
+                        S'inscrire          </a>
+                </li>
                 {% else %}
                     {{ include('seller/seller_nav.html.twig') }}
                 {% endif %}

@@ -9144,8 +9144,8 @@ a.arrow-up::after {
     display: block;
     float: left;
     padding: 8px;
-    line-height: 16px;
-    font-size: 14px;
+    line-height: 20px;
+    font-size: 15px;
     text-decoration: none;
     box-sizing: border-box;
     color: #E55400;
@@ -9408,7 +9408,8 @@ a.arrow-up::after {
     margin: 0;
     padding: 0;
     color: #555;
-    font-weight: 500;
+    font-size: 15px;
+    font-weight: 400;
 }
 
 .gnav-header .account-nav>li:hover{
@@ -10010,9 +10011,7 @@ only screen and (min-device-pixel-ratio: 1.5) {
     display: block;
     margin-top: 20px;
 }
-.weight-500{
-    font-weight: 500;
-}
+
 .gnav-header .register-link a,
 .gnav-header .sign-in-link a{
     height: auto;
@@ -10021,8 +10020,6 @@ only screen and (min-device-pixel-ratio: 1.5) {
     display: block;
     float: left;
     padding: 8px;
-    line-height: 16px;
-    font-size: 16px;
     border: 1px solid;
     text-decoration: none;
     border-radius: 3px;

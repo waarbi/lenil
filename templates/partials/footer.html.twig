@@ -4,8 +4,8 @@
             <div class="col-md-3 col-12">
                 <h3 data-toggle="collapse" data-target="#collapsecategories">CATEGORIES</h3>
                 <ul class="collapse show list-unstyled" id="collapsecategories">
-                    {% for category in categories_yes %}
-                    <li class="list-unstyled-item"><a href="{{ path('category_services',{slug: category.slug}) }}">{{ category.title }}</a></li>
+                    {% for category in categories_yes | slice(0, 4) %}
+                    <li class="list-unstyled-item"><a href="{{ path('category_services',{categorySlug: category.slug,subcategorySlug:0}) }}">{{ category.title }}</a></li>
                     {% endfor %}
                 </ul>
             </div>
@@ -19,6 +19,12 @@
                 </ul>
             </div>
             <div class="col-md-3 col-12">
+                <h3 data-toggle="collapse" data-target="#collapsecategories">CATEGORIES</h3>
+                <ul class="collapse show list-unstyled" id="collapsecategories">
+                    {% for category in categories_yes | slice(5, categories_yes|length) %}
+                        <li class="list-unstyled-item"><a href="{{ path('category_services',{categorySlug: category.slug,subcategorySlug:0}) }}">{{ category.title }}</a></li>
+                    {% endfor %}
+                </ul>
             </div>
             <div class="col-md-4 col-12">
                 <h3 class="h3Border" data-target="#collapsefindusOn">TROUVEZ-NOUS SUR</h3>
