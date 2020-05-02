@@ -21,6 +21,11 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  */
 class User implements UserInterface
 {
+    const ROLE_ADMIN = 'ROLE_ADMIN';
+    const ROLE_FREELANCER = 'ROLE_FREELANCER';
+    const ROLE_BUYER = 'ROLE_BUYER';
+    const ROLE_USER = 'ROLE_USER';
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -90,6 +95,23 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=255)
      */
     private $slug;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     * @Assert\Length(min=10, minMessage="Votre specialité doit faire au moins 10 caractères")
+     */
+    private $specialty;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $recentDelivery;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $connected = false;
+
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Role", mappedBy="users")
@@ -253,6 +275,10 @@ class User implements UserInterface
         $this->languages = new ArrayCollection();
         $this->demandes = new ArrayCollection();
         $this->proposals = new ArrayCollection();
+
+        if (empty($this->roles)) {
+            $this->roles[] = 'ROLE_USER';
+        }
     }
 
     public function getRoles()
@@ -535,6 +561,42 @@ class User implements UserInterface
                 $proposal->setSeller(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getSpecialty(): ?string
+    {
+        return $this->specialty;
+    }
+
+    public function setSpecialty(?string $specialty): self
+    {
+        $this->specialty = $specialty;
+
+        return $this;
+    }
+
+    public function getRecentDelivery(): ?\DateTimeInterface
+    {
+        return $this->recentDelivery;
+    }
+
+    public function setRecentDelivery(?\DateTimeInterface $recentDelivery): self
+    {
+        $this->recentDelivery = $recentDelivery;
+
+        return $this;
+    }
+
+    public function getConnected(): ?bool
+    {
+        return $this->connected;
+    }
+
+    public function setConnected(?bool $connected): self
+    {
+        $this->connected = $connected;
 
         return $this;
     }

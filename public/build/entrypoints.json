@@ -1,11 +1,11 @@
 {
   "entrypoints": {
-    "css/home_css": {
+    "css/font_awesome": {
       "js": [
         "/build/runtime.js"
       ],
       "css": [
-        "/build/css/home_css.css"
+        "/build/css/font_awesome.css"
       ]
     },
     "css/animate_css": {
@@ -112,12 +112,12 @@
         "/build/css/freelancers_back.css"
       ]
     },
-    "css/font_awesome": {
+    "css/home_css": {
       "js": [
         "/build/runtime.js"
       ],
       "css": [
-        "/build/css/font_awesome.css"
+        "/build/css/home_css.css"
       ]
     },
     "css/inbox_style": {

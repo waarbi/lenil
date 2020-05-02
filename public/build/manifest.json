@@ -431,7 +431,7 @@
   "build/images/cookie.png": "/build/images/cookie.png",
   "build/images/credit_cards.jpg": "/build/images/credit_cards.jpg",
   "build/images/doc.jpg": "/build/images/doc.jpg",
-  "build/images/fontawesome-webfont.svg?v=4.7.0": "/build/images/fontawesome-webfont.912ec66d.svg",
+  "build/images/fontawesome-webfont.svg?v=4.7.0": "/build/images/fontawesome-webfont.acf3dcb7.svg",
   "build/images/gigtodoFav.ico": "/build/images/gigtodoFav.ico",
   "build/images/google.png": "/build/images/google.png",
   "build/images/home-header-background.jpg": "/build/images/home-header-background.jpg",
@@ -450,6 +450,7 @@
   "build/images/level_badge_2.png": "/build/images/level_badge_2.png",
   "build/images/level_badge_3.png": "/build/images/level_badge_3.png",
   "build/images/loading.gif": "/build/images/loading.gif",
+  "build/images/logo-ico.ico": "/build/images/logo-ico.ico",
   "build/images/logo.PNG": "/build/images/logo.PNG",
   "build/images/logo.jpg": "/build/images/logo.jpg",
   "build/images/logo1.png": "/build/images/logo1.png",
@@ -515,8 +516,5 @@
   "build/js/slidesbg.js": "/build/js/slidesbg.js",
   "build/js/summernote.js": "/build/js/summernote.js",
   "build/js/sweat_alert.js": "/build/js/sweat_alert.js",
-  "build/js/tagsinput.js": "/build/js/tagsinput.js",
-  "build/images/logo_6od_icon.ico": "/build/images/logo_6od_icon.ico",
-  "build/images/hnet.com-image.ico": "/build/images/hnet.com-image.ico",
-  "build/images/logo-ico.ico": "/build/images/logo-ico.ico"
+  "build/js/tagsinput.js": "/build/js/tagsinput.js"
 }
