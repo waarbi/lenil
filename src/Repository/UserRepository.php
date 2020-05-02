@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Admin\UserSearchProperty;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
@@ -19,32 +20,28 @@ class UserRepository extends ServiceEntityRepository
         parent::__construct($registry, User::class);
     }
 
-    // /**
-    //  * @return User[] Returns an array of User objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('u.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+    public function getSearchUserByName(UserSearchProperty $searchProperty, $limit, $offset){
+        $query = $this->createQueryBuilder('user')->setMaxResults($limit);
+        if ($searchProperty->getName()){
+            $query = $query->where("user.firstName LIKE :keySearch")
+                ->setParameter("keySearch", '%'.$searchProperty->getName().'%')->orWhere("user.lastName LIKE :name")->setParameter("name", '%'.$searchProperty->getName().'%');
+        }
+        if (false === is_null($offset))
+            $query->setFirstResult($offset);
 
-    /*
-    public function findOneBySomeField($value): ?User
-    {
-        return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        if (false === is_null($limit))
+            $query->setMaxResults($limit);
+        return $query->getQuery()->getResult();
     }
-    */
+    public function getSearchUserByStringName(string  $searchKey){
+        $query = $this->createQueryBuilder('user')
+            ->where("user.firstName LIKE :searchFirstname")
+            ->setParameter("searchFirstname", '%'.$searchKey.'%')
+            ->orWhere("user.lastName LIKE :searchLastname")
+            ->setParameter("searchLastname",'%'.$searchKey.'%');
+
+        return $query->getQuery()->getResult();
+
+
+    }
 }

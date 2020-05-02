@@ -28,7 +28,7 @@ class AdminDashboardController extends AbstractController
     {
         $this->manager = $manager;
         $this->generalSettings = $manager->getRepository(GeneralSetting::class)->findAll()[0];
-        $this->nbProposal = $this->manager->getRepository(Proposal::class)->findBy(array('statusId' => Proposal::REQUEST_STATUS_INPROGRESS));
+        $this->nbProposal = $this->manager->getRepository(Proposal::class)->findBy(array('statusId' => Proposal::PROPOSAL_STATUS_INPROGRESS));
 
 
 

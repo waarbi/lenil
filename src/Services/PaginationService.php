@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
-use App\Entity\Ad;
-use App\Entity\AdSearchProperty;
+use App\Entity\Admin\ProposalSearchProperty;
+use App\Entity\Proposal;
 use Doctrine\ORM\EntityManagerInterface;
 use Twig\Environment;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -72,8 +72,11 @@ class PaginationService
         // 1) Connaitre le total des enregistrements de la table
         $repo = $this->manager->getRepository($this->entityClass);
         $total = count($repo->findAll());
-        if ($this->entityClass === 'App\Entity\Ad' && $this->search) {
+        if ($this->entityClass === 'App\Entity\Proposal' && $this->search) {
             $total = count($repo->getSearchAd($this->search, $this->limit, null));
+        }
+        if ($this->entityClass === 'App\Entity\User' && $this->search) {
+            $total = count($repo->getSearchUserByName($this->search, $this->limit, null));
         }
         // 2) Faire la division, l'arrondie et le renvoyer
         $pages = ceil($total / $this->limit);
@@ -92,9 +95,16 @@ class PaginationService
         $offset = $this->currentPage * $this->limit - $this->limit;
         // 2)Demander au repository de trouver les éléments
         $repo = $this->manager->getRepository($this->entityClass);
+
         $data = $repo->findBy([], [], $this->limit, $offset);
 
-        // 3)Renvoyer les éléments en fonctions
+        if ($this->entityClass === 'App\Entity\Proposal' && $this->search) {
+            $data = $repo->getSearchAd($this->search, $this->limit, null);
+        }
+        if ($this->entityClass === 'App\Entity\User' && $this->search) {
+            $data = $repo->getSearchUserByName($this->search, $this->limit, null);
+        }
+
         return $data;
     }
 
@@ -128,7 +138,7 @@ class PaginationService
     }
 
     /**
-     * @param AdSearchProperty $search
+     * @param mixed $search
      */
     public function setSearch($search): void
     {

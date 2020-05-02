@@ -38,7 +38,7 @@ class AdminGeneralSetting extends AbstractController
     public function __construct(EntityManagerInterface $manager)
     {
         $this->manager = $manager;
-        $this->nbProposal = $this->manager->getRepository(Proposal::class)->findBy(array('statusId' => Proposal::REQUEST_STATUS_INPROGRESS));
+        $this->nbProposal = $this->manager->getRepository(Proposal::class)->findBy(array('statusId' => Proposal::PROPOSAL_STATUS_INPROGRESS));
 
 
     }
@@ -77,7 +77,7 @@ class AdminGeneralSetting extends AbstractController
     public function updateLayoutSettings(Request $request): Response
     {
         $textLayout = $this->manager->getRepository(HomePageSection::class)->findAll()[0];
-        $sliders = $this->manager->getRepository(LandingPageSlide::class)->findAll();
+        $sliders = $this->manager->getRepository(LandingPageSlide::class)->findBy(array('onHomePageAnonym' => true));
         $cardCategories = $this->manager->getRepository(Category::class)->findBy(array('in_card' => true));
 
         $form = $this->createForm(HomePageSectionType::class, $textLayout);
@@ -122,7 +122,8 @@ class AdminGeneralSetting extends AbstractController
             $this->manager->persist($slide);
             $this->manager->flush();
             $this->addFlash('success', 'Vous avez créé un nouveau slide');
-            return $this->redirectToRoute('update_text_slider_in_layout_setting');
+            $referer = $request->headers->get('referer');
+            return $this->redirect($referer);
         }
         return $this->render('admin/settings/new-slider.html.twig', [
             'form' => $form->createView(),
@@ -135,18 +136,20 @@ class AdminGeneralSetting extends AbstractController
 
     /**
      * @Route("/slide/{id}", name="delete_slide_homepage")
+     * @param Request $request
      * @param LandingPageSlide $slide
      * @param FileUploader $fileUploader
      * @return Response
      */
-    public function deleteSlide(LandingPageSlide $slide, FileUploader $fileUploader): Response
+    public function deleteSlide(Request $request, LandingPageSlide $slide, FileUploader $fileUploader): Response
     {
         $fileUploader->deleteFile($slide->getImageName());
         $this->manager->remove($slide);
         $this->manager->flush();
         $this->addFlash('success', 'Le Slide a été bien supprimée');
 
-        return $this->redirectToRoute('update_text_slider_in_layout_setting');
+        $referer = $request->headers->get('referer');
+        return $this->redirect($referer);
     }
 
     /**
@@ -156,7 +159,7 @@ class AdminGeneralSetting extends AbstractController
      * @param FileUploader $fileUploader
      * @return Response
      */
-    public function editSlide(Request $request, LandingPageSlide $slide,FileUploader $fileUploader): Response
+    public function editSlide(Request $request, LandingPageSlide $slide, FileUploader $fileUploader): Response
     {
         $form = $this->createForm(LandingPageSlideType::class, $slide);
         $form->handleRequest($request);
@@ -171,7 +174,9 @@ class AdminGeneralSetting extends AbstractController
             $this->manager->persist($slide);
             $this->manager->flush();
             $this->addFlash('success', 'Vous avez modifié le slide');
-            return $this->redirectToRoute('update_text_slider_in_layout_setting');
+
+            $referer = $request->headers->get('referer');
+            return $this->redirect($referer);
         }
         return $this->render('admin/settings/new-slider.html.twig', [
             'form' => $form->createView(),
@@ -182,6 +187,7 @@ class AdminGeneralSetting extends AbstractController
 
         ]);
     }
+
     /**
      * @Route("/ajouterCard/", name="add_card", methods={"GET","POST"})
      * @param Request $request
@@ -196,7 +202,7 @@ class AdminGeneralSetting extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $datas = $request->get('categories');
-            foreach ($datas as $idCat){
+            foreach ($datas as $idCat) {
                 $cat = $this->manager->getRepository(Category::class)->findBy(array('id' => $idCat))[0];
                 $cat->setInCard(true);
                 $this->manager->persist($cat);
@@ -278,6 +284,22 @@ class AdminGeneralSetting extends AbstractController
 
 
         ]);
+    }
+
+    /**
+     * @Route("/slide/seller/homepage", name="slide_seller_home_page")
+     */
+    public function indexSlideSellerHomePage()
+    {
+
+        $sliders = $this->manager->getRepository(LandingPageSlide::class)->findBy(array('onHomePageSeller' => true));
+
+        return $this->render('admin/settings/slider-home-seller.html.twig', array(
+            'sliders' => $sliders,
+            'nbProposal' => count($this->nbProposal),
+            'user' => $this->getUser(),
+
+        ));
     }
 
 }

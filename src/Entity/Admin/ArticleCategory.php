@@ -27,7 +27,7 @@ class ArticleCategory
      */
     private $position;
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Admin\Article",cascade={"remove"}, mappedBy="category")
+     * @ORM\OneToMany(targetEntity="App\Entity\Admin\Article",cascade={"remove"}, mappedBy="articleCategory", fetch="EAGER")
      */
     private $articles;
 
@@ -77,7 +77,7 @@ class ArticleCategory
     {
         if (!$this->articles->contains($article)) {
             $this->articles[] = $article;
-            $article->setCategory($this);
+            $article->getArticleCategory($this);
         }
 
         return $this;
@@ -88,11 +88,15 @@ class ArticleCategory
         if ($this->articles->contains($article)) {
             $this->articles->removeElement($article);
             // set the owning side to null (unless already changed)
-            if ($article->getCategory() === $this) {
-                $article->setCategory(null);
+            if ($article->getArticleCategory() === $this) {
+                $article->getArticleCategory(null);
             }
         }
 
         return $this;
+    }
+    public function __toString()
+    {
+       return $this->title;
     }
 }

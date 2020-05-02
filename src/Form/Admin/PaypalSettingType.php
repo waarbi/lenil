@@ -6,7 +6,6 @@ use App\Entity\Admin\PaypalSetting;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -35,7 +34,7 @@ class PaypalSettingType extends AbstractType
                     'placeholder' => 'Entrer la devis '
                 ]
             ))
-            ->add('appClientId',IntegerType::class, array(
+            ->add('appClientId',TextType::class, array(
                 'label' => 'App Client Id Paypal',
                 'attr' => [
                     'placeholder' => 'Entrer la clé api paypal du site'

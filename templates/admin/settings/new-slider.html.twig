@@ -69,6 +69,18 @@
                                         {{ form_widget(form.isActivate, { 'attr': {'class': 'form-control'} }) }}
                                     </div>
                                 </div>
+                                <div class="form-group row">
+                                    {{ form_label(form.onHomePageAnonym, null, {'label_attr': {'class': 'col-md-3 control-label'}}) }}
+                                    <div class="col-md-6">
+                                        {{ form_widget(form.onHomePageAnonym, { 'attr': {'class': 'form-control'} }) }}
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    {{ form_label(form.onHomePageSeller, null, {'label_attr': {'class': 'col-md-3 control-label'}}) }}
+                                    <div class="col-md-6">
+                                        {{ form_widget(form.onHomePageSeller, { 'attr': {'class': 'form-control'} }) }}
+                                    </div>
+                                </div>
                                 {% if slide is defined %}<img src="/uploads/images/{{ slide.imageName }}" width="100" height="40">{% endif %}
                                 <div class="form-group row"><!--- form-group row Starts --->
 
