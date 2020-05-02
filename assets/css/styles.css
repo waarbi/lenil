@@ -1,7 +1,7 @@
 @charset "utf-8";
 @font-face{
   src:url(../fonts/Montserrat-Regular.otf);
-  font-family: 'Montserrat-Regular';
+  font-family: 'Montserrat', sans-serif;
 }
 @font-face{
   src:url(../fonts/Montserrat-SemiBold.otf);
@@ -9,7 +9,7 @@
 }
 @font-face{
   src:url(../fonts/Montserrat-Light.otf);
-  font-family:'Montserrat-Light';
+  font-family: 'Montserrat', sans-serif;
 }
 @font-face{
   src:url(../fonts/Mosk-Light-300.ttf);
@@ -23,7 +23,7 @@ body {
 	background: #fff;
 	height: 100%;
 	width: 100%;
-  font-family: "Graphik Webfont", -apple-system, BlinkMacSystemFont, "Roboto", "Droid Sans", "Segoe UI", "Helvetica", Arial, sans-serif;
+  	font-family: 'Montserrat', sans-serif;
 	color: #000;
 	font-weight: 400;
 	overflow-x: hidden;
@@ -34,7 +34,7 @@ html {
 	width: 100%;
 }
 
-h1, h2 {
+h1{
 	color: #0066FF ;
 }
 
@@ -63,7 +63,7 @@ h1, h2 {
 	border:1px solid #ccc;
 	position: fixed;
 	font-weight:bold;
-	font-family:'Montserrat-Light';
+	font-family: 'Montserrat', sans-serif;
 	letter-spacing:2px;
 	z-index: 9997;
 	text-decoration: none;
@@ -892,13 +892,13 @@ font-size:18px;
 .market h4 ,.top h4{
 	font-size: 16px;
 	color: #6d6e71;
-	font-family:'Montserrat-Light';
+	font-family: 'Montserrat', sans-serif;
 	text-align: center;
 }
 .market p{
 	font-size: 14px;
 	color: #414042;
-	font-family:'Montserrat-Light';
+	font-family: 'Montserrat', sans-serif;
 	text-align: center;
 	margin-top: 40px;
 }
@@ -1000,7 +1000,7 @@ font-size:18px;
 .btn_view{
 	font-size: 10.56px;
 	color: #0066FF;
-	font-family: 'Montserrat-Regular';
+	font-family: 'Montserrat', sans-serif;
 	text-transform: uppercase;
 	margin: 0 auto;
 	display: block;
@@ -1042,7 +1042,6 @@ font-size:18px;
   display: block
 }
 ul{
-	list-style:none;
 	margin: 0;
 	padding: 0;
 }
@@ -2084,7 +2083,7 @@ margin-right:5px;
 }
 
 .proposal-card-base .proposal-link-main h3:hover{
-	color: #1dbf73;
+	color: #0066FF;
 }
 
 .proposal-card-base .proposal-link-main h3 {
@@ -3716,7 +3715,7 @@ border-top:1px solid #E1E3DF;
 
 /*** New Styles ***/
 .card_user {
-	font-family: 'Montserrat-Regular';
+	font-family: 'Montserrat', sans-serif;
 	border: 1px solid #d2d6da;
 	text-align: center;
 }
@@ -3761,7 +3760,7 @@ border-top:1px solid #E1E3DF;
 
 .buy_head{
 
-font-family: 'Montserrat-Regular';
+font-family: 'Montserrat', sans-serif;
 font-size: 19px;
 color: #1a1e31;
 margin-bottom: 20px;
@@ -4124,13 +4123,13 @@ opacity: 0.8;
 footer h3{
   color: #fff;
   font-size: 14px;
-  font-family: 'Montserrat-Regular';
+  font-family: 'Montserrat', sans-serif;
 }
 
 footer ul li a{
   color: #bdbfc4;
   font-size: 13px;
-  font-family:'Montserrat-Light';
+  font-family: 'Montserrat', sans-serif;
 }
 footer ul li{
   padding: 7px 0;
@@ -4138,7 +4137,7 @@ footer ul li{
 footer h5{
   color: #fff;
   font-size: 14px;
-  font-family: 'Montserrat-Regular';
+  font-family: 'Montserrat', sans-serif;
 }
 footer a:hover{
   color: #fff;

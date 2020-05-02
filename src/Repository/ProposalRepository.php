@@ -72,7 +72,7 @@ class ProposalRepository extends ServiceEntityRepository
 
     }
 
-    public function loadSearchProposal(string $searchKey, array $onlineFilter, array $categoriesFilter, array $deliveryFilter, array $levelFilter)
+    public function loadSearchProposal(string $searchKey, array $onlineFilter, array $categoriesFilter, array $deliveryFilter, array $levelFilter, array $countryFilter)
     {
         $query = $this->createQueryBuilder('proposal')
             ->where("proposal.title LIKE :searchTitle")
@@ -88,7 +88,7 @@ class ProposalRepository extends ServiceEntityRepository
             $query = $query->andWhere('proposal.deliveryTime IN (:idsDelivery)')
                 ->setParameter('idsDelivery', $deliveryFilter);
         }
-        if (!empty($levelFilter) || !empty($onlineFilter)) {
+        if (!empty($levelFilter) || !empty($onlineFilter) || !empty($countryFilter)) {
             $query = $query->join('proposal.seller', 'user');
         }
         if (!empty($levelFilter)) {
@@ -99,12 +99,16 @@ class ProposalRepository extends ServiceEntityRepository
             $query = $query->andwhere('user.online = :online')
                 ->setParameter('online', true);
         }
+        if (!empty($countryFilter)) {
+            $query = $query->andwhere('user.pays IN (:idsCountry)')
+                ->setParameter('idsCountry', $countryFilter);
+        }
 
         return $query->getQuery()->getResult();
 
     }
 
-    public function loadCategoryProposal(string $catSlug, string $subCatSlug, array $onlineFilter, array $deliveryFilter, array $levelFilter)
+    public function loadCategoryProposal(string $catSlug, string $subCatSlug, array $onlineFilter = null, array $deliveryFilter = null, array $levelFilter = null,  array $countryFilter = null)
     {
         $query = $this->createQueryBuilder('proposal');
         $query = $query->join('proposal.category', 'category')
@@ -119,7 +123,7 @@ class ProposalRepository extends ServiceEntityRepository
             $query = $query->andWhere('proposal.deliveryTime IN (:idsDelivery)')
                 ->setParameter('idsDelivery', $deliveryFilter);
         }
-        if (!empty($levelFilter) || !empty($onlineFilter)) {
+        if (!empty($levelFilter) || !empty($onlineFilter) || !empty($countryFilter)) {
             $query = $query->join('proposal.seller', 'user');
         }
         if (!empty($levelFilter)) {
@@ -129,6 +133,10 @@ class ProposalRepository extends ServiceEntityRepository
         if (!empty($onlineFilter)) {
             $query = $query->andwhere('user.online = :online')
                 ->setParameter('online', true);
+        }
+        if (!empty($countryFilter)) {
+            $query = $query->andwhere('user.pays IN (:idsCountry)')
+                ->setParameter('idsCountry', $countryFilter);
         }
 
         return $query->getQuery()->getResult();

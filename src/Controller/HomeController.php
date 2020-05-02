@@ -75,12 +75,18 @@ class HomeController extends AbstractController
                 /**@var User $user */
                 $levelsUsers [] = $user->getLevel();
             }
+            $countryUsers = array();
+            foreach (array_unique($sellers) as $user){
+                /**@var User $user */
+                $countryUsers [] = $user->getPays();
+            }
 
             return $this->render('proposals/search-result.html.twig', array(
                 'searchQuery' => $request->get('search_query') ? $request->get('search_query') : $proposalSearch->getTitle(),
                 'proposalsSearch' =>$proposalsSearchResult,
                 'filterCategories' => array_unique($categories),
                 'filterDeliveryTimes' =>array_unique($deliveyTimes),
+                'filterCountry' => array_unique($countryUsers),
                 'filterLevels' => array_unique($levelsUsers),
                 'categories_yes' =>  $this->categories_yes,
             ));
@@ -194,7 +200,7 @@ class HomeController extends AbstractController
                 /** @var Proposal $service */
                 $servicesArray[] = array(
                     "title" => $service->getTitle(),
-                    "url" => '/proposal/'.$service->getSlug(),
+                    "url" => '/proposals/show/'.$service->getSeller()->getSlug().'/'.$service->getSlug(),
                 );
             }
             $userByLastnameOrFirstname = $this->manager->getRepository(User::class)->getSearchUserByStringName($request->query->get("search_query"));
@@ -227,9 +233,10 @@ class HomeController extends AbstractController
         $categoriesFilter = json_decode($request->get('json_categories'));
         $deliveryFilter = json_decode($request->get('json_delivery'));
         $levelFilter = json_decode($request->get('json_level_seller'));
+        $countryFilter = json_decode($request->get('json_country_seller'));
         $searchKey = $request->get('searchKey');
 
-        $proposals = $this->manager->getRepository(Proposal::class)->loadSearchProposal($searchKey, $onlineFilter,$categoriesFilter,$deliveryFilter,$levelFilter);
+        $proposals = $this->manager->getRepository(Proposal::class)->loadSearchProposal($searchKey, $onlineFilter,$categoriesFilter,$deliveryFilter,$levelFilter,$countryFilter);
         $results = array(
             "count_proposals" => 0,
             "proposals" => array(),
@@ -242,11 +249,14 @@ class HomeController extends AbstractController
                 "sellerAvatar" => $proposal->getSeller()->getPicture(),
                 "sellerName" => $proposal->getSeller()->getFullName(),
                 "sellerLevel" => $proposal->getSeller()->getLevel()->getName(),
+                "sellerCountry" => $proposal->getSeller()->getPays()->getName(),
+                "sellerSlug" => $proposal->getSeller()->getSlug(),
+                "proposalSlug" => $proposal->getSlug(),
                 "proposalTitle" => $proposal->getTitle(),
                 "proposalRating" => $proposal->getRating()? $proposal->getRating():'',
                 "proposalViews" => $proposal->getViews() ? $proposal->getViews():'',
                 "proposalPrice" => $proposal->getPrice(),
-                "proposalUrl" => '/proposal/'.$proposal->getSlug(),
+                "proposalUrl" => '/proposals/show/'.$proposal->getSeller()->getSlug().'/'.$proposal->getSlug(),
             );
         }
         $results = array(

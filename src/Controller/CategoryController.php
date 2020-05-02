@@ -41,7 +41,7 @@ class CategoryController extends AbstractController
     public function getServicesByCategory($categorySlug,$subcategorySlug)
     {
 
-        $proposals = $this->manager->getRepository(Proposal::class)->loadCategoryProposal($categorySlug,$subcategorySlug, array(),array(),array());
+        $proposals = $this->manager->getRepository(Proposal::class)->loadCategoryProposal($categorySlug,$subcategorySlug);
         $deliveyTimes  = array();
         $sellers = array();
         foreach ($proposals as $proposal){
@@ -54,12 +54,18 @@ class CategoryController extends AbstractController
             /**@var User $user */
             $levelsUsers [] = $user->getLevel();
         }
+        $countryUsers = array();
+        foreach (array_unique($sellers) as $user){
+            /**@var User $user */
+            $countryUsers [] = $user->getPays();
+        }
 
         return $this->render('categorie/service-categorie.html.twig', array(
                 'categories_yes' => $this->categories_yes,
                 'proposals' => $proposals,
                 'filterDeliveryTimes' =>array_unique($deliveyTimes),
                 'filterLevels' => array_unique($levelsUsers),
+                'filterCountry' => array_unique($countryUsers),
                 'catSlug' => $categorySlug,
                 'categories' => $this->manager->getRepository(Category::class)->findAll(),
                 'subCatSlug' => $subcategorySlug,
@@ -81,10 +87,11 @@ class CategoryController extends AbstractController
         $onlineFilter = json_decode($request->get('json_online_seller'));
         $deliveryFilter = json_decode($request->get('json_delivery'));
         $levelFilter = json_decode($request->get('json_level_seller'));
+        $countryFilter = json_decode($request->get('json_country_seller'));
         $catSlug = $request->get('cat_slug');
         $subCatSlug = $request->get('sub_cat_slug');
 
-        $proposals = $this->manager->getRepository(Proposal::class)->loadCategoryProposal($catSlug,$subCatSlug, $onlineFilter,$deliveryFilter,$levelFilter);
+        $proposals = $this->manager->getRepository(Proposal::class)->loadCategoryProposal($catSlug,$subCatSlug, $onlineFilter,$deliveryFilter,$levelFilter,$countryFilter);
         $results = array(
             "count_proposals" => 0,
             "proposals" => array(),
@@ -97,11 +104,14 @@ class CategoryController extends AbstractController
                 "sellerAvatar" => $proposal->getSeller()->getPicture(),
                 "sellerName" => $proposal->getSeller()->getFullName(),
                 "sellerLevel" => $proposal->getSeller()->getLevel()->getName(),
+                "sellerSlug" => $proposal->getSeller()->getSlug(),
+                "proposalSlug" => $proposal->getSlug(),
+                "sellerCountry" => $proposal->getSeller()->getPays()->getName(),
                 "proposalTitle" => $proposal->getTitle(),
                 "proposalRating" => $proposal->getRating()? $proposal->getRating():'',
                 "proposalViews" => $proposal->getViews() ? $proposal->getViews():'',
                 "proposalPrice" => $proposal->getPrice(),
-                "proposalUrl" => '/proposal/'.$proposal->getSlug(),
+                "proposalUrl" => '/proposals/show/'.$proposal->getSeller()->getSlug().'/'.$proposal->getSlug(),
             );
         }
         $results = array(

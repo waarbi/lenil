@@ -51,6 +51,28 @@
                     </div>
                     <div class="card border-success mb-3">
                         <div class="card-header bg-success">
+                            <h3 class="float-left text-white h5">Pays du vendeur</h3>
+                            <button class="btn btn-secondary btn-sm float-right clear_seller_country clearlink"
+                                    onclick="clearCountry()">
+                                <i class="fa fa-times-circle"></i> Filtre
+                            </button>
+                        </div>
+                        <div class="card-body">
+                            <ul class="nav flex-column">
+                                {% for country in filterCountry %}
+
+                                    <li class="nav-item checkbox checkbox-success">
+                                        <label>
+                                            <input type="checkbox" value="{{ country.id }}" class="get_seller_country">
+                                            <span>{{ country.name }}</span>
+                                        </label>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card border-success mb-3">
+                        <div class="card-header bg-success">
                             <h3 class="float-left text-white h5">Délai de livraison</h3>
                             <button class="btn btn-secondary btn-sm float-right clear_delivery_time clearlink"
                                     onclick="clearDelivery()">
@@ -72,7 +94,7 @@
                     </div>
                     <div class="card border-success mb-3">
                         <div class="card-header bg-success">
-                            <h3 class="float-left text-white h5">Niveau vendeur</h3>
+                            <h3 class="float-left text-white h5">Niveau du vendeur</h3>
                             <button class="btn btn-secondary btn-sm float-right clear_seller_level clearlink"
                                     onclick="clearLevel()">
                                 <i class="fa fa-times-circle"></i> Filtre
@@ -98,7 +120,7 @@
                         {% for proposal in proposalsSearch %}
                              <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 mb-3">
                                  <div class="proposal-card-base mp-proposal-card"><!--- proposal-card-base mp-proposal-card Starts --->
-                                     <a href="#">
+                                     <a href="{{ path('show_details_proposal',{sellerSlug: proposal.seller.slug, proposalSlug: proposal.slug }) }}">
                                          <img src="{{ asset('/uploads/images/'~proposal.proposalImages.first().getFileName()) }}" class="img-fluid">
                                      </a>
                                      <div class="proposal-card-caption"><!--- proposal-card-caption Starts --->
@@ -111,7 +133,7 @@
                                                  <div class="gig-seller-tooltip">{{ proposal.seller.level.name }}</div>
                                              </div>
                                          </div><!--- gig-seller-info Ends --->
-                                         <a href="#" class="proposal-link-main">
+                                         <a href="{{ path('show_details_proposal',{sellerSlug: proposal.seller.slug, proposalSlug: proposal.slug }) }}" class="proposal-link-main">
                                              <h3>{{ proposal.title }}</h3>
                                          </a>
                                          <div class="rating-badges-container">
@@ -124,6 +146,7 @@
                                                 ({{ proposal.views }})
                                                 </span>
                                             </span>
+                                             <span class="float-right" style="color: #b2b2b2;margin-right: 12px">{{ proposal.seller.pays.name }}</span>
                                          </div>
                                      </div><!--- proposal-card-caption Ends --->
                                      <footer class="proposal-card-footer"><!--- proposal-card-footer Starts --->
@@ -201,7 +224,15 @@
                 };
                 iKey++;
             });
-
+            var aInputs = $('li').find('.get_seller_country');
+            var country_seller = Array();
+            iKey = 0;
+            $.each(aInputs,function(key,oInput){
+                if(oInput.checked){
+                    country_seller[iKey] =  oInput.value
+                };
+                iKey++;
+            });
 
             $('#wait').addClass("loader");
 
@@ -211,7 +242,9 @@
                     json_online_seller: JSON.stringify(online_seller),
                     json_categories: JSON.stringify(categories),
                     json_delivery: JSON.stringify(delivery),
-                    json_level_seller: JSON.stringify(level_seller)},
+                    json_level_seller: JSON.stringify(level_seller),
+                    json_country_seller: JSON.stringify(country_seller)
+                },
                 type:'GET',
                 dataType: "JSON",
                 success:function(result){
@@ -221,13 +254,13 @@
                         $.each(result.proposals, function (key, proposal) {
                             _html +='<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 mb-3">\n' +
                                 '                                 <div class="proposal-card-base mp-proposal-card"><!--- proposal-card-base mp-proposal-card Starts --->\n' +
-                                '                                     <a href="#">\n' +
+                                '                                     <a href='+proposal.proposalUrl+'>\n' +
                                 '                                         <img src='+'/uploads/images/'+ proposal.proposalFirstImage +' class="img-fluid">\n' +
                                 '                                     </a>\n' +
                                 '                                     <div class="proposal-card-caption"><!--- proposal-card-caption Starts --->\n' +
                                 '                                         <div class="proposal-seller-info"><!--- gig-seller-info Starts --->\n' +
                                 '                                             <span class="fit-avatar s24">\n' +
-                                '                                                 <img src="'+ proposal.sellerAvatar+'" class="rounded-circle" width="32" height="32">\n' +
+                                '                                                 <img src='+'/uploads/images/'+ proposal.sellerAvatar+' class="rounded-circle" width="32" height="32">\n' +
                                 '                                                                                         </span>\n' +
                                 '                                             <div class="seller-info-wrapper">\n' +
                                 '                                                 <a href="#ashleytharma1" class="seller-name">'+ proposal.sellerName+'</a>\n' +
@@ -247,6 +280,8 @@
                                 '                                                ('+ proposal.proposalViews+')\n' +
                                 '                                                </span>\n' +
                                 '                                            </span>\n' +
+                                                                            '<span class="float-right" style="color: #b2b2b2;margin-right: 12px">'+ proposal.sellerCountry+'</span>'+
+
                                 '                                         </div>\n' +
                                 '                                     </div><!--- proposal-card-caption Ends --->\n' +
                                 '                                     <footer class="proposal-card-footer"><!--- proposal-card-footer Starts --->\n' +
@@ -287,6 +322,9 @@
         $('.get_seller_level').click(function(){
             get_search_proposals();
         });
+        $('.get_seller_country').click(function(){
+            get_search_proposals();
+        });
 
         $(document).ready(function(){
             $(".get_cat_id").click(function(){
@@ -313,6 +351,14 @@
                     $(".clear_seller_level").hide();
                 }
             });
+            $(".get_seller_country").click(function(){
+                if($(".get_seller_country:checked").length > 0 ) {
+                    $(".clear_seller_country").show();
+                }
+                else{
+                    $(".clear_seller_country").hide();
+                }
+            });
             $(".clear_cat_id").click(function(){
                 $(".clear_cat_id").hide();
             });
@@ -322,9 +368,10 @@
             $(".clear_seller_level").click(function(){
                 $(".clear_seller_level").hide();
             });
-            $(".clear_seller_language").click(function(){
-                $(".clear_seller_language").hide();
+            $(".clear_seller_country").click(function(){
+                $(".clear_seller_country").hide();
             });
+
         });
 
         function clearCat(){
@@ -338,6 +385,10 @@
         function clearLevel(){
             $('.get_seller_level').prop('checked',false);
             get_search_proposals();
+        }
+        function clearCountry(){
+            $('.get_seller_country').prop('checked',false);
+            get_category_proposals();
         }
 
     </script>

@@ -203,7 +203,7 @@ margin-right:-20px !important;
   border-radius:50%;
 }
 .proposal-reviews .active {
-  background: #00a64b !important;
+  background: #0066FF !important;
 }
 
 /***  Proposal Tags Styles ****/
@@ -234,15 +234,15 @@ margin-right:-20px !important;
 margin-bottom: 12px;
 }
 .btn-order.primary:hover, .btn-order.primary:hover, .btn-order.primary:focus, .btn-order.primary:active {
-background-color: #2ca35b;
+background-color: #0069ff;
 color:white;
 }
 .btn-order:hover, .btn-order:hover, .btn-order:focus, .btn-order:active {
 color:white;
 }
 .btn-order.primary{
--webkit-box-shadow: 0 2px 0 #2ca35b;
-box-shadow: 0 2px 0 #2ca35b;
+-webkit-box-shadow: 0 2px 0 #0069ff;
+box-shadow: 0 2px 0 #0069ff;
 position: relative;
 }
 .btn-order{
@@ -251,7 +251,7 @@ box-sizing: border-box;
 width: 100%;
 }
 .btn-order.primary{
-background-color: #27ae60;
+background-color: #0069ff;
 }
 .btn-order.referral{
 background-color: #0069ff;
@@ -260,7 +260,7 @@ background-color: #0069ff;
 background-color: #0052cc;
 }
 .btn-order.primary.added {
-background-color: #82b440e8;
+background-color: #0069ff;
 }
 .btn-order {
 background-color: #00CCBC;
