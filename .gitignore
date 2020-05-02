@@ -13,6 +13,8 @@ phpunit.xml.dist
 
 ###> symfony/webpack-encore-bundle ###
 /node_modules/
-.idea/*
+.idea
 ###< symfony/webpack-encore-bundle ###
 .env
+/public/bundles/
+/public/uploads/images
