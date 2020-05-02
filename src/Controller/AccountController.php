@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Admin\GeneralSetting;
 use App\Entity\ForgotPassword;
 use App\Entity\Language;
+use App\Entity\Proposal;
 use App\Entity\Skill;
 use App\Entity\User;
 use App\Form\AccountType;
@@ -30,11 +32,14 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class AccountController extends AbstractController
 {
     private $categories_yes;
+    private $generalSettings;
 
 
     public function __construct(EntityManagerInterface $manager)
     {
         $this->categories_yes = $manager->getRepository('App\Entity\Category')->findBy(array('featured' => true));
+        $this->generalSettings = $manager->getRepository(GeneralSetting::class)->findAll()[0];
+
 
     }
 
@@ -55,6 +60,8 @@ class AccountController extends AbstractController
             'hasError' => $error != null,
             'username' => $username,
             'categories_yes' => $this->categories_yes,
+            'generalSettings' => $this->generalSettings
+
         ]);
     }
 
@@ -125,7 +132,9 @@ class AccountController extends AbstractController
             'registrationForm' => $registrationForm->createView(),
             'categories_yes' => $this->categories_yes,
             'last_username' => $lastUsername,
-            'error' => $error
+            'error' => $error,
+             'generalSettings' => $this->generalSettings
+
 
         ]);
     }
@@ -193,14 +202,16 @@ class AccountController extends AbstractController
             $manager->flush();
         }
 
+        $status = Proposal::PROPOSAL_STATUS_ACTIVE;
+
+        $proposals = $manager->getRepository(Proposal::class)->getUserProposals($this->getUser()->getId() ,$status);
 
         return $this->render('seller/index.html.twig', [
             'user' => $this->getUser(),
             'categories_yes' => $this->categories_yes,
-            'formSkill' => $formSkill->createView(),
-            'formLanguage' => $formLanguage->createView()
-
-
+            'formSkill'      => $formSkill->createView(),
+            'formLanguage'   => $formLanguage->createView(),
+            'proposals'      => $proposals
         ]);
     }
     /**

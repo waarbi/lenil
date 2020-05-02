@@ -1,7 +1,7 @@
     <li class="logged-in-link">
         <a class="menuItem" href="#freelancers">
     <span class="gigtodo-icon nav-icon gigtodo-icon-relative">
-      <img width="135" src="{{ asset('/uploads/images/big-users.png') }}" style="width: 35px;height: 35px;top: -10px;">
+      <img width="135" src="{{ asset('/uploads/images/default/big-users.png') }}" style="width: 35px;height: 35px;top: -10px;">
     </span>
         </a>
     </li>
@@ -166,7 +166,7 @@
                 <div id="service" class="dropdown-submenu collapse">
                     <a class="dropdown-item" href="{{ path('create_proposal') }}">
                         Créer un service      </a>
-                    <a class="dropdown-item" href="#manage_contacts?my_sellers">
+                    <a class="dropdown-item" href="{{ path('proposal_index') }}">
                         Gérer vos services      </a>
                 </div>
 

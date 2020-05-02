@@ -95,7 +95,7 @@
 					
 					if(out.count>0){
 						if(_cat)
-					$('.search-articles h3').html(out.results[0].article_cat_title +' :');
+							$('.search-articles h3').html(out.results[0].article_cat_title +' :');
 				
 						for(o in out.results){
 		

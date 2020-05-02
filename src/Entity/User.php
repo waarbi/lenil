@@ -76,6 +76,10 @@ class User implements UserInterface
      */
     private $enabled = false;
     /**
+     * @ORM\Column(type="boolean")
+     */
+    private $online = true;
+    /**
      *@Assert\EqualTo(propertyPath="hash", message="Vous n'avez pas correctement confirmé votre mot de passe !")
      *
      */
@@ -101,7 +105,7 @@ class User implements UserInterface
      */
     private $comments;
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Demande", mappedBy="author", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Demande", mappedBy="auteur")
      */
     private $demandes;
     /**
@@ -114,6 +118,11 @@ class User implements UserInterface
      * @ORM\JoinColumn(nullable=true)
      */
     private $languages;
+    /**
+     * @ORM\ManyToOne(targetEntity="SellerLevel", inversedBy="users")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $level;
 
     public function getId(): ?int
     {
@@ -369,6 +378,22 @@ class User implements UserInterface
         $this->enabled = $enabled;
     }
 
+    /**
+     * @return bool
+     */
+    public function isOnline(): bool
+    {
+        return $this->online;
+    }
+
+    /**
+     * @param bool $online
+     */
+    public function setOnline(bool $online): void
+    {
+        $this->online = $online;
+    }
+
     public function addUserRole(Role $userRole): self
     {
         if (!$this->userRoles->contains($userRole)) {
@@ -537,6 +562,23 @@ class User implements UserInterface
         }
 
         return $this;
+    }
+
+    public function getLevel(): ?SellerLevel
+    {
+        return $this->level;
+    }
+
+    public function setLevel(?SellerLevel $level): self
+    {
+        $this->level = $level;
+
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->getFullName();
     }
 
 }

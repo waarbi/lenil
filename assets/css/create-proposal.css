@@ -15,7 +15,10 @@ background-color: white;
 border-bottom: 0px;
 
 }
-
+.img-fluid {
+    max-width: 100%;
+    height: 180px !important;
+}
 #tabs .nav-tabs .nav-link:not(active) {
     border: 0px solid transparent;
     border-top: 4.2px solid transparent;
@@ -214,7 +217,10 @@ line-height: 1.7;
     font-size: 12px;
     cursor: pointer;
 }
-
+#appbundle_proposal_price-error{
+    margin-top: 45px !important;
+    position: absolute !important;
+}
 .gallery .img {
     margin-top: 11px;
     width: 100%;

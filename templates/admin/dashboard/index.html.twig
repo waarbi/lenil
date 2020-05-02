@@ -26,7 +26,6 @@
 
     </div>
     <div class="container">
-        <h4 class="text-danger p-3">NB: MOST ITEMS ON THIS ADMIN PANEL HAVE BEEN DISABLED FOR SECURITY PURPOSES</h4>
         <div class="row">
 
             <div class="col-xl-3 col-lg-6 col-md-6">
@@ -45,10 +44,8 @@
 
                             <div class="col-9 text-right">
 
-                                <div class="huge">3  <span class="badge badge-danger">Proposals</span></div>
-                                Pending Approval
-
-
+                                <div class="huge">{{nbProposal}}<span class="badge badge-danger">Services</span></div>
+                                En attente de validation
                             </div>
 
 
@@ -64,7 +61,7 @@
 
                  <span class="float-left text-primary">
 
-                     View Details
+                     Voir détails
 
 
                  </span>
@@ -108,9 +105,9 @@
 
                             <div class="col-9 text-right">
 
-                                <div class="huge">748</div>
+                                <div class="huge">{{nbUser}}</div>
 
-                                <div class="text-caption">Users</div>
+                                <div class="text-caption">Utilisateurs</div>
 
                             </div>
 
@@ -124,7 +121,7 @@
 
                  <span class="float-left text-success">
 
-                     View Details
+                     Voir détails
 
                  </span>
 
@@ -183,7 +180,7 @@
 
                  <span class="float-left text-warning">
 
-                     View Details
+                     Voir détails
 
                  </span>
 
@@ -237,7 +234,7 @@
 
                  <span class="float-left text-danger">
 
-                     View Details
+                     Voir détails
 
                  </span>
 
@@ -307,17 +304,13 @@
                     <div class="card-body">
                         <div class="mx-auto d-block">
 
-
-                            <img class="rounded-circle mx-auto d-block" src="{{ asset('/uploads/images/'~user.picture) }}" alt="Card image cap" width="145px">
-
-
-
+                            <img class="rounded-circle mx-auto d-block" src="{{ asset('/uploads/images/default/'~user.picture) }}" alt="Card image cap" width="145px">
                             <h5 class="text-sm-center mt-2 mb-1">{{ user.fullname }}</h5>
                             <div class="location text-sm-center"><i class="fa fa-map-marker"></i> {{ user.pays.name }}</div>
                         </div>
                         <hr>
                         <div class="card-text text-sm-center">
-                            <span class="badge badge-success">ADMIN</span>
+                            <span class="badge badge-primary">ADMIN</span>
                         </div>
                     </div>
                 </div>

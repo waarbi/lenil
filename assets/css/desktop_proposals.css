@@ -52,7 +52,7 @@
     cursor: default;
 }
 .mp-gig-top-nav>nav li.selected a {
-    color: #00b8a9;
+    color: #0066FF;
 }
 .mp-gig-top-nav>nav li a:not(.btn) {
     font-size: 14px;
@@ -60,7 +60,7 @@
     line-height: 43px;
     font-weight: 400;
     display: inline-block;
-    color: #00b8a9;
+    color: #0066FF;
 }
 .mp-gig-top-nav>nav li .btn{
     margin-top: 7.5px;
@@ -71,14 +71,14 @@
     margin-top: -5px;
     margin-right: 1px;
     top: 3.5px;
-    fill: #00717c;
+    fill: #0066FF;
 }
 .mp-gig-top-nav>nav li .btn svg {
     position: relative;
     margin-top: -5px;
     margin-right: 1px;
     top: 5px;
-    fill: #00ccbc;
+    fill: #0066FF;
 }
 .mp-gig-top-nav>nav li.selected:after {
     content: '';
@@ -87,7 +87,7 @@
     left: 0;
     height: 4px;
     width: 100%;
-    background: #00b8a9;
+    background: #0066FF;
 }
 @media (max-width: 1200px) {
 .mp-gig-top-nav>nav li.center {
@@ -156,8 +156,8 @@ display: flex;
 
 .proposal-sidebar .nav-tabs .nav-link.active{
     
-    color:#1dbf73;
-    border-bottom: 2px solid #1dbf73;
+    color:#0066FF;
+    border-bottom: 2px solid #0066FF;
 
 }
 
@@ -418,7 +418,7 @@ margin-left: -6px;
     margin-top: 4px;
 }
 .proposal-card-base .proposal-link-main h3:hover{
-    color: #1dbf73;
+    color: #0066FF;
 }
 .proposal-card-base .proposal-link-main h3 {
 color: #303030;

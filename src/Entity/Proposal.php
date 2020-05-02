@@ -13,6 +13,14 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Proposal
 {
+    const PROPOSAL_STATUS_ACTIVE = 1; // active
+    const PROPOSAL_STATUS_PAUSE = 2; // supendue
+    const PROPOSAL_STATUS_INPROGRESS = 3; //en cours de validation
+    const PROPOSAL_STATUS_DECLINED = 4; // décline
+    const PROPOSAL_STATUS_MODIFICATION_REQUIRED = 5; // soumettre pour modification
+    const PROPOSAL_STATUS_TRUSH = 6; // dans la poubelle
+
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -34,19 +42,33 @@ class Proposal
      * @ORM\Column(type="string", length=255)
      */
     private $slug;
+    /**
+     * @ORM\Column(type="integer",name="status_id", nullable=true)
+     */
+    private $statusId = Proposal::PROPOSAL_STATUS_INPROGRESS;
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $featured = 0;
+    
+    /**
+     * @ORM\Column(type="boolean",nullable=true)
+     */
+    private $topRated;
 
     /**
-     * @ORM\Column(type="decimal", precision=5, scale=2)
+     * @ORM\Column(type="decimal")
      */
     private $price;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="integer", length=255, nullable=true)
      */
     private $views;
+    
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $rating;
 
@@ -84,6 +106,14 @@ class Proposal
      * @ORM\OneToMany(targetEntity="App\Entity\ProposalImage", mappedBy="proposal", orphanRemoval=true)
      */
     private $proposalImages;
+    
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $tags;
+
+
 
     public function __construct()
     {
@@ -143,24 +173,24 @@ class Proposal
         return $this;
     }
 
-    public function getViews(): ?string
+    public function getViews(): ?int
     {
         return $this->views;
     }
 
-    public function setViews(?string $views): self
+    public function setViews(?int $views): self
     {
         $this->views = $views;
 
         return $this;
     }
 
-    public function getRating(): ?string
+    public function getRating(): ?int
     {
         return $this->rating;
     }
 
-    public function setRating(?string $rating): self
+    public function setRating(?int $rating): self
     {
         $this->rating = $rating;
 
@@ -263,5 +293,56 @@ class Proposal
         return $this;
     }
 
+    public function getStatusId(): ?int
+    {
+        return $this->statusId;
+    }
+
+    public function setStatusId(?int $statusId): self
+    {
+        $this->statusId = $statusId;
+
+        return $this;
+    }
+    public function getFeatured(): ?bool
+    {
+        return $this->featured;
+    }
+
+    public function setFeatured(bool $featured): self
+    {
+        $this->featured = $featured;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTopRated()
+    {
+        return $this->topRated;
+    }
+
+    public function getTags(): ?string
+    {
+        return $this->tags;
+    }
+
+    public function setTags(?string $tags): self
+    {
+        $this->tags = $tags;
+
+        return $this;
+    }
+    
+
+    /**
+     * @param mixed $topRated
+     */
+    public function setTopRated($topRated): void
+    {
+        $this->topRated = $topRated;
+    }
 
 }

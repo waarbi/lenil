@@ -33,10 +33,8 @@ class Offer
     private $budget;
     /**
      * @var DeliveryTime
-     * @ORM\ManyToOne(targetEntity="Demande")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="demande", referencedColumnName="id")
-     * })
+     * @ORM\ManyToOne(targetEntity="Demande", inversedBy="offers")
+     * @ORM\JoinColumn(name="demande", referencedColumnName="id")
      */
     private  $demande;
 

@@ -1,9 +1,9 @@
 {% block stylesheets %}
 {% endblock %}
-    {% block title %}Lenyl | Plateforme des freelancers africains!{% endblock %}
+    {% block title %}{{ generalSettings.siteTitle }}{% endblock %}
 {% block meta %}
-    <meta name="description" content="Plateforme des freelancers africains"/>
-    <meta name="keywords" content="it senegal,developpeur, web, informatique, freelance afrique, projet diaspora"/>
+    <meta name="description" content="{{ generalSettings.siteDescription }}"/>
+    <meta name="keywords" content="{{ generalSettings.siteKeywords }}"/>
 {% endblock %}
 {% extends "base.html.twig" %}
 

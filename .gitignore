@@ -1,20 +1,33 @@
-/public/build/
+###> symfony/framework-bundle ###
+/.env
 
 /var/
-/vendor/*
+/var/log/
+/vendor/
 ###< symfony/framework-bundle ###
+
+###> Ignoring bin, except for SF console ###
+/bin/*
+!/bin/console
+###< Ignoring bin, except for SF console ###
 
 ###> symfony/phpunit-bridge ###
 .phpunit
 .phpunit.result.cache
-phpunit.xml.dist
+/phpunit.xml
+###< symfony/phpunit-bridge ###
 
-###< friendsofphp/php-cs-fixer ###
 
-###> symfony/webpack-encore-bundle ###
-/node_modules/
+###> OS/IDE file ###
+.DS_Store
 .idea
-###< symfony/webpack-encore-bundle ###
-.env
+.idea/workspace.xml
+*.iml
+###< OS/IDE file ###
+
+###> ASSETS ###
+/node_modules/
+/public/build/
 /public/bundles/
-/public/uploads/images
+/public/uploads
+###< ASSETS ###
