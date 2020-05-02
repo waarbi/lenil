@@ -7,7 +7,7 @@ namespace App\Controller\Admin;
 use App\Entity\Admin\UserSearchProperty;
 use App\Entity\Proposal;
 use App\Entity\User;
-use App\Form\Admin\UserSearchPropertyType;
+use App\Form\UserSearchPropertyType;
 use App\Services\PaginationService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

@@ -217,7 +217,10 @@ line-height: 1.7;
     font-size: 12px;
     cursor: pointer;
 }
-
+#appbundle_proposal_price-error{
+    margin-top: 45px !important;
+    position: absolute !important;
+}
 .gallery .img {
     margin-top: 11px;
     width: 100%;

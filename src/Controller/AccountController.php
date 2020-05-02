@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Admin\GeneralSetting;
 use App\Entity\ForgotPassword;
 use App\Entity\Language;
+use App\Entity\Proposal;
 use App\Entity\Skill;
 use App\Entity\User;
 use App\Form\AccountType;
@@ -201,13 +202,9 @@ class AccountController extends AbstractController
             $manager->flush();
         }
 
-        $qb = $manager->createQueryBuilder();
-        $proposals = $qb->add('select', 'p')
-            ->add('from', 'App\Entity\Proposal p')
-            ->add('where', 'p.seller = :seller')
-            ->setParameter('seller', $this->getUser())
-            ->getQuery()
-            ->getResult();
+        $status = Proposal::PROPOSAL_STATUS_ACTIVE;
+
+        $proposals = $manager->getRepository(Proposal::class)->getUserProposals($this->getUser()->getId() ,$status);
 
         return $this->render('seller/index.html.twig', [
             'user' => $this->getUser(),

@@ -192,10 +192,10 @@
 
             $("#appbundle_proposal_description").rules("add", {
                 required:true,
-                 // max: 255,
+                // max: 255,
                 messages: {
                     required: "Veuillez renseigner la description du service svp!",
-                     // max: "la description doit centenir 255 caractères"
+                    // max: "la description doit centenir 255 caractères"
                 }
             });
 
@@ -220,13 +220,13 @@
             $("#appbundle_proposal_deliveryTime").rules("add", {
                 required:true,
                 messages: {
-                    required: "Le délai de livraison est obligatoire !"
+                    required: "Veuillez saisir un ou des mot(s) clé(s)"
                 }
             });
             $("#appbundle_proposal_tags").rules("add", {
                 required:true,
                 messages: {
-                    required: "Veuillez saisir un ou des mot(s) clé(s) svp !"
+                    required: "V!"
                 }
             });
             var current_fs, next_fs, previous_fs;

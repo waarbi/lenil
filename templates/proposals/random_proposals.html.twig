@@ -35,12 +35,12 @@
                     <div class="card-header bg-success">
                         <h3 class="float-left text-white h5">Categories</h3>
                         <button class="btn btn-secondary btn-sm float-right clear_cat_id clearlink" onclick="clearCat()">
-                            <i class="fa fa-times-circle"></i> Effacer le filtre
+                            <i class="fa fa-times-circle"></i>filtre
                         </button>
                     </div>
                     <div class="card-body">
                         <ul class="nav flex-column">
-                            {% for category in categories_yes %}
+                            {% for category in filterCategories %}
                                 <li class="nav-item checkbox checkbox-success">
                                     <label>
                                         <input type="checkbox" value="{{ category.id }}" class="get_cat_id">
@@ -55,15 +55,15 @@
                     <div class="card-header bg-success">
                         <h3 class="float-left text-white h5">Heure de livraison</h3>
                         <button class="btn btn-secondary btn-sm float-right clear_delivery_time clearlink" onclick="clearDelivery()">
-                            <i class="fa fa-times-circle"></i> Effacer le filtre
+                            <i class="fa fa-times-circle"></i> filtre
                         </button>
                     </div>
                     <div class="card-body">
                         <ul class="nav flex-column">
-                            {% for delivery in delivery_times %}
+                            {% for delivery in filterDeliveryTimes %}
                                 <li class="nav-item checkbox checkbox-success">
                                     <label>
-                                        <input type="checkbox" value="1" class="get_delivery_time">
+                                        <input type="checkbox" value="{{ delivery.id }}" class="get_delivery_time">
                                         <span>Jusqu'à {{ delivery.name }}</span>
                                     </label>
                                 </li>
@@ -75,12 +75,12 @@
                     <div class="card-header bg-success">
                         <h3 class="float-left text-white h5">Niveau du vendeur</h3>
                         <button class="btn btn-secondary btn-sm float-right clear_seller_level clearlink" onclick="clearLevel()">
-                            <i class="fa fa-times-circle"></i> Effacer le filtre
+                            <i class="fa fa-times-circle"></i> filtre
                         </button>
                     </div>
                     <div class="card-body">
                         <ul class="nav flex-column">
-                            {% for level in levels %}
+                            {% for level in filterLevels %}
                                 <li class="nav-item checkbox checkbox-success">
                                     <label>
                                         <input type="checkbox" value="{{ level.id }}" class="get_seller_level">
@@ -91,29 +91,9 @@
                         </ul>
                     </div>
                 </div>
-                <div class="card border-success mb-3">
-                    <div class="card-header bg-success">
-                        <h3 class="float-left text-white h5">Language du vendeur</h3>
-                        <button class="btn btn-secondary btn-sm float-right clear_seller_language clearlink" onclick="clearLanguage()">
-                            <i class="fa fa-times-circle"></i> Effacer le filtre
-                        </button>
-                    </div>
-                    <div class="card-body">
-                        <ul class="nav flex-column">
-                            {% for language in languages %}
-                                <li class="nav-item checkbox checkbox-success">
-                                    <label>
-                                        <input type="checkbox" value="{{ language.id }}" class="get_seller_language">
-                                        <span>{{ language.name }} </span>
-                                    </label>
-                                </li>
-                            {% endfor %}
-                        </ul>
-                    </div>
-                </div>
             </div>
             <div class="col-lg-9 col-md-8 col-sm-12 ">
-                <div class="row flex-wrap" id="featured_proposals">
+                <div class="row flex-wrap" id="random_proposals">
                     {% for proposal in randomProposals %}
                         <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 mb-3">
                             <div class="proposal-card-base mp-proposal-card"><!--- proposal-card-base mp-proposal-card Starts --->
@@ -177,7 +157,7 @@
                                         <i data-id="3" href="#" class="fa fa-heart proposal-favorite dil1" data-toggle="tooltip" data-placement="top" title="" data-original-title="Favorite"></i>
                                     </div>
                                     <div class="proposal-price">
-                                        <a><small>STARTING AT</small>${{ proposal.price}}</a>
+                                        <a><small>A PARTIR DE</small>{{ proposal.price}} €</a>
                                     </div>
                                 </footer><!--- proposal-card-footer Ends --->
                             </div><!--- proposal-card-base mp-proposal-card Ends --->        </div>
@@ -209,6 +189,189 @@
 {% endblock %}
 
 {% block javascripts %}
+    <script type="application/javascript">
+        function get_search_proposals(){
+            var aInputs = $('li').find('.get_online_sellers');
+            var online_seller   = Array();
+            iKey = 0;
+            $.each(aInputs,function(key,oInput){
+                if(oInput.checked){
+                    online_seller[iKey] =  oInput.value
+                };
+                iKey++;
+            });
 
+
+            var aInputs = $('li').find('.get_cat_id');
+            var categories   = Array();
+            iKey = 0;
+            $.each(aInputs,function(key,oInput){
+                if(oInput.checked){
+                    categories[iKey] = oInput.value
+                };
+                iKey++;
+            });
+
+            var aInputs = $('li').find('.get_delivery_time');
+            var delivery   = Array();
+            iKey = 0;
+            $.each(aInputs,function(key,oInput){
+                if(oInput.checked){
+                    delivery[iKey] =  oInput.value
+                };
+                iKey++;
+            });
+
+
+            var aInputs = $('li').find('.get_seller_level');
+            var level_seller = Array();
+            iKey = 0;
+            $.each(aInputs,function(key,oInput){
+                if(oInput.checked){
+                    level_seller[iKey] =  oInput.value
+                };
+                iKey++;
+            });
+
+
+            $('#wait').addClass("loader");
+
+            $.ajax({
+                url:"{{ path('load_search_random_proposals') }}",
+                data: {
+                    json_online_seller: JSON.stringify(online_seller),
+                    json_categories: JSON.stringify(categories),
+                    json_delivery: JSON.stringify(delivery),
+                    json_level_seller: JSON.stringify(level_seller)},
+                type:'GET',
+                dataType: "JSON",
+                success:function(result){
+                    console.log(result);
+                    $('#random_proposals').html('');
+                    _html = '';
+                    if (result.count_proposals > 0){
+                        $.each(result.proposals, function (key, proposal) {
+                            _html +='<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 mb-3">\n' +
+                                '                                 <div class="proposal-card-base mp-proposal-card"><!--- proposal-card-base mp-proposal-card Starts --->\n' +
+                                '                                     <a href="#">\n' +
+                                '                                         <img src='+'/uploads/images/'+ proposal.proposalFirstImage +' class="img-fluid">\n' +
+                                '                                     </a>\n' +
+                                '                                     <div class="proposal-card-caption"><!--- proposal-card-caption Starts --->\n' +
+                                '                                         <div class="proposal-seller-info"><!--- gig-seller-info Starts --->\n' +
+                                '                                             <span class="fit-avatar s24">\n' +
+                                '                                                 <img src="'+ proposal.sellerAvatar+'" class="rounded-circle" width="32" height="32">\n' +
+                                '                                                                                         </span>\n' +
+                                '                                             <div class="seller-info-wrapper">\n' +
+                                '                                                 <a href="#ashleytharma1" class="seller-name">'+ proposal.sellerName+'</a>\n' +
+                                '                                                 <div class="gig-seller-tooltip">'+ proposal.sellerLevel+'</div>\n' +
+                                '                                             </div>\n' +
+                                '                                         </div><!--- gig-seller-info Ends --->\n' +
+                                '                                         <a href='+proposal.proposalUrl+' class="proposal-link-main">\n' +
+                                '                                             <h3>'+ proposal.proposalTitle+'</h3>\n' +
+                                '                                         </a>\n' +
+                                '                                         <div class="rating-badges-container">\n' +
+                                '                                            <span class="proposal-rating">\n' +
+                                '                                                <svg class="fit-svg-icon full_star" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg" width="15" height="15">\n' +
+                                '                                                    <path d="M1728 647q0 22-26 48l-363 354 86 500q1 7 1 20 0 21-10.5 35.5t-30.5 14.5q-19 0-40-12l-449-236-449 236q-22 12-40 12-21 0-31.5-14.5t-10.5-35.5q0-6 2-20l86-500-364-354q-25-27-25-48 0-37 56-46l502-73 225-455q19-41 49-41t49 41l225 455 502 73q56 9 56 46z"></path>\n' +
+                                '                                                 </svg>\n' +
+                                '                                                <span>\n' +
+                                '                                                <strong>'+ proposal.proposalRating+'</strong>\n' +
+                                '                                                ('+ proposal.proposalViews+')\n' +
+                                '                                                </span>\n' +
+                                '                                            </span>\n' +
+                                '                                         </div>\n' +
+                                '                                     </div><!--- proposal-card-caption Ends --->\n' +
+                                '                                     <footer class="proposal-card-footer"><!--- proposal-card-footer Starts --->\n' +
+                                '\n' +
+                                '                                         <div class="proposal-fav">\n' +
+                                '                                             <a href="#" data-toggle="modal" data-target="#login-modal">\n' +
+                                '                                                 <i class="fa fa-heart dil1" data-toggle="tooltip" data-placement="top" title="Favorite"></i>\n' +
+                                '                                             </a>\n' +
+                                '                                         </div>\n' +
+                                '\n' +
+                                '                                         <div class="proposal-price">\n' +
+                                '                                             <a class="js-proposal-card-imp-data">\n' +
+                                '                                                 <small>A PARTIR DE</small>'+ proposal.proposalPrice+' €</a>\n' +
+                                '                                         </div>\n' +
+                                '                                     </footer><!--- proposal-card-footer Ends --->\n' +
+                                '                                 </div>\n' +
+                                '                        </div>';
+                        });
+                    }else {
+                        _html +='<div class=\'col-md-12\'>\n<h1 class=\'text-center mt-4\'><i class=\'fa fa-meh-o\'></i> Nous n\'avons trouvé aucun service correspondant à cette recherche </h1>\n</div>';
+                    }
+                    $('#random_proposals').html(_html);
+                    $('#wait').removeClass("loader");
+                }
+            });
+
+        }
+
+        $('.get_online_sellers').click(function(){
+            get_search_proposals();
+        });
+        $('.get_cat_id').click(function(){
+            get_search_proposals();
+        });
+        $('.get_delivery_time').click(function(){
+            get_search_proposals();
+        });
+        $('.get_seller_level').click(function(){
+            get_search_proposals();
+        });
+
+        $(document).ready(function(){
+            $(".get_cat_id").click(function(){
+                if($(".get_cat_id:checked").length > 0 ) {
+                    $(".clear_cat_id").show();
+                }
+                else{
+                    $(".clear_cat_id").hide();
+                }
+            });
+            $(".get_delivery_time").click(function(){
+                if($(".get_delivery_time:checked").length > 0 ) {
+                    $(".clear_delivery_time").show();
+                }
+                else{
+                    $(".clear_delivery_time").hide();
+                }
+            });
+            $(".get_seller_level").click(function(){
+                if($(".get_seller_level:checked").length > 0 ) {
+                    $(".clear_seller_level").show();
+                }
+                else{
+                    $(".clear_seller_level").hide();
+                }
+            });
+            $(".clear_cat_id").click(function(){
+                $(".clear_cat_id").hide();
+            });
+            $(".clear_delivery_time").click(function(){
+                $(".clear_delivery_time").hide();
+            });
+            $(".clear_seller_level").click(function(){
+                $(".clear_seller_level").hide();
+            });
+            $(".clear_seller_language").click(function(){
+                $(".clear_seller_language").hide();
+            });
+        });
+
+        function clearCat(){
+            $('.get_cat_id').prop('checked',false);
+            get_search_proposals();
+        }
+        function clearDelivery(){
+            $('.get_delivery_time').prop('checked',false);
+            get_search_proposals();
+        }
+        function clearLevel(){
+            $('.get_seller_level').prop('checked',false);
+            get_search_proposals();
+        }
+
+    </script>
 
 {% endblock %}

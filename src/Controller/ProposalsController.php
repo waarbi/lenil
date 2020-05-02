@@ -40,15 +40,7 @@ class ProposalsController extends AbstractController
         $this->session = $session;
         $this->userRepo = $manager->getRepository(User::class);
     }
-    /**
-     * @Route("/", name="my_proposals")
-     */
-//    public function index()
-//    {
-//        return $this->render('proposals/index.html.twig', [
-//            'categories_yes' => $this->categories_yes
-//        ]);
-//    }
+
 
     /**
      * @Route("/uploadproposalimagehandler", name="uploadproposalimagehandler")
@@ -124,34 +116,67 @@ class ProposalsController extends AbstractController
     }
 
     /**
+     * @Route("/{id}/edit/proposal", name="edit_proposal", methods={"GET","POST"}))
+     * @param Proposal $proposal
+     * @param Request $request
+     * @param EntityManagerInterface $manager
+     * @return void
+     */
+    public function edit(Proposal $proposal, Request $request, EntityManagerInterface $manager):Response
+    {
+        $form = $this->createForm(ProposalType::class, $proposal);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $proposal->setSeller($this->getUser());
+            $manager->flush();
+            $this->addFlash('success', 'Le service a été bien modifiée');
+
+            return $this->redirectToRoute('proposal_index');
+        }
+
+        return $this->render('proposals/edit_proposal.html.twig', [
+            'proposal' => $proposal,
+            'form' => $form->createView(),
+            'categories_yes' => $this->categories_yes,
+        ]);
+    }
+
+    /**
      * @Route("/featured", name="featured_proposals")
      * @param EntityManagerInterface $manager
      * @return Response
      */
     public function featured_proposals(EntityManagerInterface $manager) :Response
     {
+        $status = Proposal::PROPOSAL_STATUS_ACTIVE;
+        $featuredProposals = $manager->getRepository(Proposal::class)->getFeaturedProposals($status);
 
-        $featuredProposals = $manager->getRepository(Proposal::class)->findBy(array('featured' => true));
-        $delivery_times = $manager->getRepository(DeliveryTime::class)->findAll();
-        $levels = $manager->getRepository(Level::class)->findAll();
-        $languages = $manager->getRepository(LanguageName::class)->findAll();
-//        $qb = $manager->createQueryBuilder();
-//        $qb = $manager->createQueryBuilder();
-//        $seller_laganges = $qb->add('select', 'p')
-//            ->add('from', 'App\Entity\Level l')
-//            ->join('App\Entity\Level l')
-//            ->add('where', 'p.seller = :seller')
-//            ->setParameter('seller', $this->getUser())
-//            ->andWhere('p.featured = true')
-//            ->getQuery()
-//            ->getResult();
-        return $this->render('proposals/featured_proposals.html.twig', [
+        $deliveyTimes  = array();
+            $categories  = array();
+            $sellers = array();
+            $levelsUsers = array();
+
+            foreach ($featuredProposals as $proposal){
+                /**@var Proposal $proposal  */
+                $deliveyTimes [] = $proposal->getDeliveryTime();
+                $categories [] = $proposal->getCategory();
+                $sellers [] = $proposal->getSeller();
+            }
+
+            foreach (array_unique($sellers) as $user){
+                /**@var User $user */
+                $levelsUsers [] = $user->getLevel();
+            }
+
+        return $this->render('proposals/featured_proposals.html.twig', array(
             'featuredProposals' => $featuredProposals,
-            'categories_yes'    => $this->categories_yes,
-            'delivery_times'    => $delivery_times,
-            'levels'            => $levels,
-            'languages'          => $languages
-        ]);
+            'filterCategories' => array_unique($categories),
+            'filterDeliveryTimes' =>array_unique($deliveyTimes),
+            'filterLevels' => array_unique($levelsUsers),
+            'categories_yes' =>  $this->categories_yes,
+        ));
+
     }
 
     /**
@@ -162,27 +187,33 @@ class ProposalsController extends AbstractController
     public function top_proposals(EntityManagerInterface $manager) :Response
     {
 
-        $topProposals = $manager->getRepository(Proposal::class)->findBy(array('statusId' => Proposal::REQUEST_STATUS_ACTIVE,'seller'=>$this->getUser()->getId(), 'level'=> 3));
+        $status = Proposal::PROPOSAL_STATUS_ACTIVE;
+        $topProposals = $manager->getRepository(Proposal::class)->getTopProposals($status);
 
-        $delivery_times = $manager->getRepository(DeliveryTime::class)->findAll();
-        $levels = $manager->getRepository(Level::class)->findAll();
-        $languages = $manager->getRepository(LanguageName::class)->findAll();
-//        $qb = $manager->createQueryBuilder();
-//        $qb = $manager->createQueryBuilder();
-//        $seller_laganges = $qb->add('select', 'p')
-//            ->add('from', 'App\Entity\Level l')
-//            ->join('App\Entity\Level l')
-//            ->add('where', 'p.seller = :seller')
-//            ->setParameter('seller', $this->getUser())
-//            ->andWhere('p.featured = true')
-//            ->getQuery()
-//            ->getResult();
+        $deliveyTimes  = array();
+        $categories  = array();
+        $sellers = array();
+        $levelsUsers = array();
+
+        foreach ($topProposals as $proposal){
+            /**@var Proposal $proposal  */
+            $deliveyTimes [] = $proposal->getDeliveryTime();
+            $categories [] = $proposal->getCategory();
+            $sellers [] = $proposal->getSeller();
+        }
+
+        foreach (array_unique($sellers) as $user){
+            /**@var User $user */
+            $levelsUsers [] = $user->getLevel();
+        }
+
+
         return $this->render('proposals/top_proposals.html.twig', [
             'topProposals' => $topProposals,
-            'categories_yes'    => $this->categories_yes,
-            'delivery_times'    => $delivery_times,
-            'levels'            => $levels,
-            'languages'          => $languages
+            'filterCategories' => array_unique($categories),
+            'filterDeliveryTimes' =>array_unique($deliveyTimes),
+            'filterLevels' => array_unique($levelsUsers),
+            'categories_yes' =>  $this->categories_yes,
         ]);
     }
 
@@ -199,31 +230,34 @@ class ProposalsController extends AbstractController
     public function random_proposals(EntityManagerInterface $manager) :Response
     {
 
-        $repo = $manager->getRepository(Proposal::class);
-        $status = Proposal::REQUEST_STATUS_ACTIVE;
-        $quantity = 8; // We only want 5 rows (however think in increase this value if you have previously removed rows on the table)
-        $totalRowsTable = $repo->createQueryBuilder('p')->select('count(p.id)')
-            ->add('where', 'p.seller = :seller')
-            ->setParameter('seller', $this->getUser())
-            ->andwhere('p.statusId ='.$status)->getQuery()->getSingleScalarResult();
-        // This will be in this case 10 because i have 10 records on this table
-        $random_ids = $this->UniqueRandomNumbersWithinRange(1,$totalRowsTable,$quantity);
-        $randomProposals = $repo->createQueryBuilder('a')
-            ->where('a.id IN (:ids)') // if is another field, change it
-            ->setParameter('ids', $random_ids)
-            ->setMaxResults(8)// Add this line if you want to give a limit to the records (if all the ids exists then you would like to give a limit)
-            ->getQuery()
-            ->getResult();
-        $delivery_times = $manager->getRepository(DeliveryTime::class)->findAll();
-        $levels = $manager->getRepository(Level::class)->findAll();
-        $languages = $manager->getRepository(LanguageName::class)->findAll();
+        $status = Proposal::PROPOSAL_STATUS_ACTIVE;
+        $randomProposals = $manager->getRepository(Proposal::class)->getRandomProposals($status);
+
+        $deliveyTimes  = array();
+        $categories  = array();
+        $sellers = array();
+        $levelsUsers = array();
+
+        foreach ($randomProposals as $proposal){
+            /**@var Proposal $proposal  */
+            $deliveyTimes [] = $proposal->getDeliveryTime();
+            $categories [] = $proposal->getCategory();
+            $sellers [] = $proposal->getSeller();
+        }
+
+        foreach (array_unique($sellers) as $user){
+            /**@var User $user */
+            $levelsUsers [] = $user->getLevel();
+        }
+
+
 
         return $this->render('proposals/random_proposals.html.twig', [
             'randomProposals' => $randomProposals,
-            'categories_yes'    => $this->categories_yes,
-            'delivery_times'    => $delivery_times,
-            'levels'            => $levels,
-            'languages'          => $languages
+            'filterCategories' => array_unique($categories),
+            'filterDeliveryTimes' =>array_unique($deliveyTimes),
+            'filterLevels' => array_unique($levelsUsers),
+            'categories_yes' =>  $this->categories_yes,
         ]);
     }
 
@@ -236,20 +270,213 @@ class ProposalsController extends AbstractController
     public function index(ProposalRepository $proposalRepository): Response
     {
 
-        $proposalsActives = $proposalRepository->findBy(array('statusId' => Proposal::REQUEST_STATUS_ACTIVE,'seller'=>$this->getUser()->getId()));
-        $proposalsEncours = $proposalRepository->findBy(array('statusId' => Proposal::REQUEST_STATUS_INPROGRESS,'seller'=>$this->getUser()->getId()));
-        $proposalsSuspendues = $proposalRepository->findBy(array('statusId' => Proposal::REQUEST_STATUS_INACTIVE,'seller'=>$this->getUser()->getId()));
-        $proposalsAnnulees = $proposalRepository->findBy(array('statusId' => Proposal::REQUEST_STATUS_CANCELLED,'seller'=>$this->getUser()->getId()));
-
-
+        $proposalsActives = $proposalRepository->findBy(array('statusId' => Proposal::PROPOSAL_STATUS_ACTIVE,'seller'=>$this->getUser()->getId()));
+        $proposalsEncours = $proposalRepository->findBy(array('statusId' => Proposal::PROPOSAL_STATUS_INPROGRESS,'seller'=>$this->getUser()->getId()));
+        $proposalsSuspendues = $proposalRepository->findBy(array('statusId' => Proposal::PROPOSAL_STATUS_PAUSE,'seller'=>$this->getUser()->getId()));
+        $proposalsAnnulees = $proposalRepository->findBy(array('statusId' => Proposal::PROPOSAL_STATUS_TRUSH,'seller'=>$this->getUser()->getId()));
+        $proposalsAmodifier = $proposalRepository->findBy(array('statusId' => Proposal::PROPOSAL_STATUS_MODIFICATION_REQUIRED,'seller'=>$this->getUser()->getId()));
+        $proposalsDeclined = $proposalRepository->findBy(array('statusId' => Proposal::PROPOSAL_STATUS_DECLINED,'seller'=>$this->getUser()->getId()));
 
         return $this->render('proposals/index.html.twig', [
-            'categories_yes' => $this->categories_yes,
-            'proposalsActives' => $proposalsActives,
-            'proposalsEncours' => $proposalsEncours,
-            'proposalsSuspendues' => $proposalsSuspendues,
-            'proposalsAnnulees' => $proposalsAnnulees
-
+            'categories_yes'         => $this->categories_yes,
+            'proposalsActives'       => $proposalsActives,
+            'proposalsEncours'       => $proposalsEncours,
+            'proposalsSuspendues'    => $proposalsSuspendues,
+            'proposalsAnnulees'      => $proposalsAnnulees,
+            'proposalsAmodifier'     => $proposalsAmodifier,
+            'proposalsDeclined'      => $proposalsDeclined,
         ]);
+    }
+
+    /**
+     * @Route("/load/featured-proposal/search", name="load_search_featured_proposals")
+     * @param EntityManagerInterface $manager
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function loadSearchFeaturedProposal(EntityManagerInterface $manager, Request $request)
+    {
+
+        $onlineFilter = json_decode($request->get('json_online_seller'));
+        $categoriesFilter = json_decode($request->get('json_categories'));
+        $deliveryFilter = json_decode($request->get('json_delivery'));
+        $levelFilter = json_decode($request->get('json_level_seller'));
+        $status = Proposal::PROPOSAL_STATUS_ACTIVE;
+
+        $proposals = $manager->getRepository(Proposal::class)->loadSearchFeaturedProposal($onlineFilter,$categoriesFilter,$deliveryFilter,$levelFilter, $status);
+
+        $results = array(
+            "count_proposals" => 0,
+            "proposals" => array(),
+        );
+        $proposalsArrayResult = array();
+        foreach($proposals as $proposal){
+            /**@var Proposal $proposal */
+            $proposalsArrayResult [] = array(
+                "proposalFirstImage" => $proposal->getProposalImages()[0]->getFileName(),
+                "sellerAvatar" => $proposal->getSeller()->getPicture(),
+                "sellerName" => $proposal->getSeller()->getFullName(),
+                "sellerLevel" => $proposal->getSeller()->getLevel()->getName(),
+                "proposalTitle" => $proposal->getTitle(),
+                "proposalRating" => $proposal->getRating()? $proposal->getRating():'',
+                "proposalViews" => $proposal->getViews() ? $proposal->getViews():'',
+                "proposalPrice" => $proposal->getPrice(),
+                "proposalUrl" => '/proposal/'.$proposal->getSlug(),
+            );
+        }
+        $results = array(
+            "count_proposals" => count($proposalsArrayResult),
+            "proposals" => $proposalsArrayResult,
+        );
+        return new JsonResponse($results);
+    }
+
+    /**
+     * @Route("/load/top-proposal/search", name="load_search_top_proposals")
+     * @param EntityManagerInterface $manager
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function loadSearchTopProposal(EntityManagerInterface $manager, Request $request)
+    {
+
+        $onlineFilter = json_decode($request->get('json_online_seller'));
+        $categoriesFilter = json_decode($request->get('json_categories'));
+        $deliveryFilter = json_decode($request->get('json_delivery'));
+        $levelFilter = json_decode($request->get('json_level_seller'));
+        $status = Proposal::PROPOSAL_STATUS_ACTIVE;
+
+        $proposals = $manager->getRepository(Proposal::class)->loadSearchTopProposal($onlineFilter,$categoriesFilter,$deliveryFilter,$levelFilter, $status);
+
+        $results = array(
+            "count_proposals" => 0,
+            "proposals" => array(),
+        );
+        $proposalsArrayResult = array();
+        foreach($proposals as $proposal){
+            /**@var Proposal $proposal */
+            $proposalsArrayResult [] = array(
+                "proposalFirstImage" => $proposal->getProposalImages()[0]->getFileName(),
+                "sellerAvatar" => $proposal->getSeller()->getPicture(),
+                "sellerName" => $proposal->getSeller()->getFullName(),
+                "sellerLevel" => $proposal->getSeller()->getLevel()->getName(),
+                "proposalTitle" => $proposal->getTitle(),
+                "proposalRating" => $proposal->getRating()? $proposal->getRating():'',
+                "proposalViews" => $proposal->getViews() ? $proposal->getViews():'',
+                "proposalPrice" => $proposal->getPrice(),
+                "proposalUrl" => '/proposal/'.$proposal->getSlug(),
+            );
+        }
+        $results = array(
+            "count_proposals" => count($proposalsArrayResult),
+            "proposals" => $proposalsArrayResult,
+        );
+        return new JsonResponse($results);
+    }
+
+    /**
+     * @Route("/load/random-proposal/search", name="load_search_random_proposals")
+     * @param EntityManagerInterface $manager
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function loadSearchRandomProposal(EntityManagerInterface $manager, Request $request)
+    {
+
+        $onlineFilter = json_decode($request->get('json_online_seller'));
+        $categoriesFilter = json_decode($request->get('json_categories'));
+        $deliveryFilter = json_decode($request->get('json_delivery'));
+        $levelFilter = json_decode($request->get('json_level_seller'));
+        $status = Proposal::PROPOSAL_STATUS_ACTIVE;
+
+        $proposals = $manager->getRepository(Proposal::class)->loadSearchRandomProposal($onlineFilter,$categoriesFilter,$deliveryFilter,$levelFilter, $status);
+
+        $results = array(
+            "count_proposals" => 0,
+            "proposals" => array(),
+        );
+        $proposalsArrayResult = array();
+        foreach($proposals as $proposal){
+            /**@var Proposal $proposal */
+            $proposalsArrayResult [] = array(
+                "proposalFirstImage" => $proposal->getProposalImages()[0]->getFileName(),
+                "sellerAvatar" => $proposal->getSeller()->getPicture(),
+                "sellerName" => $proposal->getSeller()->getFullName(),
+                "sellerLevel" => $proposal->getSeller()->getLevel()->getName(),
+                "proposalTitle" => $proposal->getTitle(),
+                "proposalRating" => $proposal->getRating()? $proposal->getRating():'',
+                "proposalViews" => $proposal->getViews() ? $proposal->getViews():'',
+                "proposalPrice" => $proposal->getPrice(),
+                "proposalUrl" => '/proposal/'.$proposal->getSlug(),
+            );
+        }
+        $results = array(
+            "count_proposals" => count($proposalsArrayResult),
+            "proposals" => $proposalsArrayResult,
+        );
+        return new JsonResponse($results);
+    }
+
+    /**
+     * @Route("/{id}", name="proposal_delete")
+     * @param Proposal $proposal
+     * @return Response
+     */
+    public function delete(Proposal $proposal): Response
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($proposal);
+        $entityManager->flush();
+        $this->addFlash('success', 'Le service a été bien supprimé');
+
+        return $this->redirectToRoute('proposal_index');
+    }
+
+    /**
+     * @Route("/desactiver/{id}", name="disable_proposal")
+     * @param Proposal $proposal
+     * @return Response
+     */
+    public function disableService(Proposal $proposal): Response
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $proposal->setStatusId(Proposal::PROPOSAL_STATUS_PAUSE);
+        $entityManager->persist($proposal);
+        $entityManager->flush();
+        $this->addFlash('success', 'Le service a été bien suspendue');
+
+        return $this->redirectToRoute('proposal_index');
+    }
+
+    /**
+     * @Route("/activer/{id}", name="enable_proposal")
+     * @param Proposal $proposal
+     * @return Response
+     */
+    public function enableService(Proposal $proposal): Response
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $proposal->setStatusId(Proposal::PROPOSAL_STATUS_ACTIVE);
+        $entityManager->persist($proposal);
+        $entityManager->flush();
+        $this->addFlash('success', 'Le service a été bien activé');
+
+        return $this->redirectToRoute('proposal_index');
+    }
+
+    /**
+     * @Route("/make/featured/{id}", name="make_featured_proposal")
+     * @param Proposal $proposal
+     * @return Response
+     */
+    public function makeServiceFeatured(Proposal $proposal): Response
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $proposal->setFeatured(true);
+        $entityManager->persist($proposal);
+        $entityManager->flush();
+        $this->addFlash('success', 'Le service a été bien mis en vedette');
+
+        return $this->redirectToRoute('proposal_index');
     }
 }

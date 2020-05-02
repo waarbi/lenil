@@ -49,7 +49,7 @@ class Proposal
     /**
      * @ORM\Column(type="boolean")
      */
-    private $featured = false;
+    private $featured = 0;
     
     /**
      * @ORM\Column(type="boolean",nullable=true)

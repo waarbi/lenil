@@ -200,7 +200,7 @@
                                         <i data-id="3" href="#" class="fa fa-heart proposal-favorite dil1" data-toggle="tooltip" data-placement="top" title="" data-original-title="Favorite"></i>
                                     </div>
                                     <div class="proposal-price">
-                                        <a><small>STARTING AT</small>${{ proposal.price}}</a>
+                                        <a><small>A PARTIR DE</small>{{ proposal.price}} €</a>
                                     </div>
                                 </footer><!--- proposal-card-footer Ends --->
                             </div><!--- proposal-card-base mp-proposal-card Ends --->        </div>
@@ -275,15 +275,14 @@
 
                                             </svg>
                                         </a>
-
-
                                         <i data-id="3" href="#" class="fa fa-heart proposal-favorite dil1" data-toggle="tooltip" data-placement="top" title="" data-original-title="Favorite"></i>
                                     </div>
                                     <div class="proposal-price">
-                                        <a><small>STARTING AT</small>${{ top_proposal.price}}</a>
+                                        <a><small>A PARTIR DE</small>{{ top_proposal.price}} €</a>
                                     </div>
                                 </footer><!--- proposal-card-footer Ends --->
-                            </div><!--- proposal-card-base mp-proposal-card Ends --->        </div>
+                            </div><!--- proposal-card-base mp-proposal-card Ends --->
+                        </div>
                     {% endfor %}
                 </div>
 
@@ -359,7 +358,7 @@
                                         <i data-id="3" href="#" class="fa fa-heart proposal-favorite dil1" data-toggle="tooltip" data-placement="top" title="" data-original-title="Favorite"></i>
                                     </div>
                                     <div class="proposal-price">
-                                        <a><small>STARTING AT</small>${{ random_proposal.price}}</a>
+                                        <a><small>A PARTIR DE</small>${{ random_proposal.price}} €</a>
                                     </div>
                                 </footer><!--- proposal-card-footer Ends --->
                             </div><!--- proposal-card-base mp-proposal-card Ends --->

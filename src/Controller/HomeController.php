@@ -40,11 +40,7 @@ class HomeController extends AbstractController
 
     }
 
-    function UniqueRandomNumbersWithinRange($min, $max, $quantity) {
-        $numbers = range($min, $max);
-        shuffle($numbers);
-        return array_slice($numbers, 0, $quantity);
-    }
+
     /**
      * @Route("/", name="homepage", methods={"GET","POST"})
      * @param EntityManagerInterface $manager
@@ -110,34 +106,12 @@ class HomeController extends AbstractController
             $demandesActives = $manager->getRepository('App\Entity\Demande')->findAllActivesDemandeOfOthersUsers($this->getUser()->getId());
             $proposals = $manager->getRepository(Proposal::class)->findBySeller($this->getUser()->getId());
             $sliders = $manager->getRepository(LandingPageSlide::class)->findBy(array('onHomePageSeller' => true));
-            $qb = $manager->createQueryBuilder();
-            $featuredProposals = $qb->add('select', 'p')
-                ->add('from', 'App\Entity\Proposal p')
-                ->add('where', 'p.seller = :seller')
-                ->setParameter('seller', $this->getUser())
-                ->andWhere('p.featured = true')
-                ->setMaxResults(8)
-                ->getQuery()
-                ->getResult();
 
-            $topProposals = $manager->getRepository(Proposal::class)->findBy(array('statusId' => Proposal::REQUEST_STATUS_ACTIVE,'seller'=>$this->getUser()->getId(), 'level'=> 3));
-
-            $repo = $manager->getRepository(Proposal::class);
-            $status = Proposal::REQUEST_STATUS_ACTIVE;
-            $quantity = 8;
-
-            $totalRowsTable = $repo->createQueryBuilder('p')->select('count(p.id)')
-                                    ->add('where', 'p.seller = :seller')
-                                    ->setParameter('seller', $this->getUser())
-                                    ->andwhere('p.statusId ='.$status)->getQuery()->getSingleScalarResult();
-            $random_ids = $this->UniqueRandomNumbersWithinRange(1,$totalRowsTable,$quantity);
-
-            $randomProposals = $repo->createQueryBuilder('a')
-                ->where('a.id IN (:ids)') // if is another field, change it
-                ->setParameter('ids', $random_ids)
-                ->setMaxResults(8)
-                ->getQuery()
-                ->getResult();
+            $status = Proposal::PROPOSAL_STATUS_ACTIVE;
+            $maxResult = 8;
+            $featuredProposals = $manager->getRepository(Proposal::class)->getFeaturedProposals($status, $maxResult);
+            $topProposals = $manager->getRepository(Proposal::class)->getTopProposals($status, $maxResult);
+            $randomProposals = $manager->getRepository(Proposal::class)->getRandomProposals($status, $maxResult);
 
             return $this->render('home_seller.html.twig',
                 array(

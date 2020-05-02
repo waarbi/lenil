@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Form\Admin;
+namespace App\Form;
 
 use App\Entity\Category;
 use App\Entity\DeliveryTime;
