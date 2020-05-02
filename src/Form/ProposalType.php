@@ -39,38 +39,28 @@ class ProposalType extends AbstractType
         $builder->addEventListener(FormEvents::PRE_SUBMIT, array($this, 'onPreSubmit'));
 
         $builder
-            ->add(
-                'title',
-                TextType::class,
+            ->add('title', TextType::class,
                 [
                     'required' => true,
                     'label' => 'Titre',
                     'attr' => ['class' => 'form-control', 'autofocus' =>true]
                 ]
             )
-
-            ->add(
-                'description',
-                TextareaType::class,
+            ->add('description', TextareaType::class,
                 [
                     'label' => 'Description',
                     'required' => false,
                     'attr' => ['class' => 'form-control']
                 ]
             )
-//            ->add(
-//                'slug',
-//                TextType::class,
-//                [
-//                    'constraints' => [new NotBlank()],
-//                    'label' => 'Lien vers le service',
-//                    'required' => false,
-//                    'attr' => ['class' => 'form-control']
-//                ]
-//            )
-            ->add(
-                'price',
-                NumberType::class,
+            ->add('tags', TextType::class,
+                [
+                    'required' => true,
+                    'label' => 'Tags',
+                    'attr' => ['class' => 'form-control']
+                ]
+            )
+            ->add('price', NumberType::class,
                 [
                     'label' => 'Prix',
                     'required' => true,

@@ -47,9 +47,10 @@ class Proposal
      */
     private $statusId = Proposal::PROPOSAL_STATUS_INPROGRESS;
     /**
-     * @ORM\Column(type="boolean",nullable=true)
+     * @ORM\Column(type="boolean")
      */
-    private $featured;
+    private $featured = 0;
+    
     /**
      * @ORM\Column(type="boolean",nullable=true)
      */
@@ -64,6 +65,7 @@ class Proposal
      * @ORM\Column(type="integer", length=255, nullable=true)
      */
     private $views;
+    
 
     /**
      * @ORM\Column(type="integer", nullable=true)
@@ -104,6 +106,14 @@ class Proposal
      * @ORM\OneToMany(targetEntity="App\Entity\ProposalImage", mappedBy="proposal", orphanRemoval=true)
      */
     private $proposalImages;
+    
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $tags;
+
+
 
     public function __construct()
     {
@@ -313,6 +323,19 @@ class Proposal
     {
         return $this->topRated;
     }
+
+    public function getTags(): ?string
+    {
+        return $this->tags;
+    }
+
+    public function setTags(?string $tags): self
+    {
+        $this->tags = $tags;
+
+        return $this;
+    }
+    
 
     /**
      * @param mixed $topRated

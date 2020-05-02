@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Admin\GeneralSetting;
 use App\Entity\ForgotPassword;
 use App\Entity\Language;
+use App\Entity\Proposal;
 use App\Entity\Skill;
 use App\Entity\User;
 use App\Form\AccountType;
@@ -201,14 +202,16 @@ class AccountController extends AbstractController
             $manager->flush();
         }
 
+        $status = Proposal::PROPOSAL_STATUS_ACTIVE;
+
+        $proposals = $manager->getRepository(Proposal::class)->getUserProposals($this->getUser()->getId() ,$status);
 
         return $this->render('seller/index.html.twig', [
             'user' => $this->getUser(),
             'categories_yes' => $this->categories_yes,
-            'formSkill' => $formSkill->createView(),
-            'formLanguage' => $formLanguage->createView()
-
-
+            'formSkill'      => $formSkill->createView(),
+            'formLanguage'   => $formLanguage->createView(),
+            'proposals'      => $proposals
         ]);
     }
     /**

@@ -6,7 +6,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Proposal;
 use App\Entity\Admin\ProposalSearchProperty;
-use App\Form\Admin\ProposalSearchPropertyType;
+use App\Form\ProposalSearchPropertyType;
 use App\Services\PaginationService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

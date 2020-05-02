@@ -31,6 +31,11 @@ class Level
      */
     private $languages;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Proposal", mappedBy="level")
+     */
+    private $proposals;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -52,6 +57,7 @@ class Level
     {
         $this->skills = new ArrayCollection();
         $this->languages = new ArrayCollection();
+        $this->proposals = new ArrayCollection();
     }
 
     /**
@@ -105,6 +111,37 @@ class Level
         if ($this->languages->contains($language)) {
             $this->languages->removeElement($language);
             $language->removeSkill($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Proposal[]
+     */
+    public function getProposals(): Collection
+    {
+        return $this->proposals;
+    }
+
+    public function addProposal(Proposal $proposal): self
+    {
+        if (!$this->proposals->contains($proposal)) {
+            $this->proposals[] = $proposal;
+            $proposal->setLevel($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProposal(Proposal $proposal): self
+    {
+        if ($this->proposals->contains($proposal)) {
+            $this->proposals->removeElement($proposal);
+            // set the owning side to null (unless already changed)
+            if ($proposal->getLevel() === $this) {
+                $proposal->setLevel(null);
+            }
         }
 
         return $this;

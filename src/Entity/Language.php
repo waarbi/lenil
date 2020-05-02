@@ -33,9 +33,15 @@ class Language
      */
     private $level;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Proposal", mappedBy="language")
+     */
+    private $proposals;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
+        $this->proposals = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -102,6 +108,37 @@ class Language
     public function setLevel(?Level $level): self
     {
         $this->level = $level;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Proposal[]
+     */
+    public function getProposals(): Collection
+    {
+        return $this->proposals;
+    }
+
+    public function addProposal(Proposal $proposal): self
+    {
+        if (!$this->proposals->contains($proposal)) {
+            $this->proposals[] = $proposal;
+            $proposal->setLanguage($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProposal(Proposal $proposal): self
+    {
+        if ($this->proposals->contains($proposal)) {
+            $this->proposals->removeElement($proposal);
+            // set the owning side to null (unless already changed)
+            if ($proposal->getLanguage() === $this) {
+                $proposal->setLanguage(null);
+            }
+        }
 
         return $this;
     }

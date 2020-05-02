@@ -40,6 +40,7 @@ class HomeController extends AbstractController
 
     }
 
+
     /**
      * @Route("/", name="homepage", methods={"GET","POST"})
      * @param EntityManagerInterface $manager
@@ -112,19 +113,27 @@ class HomeController extends AbstractController
             $proposals = $manager->getRepository(Proposal::class)->findBySeller($this->getUser()->getId());
             $sliders = $manager->getRepository(LandingPageSlide::class)->findBy(array('onHomePageSeller' => true));
 
+            $status = Proposal::PROPOSAL_STATUS_ACTIVE;
+            $maxResult = 8;
+            $featuredProposals = $manager->getRepository(Proposal::class)->getFeaturedProposals($status, $maxResult);
+            $topProposals = $manager->getRepository(Proposal::class)->getTopProposals($status, $maxResult);
+            $randomProposals = $manager->getRepository(Proposal::class)->getRandomProposals($status, $maxResult);
+
             return $this->render('home_seller.html.twig',
                 array(
-                    'categories_yes' => $this->categories_yes,
-                    'categories_card' => $categories_cards,
-                    'proposals'      => $proposals,
-                    'demandesActives' => $demandesActives,
-                    'generalSettings' => $this->generalSettings,
-                    'sliders' => $sliders
-
+                    'categories_yes'      => $this->categories_yes,
+                    'categories_card'     => $categories_cards,
+                    'demandesActives'     => $demandesActives,
+                    'generalSettings'     => $this->generalSettings,
+                    'sliders'             => $sliders,
+                    'featuredProposals'   => $featuredProposals,
+                    'topProposals'        => $topProposals,
+                    'randomProposals'     => $randomProposals
                 ));
         }
 
     }
+
 
     /**
      * @Route("/contact", name="contact_support")
