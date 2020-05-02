@@ -90,7 +90,7 @@
                                     {% for sousCategory in category.getSousCategories %}
                                         <li class="p-xs-1 bb-xs-1 text-body-larger subnav-item a11y-focus-only">
                                             <a class="p-xs-1 text-gray display-inline-block width-full text-underline"
-                                               href="{{ path('category_services',{slug: sousCategory.slug}) }}">
+                                               href="{{ path('category_services',{categorySlug: category.slug, subcategorySlug: sousCategory.slug}) }}">
                                                 {{ sousCategory.title }} </a>
                                         </li>
                                     {% endfor %}

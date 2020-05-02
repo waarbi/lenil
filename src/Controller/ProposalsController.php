@@ -26,19 +26,19 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/proposals")
- * @Security("is_granted('ROLE_USER')", message="vous n'avez pas le droit d'acceder a cette ressource")
  */
 class ProposalsController extends AbstractController
 {
     private $categories_yes;
     private $session;
+    private $manager;
 
 
     public function __construct(EntityManagerInterface $manager, SessionInterface $session)
     {
         $this->categories_yes = $manager->getRepository(Category::class)->findBy(array('featured' => true));
         $this->session = $session;
-        $this->userRepo = $manager->getRepository(User::class);
+        $this->manager = $manager;
     }
 
 
@@ -73,6 +73,7 @@ class ProposalsController extends AbstractController
     /**
      * @Route("/create", name="create_proposal")
      * @param Request $request
+     * @Security("is_granted('ROLE_USER')", message="vous n'avez pas le droit d'acceder a cette ressource")
      * @param EntityManagerInterface $manager
      * @param FileUploader $fileUploader
      * @return Response
@@ -116,6 +117,23 @@ class ProposalsController extends AbstractController
     }
 
     /**
+     * @Route("/show/{sellerSlug}/{proposalSlug}", name="show_details_proposal")
+     * @param Request $request
+     * @param $proposalSlug
+     * @param $sellerSlug
+     * @return Response
+     */
+    public function showProposal(Request $request, $proposalSlug,$sellerSlug ){
+        $proposal = $this->manager->getRepository(Proposal::class)->findBy(array('slug' => $proposalSlug))[0];
+
+        return  $this->render('proposals/show-proposal.html.twig',array(
+            'proposal' => $proposal,
+            'categories_yes' => $this->categories_yes,
+
+        ));
+    }
+
+
      * @Route("/{id}/edit/proposal", name="edit_proposal", methods={"GET","POST"}))
      * @param Proposal $proposal
      * @param Request $request

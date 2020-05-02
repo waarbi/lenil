@@ -27,8 +27,6 @@ class DefaultController extends AbstractController
         $this->categories_yes = $manage->getRepository('App\Entity\Category')->findBy(array('featured' => true));
         $this->manager = $manage;
         $this->generalSettings = $manage->getRepository(GeneralSetting::class)->findAll()[0];
-
-
     }
     /**
      * @Route("/comment-ca-marche", name="comment_ca_marche")

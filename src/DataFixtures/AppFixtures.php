@@ -96,7 +96,7 @@ class AppFixtures extends Fixture implements FixtureGroupInterface
                 ->setEmail($faker->email)
                 ->setDescription('<p>' . join('</p><p>', $faker->paragraphs(3)) . '</p>')
                 ->setHash($hash)
-                ->setPicture($picture)
+                ->setPicture('tof-admin.png')
                 ->setPays($faker->randomElement($pays))
                 ->setLevel($faker->randomElement($sellerLevel))
                 ->setEnabled($faker->boolean);
