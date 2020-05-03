@@ -124,6 +124,22 @@ class User implements UserInterface
      */
     private $level;
 
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     * @Assert\Length(min=10, minMessage="Votre specialité doit faire au moins 10 caractères")
+     */
+    private $specialty;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $recentDelivery;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $connected = false;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -579,6 +595,47 @@ class User implements UserInterface
     public function __toString()
     {
         return $this->getFullName();
+    }
+
+    public function getOnline(): ?bool
+    {
+        return $this->online;
+    }
+
+    public function getSpecialty(): ?string
+    {
+        return $this->specialty;
+    }
+
+    public function setSpecialty(?string $specialty): self
+    {
+        $this->specialty = $specialty;
+
+        return $this;
+    }
+
+    public function getRecentDelivery(): ?\DateTimeInterface
+    {
+        return $this->recentDelivery;
+    }
+
+    public function setRecentDelivery(?\DateTimeInterface $recentDelivery): self
+    {
+        $this->recentDelivery = $recentDelivery;
+
+        return $this;
+    }
+
+    public function getConnected(): ?bool
+    {
+        return $this->connected;
+    }
+
+    public function setConnected(?bool $connected): self
+    {
+        $this->connected = $connected;
+
+        return $this;
     }
 
 }

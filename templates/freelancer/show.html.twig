@@ -2,14 +2,189 @@
     <link href="{{ asset('build/css/freelancers_css.css') }}" rel="stylesheet">
 {% endblock %}
 
+{% block title %}Lenyl | Details Freelancer{% endblock %}
+
 {% extends "base.html.twig" %}
 
 {% block body %}
-    <p>{{ freelancer.firstname }}</p>
-{% endblock %}
+    <div class="col-md-12 user-header pl-5 pr-5 pt-5 pb-5">
+        <div class="profile-image float-lg-left flaot-md-left float-none mr-4">
+            <img src="{{ asset('/uploads/images/'~freelancer.picture) }}" class="rounded-circle"
+                 alt="Avatar de  {{ freelancer.fullName }}"/>
+        </div>
+        <div class="content-bar mt-3">
+            <h1>Bonjour, je suis {{ freelancer.fullName }} </h1>
+            <span class="headline">
+                {{ freelancer.specialty }}
+            </span>
+            <div class="star-rating">
+                <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i
+                        class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <span
+                        class="text-white m-1"><strong>0.0</strong> (0)</span>
+                <span class="text-white">
+                    <i class="fa fa-map-marker m-1"></i>  {{ freelancer.pays.name }}
+                </span>
+            </div>
+        </div>
+    </div>
 
-{% block javascripts %}
-    <script type="application/javascript">
+    <div class="col-md-12 user-status">
+        <ul>
+            <li>
+                <i class="fa fa-user"></i>
+                <strong>Membre depuis: </strong> {{ freelancer.createdAt |date('d/m/Y') }}
+            </li>
+            <li>
+                <i class="fa fa-truck fa-flip-horizontal"></i>
+                <strong>Livraison récente: </strong> {{ freelancer.recentDelivery |date('d/m/Y') }}
+            </li>
+        </ul>
+    </div>
+    <div class="container"> <!-- Container starts -->
+        <div class="row">
+            <div class="col-md-4 mt-4">
 
-    </script>
+                <div class="card user-sidebar rounded-0"><!--- card user-sidebar rounded-0 Starts -->
+
+                    <div class="card-body"><!-- card-body Starts -->
+
+                        <h3>Description</h3>
+
+                        <p>
+
+                            {{ freelancer.description }}
+                        </p>
+
+                        <hr class="card-hr">
+
+                        <h3 class="float-left">Langues</h3>
+
+                        <div class="clearfix"></div>
+
+                        <ul class="list-unstyled mt-3"><!-- list-unstyled mt-3 Starts -->
+
+                            {% for langue in freelancer.getLanguages %}
+                                <li class="card-li mb-1">
+                                    {{ langue.name }} - <span class="text-muted"> {{ langue.level.name }} </span>
+
+                                </li>
+                            {% endfor %}
+
+
+                        </ul>
+
+                        <hr class="card-hr">
+
+                        <h3 class="float-left">Compétences</h3>
+
+                        <div class="clearfix"></div>
+
+                        <ul class="list-unstyled mt-3">
+                            {% for skill in freelancer.getSkills %}
+                                <li class="card-li mb-1">
+                                    {{ skill.name }} - <span class="text-muted"> {{ skill.level.name }} </span>
+
+                                </li>
+                            {% endfor %}
+                        </ul>
+
+                    </div><!--- card user-sidebar rounded-0 Ends -->
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card mt-4 mb-4 rounded-0">
+                            <div class="card-body">
+                                <h2>Ses services</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+
+                    <div class="col-md-12">
+                        <h3 class="text-center mb-5 p-2">
+                            <i class="fa fa-smile-o"></i> {{ freelancer.fullName }} ne propose pas de service pour le moment.
+                        </h3>
+                    </div>
+                </div>
+                <div class="row">
+
+                    <div class="col-md-12">
+
+                        <div class="card user-reviews mt-4 mb-4 rounded-0">
+
+                            <div class="card-header make">
+
+                                <h4>
+
+                                    Notes de {{ freelancer.fullName }}
+
+
+                                    <span class="text-muted">4.8 (21) </span>
+
+                                    <div class="dropdown float-right">
+
+                                        <button id="<dropdown-button></dropdown-button>" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+
+                                            Most Recent
+
+                                        </button>
+
+                                        <ul class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 33px, 0px); top: 0px; left: 0px; will-change: transform;">
+
+                                            <li class="dropdown-item active all">  Most Recent</li>
+                                            <li class="dropdown-item good"> Positive Reviews</li>
+                                            <li class="dropdown-item bad">  Negative Reviews</li>
+
+                                        </ul>
+
+                                    </div>
+
+                                </h4>
+
+                            </div>
+
+                            <div class="card-body">
+
+                                <article id="all" class="proposal-reviews">
+
+                                    <ul class="reviews-list">
+                                    {% for comment in comments %}
+                                        <li class="star-rating-row">
+                                            <span class="user-picture">
+                                                   <img src="{{ asset('/uploads/images/'~comment.author.picture)}} " width="60" height="60">
+                                            </span>
+                                            <h4>
+                                                <a href="#" class="mr-1 text-success"> {{ comment.author.getFullName}} </a>
+                                            </h4>
+                                                <img class="rating" src="{{ asset('/uploads/images/user_rate_full.png')}} ">  <img class="rating" src="{{ asset('/uploads/images/user_rate_full.png')}} "> <img class="rating" src="{{ asset('/uploads/images/user_rate_full.png')}} "> <img class="rating" src="{{ asset('/uploads/images/user_rate_full.png')}} ">
+                                            <div class="msg-body">
+                                                {{ comment.content}}
+                                            </div>
+                                            <span class="rating-date">{{ comment.createdAt | date('d/m/y')}}</span>
+                                        </li>
+                                        <hr>
+                                    {% endfor %}
+                                    </ul>
+
+                                </article>
+
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+
+
+                </div>
+            </div>
+            <br>
+            <br>
+        </div>
+    </div>
 {% endblock %}
