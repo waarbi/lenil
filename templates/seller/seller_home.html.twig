@@ -13,8 +13,8 @@
                     <div class="row m-0"><!--- row Starts --->
                         <div class="col-lg-6 m-0 p-0 pr-2 pb-lg-0 pr-lg-2 pb-md-2 pr-sm-2"><!--- col-md-6 Starts --->
                             <h5><a href="{{ path('dashboard_seller') }}">Dashboard</a></h5>
-                            <h5><a href="#proposals/create_proposal">Ajouter un service</a></h5>
-                            <h5 class="mb-0"><a href="#requests/post_request">Poster une demande</a></h5>
+                            <h5><a href="{{ path('create_proposal') }}">Ajouter un service</a></h5>
+                            <h5 class="mb-0"><a href="{{ path('demande_new') }}">Poster une demande</a></h5>
                         </div><!--- col-md-6 Ends --->
                         <div class="col-lg-6 m-0 p-0 pl-2 pt-lg-0 pl-lg-2 pl-md-0 pt-md-2 pl-sm-2"><!--- col-md-6 Starts --->
                             <h5><a href="#buying_orders">Mes achats</a></h5>
@@ -43,7 +43,7 @@
                             <div class="carousel-item">
                                 {% endif %}
                                 <div class="proposal-card-base mp-proposal-card"><!--- proposal-card-base mp-proposal-card Starts --->
-                                    <a href="proposals/ashleytharma1/i-will-design-a-logo-and-brand-for-you">
+                                    <a href="{{ path('show_details_proposal',{sellerSlug: proposal.seller.slug, proposalSlug: proposal.slug }) }}">
                                         <img src="{{ asset('/uploads/images/'~proposal.proposalImages.first().getFileName()) }}" class="img-fluid">
                                     </a>
                                     <div class="proposal-card-caption"><!--- proposal-card-caption Starts --->
@@ -57,7 +57,7 @@
                                                     Débutant    </div>
                                             </div>
                                         </div><!--- gig-seller-info Ends --->
-                                        <a href="#proposals/ashleytharma1/i-will-design-a-logo-and-brand-for-you" class="proposal-link-main">
+                                        <a href="{{ path('show_details_proposal',{sellerSlug: proposal.seller.slug, proposalSlug: proposal.slug }) }}" class="proposal-link-main">
                                             <h3>{{ proposal.title }}</h3>
                                         </a>
                                         <div class="rating-badges-container">
@@ -79,7 +79,7 @@
 
                                         <div class="proposal-price">
                                             <a class="js-proposal-card-imp-data">
-                                                <small>Starting At</small>${{ proposal.price }}  </a>
+                                                <small>A PARTIR DE </small>{{ proposal.price }}  €</a>
                                         </div>
                                     </footer><!--- proposal-card-footer Ends --->
                                 </div><!--- proposal-card-base mp-proposal-card Ends --->
@@ -101,8 +101,8 @@
 
                 <div id="sticky-wrapper" class="sticky-wrapper" style="height: 275px;"><div class="card rounded-0 sticky-start mb-3 card_user">
                         <div class="card-body">
-                            <img src="{{ asset('/uploads/images/sales.png')}}" class="img-fluid center-block" alt="none">
-                            <h4>Commençer à vendre</h4>
+                            <img src="{{ asset('build/images/sales.png')}}" class="img-fluid center-block" alt="none">
+                            <h4 class="text-primary">Commençer à vendre</h4>
                             <p>Vendez vos services à des millions de personnes partout dans le monde.</p>
                             <button onclick="location.href='/start_selling'" class="btn get_btn">Vendre un service</button>
                         </div>
@@ -130,7 +130,7 @@
                 </div>
                 <div class="row mt-4 mb-3">
                     <div class="col-md-12">
-                        <h2 class="float-left"> Propositions/Services Etendus</h2>
+                        <h2 class="float-left text-primary font-weight-bold"> Service mis en avant</h2>
                         <a href="{{ path('featured_proposals') }}" class="float-right btn btn-success">VOIR TOUT</a>
                     </div>
                 </div>
@@ -140,7 +140,7 @@
                         <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 mb-3 pr-lg-1">
                             <div class="proposal-card-base mp-proposal-card"><!--- proposal-card-base mp-proposal-card Starts --->
 {#                                <div class ="card-header">#}
-                                    <a href="#proposals/ashleytharma1/i-will-design-a-logo-and-brand-for-you">
+                                    <a href="{{ path('show_details_proposal',{sellerSlug: proposal.seller.slug, proposalSlug: proposal.slug }) }}">
                                         <img src="{{ asset('/uploads/images/'~proposal.proposalImages.first().getFileName()) }}" height="150px" width="220px">
                                     </a>
 {#                                </div>#}
@@ -154,7 +154,7 @@
                                             <div class="gig-seller-tooltip">  Débutant   </div>
                                         </div>
                                     </div><!--- gig-seller-info Ends --->
-                                    <a href="#proposals/ashleytharma1/i-will-design-a-logo-and-brand-for-you" class="proposal-link-main js-proposal-card-imp-data">
+                                    <a href="{{ path('show_details_proposal',{sellerSlug: proposal.seller.slug, proposalSlug: proposal.slug }) }}" class="proposal-link-main js-proposal-card-imp-data">
                                         <h3>{{ proposal.title }}</h3>
                                     </a>
                                     <div class="rating-badges-container">
@@ -212,7 +212,7 @@
                 {#Top proposals/services#}
                 <div class="row mt-4 mb-3">
                     <div class="col-md-12">
-                        <h2 class="float-left">Top Propositions/Services</h2>
+                        <h2 class="float-left text-primary font-weight-bold">Top Services</h2>
                         <a href="{{ path('top_proposals') }}" class="float-right btn btn-success">VOIR TOUT</a>
                     </div>
                 </div>
@@ -221,7 +221,7 @@
                     {% for top_proposal in topProposals %}
                         <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 mb-3 pr-lg-1">
                             <div class="proposal-card-base mp-proposal-card"><!--- proposal-card-base mp-proposal-card Starts --->
-                                <a href="#proposals/ashleytharma1/i-will-design-a-logo-and-brand-for-you">
+                                <a href="{{ path('show_details_proposal',{sellerSlug: top_proposal.seller.slug, proposalSlug: top_proposal.slug }) }}">
                                     <img src="{{ asset('/uploads/images/'~top_proposal.proposalImages.first().getFileName()) }}" class="img-fluid">
                                 </a>
                                 <div class="proposal-card-caption"><!--- proposal-card-caption Starts --->
@@ -234,7 +234,7 @@
                                             <div class="gig-seller-tooltip">  Débutant   </div>
                                         </div>
                                     </div><!--- gig-seller-info Ends --->
-                                    <a href="#proposals/ashleytharma1/i-will-design-a-logo-and-brand-for-you" class="proposal-link-main js-proposal-card-imp-data">
+                                    <a href="{{ path('show_details_proposal',{sellerSlug: top_proposal.seller.slug, proposalSlug: top_proposal.slug }) }}" class="proposal-link-main js-proposal-card-imp-data">
                                         <h3>{{ top_proposal.title }}</h3>
                                     </a>
                                     <div class="rating-badges-container">
@@ -291,7 +291,7 @@
                 {#Random proposals/services#}
                 <div class="row mt-4 mb-3">
                     <div class="col-md-12">
-                        <h2 class="float-left"> Propositions/Services Aléatoires</h2>
+                        <h2 class="float-left text-primary font-weight-bold"> Autres Services</h2>
                         <a href="{{ path('random_proposals') }}" class="float-right btn btn-success">VOIR TOUT</a>
                     </div>
                 </div>
@@ -300,7 +300,7 @@
                     {% for random_proposal in randomProposals %}
                         <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 mb-3 pr-lg-1">
                             <div class="proposal-card-base mp-proposal-card"><!--- proposal-card-base mp-proposal-card Starts --->
-                                <a href="#proposals/ashleytharma1/i-will-design-a-logo-and-brand-for-you">
+                                <a href="{{ path('show_details_proposal',{sellerSlug: random_proposal.seller.slug, proposalSlug: random_proposal.slug }) }}">
                                     <img src="{{ asset('/uploads/images/'~random_proposal.proposalImages.first().getFileName()) }}" class="img-fluid">
                                 </a>
                                 <div class="proposal-card-caption"><!--- proposal-card-caption Starts --->
@@ -313,7 +313,7 @@
                                             <div class="gig-seller-tooltip">  Débutant   </div>
                                         </div>
                                     </div><!--- gig-seller-info Ends --->
-                                    <a href="#proposals/ashleytharma1/i-will-design-a-logo-and-brand-for-you" class="proposal-link-main js-proposal-card-imp-data">
+                                    <a href="{{ path('show_details_proposal',{sellerSlug: random_proposal.seller.slug, proposalSlug: random_proposal.slug }) }}" class="proposal-link-main js-proposal-card-imp-data">
                                         <h3>{{ random_proposal.title }}</h3>
                                     </a>
                                     <div class="rating-badges-container">
@@ -358,7 +358,7 @@
                                         <i data-id="3" href="#" class="fa fa-heart proposal-favorite dil1" data-toggle="tooltip" data-placement="top" title="" data-original-title="Favorite"></i>
                                     </div>
                                     <div class="proposal-price">
-                                        <a><small>A PARTIR DE</small>${{ random_proposal.price}} €</a>
+                                        <a><small>A PARTIR DE</small>{{ random_proposal.price}} €</a>
                                     </div>
                                 </footer><!--- proposal-card-footer Ends --->
                             </div><!--- proposal-card-base mp-proposal-card Ends --->

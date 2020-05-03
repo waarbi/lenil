@@ -11,7 +11,7 @@
         <div class="row">
             <div class="col-md-12">
                 <center>
-                    <h1>  Proposition/Services Aléatoires</h1>
+                    <h1> Nos autres services</h1>
                     <p class="lead">Ceci est une liste de nos principales propositions / services aléatoires</p>
                 </center>
                 <hr class="mt-5 pt-2">
@@ -97,7 +97,7 @@
                     {% for proposal in randomProposals %}
                         <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 mb-3">
                             <div class="proposal-card-base mp-proposal-card"><!--- proposal-card-base mp-proposal-card Starts --->
-                                <a href="#proposals/ashleytharma1/i-will-design-a-logo-and-brand-for-you">
+                                <a href="{{ path('show_details_proposal',{sellerSlug: proposal.seller.slug, proposalSlug: proposal.slug }) }}">
                                     <img src="{{ asset('/uploads/images/'~proposal.proposalImages.first().getFileName()) }}" class="img-fluid">
                                 </a>
                                 <div class="proposal-card-caption"><!--- proposal-card-caption Starts --->
@@ -110,7 +110,7 @@
                                             <div class="gig-seller-tooltip">  Débutant   </div>
                                         </div>
                                     </div><!--- gig-seller-info Ends --->
-                                    <a href="#proposals/ashleytharma1/i-will-design-a-logo-and-brand-for-you" class="proposal-link-main js-proposal-card-imp-data">
+                                    <a href="{{ path('show_details_proposal',{sellerSlug: proposal.seller.slug, proposalSlug: proposal.slug }) }}" class="proposal-link-main js-proposal-card-imp-data">
                                         <h3>{{ proposal.title }}</h3>
                                     </a>
                                     <div class="rating-badges-container">
@@ -253,7 +253,7 @@
                         $.each(result.proposals, function (key, proposal) {
                             _html +='<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 mb-3">\n' +
                                 '                                 <div class="proposal-card-base mp-proposal-card"><!--- proposal-card-base mp-proposal-card Starts --->\n' +
-                                '                                     <a href="#">\n' +
+                                '                                     <a href='+proposal.proposalUrl+'>\n' +
                                 '                                         <img src='+'/uploads/images/'+ proposal.proposalFirstImage +' class="img-fluid">\n' +
                                 '                                     </a>\n' +
                                 '                                     <div class="proposal-card-caption"><!--- proposal-card-caption Starts --->\n' +

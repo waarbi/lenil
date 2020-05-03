@@ -110,14 +110,14 @@ class HomeController extends AbstractController
         }else{
 
             $demandesActives = $manager->getRepository('App\Entity\Demande')->findAllActivesDemandeOfOthersUsers($this->getUser()->getId());
-            $proposals = $manager->getRepository(Proposal::class)->findBySeller($this->getUser()->getId());
             $sliders = $manager->getRepository(LandingPageSlide::class)->findBy(array('onHomePageSeller' => true));
 
             $status = Proposal::PROPOSAL_STATUS_ACTIVE;
             $maxResult = 8;
             $featuredProposals = $manager->getRepository(Proposal::class)->getFeaturedProposals($status, $maxResult);
             $topProposals = $manager->getRepository(Proposal::class)->getTopProposals($status, $maxResult);
-            $randomProposals = $manager->getRepository(Proposal::class)->getRandomProposals($status, $maxResult);
+            $randomProposals = $manager->getRepository(Proposal::class)->getRandomProposals($maxResult);
+            shuffle($randomProposals);
 
             return $this->render('home_seller.html.twig',
                 array(
