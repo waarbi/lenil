@@ -133,8 +133,9 @@ class ProposalsController extends AbstractController
         ));
     }
 
+
     /**
-     * @Route("/{id}/edit/proposal", name="edit_proposal", methods={"GET","POST"}))
+     * @Route("/{id}/edit/proposal", name="edit_proposal", methods={"GET","POST"})
      * @param Proposal $proposal
      * @param Request $request
      * @param EntityManagerInterface $manager

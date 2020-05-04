@@ -11,7 +11,7 @@
             <div class="col-md-12">
                 <center>
                     <h1>Freelancers </h1>
-                    <p class="lead"><a href="{{ path('homepage_anonym') }}"> Accueil </a>/ Recherche de freelancers</p>
+                    <p class="lead"><a href="{{ path('homepage') }}"> Accueil </a>/ Recherche de freelancers</p>
                 </center>
                 <hr class="mt-5 pt-2">
             </div>
@@ -21,14 +21,13 @@
             <div class="col-xl-10 col-lg-12 col-md-12">
                 <div class="row">
                     <div class="col-lg-3 col-md-4 col-sm-12 ">
-
                         <div class="card border-success mb-3">
                             <div class="card-body pb-2 pt-3 ">
                                 <ul class="nav flex-column">
                                     <li class="nav-item checkbox checkbox-success">
                                         <label>
                                             <input type="checkbox" value="1" class="get_online_sellers">
-                                            <span>Show Online Sellers</span>
+                                            <span>Voir les Freelancers en ligne</span>
                                         </label>
                                     </li>
                                 </ul>
@@ -45,20 +44,14 @@
                             </div>
                             <div class="card-body">
                                 <ul class="nav flex-column">
-                                    <li class="nav-item checkbox checkbox-success">
-                                        <label>
-                                            <input type="checkbox" value="France" class="get_seller_country">
-                                            <span>Sénégal</span>
-                                        </label>
-                                    </li>
-                                    <li class="nav-item checkbox checkbox-success">
-                                        <label>
-                                            <input type="checkbox" value="China" class="get_seller_country">
-                                            <span>Cote d'ivoire</span>
-                                        </label>
-                                    </li>
-
-
+                                    {% for localisation in pays %}
+                                        <li class="nav-item checkbox checkbox-success">
+                                            <label>
+                                                <input type="checkbox" value="{{ localisation.name }}" class="get_seller_country">
+                                                <span>{{ localisation.name }}</span>
+                                            </label>
+                                        </li>
+                                    {% endfor%}
                                 </ul>
                             </div>
                         </div>
@@ -73,30 +66,14 @@
                             </div>
                             <div class="card-body">
                                 <ul class="nav flex-column">
-                                    <li class="nav-item checkbox checkbox-success">
-                                        <label>
-                                            <input type="checkbox" value="4" class="get_seller_level">
-                                            <span>Top Notation A</span>
-                                        </label>
-                                    </li>
-                                    <li class="nav-item checkbox checkbox-success">
-                                        <label>
-                                            <input type="checkbox" value="3" class="get_seller_level">
-                                            <span>Niveau 2</span>
-                                        </label>
-                                    </li>
-                                    <li class="nav-item checkbox checkbox-success">
-                                        <label>
-                                            <input type="checkbox" value="1" class="get_seller_level">
-                                            <span>Débutant</span>
-                                        </label>
-                                    </li>
-                                    <li class="nav-item checkbox checkbox-success">
-                                        <label>
-                                            <input type="checkbox" value="2" class="get_seller_level">
-                                            <span>Niveau 1</span>
-                                        </label>
-                                    </li>
+                                    {% for level in levels %}
+                                        <li class="nav-item checkbox checkbox-success">
+                                            <label>
+                                                <input type="checkbox" value="{{ level.name }}" class="get_seller_level">
+                                                <span>{{ level.name }}</span>
+                                            </label>
+                                        </li>
+                                    {% endfor%}
                                 </ul>
                             </div>
                         </div>
@@ -110,32 +87,37 @@
                             </div>
                             <div class="card-body">
                                 <ul class="nav flex-column">
-                                    <li class="nav-item checkbox checkbox-success">
-                                        <label>
-                                            <input type="checkbox" value="45" class="get_seller_language">
-                                            <span>Francais</span>
-                                        </label>
-                                    </li>
-                                    <li class="nav-item checkbox checkbox-success">
-                                        <label>
-                                            <input type="checkbox" value="51" class="get_seller_language">
-                                            <span>Anglais</span>
-                                        </label>
-                                    </li>
+                                    {% for language in languages %}
+                                        <li class="nav-item checkbox checkbox-success">
+                                            <label>
+                                                <input type="checkbox" value="{{ language.name }}" class="get_seller_language">
+                                                <span>{{ language.name }}</span>
+                                            </label>
+                                        </li>
+                                    {% endfor%}
                                 </ul>
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-9 col-md-8 col-sm-12 ">
-                        <div class="row flex-wrap" id="freelancers">
+
+
+                        <div class="col-lg-9 col-md-8 col-sm-12 ">
+
+                            {% for user in pagination.data %}
+                                <div class="row flex-wrap" id="freelancers">
                             <!-- Here Freelancers Gona Show -->
                             <div class="col-md-12">
                                 <div class="card card-body mb-4 freelancerBox">
                                     <figure class="wt-userlistingimg">
-                                        <img src="#user_images/salman.jpg" width="100"
+                                        <img src="{{ asset('/uploads/images/'~user.picture) }}" width="100"
                                              class="rounded img-fluid">
+                                        {% if user.connected %}
                                         <small class="text-muted mt-1">
-                                            <i class="fa fa-circle text-danger"></i> Offline </small>
+                                            <i class="fa fa-circle text-green"></i> En ligne </small>
+                                        {% else %}
+                                            <small class="text-muted mt-1">
+                                                <i class="fa fa-circle text-danger"></i> Hors ligne </small>
+                                        {% endif %}
                                         <div class="wt-userdropdown wt-away template-content tipso_style wt-tipso">
                                             <img src="{{ asset('build/images/level_badge_2.png') }}"
                                                  class="level_badge">
@@ -149,31 +131,29 @@
                                     <div class="request-description">
                                         <div class="row">
                                             <div class="col-lg-9 col-md-12">
-                                                <a href="mir_digimarket">
+                                                <a href="{{ path('show_freelancer', {slug: user.slug}) }}">
                                                     <h6 class="font-weight-normal"><i class="fa fa-check-circle"
                                                                                       style="color:#00cc8d;"></i>
-                                                        mir_digimarket </h6>
-                                                    <h5 class="text-success"> Lorem Ipsum is simply dummy text of the
-                                                        printing and typesetting industry. Lorem Ipsum has been the
-                                                        industry's. </h5>
+                                                        {{ user.fullName}}</h6>
+                                                    <h5 class="text-success">{{ user.specialty }} </h5>
                                                 </a>
                                                 <ul class="tagline mb-2">
                                                     <li>
                                                         <i class="fa fa-user"></i>
-                                                        <strong>Member Since: </strong> January 1, 2018
+                                                        <strong>Membre depuis: </strong> {{ user.createdAt | date ('d M Y')}}
                                                     </li>
                                                     <li>
                                                         <i class="fa fa-truck fa-flip-horizontal"></i>
-                                                        <strong>Recent Delivery: </strong> January 16, 2020
+                                                        <strong>Livraison récente: </strong> {{ user.recentDelivery | date ('d M Y') }}
                                                     </li>
                                                     <li>
                                                         <i class="fa fa-map-marker"></i>
-                                                        <strong>Country: </strong> China
+                                                        <strong>Pays: </strong>{{ user.pays.name }}
                                                     </li>
                                                     <li>
                                                         <a href="conversations/message.php?seller_id=2"><i
                                                                     class="fa fa-comments-o"></i>
-                                                            <strong>Contact:</strong> mir_digimarket </a>
+                                                            <strong>Contacter:</strong> {{ user.fullName }} </a>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -187,10 +167,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <p class="lead mb-2 mt-0">It is a long established fact that a reader will be
-                                            distracted by the readable content of a page when looking at its layout. The
-                                            point of using Lorem Ipsum is that it has a more-or-less normal distribution
-                                            of letters, as opposed to using 'Content here.</p>
+                                        <p class="lead mb-2 mt-0">{{ user.description}}</p>
                                         <div class="skills">
                                         </div>
                                     </div>
@@ -204,28 +181,21 @@
                                 </script>
                             </div>
                         </div>
-                        <div id="wait"></div>
-                        <br>
-                        <div class="row justify-content-center mb-5 mt-0"><!-- row justify-content-center Starts -->
-                            <nav><!-- nav Starts -->
-                                <ul class="pagination" id="freelancer_pagination">
-                                    <!-- Here Pagination Gona Show -->
+                            {% else %}
+                                <p>Pas de Freelancer</p>
+                            {% endfor %}
 
-                                    <li class="page-item">
-                                        <a class="page-link" href="?page=1&amp;">Première page</a>
-                                    </li>
-                                    <li class="page-item active"><a class="page-link" href="?page=1&amp;">1</a></li>
-                                    <li class="page-item"><a href="?page=2&amp;" class="page-link">2</a></li>
-                                    <li class="page-item"><a href="?page=6&amp;" class="page-link">6</a></li>
-                                    <li class="page-item" href="#"><a class="page-link">...</a></li>
-                                    <li class="page-item "><a class="page-link" href="?page=13&amp;">13</a></li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="?page=13&amp;">Dernière Page</a>
-                                    </li>
-                                </ul>
-                            </nav><!-- nav Ends -->
+                            <div id="wait"></div>
+                            <br>
+                            <div class="row justify-content-center mb-5 mt-0"><!-- row justify-content-center Starts -->
+                                <nav><!-- nav Starts -->
+                                    {% if pagination.data|length > 0 %}
+                                        {{pagination.display()}}
+                                    {% endif %}
+                                </nav>
+                            </div>
                         </div>
-                    </div>
+
                 </div>
             </div>
         </div>
