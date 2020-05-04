@@ -134,7 +134,8 @@ class ProposalsController extends AbstractController
     }
 
 
-    /* @Route("/{id}/edit/proposal", name="edit_proposal", methods={"GET","POST"}))
+    /**
+     * @Route("/{id}/edit/proposal", name="edit_proposal", methods={"GET","POST"})
      * @param Proposal $proposal
      * @param Request $request
      * @param EntityManagerInterface $manager
@@ -248,8 +249,7 @@ class ProposalsController extends AbstractController
     public function random_proposals(EntityManagerInterface $manager) :Response
     {
 
-        $status = Proposal::PROPOSAL_STATUS_ACTIVE;
-        $randomProposals = $manager->getRepository(Proposal::class)->getRandomProposals($status);
+        $randomProposals = $manager->getRepository(Proposal::class)->getRandomProposals();
 
         $deliveyTimes  = array();
         $categories  = array();
@@ -339,7 +339,7 @@ class ProposalsController extends AbstractController
                 "proposalRating" => $proposal->getRating()? $proposal->getRating():'',
                 "proposalViews" => $proposal->getViews() ? $proposal->getViews():'',
                 "proposalPrice" => $proposal->getPrice(),
-                "proposalUrl" => '/proposal/'.$proposal->getSlug(),
+                "proposalUrl" => '/proposals/show/'.$proposal->getSeller()->getSlug().'/'.$proposal->getSlug(),
             );
         }
         $results = array(
@@ -382,7 +382,7 @@ class ProposalsController extends AbstractController
                 "proposalRating" => $proposal->getRating()? $proposal->getRating():'',
                 "proposalViews" => $proposal->getViews() ? $proposal->getViews():'',
                 "proposalPrice" => $proposal->getPrice(),
-                "proposalUrl" => '/proposal/'.$proposal->getSlug(),
+                "proposalUrl" => '/proposals/show/'.$proposal->getSeller()->getSlug().'/'.$proposal->getSlug(),
             );
         }
         $results = array(
@@ -425,7 +425,7 @@ class ProposalsController extends AbstractController
                 "proposalRating" => $proposal->getRating()? $proposal->getRating():'',
                 "proposalViews" => $proposal->getViews() ? $proposal->getViews():'',
                 "proposalPrice" => $proposal->getPrice(),
-                "proposalUrl" => '/proposal/'.$proposal->getSlug(),
+                "proposalUrl" => '/proposals/show/'.$proposal->getSeller()->getSlug().'/'.$proposal->getSlug(),
             );
         }
         $results = array(

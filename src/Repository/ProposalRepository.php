@@ -284,20 +284,14 @@ class ProposalRepository extends ServiceEntityRepository
         return array_slice($numbers, 0, $quantity);
     }
 
-    public function getRandomProposals($status, $maxResult = null){
-        $totalRowsTable = $this->createQueryBuilder('proposal')
-            ->select('count(proposal.id)')
-            ->distinct('proposal.seller')
-            ->where("proposal.statusId = :status")
-            ->setParameter("status", $status)
-            ->orderBy('proposal.seller', 'DESC')
-            ->getQuery()->getSingleScalarResult();
-
-        $random_ids = $this->UniqueRandomNumbersWithinRange(1,$totalRowsTable,$maxResult);
-
+    public function getRandomProposals($maxResult = null){
         $query = $this->createQueryBuilder('proposal')
-            ->where('proposal.id IN (:ids)') // if is another field, change it
-            ->setParameter('ids', $random_ids)
+            ->where("proposal.featured = :featured")
+            ->setParameter("featured",false)
+            ->andwhere("proposal.statusId = :status")
+            ->setParameter("status", Proposal::PROPOSAL_STATUS_ACTIVE)
+            ->andWhere("proposal.topRated = :top")
+            ->setParameter("top", false)
             ->setMaxResults($maxResult);
 
         return $query->getQuery()->getResult();

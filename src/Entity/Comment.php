@@ -100,18 +100,6 @@ class Comment
         return $this;
     }
 
-    public function getAd(): ?Ad
-    {
-        return $this->ad;
-    }
-
-    public function setAd(?Ad $ad): self
-    {
-        $this->ad = $ad;
-
-        return $this;
-    }
-
     public function getAuthor(): ?User
     {
         return $this->author;
