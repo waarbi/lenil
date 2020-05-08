@@ -17,28 +17,36 @@ use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 
 /**
  * @Route("/proposals")
+ * @Security("is_granted('ROLE_USER')", message="vous n'avez pas le droit d'acceder a cette ressource")
+
  */
 class ProposalsController extends AbstractController
 {
     private $categories_yes;
     private $session;
     private $manager;
+    private $eventDispatcher;
 
 
-    public function __construct(EntityManagerInterface $manager, SessionInterface $session)
+    public function __construct(EntityManagerInterface $manager, EventDispatcherInterface $eventDispatcher,SessionInterface $session)
     {
         $this->categories_yes = $manager->getRepository(Category::class)->findBy(array('featured' => true));
         $this->session = $session;
         $this->manager = $manager;
+        $this->eventDispatcher = $eventDispatcher;
+
     }
 
 
@@ -70,50 +78,115 @@ class ProposalsController extends AbstractController
         return new JsonResponse($output);
     }
 
+//    /**
+//     * @Route("/create", name="create_proposal", methods={"GET","POST"})
+//     * @param Request $request
+//     * @Security("is_granted('ROLE_USER')")
+//     * @Security("is_granted('ROLE_SELLER')")
+//     * @param EntityManagerInterface $manager
+//     * @return Response
+//     */
+//    public function create(Request $request, EntityManagerInterface $manager)
+//    {
+//
+//        $proposal = new Proposal();
+//        $form = $this->createForm(ProposalType::class, $proposal);
+//        $form->handleRequest($request);
+//        // Check is valid
+//        if ($form->isSubmitted() && $form->isValid()) {
+//
+//            $proposal->setSeller($this->getUser());
+//            $medias = $manager->getRepository('App\Entity\ProposalImage')->findBy(array('proposal' => null));
+//
+//            foreach ($medias as $media)
+//            {
+//                $media->setProposal($proposal);
+//                $proposal->addProposalImage($media);
+//                $manager->persist($media);
+//
+//            }
+//            $roleSeller = new Role();
+//            $roleSeller->setTitle(Role::ROLE_SELLER);
+//            $this->getUser()->addUserRole($roleSeller);
+//
+//            $manager->persist($roleSeller);
+//            $manager->flush();
+//            $this->addFlash('success', 'Congratulations! Your proposal is created');
+//
+//            return $this->redirectToRoute('account_index');
+//        }
+//
+//        return $this->render('proposals/create.html.twig', [
+//            'form' => $form->createView(),
+//            'categories_yes' => $this->categories_yes,
+//        ]);
+//    }
+
     /**
-     * @Route("/create", name="create_proposal")
+     * @Route("/new/proposal", name="create_new_proposal")
      * @param Request $request
-     * @Security("is_granted('ROLE_USER')", message="vous n'avez pas le droit d'acceder a cette ressource")
-     * @param EntityManagerInterface $manager
-     * @param FileUploader $fileUploader
-     * @return Response
+     * @return RedirectResponse|Response
      */
-    public function create(Request $request, EntityManagerInterface $manager, FileUploader $fileUploader)
-    {
+    public function createProposal(Request $request){
 
         $proposal = new Proposal();
         $form = $this->createForm(ProposalType::class, $proposal);
         $form->handleRequest($request);
-        // Check is valid
+
         if ($form->isSubmitted() && $form->isValid()) {
 
             $proposal->setSeller($this->getUser());
-            $proposal->setFeatured(false);
-            $proposal->setRating(0.0);
-            $medias = $manager->getRepository('App\Entity\ProposalImage')->findBy(array('proposal' => null));
+            $medias = $this->manager->getRepository('App\Entity\ProposalImage')->findBy(array('proposal' => null));
 
             foreach ($medias as $media)
             {
                 $media->setProposal($proposal);
                 $proposal->addProposalImage($media);
-                $roleSeller = new Role();
-
-                $roleSeller->setTitle(Role::ROLE_SELLER);
-                $this->getUser()->addUserRole($roleSeller);
-
-                $manager->persist($media);
-                $manager->persist($roleSeller);
-                $manager->flush();
+                $this->manager->persist($media);
             }
 
-            $this->addFlash('success', 'Congratulations! Your proposal is created');
-            return $this->redirectToRoute('homepage');
-        }
+            $roleSeller = new Role();
+            $roleSeller->setTitle(Role::ROLE_SELLER);
+            $this->getUser()->addUserRole($roleSeller);
 
-        return $this->render('proposals/create.html.twig', [
+            $this->manager->persist($roleSeller);
+            $this->manager->persist($proposal);
+            $this->manager->flush();
+
+            $this->addFlash('success', 'Votre service a été créé et soumis pour validation');
+            return $this->redirectToRoute('account_index');
+
+        }
+        return $this->render('proposals/new-proposal.html.twig', [
             'form' => $form->createView(),
             'categories_yes' => $this->categories_yes,
+
         ]);
+
+    }
+
+    /**
+     * @Route("/delete/{id}", name="delete_proposal")
+     * @param Proposal $proposal
+     * @param FileUploader $fileUploader
+     * @return RedirectResponse
+     */
+    public function deleteProposal(Proposal $proposal,FileUploader $fileUploader){
+
+        $images = $proposal->getProposalImages();
+        if ($images){
+            foreach ($images as $media)
+            {
+                $fileUploader->deleteFile($media->getFileName());
+                $proposal->removeProposalImage($media);
+                $this->manager->remove($media);
+
+            }
+        }
+        $this->manager->remove($proposal);
+        $this->manager->flush();
+        $this->addFlash('success', 'Le service  a été bien supprimée');
+        return $this->redirectToRoute('account_index');
     }
 
     /**
@@ -135,23 +208,35 @@ class ProposalsController extends AbstractController
 
 
     /**
-     * @Route("/{id}/edit/proposal", name="edit_proposal", methods={"GET","POST"})
+     * @Route("/edit/{id}", name="edit_proposal", methods={"GET","POST"})
      * @param Proposal $proposal
      * @param Request $request
      * @param EntityManagerInterface $manager
-     * @return void
+     * @return Response
      */
-    public function edit(Proposal $proposal, Request $request, EntityManagerInterface $manager):Response
+    public function edit(Proposal $proposal, Request $request, EntityManagerInterface $manager, FileUploader $fileUploader):Response
     {
         $form = $this->createForm(ProposalType::class, $proposal);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
             $proposal->setSeller($this->getUser());
+            $medias = $this->manager->getRepository('App\Entity\ProposalImage')->findBy(array('proposal' => null));
+            if ($medias){
+                foreach ($medias as $media)
+                {
+                    $media->setProposal($proposal);
+                    $proposal->addProposalImage($media);
+                    $this->manager->persist($media);
+                }
+
+            }
+
+
             $manager->flush();
             $this->addFlash('success', 'Le service a été bien modifiée');
-
-            return $this->redirectToRoute('proposal_index');
+            return $this->redirectToRoute('account_index');
         }
 
         return $this->render('proposals/edit_proposal.html.twig', [
@@ -161,6 +246,49 @@ class ProposalsController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/load/proposal/images", name="load_proposal_image")
+     * @param Request $request
+     * @param FileUploader $fileUploader
+     * @return JsonResponse
+     */
+    public function loadImagesProposal(Request $request,FileUploader $fileUploader){
+        $idProposal = $request->get('idProposal');
+        $proposal = $this->manager->getRepository(Proposal::class)->find($idProposal);
+        $results = array();
+        if ($proposal){
+            $images = $proposal->getProposalImages();
+            if ($images){
+                foreach ($images as $media)
+                {
+                    $obj['name'] = $media->getFileName();
+                    $obj['size'] = filesize($fileUploader->getTargetDirectory().'/'.$media->getFileName());
+                    $results [] = $obj;
+                }
+            }
+        }
+        return new JsonResponse($results);
+    }
+    /**
+     * @Route("/remove/proposal/images", name="remove_proposal_image", methods={"POST"})
+     * @param Request $request
+     * @param FileUploader $fileUploader
+     * @return JsonResponse
+     */
+    public function removeImagesProposal(Request $request,FileUploader $fileUploader){
+        $filename = $request->get('name');
+        $Imageproposal = $this->manager->getRepository(ProposalImage::class)->findBy(array('file_name' => $filename));
+        $results = array();
+        if ($Imageproposal){
+                foreach ($Imageproposal as $media)
+                {
+                   $fileUploader->deleteFile($media->getFileName());
+                   $this->manager->remove($media);
+                }
+                $this->manager->flush();
+        }
+        return new JsonResponse($results);
+    }
     /**
      * @Route("/featured", name="featured_proposals")
      * @param EntityManagerInterface $manager
@@ -435,20 +563,6 @@ class ProposalsController extends AbstractController
         return new JsonResponse($results);
     }
 
-    /**
-     * @Route("/{id}", name="proposal_delete")
-     * @param Proposal $proposal
-     * @return Response
-     */
-    public function delete(Proposal $proposal): Response
-    {
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->remove($proposal);
-        $entityManager->flush();
-        $this->addFlash('success', 'Le service a été bien supprimé');
-
-        return $this->redirectToRoute('proposal_index');
-    }
 
     /**
      * @Route("/desactiver/{id}", name="disable_proposal")

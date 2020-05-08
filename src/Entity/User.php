@@ -6,6 +6,7 @@ use Cocur\Slugify\Slugify;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Security\Core\User\EquatableInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -19,7 +20,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * )
  *
  */
-class User implements UserInterface
+class User implements UserInterface, EquatableInterface
 {
     /**
      * @ORM\Id()
@@ -86,7 +87,6 @@ class User implements UserInterface
     public $passwordConfirm;
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @Assert\Length(min=100, minMessage="Votre description doit faire au moins 100 caractères")
      */
     private $description;
 
@@ -279,7 +279,18 @@ class User implements UserInterface
         $this->demandes = new ArrayCollection();
         $this->proposals = new ArrayCollection();
     }
+    public function isEqualTo(UserInterface $user)
+    {
+        if ($this->hash !== $user->getPassword()) {
+            return false;
+        }
 
+        if ($this->email !== $user->getUsername()) {
+            return false;
+        }
+
+        return true;
+    }
     public function getRoles()
     {
 

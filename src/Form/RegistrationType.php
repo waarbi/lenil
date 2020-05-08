@@ -39,9 +39,11 @@ class RegistrationType extends ApplicationType
                 ]
             ))
             ->add('hash',PasswordType::class, $this->getConfiguration("Mot de passe", "Choisissez un bon mot de passe !"))
-            ->add('passwordConfirm',PasswordType::class, $this->getConfiguration("Confirmation de mot de passe", "Veuillez confirmer votre mot de passe !"))
-            ->add('description',TextareaType::class, $this->getConfiguration("Description détaillée", "C'est le moment de vous présenter en détails !"))
-            
+            ->add('passwordConfirm',PasswordType::class, $this->getConfiguration("Confirmation de mot de passe", "Veuillez confirmer votre mot de passe !"));
+            if($options['description']){
+                $builder->add('description',TextareaType::class, $this->getConfiguration("Description détaillée", "C'est le moment de vous présenter en détails !"));
+            }
+
         ;
     }
 
@@ -49,6 +51,8 @@ class RegistrationType extends ApplicationType
     {
         $resolver->setDefaults([
             'data_class' => User::class,
+            'description' => false
+
         ]);
     }
 }

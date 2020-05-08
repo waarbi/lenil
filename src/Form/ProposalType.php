@@ -35,8 +35,6 @@ class ProposalType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, array($this, 'onPreSetData'));
-        $builder->addEventListener(FormEvents::PRE_SUBMIT, array($this, 'onPreSubmit'));
 
         $builder
             ->add('title', TextType::class,
@@ -53,13 +51,6 @@ class ProposalType extends AbstractType
                     'attr' => ['class' => 'form-control']
                 ]
             )
-            ->add('tags', TextType::class,
-                [
-                    'required' => true,
-                    'label' => 'Tags',
-                    'attr' => ['class' => 'form-control']
-                ]
-            )
             ->add('price', NumberType::class,
                 [
                     'label' => 'Prix',
@@ -69,18 +60,15 @@ class ProposalType extends AbstractType
             )
             ->add('deliveryTime', EntityType::class, [
                 'class' => DeliveryTime::class,
-                'required' => true,
-                'placeholder' => 'Choisir  un delai de livraison...',
+                'expanded' => true,
+                'choice_label' => 'name',
+
+
 
             ]);
-//            ->add(
-//                'create',
-//                SubmitType::class,
-//                [
-//                    'attr' => ['class' => 'form-control btn-primary pull-right'],
-//                    'label' => 'Create!'
-//                ]
-//            );
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, array($this, 'onPreSetData'));
+        $builder->addEventListener(FormEvents::PRE_SUBMIT, array($this, 'onPreSubmit'));
+
 
 
     }

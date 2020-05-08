@@ -13,12 +13,16 @@
                     <div class="row m-0"><!--- row Starts --->
                         <div class="col-lg-6 m-0 p-0 pr-2 pb-lg-0 pr-lg-2 pb-md-2 pr-sm-2"><!--- col-md-6 Starts --->
                             <h5><a href="{{ path('dashboard_seller') }}">Dashboard</a></h5>
-                            <h5><a href="{{ path('create_proposal') }}">Ajouter un service</a></h5>
+                            {% if is_granted('ROLE_SELLER') %}
+                                <h5><a href="{{ path('create_proposal') }}">Ajouter un service</a></h5>
+                            {% endif %}
                             <h5 class="mb-0"><a href="{{ path('demande_new') }}">Poster une demande</a></h5>
                         </div><!--- col-md-6 Ends --->
                         <div class="col-lg-6 m-0 p-0 pl-2 pt-lg-0 pl-lg-2 pl-md-0 pt-md-2 pl-sm-2"><!--- col-md-6 Starts --->
                             <h5><a href="#buying_orders">Mes achats</a></h5>
-                            <h5><a href="{{ path('account_index') }}">Editer mon profil</a></h5>
+                            {% if is_granted('ROLE_SELLER') %}
+                                <h5><a href="{{ path('account_index') }}">Editer mon profil</a></h5>
+                            {% endif %}
                             <h5 class="mb-0"><a href="{{ path('account_profile') }}">Paramétrer mon compte</a></h5>
                         </div><!--- col-md-6 Ends --->
                     </div><!--- row Ends --->
@@ -368,7 +372,6 @@
 
                 <br>
                 <!-- If You have no gigs, show random gigs on homepage Ends -->
-                {{ include('demande/all-others-demandes.html.twig') }}
             </div>
         </div>
     </div>

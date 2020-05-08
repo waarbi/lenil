@@ -5,16 +5,8 @@
             background-color: blue;
             color: #fff;
         }
-        .dropzone .dz-preview .dz-image-preview {
-            width: auto !important;
-            height: auto !important;
-        }
-
-        .dropzone .dz-preview .dz-image img{
-            max-width: 180px;
-        }
     </style>
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.1.1/min/dropzone.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.3.0/min/dropzone.min.css">
 
 {% endblock %}
 {% block title %}Créer un service{% endblock %}
@@ -101,7 +93,6 @@
                                          src="{{ asset('build/images/comp/edition.png') }}">
                                 </div>
                                 <div class="col-md-11 col-sm-12 mt-3 ">
-                                    <div id="wait"></div>
                                     <div class="dropzone"></div>
                                 </div>
                             </div>
@@ -135,15 +126,17 @@
     </div>
 {% endblock %}
 {% block javascripts %}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.1.1/min/dropzone.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.3.0/min/dropzone.min.js"></script>
 
     <script>
         $(document).ready(function () {
+
             $("#appbundle_proposal_description").keydown(function () {
                 var textarea = $("#appbundle_proposal_description").val();
                 $(".descCount").text(textarea.length);
             });
 
+            $("#appbundle_proposal_subcategory").hide();
 
             $("#appbundle_proposal_category").change(function () {
                 $("#appbundle_proposal_subcategory").show();
@@ -152,48 +145,21 @@
         });
         Dropzone.autoDiscover = false;
         var dropzone_default = new Dropzone(".dropzone", {
-
             url: '{{ path('uploadproposalimagehandler') }}' ,
             maxFiles: 4,
             thumbnailWidth: 120,
             thumbnailHeight: 120,
             dictMaxFilesExceeded: 'Only 4 Images can be uploaded',
             acceptedFiles: 'image/*',
-            maxFilesize: 10,
-            resizeWidth: 2048,
+            maxFilesize: 3,  // in Mb
             addRemoveLinks: true,
             init: function () {
-                thisDropzone = this;
-                $.ajax({
-                    url: "{{ path('load_proposal_image') }}",
-                    data: { idProposal: {{ proposal.id}} },
-                    type:'GET',
-                    dataType: "JSON",
-                    beforeSend: function() {
-                        $('#wait').addClass("loader");
-                    },
-                    success: function(images){
-                        $.each(images, function (key, img) {
-                            let mockFile = { name: img.name, size: img.size };
-                            thisDropzone.emit('addedfile', mockFile);
-                            thisDropzone.emit('thumbnail', mockFile, "/uploads/images/"+img.name);
-                        });
-                        $('#wait').removeClass("loader");
-                    }
-                });
                 this.on("maxfilesexceeded", function(file) {
                     this.removeFile(file);
                 });
                 this.on("thumbnail", function(file, xhr, formData) {
                     // send additional data with the file as POST data if needed.
                     // formData.append("key", "value");
-                });
-                this.on("removedfile", function(file) {
-                    $.ajax({
-                        url: "{{ path('remove_proposal_image') }}",
-                        type: "POST",
-                        data: { 'name': file.name}
-                    });
                 });
                 this.on("success", function(file, response) {
 

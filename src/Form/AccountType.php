@@ -35,7 +35,7 @@ class AccountType extends ApplicationType
                     'placeholder' => 'Charger votre photo Avatar'
                 ]
             ))
-            ->add('description',TextareaType::class, $this->getConfiguration("Description détaillée", "C'est le moment de vous présenter en détails !"))
+            //->add('description',TextareaType::class, $this->getConfiguration("Description détaillée", "C'est le moment de vous présenter en détails !"))
 
 
         ;

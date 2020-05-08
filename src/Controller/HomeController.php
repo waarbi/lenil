@@ -109,6 +109,7 @@ class HomeController extends AbstractController
                 ));
         }else{
 
+
             $demandesActives = $manager->getRepository('App\Entity\Demande')->findAllActivesDemandeOfOthersUsers($this->getUser()->getId());
             $sliders = $manager->getRepository(LandingPageSlide::class)->findBy(array('onHomePageSeller' => true));
 
@@ -119,7 +120,10 @@ class HomeController extends AbstractController
             $randomProposals = $manager->getRepository(Proposal::class)->getRandomProposals($maxResult);
             shuffle($randomProposals);
 
-            return $this->render('home_seller.html.twig',
+            if($this->get('security.authorization_checker')->isGranted('ROLE_SELLER')){
+                return $this->redirectToRoute('account_index');
+            }
+            return $this->render('home_buyer.html.twig',
                 array(
                     'categories_yes'      => $this->categories_yes,
                     'categories_card'     => $categories_cards,

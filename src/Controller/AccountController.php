@@ -6,6 +6,7 @@ use App\Entity\Admin\GeneralSetting;
 use App\Entity\ForgotPassword;
 use App\Entity\Language;
 use App\Entity\Proposal;
+use App\Entity\Role;
 use App\Entity\Skill;
 use App\Entity\User;
 use App\Form\AccountType;
@@ -97,8 +98,11 @@ class AccountController extends AbstractController
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
         $user = new User();
-        $registrationForm = $this->createForm(RegistrationType::class, $user);
-
+        $displayDescription = false;
+        if($request->get('_from') === '_devenir_vendeur'){
+            $displayDescription = true;
+        }
+        $registrationForm = $this->createForm(RegistrationType::class, $user, array('description' => $displayDescription));
         $registrationForm->handleRequest($request);
 
         if ($registrationForm->isSubmitted() && $registrationForm->isValid()) {
@@ -114,7 +118,17 @@ class AccountController extends AbstractController
             $hash = $encoder->encodePassword($user, $user->getHash());
             $user->setHash($hash);
             $user->setConfirmationToken($this->generateToken());
+            $roleSeller = new Role();
+            $newSeller = $manager->getRepository('App:SellerLevel')->findBy(array('name' => 'Nouveau vendeur'))[0];
+            $user->setLevel($newSeller);
+            if ($displayDescription){
+                $roleSeller->setTitle(Role::ROLE_SELLER);
+            }else{
+                $roleSeller->setTitle(Role::ROLE_BUYER);
+            }
+            $user->addUserRole($roleSeller);
 
+            $manager->persist($roleSeller);
             $manager->persist($user);
             $manager->flush();
 
@@ -170,9 +184,8 @@ class AccountController extends AbstractController
     /**
      * Permet d'afficher le profil de l'utilisateur concerné
      *
-     * @Route("/account",name="account_index")
-     * @IsGranted("ROLE_USER")
-     *
+     * @Route("/home/vendeur",name="account_index")
+     * @IsGranted("ROLE_SELLER")
      * @param EntityManagerInterface $manager
      * @param Request $request
      * @return Response
@@ -182,7 +195,6 @@ class AccountController extends AbstractController
         $skill = new Skill();
         $formSkill = $this->createForm(SkillsType::class, $skill);
         $formSkill->handleRequest($request);
-
 
         if ($formSkill->isSubmitted() && $formSkill->isValid()) {
             $skill->addUser($this->getUser());
@@ -203,7 +215,7 @@ class AccountController extends AbstractController
         }
 
         $status = Proposal::PROPOSAL_STATUS_ACTIVE;
-
+        $demandesActives = $manager->getRepository('App\Entity\Demande')->findAllActivesDemandeOfOthersUsers($this->getUser()->getId());
         $proposals = $manager->getRepository(Proposal::class)->getUserProposals($this->getUser()->getId() ,$status);
 
         return $this->render('seller/index.html.twig', [
@@ -211,7 +223,9 @@ class AccountController extends AbstractController
             'categories_yes' => $this->categories_yes,
             'formSkill'      => $formSkill->createView(),
             'formLanguage'   => $formLanguage->createView(),
-            'proposals'      => $proposals
+            'proposals'      => $proposals,
+            'demandesActives'     => $demandesActives,
+
         ]);
     }
     /**

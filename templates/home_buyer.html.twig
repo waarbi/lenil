@@ -23,7 +23,7 @@
         </div>
         <br>
     {% endif %}
-    {{ include('seller/seller_home.html.twig') }}
+    {{ include('seller/buyer_home.html.twig') }}
 {% endblock %}
 {% block javascripts %}
     <script type="text/javascript">
@@ -37,7 +37,6 @@
                 }).then(
                     sessionStorage.setItem('connected', 'ok')
                 );
-
             }
             $("#send-email").click(function () {
                 $.ajax({

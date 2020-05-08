@@ -161,14 +161,16 @@
                 </div>
                 <a class="dropdown-item" href="{{ path('account_profile') }}">
                     Mes Paramètres   </a>
-                <a class="dropdown-item dropdown-toggle" href="#" data-toggle="collapse" data-target="#service">
-                    Services   </a>
-                <div id="service" class="dropdown-submenu collapse">
-                    <a class="dropdown-item" href="{{ path('create_proposal') }}">
-                        Créer un service      </a>
-                    <a class="dropdown-item" href="{{ path('proposal_index') }}">
-                        Gérer vos services      </a>
-                </div>
+                {% if is_granted('ROLE_SELLER') %}
+                    <a class="dropdown-item dropdown-toggle" href="#" data-toggle="collapse" data-target="#service">
+                        Services   </a>
+                    <div id="service" class="dropdown-submenu collapse">
+                        <a class="dropdown-item" href="{{ path('create_new_proposal') }}">
+                            Créer un service      </a>
+                        <a class="dropdown-item" href="{{ path('proposal_index') }}">
+                            Gérer vos services      </a>
+                    </div>
+                {% endif %}
 
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" id="logout-link" href="{{ path('account_logout') }}">

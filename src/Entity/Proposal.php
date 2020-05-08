@@ -106,14 +106,6 @@ class Proposal
      * @ORM\OneToMany(targetEntity="App\Entity\ProposalImage", mappedBy="proposal", orphanRemoval=true)
      */
     private $proposalImages;
-    
-
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $tags;
-
-
 
     public function __construct()
     {
@@ -323,19 +315,6 @@ class Proposal
     {
         return $this->topRated;
     }
-
-    public function getTags(): ?string
-    {
-        return $this->tags;
-    }
-
-    public function setTags(?string $tags): self
-    {
-        $this->tags = $tags;
-
-        return $this;
-    }
-    
 
     /**
      * @param mixed $topRated

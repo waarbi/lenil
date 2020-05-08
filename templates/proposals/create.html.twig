@@ -36,7 +36,7 @@
                     {{ form_start(form, { 'attr': {'class': 'proposal-form'} }) }}
                     <div class="tab-pane show active" id="overview">
                         <div class="form-group row"><!--- form-group row Starts --->
-                            <div class="col-md-3">Proposal Title</div>
+                            <div class="col-md-3">Titre du service</div>
                             <div class="col-md-9">
                                 {{ form_widget(form.title, { 'attr': {'class': 'form-control','placeholder': 'Titre du service'} }) }}
                             </div>
@@ -44,16 +44,21 @@
                         </div><!--- form-group row Ends --->
 
                         <div class="form-group row"><!--- form-group row Starts --->
-                            <div class="col-md-3"> Category </div>
+                            <div class="col-md-3"> Categorie </div>
                             <div class="col-md-9">
                                 {{ form_widget(form.category, { 'attr': {'class': 'form-control'} }) }}
-                                <small class="form-text text-danger"></small>
+                            </div>
+                        </div><!--- form-group row Ends --->
+                        <div class="form-group row"><!--- form-group row Starts --->
+                            <div class="col-md-3"></div>
+                            <div class="col-md-9">
                                 {{ form_widget(form.subcategory, { 'attr': {'class': 'form-control'} }) }}
                             </div>
                         </div><!--- form-group row Ends --->
 
+
                         <div class="form-group row"><!--- form-group row Starts --->
-                            <div class="col-md-3">Delivery Time</div>
+                            <div class="col-md-3">Délai de livraison</div>
                             <div class="col-md-9">
                                 {{ form_widget(form.deliveryTime, { 'attr': {'class': 'form-control'} }) }}
                             </div>
@@ -73,24 +78,15 @@
                         {#                        {{ form_end(form) }}<!--- form Ends -->#}
                     </div>
                     <div class="tab-pane" id="pricing">
-                        <h5 class="font-weight-normal float-left">Pricing</h5>
-                        <div class="float-right switch-box">
-                            <span class="text">Fixed Price :</span>
-                            <label class="switch">
-                                <input type="checkbox" class="pricing" checked="">
-                                <span class="slider"></span>
-                            </label>
-                        </div>
-
+                        <h5 class="font-weight-normal float-left">Prix</h5>
                         <div class="clearfix"></div>
-
                         <hr class="mt-0">
 
                         <div class="form-group row proposal-price justify-content-center">
                             <div class="col-md-7">
                                 <div class="input-group">
                                     <span class="input-group-addon font-weight-bold">€</span>
-                                    {{ form_widget(form.price, { 'attr': {'class': 'form-control','enctype':'multipart/form-data'} }) }}
+                                    {{ form_widget(form.price, { 'attr': {'class': 'form-control'} }) }}
                                 </div>
                                 <small></small>
                             </div>
@@ -104,7 +100,7 @@
                     <div class="tab-pane" id="description">
                         <h5 class="font-weight-normal">Description</h5>
                         <hr>
-                        <p class="small mb-2"> Project Details </p>
+                        <p class="small mb-2">Description détaillée du service </p>
 
                         <div class="form-group">
                             {{ form_widget(form.description, { 'attr': {'class': 'form-control'} }) }}
@@ -287,8 +283,7 @@
                     // formData.append("key", "value");
                 });
                 this.on("success", function(file, response) {
-                    if (response.uploaded)
-                        alert('File Uploaded: ' + response.fileName);
+
                 });
             }
         });

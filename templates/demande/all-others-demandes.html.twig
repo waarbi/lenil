@@ -1,7 +1,6 @@
 <div class="row mt-2 mb-3">
     <div class="col-md-12">
         <h2 class="float-left">Demandes récentes des acheteurs</h2>
-        <button type="button" onclick="location.href='requests/buyer_requests'" class="float-right btn btn-success">VOIR TOUT</button>
     </div>
 </div>
 <div class="row buyer-requests">
@@ -18,8 +17,8 @@
                 </thead>
                 <tbody>
                 {% for demande in demandesActives %}
-                    <tr id="request_tr_106">
-                        <td>
+                    <tr>
+                        <td style="width: 650px ! important">
                             <img src="{{ asset('/uploads/images/'~demande.auteur.picture) }}" class="request-img rounded-circle">
                             <div class="request-description">
                                 <h6>{{ demande.auteur.fullName }}</h6>
@@ -45,9 +44,7 @@
                 </tbody>
             </table>
             <center>
-                <a href="requests/buyer_requests.php" class="btn btn-success btn-lg mb-3">
-                    <i class="fa fa-spinner"></i> Voir plus
-                </a>
+
             </center>
         </div>
     </div>
