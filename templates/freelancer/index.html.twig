@@ -27,7 +27,7 @@
                                     <li class="nav-item checkbox checkbox-success">
                                         <label>
                                             <input type="checkbox" value="1" class="get_online_sellers">
-                                            <span>Voir les Freelancers en ligne</span>
+                                            <span>Afficher les vendeurs en ligne</span>
                                         </label>
                                     </li>
                                 </ul>
@@ -36,165 +36,128 @@
 
                         <div class="card border-success mb-3">
                             <div class="card-header bg-success">
-                                <h3 class="float-left text-white h5">Localisation</h3>
+                                <h3 class="float-left text-white h5">Localisation du vendeur</h3>
                                 <button class="btn btn-secondary btn-sm float-right clear_seller_country clearlink"
                                         onclick="clearCountry()">
-                                    <i class="fa fa-times-circle"></i> initialiser Filtre
+                                    <i class='fa fa-times-circle'></i> Filtre
                                 </button>
                             </div>
                             <div class="card-body">
                                 <ul class="nav flex-column">
-                                    {% for localisation in pays %}
-                                        <li class="nav-item checkbox checkbox-success">
-                                            <label>
-                                                <input type="checkbox" value="{{ localisation.name }}" class="get_seller_country">
-                                                <span>{{ localisation.name }}</span>
-                                            </label>
-                                        </li>
-                                    {% endfor%}
+                                    {% for country in filterCountry %}
+                                    <li class="nav-item checkbox checkbox-success">
+                                        <label>
+                                            <input type="checkbox" value="{{ country.id }}" class="get_seller_country">
+                                            <span>{{ country.name }}</span>
+                                        </label>
+                                    </li>
+                                    {% endfor %}
                                 </ul>
                             </div>
                         </div>
-
                         <div class="card border-success mb-3">
                             <div class="card-header bg-success">
-                                <h3 class="float-left text-white h5">Niveau du freelancer</h3>
+                                <h3 class="float-left text-white h5">Niveau du vendeur</h3>
                                 <button class="btn btn-secondary btn-sm float-right clear_seller_level clearlink"
                                         onclick="clearLevel()">
-                                    <i class="fa fa-times-circle"></i> initialiser Filtre
+                                    <i class="fa fa-times-circle"></i> Filtre
                                 </button>
                             </div>
                             <div class="card-body">
                                 <ul class="nav flex-column">
-                                    {% for level in levels %}
+                                    {% for level in filterLevels %}
+                                        {% if level is not null %}
                                         <li class="nav-item checkbox checkbox-success">
                                             <label>
-                                                <input type="checkbox" value="{{ level.name }}" class="get_seller_level">
+                                                <input type="checkbox" value="{{ level.id }}" class="get_seller_level">
                                                 <span>{{ level.name }}</span>
                                             </label>
                                         </li>
-                                    {% endfor%}
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="card border-success mb-3">
-                            <div class="card-header bg-success">
-                                <h3 class="float-left text-white h5">Langue du freelancer</h3>
-                                <button class="btn btn-secondary btn-sm float-right clear_seller_language clearlink"
-                                        onclick="clearLanguage()">
-                                    <i class="fa fa-times-circle"></i> Clear Filter
-                                </button>
-                            </div>
-                            <div class="card-body">
-                                <ul class="nav flex-column">
-                                    {% for language in languages %}
-                                        <li class="nav-item checkbox checkbox-success">
-                                            <label>
-                                                <input type="checkbox" value="{{ language.name }}" class="get_seller_language">
-                                                <span>{{ language.name }}</span>
-                                            </label>
-                                        </li>
-                                    {% endfor%}
+                                        {% endif %}
+                                    {% endfor %}
                                 </ul>
                             </div>
                         </div>
                     </div>
 
 
-                        <div class="col-lg-9 col-md-8 col-sm-12 ">
-
-                            {% for user in pagination.data %}
-                                <div class="row flex-wrap" id="freelancers">
-                            <!-- Here Freelancers Gona Show -->
-                            <div class="col-md-12">
-                                <div class="card card-body mb-4 freelancerBox">
-                                    <figure class="wt-userlistingimg">
-                                        <img src="{{ asset('/uploads/images/'~user.picture) }}" width="100"
-                                             class="rounded img-fluid">
-                                        {% if user.connected %}
-                                        <small class="text-muted mt-1">
-                                            <i class="fa fa-circle text-green"></i> En ligne </small>
-                                        {% else %}
-                                            <small class="text-muted mt-1">
-                                                <i class="fa fa-circle text-danger"></i> Hors ligne </small>
-                                        {% endif %}
-                                        <div class="wt-userdropdown wt-away template-content tipso_style wt-tipso">
-                                            <img src="{{ asset('build/images/level_badge_2.png') }}"
-                                                 class="level_badge">
-                                        </div>
-                                        <a id="chatBtn" data-toggle="tooltip" data-placement="top" title=""
-                                           href="conversations/message.php?seller_id=2"
-                                           class="btn btn-success mt-4 text-white "
-                                           data-original-title="Chat With Me"><i class="fa fa-comments-o"
-                                                                                 aria-hidden="true"></i> Chat</a>
-                                    </figure>
-                                    <div class="request-description">
-                                        <div class="row">
-                                            <div class="col-lg-9 col-md-12">
-                                                <a href="{{ path('show_freelancer', {slug: user.slug}) }}">
-                                                    <h6 class="font-weight-normal"><i class="fa fa-check-circle"
-                                                                                      style="color:#00cc8d;"></i>
-                                                        {{ user.fullName}}</h6>
-                                                    <h5 class="text-success">{{ user.specialty }} </h5>
-                                                </a>
-                                                <ul class="tagline mb-2">
-                                                    <li>
-                                                        <i class="fa fa-user"></i>
-                                                        <strong>Membre depuis: </strong> {{ user.createdAt | date ('d M Y')}}
-                                                    </li>
-                                                    <li>
-                                                        <i class="fa fa-truck fa-flip-horizontal"></i>
-                                                        <strong>Livraison récente: </strong> {{ user.recentDelivery | date ('d M Y') }}
-                                                    </li>
-                                                    <li>
-                                                        <i class="fa fa-map-marker"></i>
-                                                        <strong>Pays: </strong>{{ user.pays.name }}
-                                                    </li>
-                                                    <li>
-                                                        <a href="conversations/message.php?seller_id=2"><i
-                                                                    class="fa fa-comments-o"></i>
-                                                            <strong>Contacter:</strong> {{ user.fullName }} </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <div class="col-lg-3 col-md-12">
-                                                <div class="star-rating">
-                                                    <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-                                                            class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-                                                            class="fa fa-star-o"></i>                <h4 class="mb-1">
-                                                        4.8/<small class="text-muted font-weight-normal">5</small></h4>
-                                                    <a>(21 Reviews)</a>
+                    <div class="col-lg-9 col-md-8 col-sm-12 ">
+                            <div class="row flex-wrap" id="freelancers">
+                                <!-- Here Freelancers Gona Show -->
+                                {% for user in freelancers %}
+                                <div class="col-md-12">
+                                    <div class="card card-body mb-4 freelancerBox">
+                                        <figure class="wt-userlistingimg">
+                                            <img src="{{ asset('/uploads/images/'~user.picture) }}" width="100"
+                                                 class="rounded img-fluid">
+                                            <a id="chatBtn" data-toggle="tooltip" data-placement="top" title=""
+                                               href="conversations/message.php?seller_id=2"
+                                               class="btn btn-success mt-4 text-white "
+                                               data-original-title="Chat With Me"><i class="fa fa-comments-o"
+                                                                                     aria-hidden="true"></i> Chat</a>
+                                        </figure>
+                                        <div class="request-description">
+                                            <div class="row">
+                                                <div class="col-lg-9 col-md-12">
+                                                    <a href="{{ path('show_freelancer', {slug: user.slug}) }}">
+                                                        <h6 class="font-weight-normal"><i class="fa fa-check-circle"
+                                                                                          style="color:#00cc8d;"></i>
+                                                            {{ user.fullName }}</h6>
+                                                        <h5 class="text-success">{% if user.getProposals is not empty %} {{ user.getProposals.first().title }}{% endif %}</h5>
+                                                    </a>
+                                                    <ul class="tagline mb-2">
+                                                        <li>
+                                                            <i class="fa fa-user"></i>
+                                                            <strong>Membre
+                                                                depuis: </strong> {{ user.createdAt | format(user.createdAt) }}
+                                                        </li>
+                                                        <li>
+                                                            <i class="fa fa-truck fa-flip-horizontal"></i>
+                                                            <strong>Livraison
+                                                                récente: </strong> {{ user.recentDelivery | format(user.recentDelivery) }}
+                                                        </li>
+                                                        <li>
+                                                            <i class="fa fa-map-marker"></i>
+                                                            <strong>Pays: </strong>{{ user.pays.name }}
+                                                        </li>
+                                                        <li>
+                                                            <a href="conversations/message.php?seller_id=2"><i
+                                                                        class="fa fa-comments-o"></i>
+                                                                <strong>Contacter:</strong> {{ user.fullName }} </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="col-lg-3 col-md-12">
+                                                    <div class="star-rating">
+                                                        <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
+                                                                class="fa fa-star"></i> <i class="fa fa-star"></i> <i
+                                                                class="fa fa-star-o"></i>                <h4
+                                                                class="mb-1">
+                                                            4.8/<small class="text-muted font-weight-normal">5</small>
+                                                        </h4>
+                                                        <a>(21 Reviews)</a>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <p class="lead mb-2 mt-0">{{ user.description}}</p>
-                                        <div class="skills">
+                                            <p class="lead mb-2 mt-0">{{ user.description | raw }}</p>
+                                            <div class="skills">
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <script>
-                                    $(".showMore").click(function () {
-                                        var id = $(this).data("id");
-                                        $(".tags-" + id).removeClass("d-none");
-                                        $(this).addClass("d-none");
-                                    });
-                                </script>
+                                {% else %}
+                                    <p>Pas de Freelancer</p>
+                                {% endfor %}
                             </div>
-                        </div>
-                            {% else %}
-                                <p>Pas de Freelancer</p>
-                            {% endfor %}
 
-                            <div id="wait"></div>
-                            <br>
-                            <div class="row justify-content-center mb-5 mt-0"><!-- row justify-content-center Starts -->
-                                <nav><!-- nav Starts -->
-                                    {% if pagination.data|length > 0 %}
-                                        {{pagination.display()}}
-                                    {% endif %}
-                                </nav>
-                            </div>
+
+                        <div id="wait"></div>
+                        <br>
+                        <div class="row justify-content-center mb-5 mt-0"><!-- row justify-content-center Starts -->
+                            <nav><!-- nav Starts -->
+                            </nav>
                         </div>
+                    </div>
 
                 </div>
             </div>
@@ -203,125 +166,130 @@
 {% endblock %}
 {% block javascripts %}
     <script type="application/javascript">
-        $(document).ready(function () {
+        function get_freelancers() {
+            var aInputs = $('li').find('.get_online_sellers');
+            var online_seller   = Array();
+            iKey = 0;
+            $.each(aInputs,function(key,oInput){
+                if(oInput.checked){
+                    online_seller[iKey] =  oInput.value
+                };
+                iKey++;
+            });
 
-            function get_freelancers() {
-                var sPath = '';
-                var aInputs = Array();
+            var aInputs = $('li').find('.get_seller_level');
+            var level_seller = Array();
+            iKey = 0;
+            $.each(aInputs,function(key,oInput){
+                if(oInput.checked){
+                    level_seller[iKey] =  oInput.value
+                };
+                iKey++;
+            });
+            var aInputs = $('li').find('.get_seller_country');
+            var country_seller = Array();
+            iKey = 0;
+            $.each(aInputs,function(key,oInput){
+                if(oInput.checked){
+                    country_seller[iKey] =  oInput.value
+                };
+                iKey++;
+            });
 
-                var aInputs = $('li').find('.get_online_sellers');
-                var aKeys = Array();
-                var aValues = Array();
-                iKey = 0;
-                $.each(aInputs, function (key, oInput) {
-                    if (oInput.checked) {
-                        aKeys[iKey] = oInput.value
+            $('#wait').addClass("loader");
+            $.ajax({
+                url:"{{ path('load_search_freelancer') }}",
+                data: {
+                    json_online_seller: JSON.stringify(online_seller),
+                    json_level_seller: JSON.stringify(level_seller),
+                    json_country_seller: JSON.stringify(country_seller)
+                },
+                type:'GET',
+                dataType: "JSON",
+                success:function(result){
+
+                    $('#freelancers').html('');
+                    _html = '';
+                    if (result.count_freelancers > 0){
+                        $.each(result.freelancers, function (key, user) {
+                            _html += '                                <div class="col-md-12">\n' +
+                                '                                    <div class="card card-body mb-4 freelancerBox">\n' +
+                                '                                        <figure class="wt-userlistingimg">\n' +
+                                '                                            <img src='+'/uploads/images/'+ user.avatar+' width="100"\n' +
+                            '                                                 class="rounded img-fluid">\n' +
+                            '                                            <a id="chatBtn" data-toggle="tooltip" data-placement="top" title=""\n' +
+                            '                                               href="conversations/message.php?seller_id=2"\n' +
+                            '                                               class="btn btn-success mt-4 text-white "\n' +
+                            '                                               data-original-title="Chat With Me"><i class="fa fa-comments-o"\n' +
+                            '                                                                                     aria-hidden="true"></i> Chat</a>\n' +
+                            '                                        </figure>\n' +
+                            '                                        <div class="request-description">\n' +
+                            '                                            <div class="row">\n' +
+                            '                                                <div class="col-lg-9 col-md-12">\n' +
+                            '                                                    <a href='+user.freelancerUrl+'>\n' +
+                            '                                                        <h6 class="font-weight-normal"><i class="fa fa-check-circle"\n' +
+                            '                                                                                          style="color:#00cc8d;"></i>\n' +
+                            '                                                            '+ user.fullname+'</h6>\n' +
+                            '                                                        <h5 class="text-success"> '+ user.firstProposal+' </h5>\n' +
+                            '                                                    </a>\n' +
+                            '                                                    <ul class="tagline mb-2">\n' +
+                            '                                                        <li>\n' +
+                            '                                                            <i class="fa fa-user"></i>\n' +
+                            '                                                            <strong>Membre\n' +
+                            '                                                                depuis: </strong> '+ user.sinceMember+' </li>\n' +
+                            '                                                        <li>\n' +
+                            '                                                            <i class="fa fa-truck fa-flip-horizontal"></i>\n' +
+                            '                                                            <strong>Livraison\n' +
+                            '                                                                récente: </strong>'+ user.delivery+'  </li>\n' +
+                            '                                                        <li>\n' +
+                            '                                                            <i class="fa fa-map-marker"></i>\n' +
+                            '                                                            <strong>Pays: </strong>'+ user.country+' \n' +
+                            '                                                        </li>\n' +
+                            '                                                        <li>\n' +
+                            '                                                            <a href="conversations/message.php?seller_id=2"><i\n' +
+                            '                                                                        class="fa fa-comments-o"></i>\n' +
+                            '                                                                <strong>Contacter:</strong> '+ user.fullname+'  </a>\n' +
+                            '                                                        </li>\n' +
+                            '                                                    </ul>\n' +
+                            '                                                </div>\n' +
+                            '                                                <div class="col-lg-3 col-md-12">\n' +
+                            '                                                    <div class="star-rating">\n' +
+                            '                                                        <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i\n' +
+                            '                                                                class="fa fa-star"></i> <i class="fa fa-star"></i> <i\n' +
+                            '                                                                class="fa fa-star-o"></i>                <h4\n' +
+                            '                                                                class="mb-1">\n' +
+                            '                                                            4.8/<small class="text-muted font-weight-normal">5</small>\n' +
+                            '                                                        </h4>\n' +
+                            '                                                        <a>(21 Reviews)</a>\n' +
+                            '                                                    </div>\n' +
+                            '                                                </div>\n' +
+                            '                                            </div>\n' +
+                            '                                            <p class="lead mb-2 mt-0">'+ user.description+' </p>\n' +
+                            '                                            <div class="skills">\n' +
+                            '                                            </div>\n' +
+                            '                                        </div>\n'+
+                            '                                        </div>\n'+
+                            '                                        </div>';
+                        });
+                    }else {
+                        _html +='<div class=\'col-md-12\'>\n<h1 class=\'text-center mt-4\'><i class=\'fa fa-meh-o\'></i> Nous n\'avons trouvé aucun freelancer correspondant à cette recherche </h1>\n</div>';
                     }
-                    ;
-                    iKey++;
-                });
-                if (aKeys.length > 0) {
-                    var sPath = '';
-                    for (var i = 0; i < aKeys.length; i++) {
-                        sPath = sPath + 'online_sellers[]=' + aKeys[i] + '&';
-                    }
+                    $('#freelancers').html(_html);
+                    $('#wait').removeClass("loader");
                 }
-
-                var aInputs = $('li').find('.get_seller_country');
-                var aKeys = Array();
-                var aValues = Array();
-                iKey = 0;
-                $.each(aInputs, function (key, oInput) {
-                    if (oInput.checked) {
-                        aKeys[iKey] = oInput.value
-                    }
-                    ;
-                    iKey++;
-                });
-                if (aKeys.length > 0) {
-                    for (var i = 0; i < aKeys.length; i++) {
-                        sPath = sPath + 'seller_country[]=' + aKeys[i] + '&';
-                    }
-                }
-
-                var aInputs = Array();
-                var aInputs = $('li').find('.get_seller_level');
-                var aKeys = Array();
-                var aValues = Array();
-                iKey = 0;
-                $.each(aInputs, function (key, oInput) {
-                    if (oInput.checked) {
-                        aKeys[iKey] = oInput.value
-                    }
-                    ;
-                    iKey++;
-                });
-                if (aKeys.length > 0) {
-                    for (var i = 0; i < aKeys.length; i++) {
-                        sPath = sPath + 'seller_level[]=' + aKeys[i] + '&';
-                    }
-                }
-
-                var aInputs = Array();
-                var aInputs = $('li').find('.get_seller_language');
-                var aKeys = Array();
-                var aValues = Array();
-                iKey = 0;
-                $.each(aInputs, function (key, oInput) {
-                    if (oInput.checked) {
-                        aKeys[iKey] = oInput.value
-                    }
-                    ;
-                    iKey++;
-                });
-                if (aKeys.length > 0) {
-                    for (var i = 0; i < aKeys.length; i++) {
-                        sPath = sPath + 'seller_language[]=' + aKeys[i] + '&';
-                    }
-                }
-
-                $('#wait').addClass("loader");
-                $.ajax({
-                    url: "freelancer_load",
-                    method: "POST",
-                    data: sPath + 'zAction=get_freelancers',
-                    success: function (data) {
-                        $('#freelancers').html('');
-                        $('#freelancers').html(data);
-                        $('#wait').removeClass("loader");
-                    }
-                });
-                $.ajax({
-                    url: "freelancer_load",
-                    method: "POST",
-                    data: sPath + 'zAction=get_freelancer_pagination',
-                    success: function (data) {
-                        $('#freelancer_pagination').html('');
-                        $('#freelancer_pagination').html(data);
-                    }
-                });
-            }
-
-            $('.get_online_sellers').click(function () {
-                get_freelancers();
             });
-            $('.get_seller_country').click(function () {
-                get_freelancers();
-            });
-            $('.get_delivery_time').click(function () {
-                get_freelancers();
-            });
-            $('.get_seller_level').click(function () {
-                get_freelancers();
-            });
-            $('.get_seller_language').click(function () {
-                get_freelancers();
-            });
+        }
 
+        $('.get_online_sellers').click(function () {
+            get_freelancers();
+        });
+        $('.get_seller_country').click(function () {
+            get_freelancers();
         });
 
-    </script>
-    <script type="application/javascript">
+        $('.get_seller_level').click(function () {
+            get_freelancers();
+        });
 
         $(document).ready(function () {
             $(".get_seller_country").click(function () {
@@ -331,13 +299,7 @@
                     $(".clear_seller_country").hide();
                 }
             });
-            $(".get_delivery_time").click(function () {
-                if ($(".get_delivery_time:checked").length > 0) {
-                    $(".clear_delivery_time").show();
-                } else {
-                    $(".clear_delivery_time").hide();
-                }
-            });
+
             $(".get_seller_level").click(function () {
                 if ($(".get_seller_level:checked").length > 0) {
                     $(".clear_seller_level").show();
@@ -345,34 +307,18 @@
                     $(".clear_seller_level").hide();
                 }
             });
-            $(".get_seller_language").click(function () {
-                if ($(".get_seller_language:checked").length > 0) {
-                    $(".clear_seller_language").show();
-                } else {
-                    $(".clear_seller_language").hide();
-                }
-            });
             $(".clear_seller_country").click(function () {
                 $(".clear_seller_country").hide();
             });
-            $(".clear_delivery_time").click(function () {
-                $(".clear_delivery_time").hide();
-            });
+
             $(".clear_seller_level").click(function () {
                 $(".clear_seller_level").hide();
             });
-            $(".clear_seller_language").click(function () {
-                $(".clear_seller_language").hide();
-            });
+
         });
 
         function clearCountry() {
             $('.get_seller_country').prop('checked', false);
-            get_freelancers();
-        }
-
-        function clearDelivery() {
-            $('.get_delivery_time').prop('checked', false);
             get_freelancers();
         }
 
@@ -381,9 +327,6 @@
             get_freelancers();
         }
 
-        function clearLanguage() {
-            $('.get_seller_language').prop('checked', false);
-            get_freelancers();
-        }
     </script>
+
 {% endblock %}

@@ -44,4 +44,37 @@ class UserRepository extends ServiceEntityRepository
 
 
     }
+    public function loadSearchFreelancers(array $onlineFilter, array $levelFilter, array $countryFilter)
+    {
+        $query = $this->createQueryBuilder('user');
+        $query = $query->join('user.userRoles', 'role')
+            ->where("role.title LIKE :nomRole")
+            ->setParameter("nomRole", '%' .'ROLE_SELLER'. '%');
+        if (!empty($levelFilter)) {
+            $query = $query->andwhere('user.level IN (:idsLevels)')
+                ->setParameter('idsLevels', $levelFilter);
+        }
+        if (!empty($countryFilter)) {
+            $query = $query->andwhere('user.pays IN (:idsCountry)')
+                ->setParameter('idsCountry', $countryFilter);
+        }
+        if (!empty($onlineFilter)) {
+            $query = $query->andwhere('user.online = :online')
+                ->setParameter('online', true);
+        }
+
+
+        return $query->getQuery()->getResult();
+
+    }
+    public function findAllFreelancer()
+    {
+        $query = $this->createQueryBuilder('user');
+        $query = $query->join('user.userRoles', 'role')
+        ->where("role.title LIKE :nomRole")
+        ->setParameter("nomRole", '%' .'ROLE_SELLER'. '%');
+
+        return $query->getQuery()->getResult();
+
+    }
 }

@@ -29,8 +29,6 @@ use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 
 /**
  * @Route("/proposals")
- * @Security("is_granted('ROLE_USER')", message="vous n'avez pas le droit d'acceder a cette ressource")
-
  */
 class ProposalsController extends AbstractController
 {
@@ -78,53 +76,11 @@ class ProposalsController extends AbstractController
         return new JsonResponse($output);
     }
 
-//    /**
-//     * @Route("/create", name="create_proposal", methods={"GET","POST"})
-//     * @param Request $request
-//     * @Security("is_granted('ROLE_USER')")
-//     * @Security("is_granted('ROLE_SELLER')")
-//     * @param EntityManagerInterface $manager
-//     * @return Response
-//     */
-//    public function create(Request $request, EntityManagerInterface $manager)
-//    {
-//
-//        $proposal = new Proposal();
-//        $form = $this->createForm(ProposalType::class, $proposal);
-//        $form->handleRequest($request);
-//        // Check is valid
-//        if ($form->isSubmitted() && $form->isValid()) {
-//
-//            $proposal->setSeller($this->getUser());
-//            $medias = $manager->getRepository('App\Entity\ProposalImage')->findBy(array('proposal' => null));
-//
-//            foreach ($medias as $media)
-//            {
-//                $media->setProposal($proposal);
-//                $proposal->addProposalImage($media);
-//                $manager->persist($media);
-//
-//            }
-//            $roleSeller = new Role();
-//            $roleSeller->setTitle(Role::ROLE_SELLER);
-//            $this->getUser()->addUserRole($roleSeller);
-//
-//            $manager->persist($roleSeller);
-//            $manager->flush();
-//            $this->addFlash('success', 'Congratulations! Your proposal is created');
-//
-//            return $this->redirectToRoute('account_index');
-//        }
-//
-//        return $this->render('proposals/create.html.twig', [
-//            'form' => $form->createView(),
-//            'categories_yes' => $this->categories_yes,
-//        ]);
-//    }
 
     /**
      * @Route("/new/proposal", name="create_new_proposal")
      * @param Request $request
+     * @Security("is_granted('ROLE_USER')", message="vous n'avez pas le droit d'acceder a cette ressource")
      * @return RedirectResponse|Response
      */
     public function createProposal(Request $request){
@@ -145,11 +101,6 @@ class ProposalsController extends AbstractController
                 $this->manager->persist($media);
             }
 
-            $roleSeller = new Role();
-            $roleSeller->setTitle(Role::ROLE_SELLER);
-            $this->getUser()->addUserRole($roleSeller);
-
-            $this->manager->persist($roleSeller);
             $this->manager->persist($proposal);
             $this->manager->flush();
 
@@ -168,6 +119,7 @@ class ProposalsController extends AbstractController
     /**
      * @Route("/delete/{id}", name="delete_proposal")
      * @param Proposal $proposal
+     *  @Security("is_granted('ROLE_USER')", message="vous n'avez pas le droit d'acceder a cette ressource")
      * @param FileUploader $fileUploader
      * @return RedirectResponse
      */
@@ -211,6 +163,7 @@ class ProposalsController extends AbstractController
      * @Route("/edit/{id}", name="edit_proposal", methods={"GET","POST"})
      * @param Proposal $proposal
      * @param Request $request
+     * @Security("is_granted('ROLE_USER')", message="vous n'avez pas le droit d'acceder a cette ressource")
      * @param EntityManagerInterface $manager
      * @return Response
      */

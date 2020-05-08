@@ -190,7 +190,7 @@
                             <div class="col-xl-2dot4 col-lg-3 col-md-4 col-sm-6 col-xs-12 mb-4">
                                 <div class="proposal-card-base mp-proposal-card"><!--- proposal-card-base mp-proposal-card Starts --->
                                     <a href="{{ path('show_details_proposal',{sellerSlug: proposal.seller.slug, proposalSlug: proposal.slug }) }}">
-                                        <img src="{{ asset('/uploads/images/'~proposal.proposalImages.first().getFileName()) }}" class="img-fluid">
+                                        <img {% if proposal.proposalImages.first() %} src="{{ asset('/uploads/images/'~proposal.proposalImages.first().getFileName()) }}" {% endif %} class="img-fluid">
                                     </a>
                                     <div class="proposal-card-caption"><!--- proposal-card-caption Starts --->
                                         <div class="proposal-seller-info"><!--- gig-seller-info Starts --->
