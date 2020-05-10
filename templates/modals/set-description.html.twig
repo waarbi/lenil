@@ -1,0 +1,25 @@
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Dites un peu plus sur vous ?</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <form {% if app.user %}action="{{ path('become_seller', {id : app.user.id}) }}" {% endif %}>
+                <div class="modal-body">
+                        <div class="form-group">
+                            <label for="message-text" class="col-form-label">Description :</label>
+                            <textarea class="form-control" name="description" required id="message-text"></textarea>
+                        </div>
+                </div>
+            <div class="modal-footer">
+                <button class="btn btn-default" data-dismiss="modal">Annuler</button>
+                <button  type="submit" class="btn btn-primary">Je deviens vendeur</button>
+            </div>
+            </form>
+        </div>
+
+    </div>
+</div>

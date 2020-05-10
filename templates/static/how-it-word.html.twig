@@ -18,7 +18,7 @@
                 <div class="card mt-4 mb-4 rounded-0">
                     <div class="card-body">
                         <h2 class="text-primary font-weight-bold">Acheteurs
-                            <a href="{{ path('homepage') }}" class="btn btn-success float-right btn-lg btn_start_selling">
+                            <a href="{{ path('account_register') }}" class="btn btn-success float-right btn-lg btn_start_selling">
                                 Achetez un service
                             </a>
                         </h2>
@@ -119,7 +119,7 @@
                 <div class="card mt-4 mb-4 rounded-0">
                     <div class="card-body">
                         <h2 class="text-primary font-weight-bold">Vendeurs
-                                <a href="{{ path('account_index') }}" class="btn btn-success float-right btn-lg btn_start_selling">
+                                <a href="{{ path('account_register',  {'_from': '_devenir_vendeur'}) }}" class="btn btn-success float-right btn-lg btn_start_selling">
                                     Vendez un service
                                 </a>
                         </h2>

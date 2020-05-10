@@ -135,10 +135,6 @@ class User implements UserInterface, EquatableInterface
      */
     private $recentDelivery;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
-    private $connected = false;
 
     public function getId(): ?int
     {
@@ -624,7 +620,10 @@ class User implements UserInterface, EquatableInterface
 
         return $this;
     }
-
+    public function hasRole($role)
+    {
+        return in_array($role, $this->getRoles());
+    }
     public function getRecentDelivery(): ?\DateTimeInterface
     {
         return $this->recentDelivery;
@@ -633,18 +632,6 @@ class User implements UserInterface, EquatableInterface
     public function setRecentDelivery(?\DateTimeInterface $recentDelivery): self
     {
         $this->recentDelivery = $recentDelivery;
-
-        return $this;
-    }
-
-    public function getConnected(): ?bool
-    {
-        return $this->connected;
-    }
-
-    public function setConnected(?bool $connected): self
-    {
-        $this->connected = $connected;
 
         return $this;
     }

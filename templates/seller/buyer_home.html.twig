@@ -14,7 +14,7 @@
                         <div class="col-lg-6 m-0 p-0 pr-2 pb-lg-0 pr-lg-2 pb-md-2 pr-sm-2"><!--- col-md-6 Starts --->
                             <h5><a href="{{ path('dashboard_seller') }}">Dashboard</a></h5>
                             {% if is_granted('ROLE_SELLER') %}
-                                <h5><a href="{{ path('create_proposal') }}">Ajouter un service</a></h5>
+                                <h5><a href="{{ path('create_new_proposal') }}">Ajouter un service</a></h5>
                             {% endif %}
                             <h5 class="mb-0"><a href="{{ path('demande_new') }}">Poster une demande</a></h5>
                         </div><!--- col-md-6 Ends --->
@@ -48,7 +48,7 @@
                                 {% endif %}
                                 <div class="proposal-card-base mp-proposal-card"><!--- proposal-card-base mp-proposal-card Starts --->
                                     <a href="{{ path('show_details_proposal',{sellerSlug: proposal.seller.slug, proposalSlug: proposal.slug }) }}">
-                                        <img src="{{ asset('/uploads/images/'~proposal.proposalImages.first().getFileName()) }}" class="img-fluid">
+                                        <img {% if proposal.proposalImages is not empty %}src="{{ asset('/uploads/images/'~proposal.proposalImages.first().getFileName()) }}" {% endif %} class="img-fluid">
                                     </a>
                                     <div class="proposal-card-caption"><!--- proposal-card-caption Starts --->
                                         <div class="proposal-seller-info"><!--- gig-seller-info Starts --->
@@ -145,7 +145,7 @@
                             <div class="proposal-card-base mp-proposal-card"><!--- proposal-card-base mp-proposal-card Starts --->
 {#                                <div class ="card-header">#}
                                     <a href="{{ path('show_details_proposal',{sellerSlug: proposal.seller.slug, proposalSlug: proposal.slug }) }}">
-                                        <img src="{{ asset('/uploads/images/'~proposal.proposalImages.first().getFileName()) }}" height="150px" width="220px">
+                                        <img {% if proposal.proposalImages is not empty %}src="{{ asset('/uploads/images/'~proposal.proposalImages.first().getFileName()) }}" {% endif %} height="150px" width="220px">
                                     </a>
 {#                                </div>#}
                                 <div class="proposal-card-caption"><!--- proposal-card-caption Starts --->
@@ -226,7 +226,7 @@
                         <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 mb-3 pr-lg-1">
                             <div class="proposal-card-base mp-proposal-card"><!--- proposal-card-base mp-proposal-card Starts --->
                                 <a href="{{ path('show_details_proposal',{sellerSlug: top_proposal.seller.slug, proposalSlug: top_proposal.slug }) }}">
-                                    <img src="{{ asset('/uploads/images/'~top_proposal.proposalImages.first().getFileName()) }}" class="img-fluid">
+                                    <img {% if top_proposal.proposalImages is not empty %}src="{{ asset('/uploads/images/'~top_proposal.proposalImages.first().getFileName()) }}" {% endif %} class="img-fluid">
                                 </a>
                                 <div class="proposal-card-caption"><!--- proposal-card-caption Starts --->
                                     <div class="proposal-seller-info"><!--- gig-seller-info Starts --->
@@ -305,7 +305,7 @@
                         <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 mb-3 pr-lg-1">
                             <div class="proposal-card-base mp-proposal-card"><!--- proposal-card-base mp-proposal-card Starts --->
                                 <a href="{{ path('show_details_proposal',{sellerSlug: random_proposal.seller.slug, proposalSlug: random_proposal.slug }) }}">
-                                    <img src="{{ asset('/uploads/images/'~random_proposal.proposalImages.first().getFileName()) }}" class="img-fluid">
+                                    <img {% if random_proposal.proposalImages is not empty %} src="{{ asset('/uploads/images/'~random_proposal.proposalImages.first().getFileName()) }}" {% endif %} class="img-fluid">
                                 </a>
                                 <div class="proposal-card-caption"><!--- proposal-card-caption Starts --->
                                     <div class="proposal-seller-info"><!--- gig-seller-info Starts --->

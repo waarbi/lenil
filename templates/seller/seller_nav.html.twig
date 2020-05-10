@@ -1,5 +1,5 @@
     <li class="logged-in-link">
-        <a class="menuItem" href="#freelancers">
+        <a class="menuItem" href="{{ path('index_freelancers') }}">
     <span class="gigtodo-icon nav-icon gigtodo-icon-relative">
       <img width="135" src="{{ asset('/uploads/images/default/big-users.png') }}" style="width: 35px;height: 35px;top: -10px;">
     </span>
@@ -106,62 +106,25 @@
             <div class="dropdown-menu" style="min-width: 200px; z-index: 2000; width: auto !important; position: absolute; transform: translate3d(0px, 62px, 0px); top: 0px; left: 0px; will-change: transform;" x-placement="bottom-start">
                 <a class="dropdown-item" href="{{ path('dashboard_seller') }}">
                     Dashboard   </a>
-{#                <a class="dropdown-item dropdown-toggle" href="#" data-toggle="collapse" data-target="#selling">
-                    Selling   </a>
-                <div id="selling" class="dropdown-submenu collapse">
-                    <a class="dropdown-item" href="#proposals/view_proposals">
-                        My Proposals      </a>
-                </div>
-                <a class="dropdown-item dropdown-toggle" href="#" data-toggle="collapse" data-target="#buying">
-                    Buying   </a>
-                <div id="buying" class="dropdown-submenu collapse">
-                    <a class="dropdown-item" href="#buying_orders">
-                        Orders      </a>
-                    <a class="dropdown-item" href="#purchases">
-                        Purchases      </a>
-                    <a class="dropdown-item" href="#favorites">
-                        Favorites      </a>
-                </div>
-                <a class="dropdown-item dropdown-toggle" href="#" data-toggle="collapse" data-target="#requests">
-                    Requests   </a>
-                <div id="requests" class="dropdown-submenu collapse">
-                    <a class="dropdown-item" href="#requests/post_request">
-                        Post A Request      </a>
-                    <a class="dropdown-item" href="#requests/manage_requests">
-                        Manage Requests      </a>
-                </div>
-                <a class="dropdown-item dropdown-toggle" href="#" data-toggle="collapse" data-target="#contacts">
-                    Contacts   </a>
-                <div id="contacts" class="dropdown-submenu collapse">
-                    <a class="dropdown-item" href="#manage_contacts?my_buyers">
-                        My Buyers      </a>
-                    <a class="dropdown-item" href="#manage_contacts?my_sellers">
-                        My Sellers      </a>
-                </div>
-                <a class="dropdown-item dropdown-toggle" href="#" data-toggle="collapse" data-target="#referrals">
-                    My Referrals   </a>
-                <div id="referrals" class="dropdown-submenu collapse">
-                    <a class="dropdown-item" href="#my_referrals" data-target="#referrals">
-                        User Referrals      </a>
-                    <a class="dropdown-item" href="#proposal_referrals" data-target="#referrals">
-                        Proposal Referrals      </a>
-                </div>
-                <a class="dropdown-item" href="#conversations/inbox">
-                    Inbox Messages   </a>
-                    #}
+                <a class="dropdown-item" href="{{ path('homepage') }}">
+                    Accueil   </a>
+                {% if is_granted('ROLE_SELLER') %}
                 <a class="dropdown-item" href="{{ path('account_index') }}">
                     Mon Profil   </a>
-                <a class="dropdown-item dropdown-toggle" href="#" data-toggle="collapse" data-target="#requests">
-                    Demandes   </a>
-                <div id="requests" class="dropdown-submenu collapse">
-                    <a class="dropdown-item" href="{{ path('demande_new') }}">
-                        Faites une demande      </a>
-                    <a class="dropdown-item" href="{{ path('demande_index') }}">
-                        Gérer vos demandes      </a>
-                </div>
+                {% endif %}
+                {% if app.user.hasRole('ROLE_BUYER') %}
+                    <a class="dropdown-item dropdown-toggle" href="#" data-toggle="collapse" data-target="#requests">
+                        Demandes   </a>
+                    <div id="requests" class="dropdown-submenu collapse">
+                        <a class="dropdown-item" href="{{ path('demande_new') }}">
+                            Faites une demande      </a>
+                        <a class="dropdown-item" href="{{ path('demande_index') }}">
+                            Gérer vos demandes      </a>
+                    </div>
+                {% endif %}
                 <a class="dropdown-item" href="{{ path('account_profile') }}">
                     Mes Paramètres   </a>
-                {% if is_granted('ROLE_SELLER') %}
+                {% if app.user.hasRole('ROLE_SELLER') %}
                     <a class="dropdown-item dropdown-toggle" href="#" data-toggle="collapse" data-target="#service">
                         Services   </a>
                     <div id="service" class="dropdown-submenu collapse">
@@ -171,12 +134,29 @@
                             Gérer vos services      </a>
                     </div>
                 {% endif %}
+                {% if app.user.hasRole('ROLE_SELLER') and app.user.hasRole('ROLE_BUYER') %}
+                    <a class="dropdown-item"  href="{{ path('become_seller',{id: app.user.id}) }}" id="become-buyer"><i class="fa fa-heart text-primary"></i>
+                        Vender un service</a>
+                    <a class="dropdown-item"  href="{{ path('become_buyer',{id: app.user.id}) }}"><i class="fa fa-heart text-primary"></i>
+                        Achéter un service
+                    </a>
+                {% elseif app.user.hasRole('ROLE_SELLER') %}
+                        <a class="dropdown-item"  href="{{ path('become_buyer',{id: app.user.id}) }}"><i class="fa fa-heart text-success"></i>
+                            Devenez un achéteur
+                        </a>
+                        <a class="dropdown-item"  href="{{ path('become_seller',{id: app.user.id}) }}" id="become-buyer"><i class="fa fa-heart text-primary"></i>
+                            Vender un service</a>
+
+                {% elseif app.user.hasRole('ROLE_BUYER') %}
+                    <a class="dropdown-item" data-toggle="modal" data-target="#myModal"  id="become-buyer"><i class="fa fa-heart text-primary"></i>
+                        Devenez vendeur</a>
+                    <a class="dropdown-item"  href="{{ path('become_buyer',{id: app.user.id}) }}"><i class="fa fa-heart text-primary"></i>
+                        Achéter un service
+                    </a>
+                {% endif %}
 
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" id="logout-link" href="{{ path('account_logout') }}">
                     Déconnexion   </a>
             </div>
         </div></li>
-    <li class="logged-in-link mr-lg-0 mr-2">
-        <a class="menuItem btn btn-success text-white">0€</a>
-    </li>

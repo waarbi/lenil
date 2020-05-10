@@ -118,15 +118,16 @@ class AccountController extends AbstractController
             $hash = $encoder->encodePassword($user, $user->getHash());
             $user->setHash($hash);
             $user->setConfirmationToken($this->generateToken());
-            $roleSeller = new Role();
             $newSeller = $manager->getRepository('App:SellerLevel')->findBy(array('name' => 'Nouveau vendeur'))[0];
             $user->setLevel($newSeller);
             if ($displayDescription){
-                $roleSeller->setTitle(Role::ROLE_SELLER);
+                $roleSeller = $manager->getRepository(Role::class)->findBy(array('title' => Role::ROLE_SELLER))[0];
+                $user->addUserRole($roleSeller);
             }else{
-                $roleSeller->setTitle(Role::ROLE_BUYER);
+                $roleBuyer = $manager->getRepository(Role::class)->findBy(array('title' => Role::ROLE_BUYER))[0];
+                $user->addUserRole($roleBuyer);
+
             }
-            $user->addUserRole($roleSeller);
 
             $manager->persist($roleSeller);
             $manager->persist($user);
@@ -185,7 +186,6 @@ class AccountController extends AbstractController
      * Permet d'afficher le profil de l'utilisateur concerné
      *
      * @Route("/home/vendeur",name="account_index")
-     * @IsGranted("ROLE_SELLER")
      * @param EntityManagerInterface $manager
      * @param Request $request
      * @return Response

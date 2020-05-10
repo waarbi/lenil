@@ -109,33 +109,37 @@ class HomeController extends AbstractController
                 ));
         }else{
 
-
-            $demandesActives = $manager->getRepository('App\Entity\Demande')->findAllActivesDemandeOfOthersUsers($this->getUser()->getId());
-            $sliders = $manager->getRepository(LandingPageSlide::class)->findBy(array('onHomePageSeller' => true));
-
-            $status = Proposal::PROPOSAL_STATUS_ACTIVE;
-            $maxResult = 8;
-            $featuredProposals = $manager->getRepository(Proposal::class)->getFeaturedProposals($status, $maxResult);
-            $topProposals = $manager->getRepository(Proposal::class)->getTopProposals($status, $maxResult);
-            $randomProposals = $manager->getRepository(Proposal::class)->getRandomProposals($maxResult);
-            shuffle($randomProposals);
-
             if($this->get('security.authorization_checker')->isGranted('ROLE_SELLER')){
                 return $this->redirectToRoute('account_index');
+            }else{
+                return $this->redirectToRoute('home_acheteur');
             }
-            return $this->render('home_buyer.html.twig',
-                array(
-                    'categories_yes'      => $this->categories_yes,
-                    'categories_card'     => $categories_cards,
-                    'demandesActives'     => $demandesActives,
-                    'generalSettings'     => $this->generalSettings,
-                    'sliders'             => $sliders,
-                    'featuredProposals'   => $featuredProposals,
-                    'topProposals'        => $topProposals,
-                    'randomProposals'     => $randomProposals
-                ));
         }
 
+    }
+
+    /**
+     * @Route("/home/acheteur", name="home_acheteur", methods={"GET","POST"})
+     */
+    public function homeBuyeur(){
+        $sliders = $this->manager->getRepository(LandingPageSlide::class)->findBy(array('onHomePageSeller' => true));
+
+        $status = Proposal::PROPOSAL_STATUS_ACTIVE;
+        $maxResult = 8;
+        $featuredProposals = $this->manager->getRepository(Proposal::class)->getFeaturedProposals($status, $maxResult);
+        $topProposals = $this->manager->getRepository(Proposal::class)->getTopProposals($status, $maxResult);
+        $randomProposals = $this->manager->getRepository(Proposal::class)->getRandomProposals($maxResult);
+        shuffle($randomProposals);
+
+        return $this->render('home_buyer.html.twig',
+            array(
+                'categories_yes'      => $this->categories_yes,
+                'generalSettings'     => $this->generalSettings,
+                'sliders'             => $sliders,
+                'featuredProposals'   => $featuredProposals,
+                'topProposals'        => $topProposals,
+                'randomProposals'     => $randomProposals
+            ));
     }
 
 

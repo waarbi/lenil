@@ -74,7 +74,7 @@
                                              {{ form_widget(formProfil.picture, { 'attr': {'class': 'form-control'} }) }}
                                          </div>
                                      </div>
-
+                                 {% if registrationForm.description is defined %}
                                      <div class="form-group row">
                                          {{ form_label(formProfil.description, null, {'label_attr': {'class': 'col-md-3 col-form-label'}}) }}
                                          <div class="col-md-8">
@@ -84,6 +84,7 @@
                                              {{ form_widget(formProfil.description, { 'attr': {'class': 'form-control'} }) }}
                                          </div>
                                      </div>
+                                 {% endif %}
                                      <button type="submit" name="submit" class="btn btn-success float-right">
                                          <i class="fa fa-floppy-o"></i> Enregistrer
                                      </button>

@@ -58,6 +58,14 @@ class AppFixtures extends Fixture implements FixtureGroupInterface
             $sellerLevel [] = $level;
         }
 
+        $roles = [];
+        foreach ([Role::ROLE_SELLER, Role::ROLE_BUYER] as $item){
+            $role = new Role();
+            $role->setTitle($item);
+            $manager->persist($role);
+            $manager->flush();
+            $roles [] = $role;
+        }
         //user
         $faker = Factory::create('FR-fr');
 
@@ -96,6 +104,7 @@ class AppFixtures extends Fixture implements FixtureGroupInterface
                 ->setEmail($faker->email)
                 ->setDescription('<p>' . join('</p><p>', $faker->paragraphs(3)) . '</p>')
                 ->setHash($hash)
+                ->addUserRole($faker->randomElement($roles))
                 ->setPicture('tof-admin.png')
                 ->setPays($faker->randomElement($pays))
                 ->setLevel($faker->randomElement($sellerLevel))
@@ -190,7 +199,7 @@ class AppFixtures extends Fixture implements FixtureGroupInterface
 
         $cat2 = new Category();
         $cat2->setTitle('Marketing Digital')->setDescription('It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.')
-            ->setFeatured(true)->setImage('p2.png')->setSlug('digital-marketing')->setInCard(true);
+            ->setFeatured(true)->setImage('3.jpg')->setSlug('digital-marketing')->setInCard(true);
         $manager->persist($cat2);
         $manager->flush();
 
@@ -259,12 +268,12 @@ class AppFixtures extends Fixture implements FixtureGroupInterface
 
         $cat3 = new Category();
         $cat3->setTitle('Rédaction & traduction')->setDescription('It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.')
-            ->setFeatured(true)->setImage('p4.png')->setSlug('writing-translation')->setInCard(true);
+            ->setFeatured(true)->setImage('5.jpg')->setSlug('writing-translation')->setInCard(true);
         $manager->persist($cat3);
 
         $cat4 = new Category();
         $cat4->setTitle('Video & Animation')->setDescription('It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.')
-            ->setFeatured(true)->setImage('p3.png')->setSlug('video-animation')->setCardPicture('4.jpg')->setInCard(true);
+            ->setFeatured(true)->setImage('p3.png')->setSlug('video-animation')->setCardPicture('p4.jpg')->setInCard(true);
         $manager->persist($cat4);
 
         $cat5 = new Category();

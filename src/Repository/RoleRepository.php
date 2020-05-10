@@ -4,7 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Role;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method Role|null find($id, $lockMode = null, $lockVersion = null)
@@ -14,7 +14,7 @@ use Doctrine\ORM\EntityManagerInterface;
  */
 class RoleRepository extends ServiceEntityRepository
 {
-    public function __construct(EntityManagerInterface $registry)
+    public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Role::class);
     }
