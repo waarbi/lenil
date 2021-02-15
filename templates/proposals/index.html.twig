@@ -6,12 +6,12 @@
     <div class="row"><!-- row Starts -->
         <div class="col-md-12 mt-5 mb-3"><!-- col-md-12 mt-5 mb-3 Starts -->
             <h1 class="pull-left">Voir mes services</h1>
-{#            <label class="pull-right lead"><!-- pull-right lead Starts -->#}
-{#                Vacation Mode:#}
-{#                <button id="turn_on_seller_vaction" data-toggle="button" class="btn btn-lg btn-toggle">#}
-{#                    <div class="toggle-handle"></div>#}
-{#                </button>#}
-{#            </label><!-- pull-right lead Ends -->#}
+            {#            <label class="pull-right lead"><!-- pull-right lead Starts -->#}
+            {#                Vacation Mode:#}
+            {#                <button id="turn_on_seller_vaction" data-toggle="button" class="btn btn-lg btn-toggle">#}
+            {#                    <div class="toggle-handle"></div>#}
+            {#                </button>#}
+            {#            </label><!-- pull-right lead Ends -->#}
 
         </div>
         <div class="append-modal"></div>
@@ -129,120 +129,121 @@
                             </tbody>
                         </table>
                         {% if proposalsSuspendues is empty %}
-                        <center><h3 class="pt-4 pb-4"><i class="fa fa-smile-o"></i> Vous n'avez actuellement aucune proposition / service suspendu.</h3></center>					</div>
-                    {% endif %}
+                            <center><h3 class="pt-4 pb-4"><i class="fa fa-smile-o"></i> Vous n'avez actuellement aucune proposition / service suspendu.</h3></center>
+                        {% endif %}
+                    </div>
                 </div>
-            </div>
-            <div id="pending-proposals" class="tab-pane fade">
-                <div class="table-responsive box-table mt-4">
-                    <table class="table table-bordered">
-                        <thead>
-                        <tr>
-                            <th>Titre du service</th>
-                            <th>Prix du service </th>
-                            <th>Nombre de vues</th>
-                            <th>Commandes</th>
-                            <th>Actions</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {% for proposals_pending in proposalsEncours %}
-                            <tr>
-                                <td class="proposal-title"> {{ proposals_pending.title|truncate(30, true) }}</td>
-                                <td class="text-success"> {{ proposals_pending.price }} €</td>
-                                <td>{{ proposals_pending.views}}</td>
-                                <td>{{ proposals_pending.rating }}</td>
-                                <td class="text-center">
-                                    <div class="dropdown">
-                                        <button class="btn btn-success dropdown-toggle" data-toggle="dropdown"></button>
-                                        <div class="dropdown-menu">
-                                            <a href="tyrone/webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign" class="dropdown-item"> Visualiser </a>
-                                            <a href="activate_proposal?proposal_id=199" class="dropdown-item"> Activate Proposal </a>
-                                            <a href="{{ path('edit_proposal', {id: proposals_pending.id}) }}" class="dropdown-item"> Modifier </a>
-                                            <a href="{{ path('edit_proposal', {id: proposals_pending.id}) }}" class="dropdown-item"> Supprimer </a>
+                <div id="pending-proposals" class="tab-pane fade">
+                    <div class="table-responsive box-table mt-4">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Titre du service</th>
+                                    <th>Prix du service </th>
+                                    <th>Nombre de vues</th>
+                                    <th>Commandes</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                 {% for proposals_pending in proposalsEncours %}
+                                <tr>
+                                    <td class="proposal-title"> {{ proposals_pending.title|truncate(30, true) }}</td>
+                                    <td class="text-success"> {{ proposals_pending.price }} €</td>
+                                    <td>{{ proposals_pending.views}}</td>
+                                    <td>{{ proposals_pending.rating }}</td>
+                                    <td class="text-center">
+                                        <div class="dropdown">
+                                            <button class="btn btn-success dropdown-toggle" data-toggle="dropdown"></button>
+                                            <div class="dropdown-menu">
+                                                <a href="tyrone/webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign" class="dropdown-item"> Visualiser </a>
+                                                <a href="activate_proposal?proposal_id=199" class="dropdown-item"> Activate Proposal </a>
+                                                <a href="{{ path('edit_proposal', {id: proposals_pending.id}) }}" class="dropdown-item"> Modifier </a>
+                                                <a href="{{ path('edit_proposal', {id: proposals_pending.id}) }}" class="dropdown-item"> Supprimer </a>
+                                            </div>
                                         </div>
-                                    </div>
-                                </td>
-                            </tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
-                    {% if proposalsEncours is empty %}
-                        <center><h3 class="pt-4 pb-4"><i class="fa fa-smile-o"></i> Vous n'avez actuellement aucune proposition / service en attente</h3></center>
-                    {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                        {% if proposalsEncours is empty %}
+                            <center><h3 class="pt-4 pb-4"><i class="fa fa-smile-o"></i> Vous n'avez actuellement aucune proposition / service en attente</h3></center>
+                        {% endif %}
+                    </div>
                 </div>
-            </div>
-            <div id="cancelled-proposals" class="tab-pane fade">
-                <div class="table-responsive box-table mt-4">
-                    <table class="table table-bordered">
-                        <thead>
-                        <tr>
-                            <th>Titre du service</th>
-                            <th>Prix du service </th>
-                            <th>Nombre de vues</th>
-                            <th>Commandes</th>
-                            <th>Actions</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {% for proposals_cancelled in proposalsAnnulees %}
-                            <tr>
-                                <td class="proposal-title"> {{ proposals_cancelled.title|truncate(100, true) }}</td>
-                                <td class="text-success"> {{ proposals_cancelled.price }} €</td>
-                                <td>{{ proposals_cancelled.views}}</td>
-                                <td>{{ proposals_cancelled.rating }}</td>
-                                <td class="text-center">
-                                    <div class="dropdown">
-                                        <button class="btn btn-success dropdown-toggle" data-toggle="dropdown"></button>
-                                        <div class="dropdown-menu">
-                                            <a href="tyrone/webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign" class="dropdown-item"> Visualiser </a>
-                                            <a href="{{ path('enable_proposal', {id: proposals_cancelled.id}) }}"  class="dropdown-item"> Activer le service </a>
-                                            <a href="{{ path('edit_proposal', {id: proposals_cancelled.id}) }}" class="dropdown-item"> Modifier </a>
-                                            <a href="{{ path('proposal_delete', {id: proposals_cancelled.id}) }}"  class="dropdown-item"> Supprimer </a>
+                <div id="cancelled-proposals" class="tab-pane fade">
+                    <div class="table-responsive box-table mt-4">
+                            <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Titre du service</th>
+                                    <th>Prix du service </th>
+                                    <th>Nombre de vues</th>
+                                    <th>Commandes</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                     {% for proposals_cancelled in proposalsAnnulees %}
+                                <tr>
+                                    <td class="proposal-title"> {{ proposals_cancelled.title|truncate(100, true) }}</td>
+                                    <td class="text-success"> {{ proposals_cancelled.price }} €</td>
+                                    <td>{{ proposals_cancelled.views}}</td>
+                                    <td>{{ proposals_cancelled.rating }}</td>
+                                    <td class="text-center">
+                                        <div class="dropdown">
+                                            <button class="btn btn-success dropdown-toggle" data-toggle="dropdown"></button>
+                                            <div class="dropdown-menu">
+                                                <a href="tyrone/webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign-webdesign" class="dropdown-item"> Visualiser </a>
+                                                <a href="{{ path('enable_proposal', {id: proposals_cancelled.id}) }}"  class="dropdown-item"> Activer le service </a>
+                                                <a href="{{ path('edit_proposal', {id: proposals_cancelled.id}) }}" class="dropdown-item"> Modifier </a>
+                                                <a href="{{ path('proposal_delete', {id: proposals_cancelled.id}) }}"  class="dropdown-item"> Supprimer </a>
+                                            </div>
                                         </div>
-                                    </div>
-                                </td>
-                            </tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
-                    {% if proposalsAnnulees is empty %}
-                    <center><h3 class="pt-4 pb-4"><i class="fa fa-smile-o"></i> Vous n'avez actuellement aucune proposition / service annulé.</h3></center>					</div>
-                {% endif %}
-            </div>
-            <div id="modification-proposals" class="tab-pane fade">
-                <div class="table-responsive box-table mt-4">
-                    <table class="table table-bordered">
-                        <thead>
-                        <tr>
-                            <th>Modification du titre</th>
-                            <th>Modification du message</th>
-                            <th>Actions</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {% for proposalUpdate in proposalsAmodifier %}
-                            <tr>
-                                <td class="proposal-title"> {{ proposalUpdate.title|truncate(100, true) }} </td>
-                                <td> </td>
-                                <td class="text-center">
-                                    <div class="dropdown">
-                                        <button class="btn btn-success dropdown-toggle" data-toggle="dropdown"></button>
-                                        <div class="dropdown-menu">
-                                            <a href="submit_approval?proposal_id=171" class="dropdown-item"> Submit For Approval </a>
-                                            <a href="tyrone/ergerge" class="dropdown-item"> Visualiser </a>
-                                            <a href="{{ path('edit_proposal', {id: proposalUpdate.id}) }}"class="dropdown-item"> Modifier </a>
-                                            <a href="{{ path('proposal_delete', {id: proposalUpdate.id}) }}"  class="dropdown-item"> Supprimer </a>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                            {% if proposalsAnnulees is empty %}
+                                <center><h3 class="pt-4 pb-4"><i class="fa fa-smile-o"></i> Vous n'avez actuellement aucune proposition / service annulé.</h3></center>
+                            {% endif %}
+                    </div>
                 </div>
-            </div>
-            <div id="declined-proposals" class="tab-pane fade show">
+                <div id="modification-proposals" class="tab-pane fade">
+                    <div class="table-responsive box-table mt-4">
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr>
+                                <th>Modification du titre</th>
+                                <th>Modification du message</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for proposalUpdate in proposalsAmodifier %}
+                                <tr>
+                                    <td class="proposal-title"> {{ proposalUpdate.title|truncate(100, true) }} </td>
+                                    <td> </td>
+                                    <td class="text-center">
+                                        <div class="dropdown">
+                                            <button class="btn btn-success dropdown-toggle" data-toggle="dropdown"></button>
+                                            <div class="dropdown-menu">
+                                                <a href="submit_approval?proposal_id=171" class="dropdown-item"> Submit For Approval </a>
+                                                <a href="tyrone/ergerge" class="dropdown-item"> Visualiser </a>
+                                                <a href="{{ path('edit_proposal', {id: proposalUpdate.id}) }}"class="dropdown-item"> Modifier </a>
+                                                <a href="{{ path('proposal_delete', {id: proposalUpdate.id}) }}"  class="dropdown-item"> Supprimer </a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div id="declined-proposals" class="tab-pane fade show">
                 <div class="table-responsive box-table mt-4">
                     <table class="table table-bordered">
                         <thead>
@@ -275,7 +276,7 @@
                     </table>
                 </div>
             </div>
-        </div>
+             </div>
     </div>
     </div>
 {% endblock %}
